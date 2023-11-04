@@ -1,0 +1,21 @@
+{
+    "pattern": "**/*.{ts,tsx}",
+    "minTokens": 50,
+    "minLines": 5,
+    "maxLines": 1000,
+    "maxSize": "100kb",
+    "threshold": 0,
+    "ignore": [
+        "**/node_modules/**",
+        "**/.next/**",
+        "**/*.js",
+        "**/*.min.js",
+        "**/*.map"
+    ],
+    "reporters": [
+        "html",
+        "console"
+    ],
+    "absolute": false,
+    "exitCode": 1
+  }
