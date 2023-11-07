@@ -1,4 +1,3 @@
-import { cookies } from "next/headers";
 import { API_ROUTES } from "../../constants";
 
 
@@ -17,7 +16,6 @@ export async function serverCustomFetch(
     const response = await fetch(url, {
         headers: {
             'Content-Type': 'application/json',
-            'Cookie': cookies().toString(),
             ...options.headers
         },
         body: JSON.stringify(options.body),
@@ -27,7 +25,7 @@ export async function serverCustomFetch(
 
     if (!response.ok && response.status === 401) {
         // TODO: can we show error from server?
-        serverCustomFetch(API_ROUTES.AUTH.LOGOUT());
+        serverCustomFetch(API_ROUTES.AUTH.LOGOUT(), { method: 'POST' });
     }
 
     if (!response.ok) {

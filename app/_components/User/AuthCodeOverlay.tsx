@@ -17,7 +17,8 @@ export const AuthCodeOverlay: FC<{
         }, [searchParams])
 
         async function getAndSaveToken(code: string) {
-            await clientCustomFetch(`${process.env.NEXT_PUBLIC_API_URL}${urlForApiToken(code)}`);
+            const res = await clientCustomFetch(`/api${urlForApiToken(code)}`);
+            const token = await res.json()
             router.push('/home')
         }
 

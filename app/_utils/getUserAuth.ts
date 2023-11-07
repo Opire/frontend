@@ -1,12 +1,13 @@
-import { TokenService } from "../../TokenService";
+import { cookies } from "next/headers";
 import { Token } from "../_core/_vos/Token";
 
 
 export function getUserAuth() {
-    const token = TokenService.getToken();
+    const cookieStore = cookies();
+    const tokenInCookie = cookieStore.get('token');
 
-    if (token) {
-        return Token.getTokenPayload(token);
+    if (tokenInCookie) {
+        return Token.getTokenPayload(tokenInCookie.value);
     }
 
     return null;

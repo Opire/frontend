@@ -1,11 +1,11 @@
 import { redirect } from "next/navigation";
-import { TokenService } from "../../TokenService";
+import { getUserAuth } from "./getUserAuth";
 
 
 export function redirectToHomeIfNotLogged() {
-    const token = TokenService.getToken();
+    const userAuth = getUserAuth();
 
-    if (!token) {
+    if (!userAuth) {
         redirect('/');
     }
 }

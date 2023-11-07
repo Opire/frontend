@@ -19,7 +19,7 @@ export const LogoutButton: FC<{}> = ({ }) => {
                 active={true}
                 color='red'
                 onClick={async () => {
-                    await clientCustomFetch(API_ROUTES.AUTH.LOGOUT())
+                    await clientCustomFetch('/api/auth/logout', { method: 'POST' })
                     router.refresh()
                 }}
                 styles={{
