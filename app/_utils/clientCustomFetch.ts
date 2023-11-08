@@ -8,10 +8,10 @@ export async function clientCustomFetch(
         body?: Object;
         headers?: HeadersInit;
     } = {
-            method: "GET",
-            body: undefined,
-            headers: {},
-        },
+        method: "GET",
+        body: undefined,
+        headers: {},
+    }
 ): Promise<Response> {
     const response = await fetch(url, {
         headers: {
@@ -27,7 +27,7 @@ export async function clientCustomFetch(
         errorNotification({
             title: "You need to login in order to perform this action",
         });
-        clientCustomFetch(API_ROUTES.AUTH.LOGOUT(), { method: 'POST' });
+        clientCustomFetch(API_ROUTES.AUTH.LOGOUT(), { method: "POST" });
     }
 
     if (!response.ok) {

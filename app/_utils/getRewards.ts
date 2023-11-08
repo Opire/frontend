@@ -7,22 +7,21 @@ export async function getRewards({
     page = 1,
     itemsPerPage = 30,
     search,
-    filters
+    filters,
 }: {
     page?: number;
     itemsPerPage?: number;
     search?: string;
     filters: RewardFilters;
 }) {
-    const response = await serverCustomFetch(buildEndpointWithSearchAndPagination(
-        `${process.env.NEXT_PUBLIC_API_URL}${API_ROUTES.REWARDS.ALL()}`,
-        {
+    const response = await serverCustomFetch(
+        buildEndpointWithSearchAndPagination(API_ROUTES.REWARDS.ALL(), {
             itemsPerPage,
             page,
             filters,
             search,
-        }
-    ));
+        })
+    );
 
     return response.json();
 }

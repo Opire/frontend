@@ -4,25 +4,21 @@ import { LoadingOverlay } from "@mantine/core";
 import { clientCustomFetch } from "../../_utils/clientCustomFetch";
 
 export const AuthCodeOverlay: FC<{
-    urlForApiToken: (code: string) => string
-}> = ({
-    urlForApiToken
-}) => {
-        const router = useRouter()
-        const searchParams = useSearchParams()
+    urlForApiToken: (code: string) => string;
+}> = ({ urlForApiToken }) => {
+    const router = useRouter();
+    const searchParams = useSearchParams();
 
-        useEffect(() => {
-            const code = searchParams.get('code') as string;
-            getAndSaveToken(code)
-        }, [searchParams])
+    useEffect(() => {
+        const code = searchParams.get("code") as string;
+        getAndSaveToken(code);
+    }, [searchParams]);
 
-        async function getAndSaveToken(code: string) {
-            const res = await clientCustomFetch(`/api${urlForApiToken(code)}`);
-            const token = await res.json()
-            router.push('/home')
-        }
-
-        return (
-            <LoadingOverlay visible={true}></LoadingOverlay>
-        );
+    async function getAndSaveToken(code: string) {
+        const res = await clientCustomFetch(`${urlForApiToken(code)}`);
+        const token = await res.json();
+        router.push("/home");
     }
+
+    return <LoadingOverlay visible={true}></LoadingOverlay>;
+};

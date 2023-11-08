@@ -1,12 +1,10 @@
-'use client'
+"use client";
 
-import { API_ROUTES } from "../../../constants";
+import { NEXT_SERVER_ROUTES } from "../../../constants";
 import { AuthCodeOverlay } from "../../_components/User/AuthCodeOverlay";
 
 export function AuthBitbucketView() {
     return (
-        <AuthCodeOverlay
-            urlForApiToken={API_ROUTES.AUTH.BITBUCKET}
-        />
+        <AuthCodeOverlay urlForApiToken={NEXT_SERVER_ROUTES.AUTH.BITBUCKET} />
     );
 }

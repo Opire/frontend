@@ -6,8 +6,14 @@ services:
         container_name: make_my_change_front
         working_dir: "/app"
         tty: true
-        network_mode: host
+        networks:
+            - make_my_change_network
         volumes:
             - .:/app
         ports:
             - 3001:3001
+
+networks:
+    make_my_change_network:
+        name: make_my_change_network
+        external: true
