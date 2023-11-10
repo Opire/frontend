@@ -4,18 +4,16 @@ import { cookies } from "next/headers";
 import { API_ROUTES } from "../../../../../constants";
 
 export const GET = async (req: NextRequest, { params }: any) => {
-    const res = await serverCustomFetch(
-        API_ROUTES.AUTH.BITBUCKET(params.code),
-        { method: "GET" }
-    );
+    const res = await serverCustomFetch(API_ROUTES.AUTH.BITBUCKET(params.code), {
+        method: "GET",
+    });
+    const resJson = await res.json();
 
-    res.headers.getSetCookie().forEach((cookie: string) => {
-        const [key, value] = cookie.split("=");
-        if (key === "token") {
-            const cookieStore = cookies();
-            cookieStore.set("token", value, { httpOnly: true });
-        }
+    const token = resJson.data;
+    const cookieStore = cookies();
+    cookieStore.set('token', token, {
+        httpOnly: true, secure: true,
     });
 
-    return NextResponse.json({}, { status: 200 });
-};
+    return NextResponse.json({ token }, { status: 200 })
+}

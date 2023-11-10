@@ -4,8 +4,9 @@ import { NavLink } from "@mantine/core";
 import { IconLogout } from "@tabler/icons";
 import { useRouter } from "next/navigation";
 import { FC } from "react";
-import { API_ROUTES } from "../../../constants";
 import { clientCustomFetch } from "../../_utils/clientCustomFetch";
+import { TokenServiceLocalStorage } from "../../../TokenServiceLocalStorage";
+import { NEXT_SERVER_ROUTES } from "../../../constants";
 
 export const LogoutButton: FC<{}> = ({ }) => {
     const router = useRouter();
@@ -19,7 +20,8 @@ export const LogoutButton: FC<{}> = ({ }) => {
                 active={true}
                 color='red'
                 onClick={async () => {
-                    await clientCustomFetch('/api/auth/logout', { method: 'POST' })
+                    TokenServiceLocalStorage.removeToken();
+                    await clientCustomFetch(NEXT_SERVER_ROUTES.AUTH.LOGOUT(), { method: "POST" });
                     router.refresh()
                 }}
                 styles={{

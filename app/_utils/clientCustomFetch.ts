@@ -1,3 +1,4 @@
+import { TokenServiceLocalStorage } from "../../TokenServiceLocalStorage";
 import { API_ROUTES } from "../../constants";
 import { errorNotification } from "./errorNotification";
 
@@ -8,14 +9,15 @@ export async function clientCustomFetch(
         body?: Object;
         headers?: HeadersInit;
     } = {
-        method: "GET",
-        body: undefined,
-        headers: {},
-    }
+            method: "GET",
+            body: undefined,
+            headers: {},
+        }
 ): Promise<Response> {
     const response = await fetch(url, {
         headers: {
             "Content-Type": "application/json",
+            "Authorization": `Bearer ${TokenServiceLocalStorage.getToken()}`,
             ...options.headers,
         },
         body: JSON.stringify(options.body),
@@ -28,6 +30,7 @@ export async function clientCustomFetch(
             title: "You need to login in order to perform this action",
         });
         clientCustomFetch(API_ROUTES.AUTH.LOGOUT(), { method: "POST" });
+        TokenServiceLocalStorage.removeToken();
     }
 
     if (!response.ok) {

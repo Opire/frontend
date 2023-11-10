@@ -1,3 +1,4 @@
+import { cookies } from "next/headers";
 import { API_ROUTES } from "../../constants";
 
 export async function serverCustomFetch(
@@ -7,14 +8,17 @@ export async function serverCustomFetch(
         body?: Object;
         headers?: HeadersInit;
     } = {
-        method: "GET",
-        body: undefined,
-        headers: {},
-    }
+            method: "GET",
+            body: undefined,
+            headers: {},
+        }
 ): Promise<Response> {
+    const cookieStore = cookies();
+
     const response = await fetch(url, {
         headers: {
             "Content-Type": "application/json",
+            "Authorization": `Bearer ${cookieStore.get('token')?.value}`,
             ...options.headers,
         },
         body: JSON.stringify(options.body),
