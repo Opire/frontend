@@ -5,10 +5,11 @@ import { CustomImage } from "../../../../_components/CustomImage";
 import { formatPrice } from "../../../../_utils/formatPrice";
 import { getRelativeTime } from "../../../../_utils/getRelativeTime";
 import { splitToShow } from "../../../../_utils/splitToShow";
-import { IssueByCreatorDTO } from "../../../../_core/_dtos/IssueByCreatorDTO";
+import { IssueByProgrammerDTO } from "../../../../_core/_dtos/IssueByProgrammerDTO";
+import { useUserAuth } from "../../../../../hooks/useUserAuth";
 
 interface ProgrammerRewardUnpaidCardProps {
-    data: IssueByCreatorDTO;
+    data: IssueByProgrammerDTO;
     inputRef?: Ref<HTMLDivElement>;
 }
 
@@ -18,8 +19,10 @@ export const ProgrammerRewardUnpaidCard: FC<ProgrammerRewardUnpaidCardProps> = (
     data,
     inputRef
 }) => {
+    const userAuth = useUserAuth()!;
+
     // TODO: be careful we are adding assuming that are the same currency
-    const paidIssueRewardPrice = data.rewards.filter(reward => reward.status === 'Completed').reduce((acc, reward) => {
+    const paidIssueRewardPrice = data.rewards.filter(reward => reward.status === 'Completed' && reward.rewardedUserId === userAuth.userId).reduce((acc, reward) => {
         return acc + reward.price.value
     }, 0);
 
@@ -27,11 +30,13 @@ export const ProgrammerRewardUnpaidCard: FC<ProgrammerRewardUnpaidCardProps> = (
         return acc + reward.price.value
     }, 0);
 
-    const claimerUsers = data.usersTrying.filter(userTrying => userTrying.hasClaimed);
+    const claimerUsers = data.usersTrying.filter(userTrying => userTrying.hasClaimed && userTrying.id !== userAuth.userId);
     const [claimerUsersToShow, claimerUsersHidden] = splitToShow(claimerUsers, MAX_NUMBER_OF_USERS_TO_SHOW);
     const hasMoreUsers = claimerUsersHidden.length > 0;
 
     const amountOfExtraUsers = claimerUsersHidden.length;
+
+    const hasProgrammerClaimed = data.usersTrying.find(userTrying => userTrying.id === userAuth.userId)!.hasClaimed;
 
     return (
         <>

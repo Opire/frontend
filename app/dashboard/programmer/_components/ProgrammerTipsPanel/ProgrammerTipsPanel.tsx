@@ -1,17 +1,16 @@
 import { FC } from "react";
-import { useTipsByCreator } from "../../../../../hooks/useTipsByCreator";
 import { Divider, Loader, Space, Text, Title } from "@mantine/core";
 import { TipCardSkeleton } from "./components/TipCardSkeleton";
 import { ProgrammerTipCard } from "./components/ProgrammerTipCard";
 import { InfinityList } from "../../../../_components/InfinityList";
+import { useTipsByProgrammer } from "../../../../../hooks/useTipsByProgrammer";
 
 interface ProgrammerTipsPanelProps {
 }
 
 export const ProgrammerTipsPanel: FC<ProgrammerTipsPanelProps> = ({
 }) => {
-    // const { tips, isLoading } = useTipsByProgrammer();
-    const { tips, isLoading } = useTipsByCreator();
+    const { tips, isLoading } = useTipsByProgrammer();
 
     const unpaidTips = [...tips].filter((tip) => tip.status === 'Pending payment')
     const paidTips = [...tips].filter((tip) => tip.status === 'Paid')

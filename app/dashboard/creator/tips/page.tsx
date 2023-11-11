@@ -1,6 +1,5 @@
 import { Metadata } from "next";
 import { redirectToHomeIfNotLogged } from "../../../_utils/redirectToHomeIfNotLogged";
-import { getRewardsFromCreator } from "../../../_utils/getRewardsFromCreator";
 import { DashboardCreatorView } from "./view";
 
 export const metadata: Metadata = {

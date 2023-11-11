@@ -1,10 +1,10 @@
 import { Avatar, Button, Card, Group, Space, Text } from "@mantine/core";
 import { FC, Ref } from "react";
 import { formatPrice } from "../../../../../_utils/formatPrice";
-import { TipByCreatorDTO } from "../../../../../_core/_dtos/TipByCreatorDTO";
+import { TipByProgrammerDTO } from "../../../../../_core/_dtos/TipByProgrammerDTO";
 
 interface ProgrammerTipCardProps {
-    data: TipByCreatorDTO;
+    data: TipByProgrammerDTO;
     inputRef?: Ref<HTMLDivElement>;
 }
 
@@ -22,7 +22,7 @@ export const ProgrammerTipCard: FC<ProgrammerTipCardProps> = ({
         >
             <Group justify="center">
                 <Avatar
-                    src={data.programmer.avatarURL}
+                    src={data.creator.avatarURL}
                     radius='xl'
                     size='lg'
                 />

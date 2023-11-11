@@ -1,7 +1,9 @@
 export const API_ROUTES = {
     REWARDS: {
         CREATED_BY_ME: () =>
-            `${process.env.NEXT_PUBLIC_API_URL}/rewards/createdByMe`,
+            `${process.env.NEXT_PUBLIC_API_URL}/rewards/created`,
+        TRYING_BY_ME: () =>
+            `${process.env.NEXT_PUBLIC_API_URL}/rewards/trying`,
         ALL: () => `${process.env.NEXT_PUBLIC_API_URL}/rewards`,
     },
     AUTH: {
@@ -27,9 +29,9 @@ export const API_ROUTES = {
     },
     TIPS: {
         CREATED_BY_ME: () =>
-            `${process.env.NEXT_PUBLIC_API_URL}/tips/createdByMe`,
+            `${process.env.NEXT_PUBLIC_API_URL}/tips/created`,
         RECEIVED_BY_ME: () =>
-            `${process.env.NEXT_PUBLIC_API_URL}/tips/programmer`, // TODO: Change endpoint, do all route
+            `${process.env.NEXT_PUBLIC_API_URL}/tips/received`, // TODO: Change endpoint, do all route
     },
 };
 

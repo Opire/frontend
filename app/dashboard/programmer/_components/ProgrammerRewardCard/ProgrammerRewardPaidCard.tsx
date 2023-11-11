@@ -1,13 +1,14 @@
 import { FC, Ref } from "react";
-import { Avatar, AvatarGroup, Card, CardSection, Group, HoverCard, HoverCardDropdown, HoverCardTarget, Text, Title } from "@mantine/core";
+import { Avatar, AvatarGroup, Card, CardSection, Group, Text, Title } from "@mantine/core";
 import Link from "next/link";
 import { CustomImage } from "../../../../_components/CustomImage";
 import { formatPrice } from "../../../../_utils/formatPrice";
 import { getRelativeTime } from "../../../../_utils/getRelativeTime";
-import { IssueByCreatorDTO } from "../../../../_core/_dtos/IssueByCreatorDTO";
+import { IssueByProgrammerDTO } from "../../../../_core/_dtos/IssueByProgrammerDTO";
+import { useUserAuth } from "../../../../../hooks/useUserAuth";
 
 interface ProgrammerRewardPaidCardProps {
-    data: IssueByCreatorDTO;
+    data: IssueByProgrammerDTO;
     inputRef?: Ref<HTMLDivElement>;
 }
 
@@ -15,12 +16,12 @@ export const ProgrammerRewardPaidCard: FC<ProgrammerRewardPaidCardProps> = ({
     data,
     inputRef
 }) => {
+    const userAuth = useUserAuth()!;
+
     // TODO: be careful we are adding assuming that are the same currency
-    const totalIssueRewardPrice = data.rewards.reduce((acc, reward) => {
+    const totalIssueRewardPrice = data.rewards.filter(reward => reward.rewardedUserId === userAuth.userId).reduce((acc, reward) => {
         return acc + reward.price.value
     }, 0);
-
-    const rewardedUsersIds = data.rewards.map(reward => reward.rewardedUserId);
 
     return (
         <Card
@@ -80,34 +81,7 @@ export const ProgrammerRewardPaidCard: FC<ProgrammerRewardPaidCardProps> = ({
 
 
             <CardSection withBorder inheritPadding p="md" style={{ minHeight: '88px', height: '100%' }}>
-                <Group justify="space-between" align='flex-end' style={{ height: '100%' }}>
-                    <AvatarGroup>
-                        {
-                            data.usersTrying.filter(userTrying => rewardedUsersIds.includes(userTrying.id)).map((userTrying) => {
-                                const totalPaidToUser = data.rewards.filter(reward => reward.rewardedUserId === userTrying.id).reduce((acc, reward) => {
-                                    return acc + reward.price.value
-                                }, 0)
-
-                                return (
-                                    <>
-                                        <HoverCard withArrow shadow="md" closeDelay={0} openDelay={0} key={userTrying.id}>
-                                            <HoverCardTarget>
-                                                <Avatar src={userTrying.avatarURL} alt={userTrying.username} color="teal" size='lg' radius='xl' />
-                                            </HoverCardTarget>
-                                            <HoverCardDropdown>
-                                                <Text
-                                                    variant='default'
-                                                >
-                                                    Paid {formatPrice({ unit: 'EUR_CENT', value: totalPaidToUser })}
-                                                </Text>
-                                            </HoverCardDropdown>
-                                        </HoverCard>
-                                    </>
-                                )
-                            })
-                        }
-                    </AvatarGroup>
-
+                <Group justify="flex-end" align='flex-end' style={{ height: '100%' }}>
                     <Text
                         c="dimmed"
                         size="xs"

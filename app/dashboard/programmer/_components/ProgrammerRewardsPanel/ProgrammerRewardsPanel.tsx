@@ -6,14 +6,14 @@ import { ProgrammerRewardUnpaidCard } from "../ProgrammerRewardCard/ProgrammerRe
 import { ProgrammerRewardCardSkeletonClient } from "../ProgrammerRewardCard/ProgrammerRewardCardSkeletonClient";
 import { ProgrammerRewardPaidCard } from "../ProgrammerRewardCard/ProgrammerRewardPaidCard";
 import { InfinityList } from "../../../../_components/InfinityList";
+import { useGetRewardsFromProgrammer } from "../../../../../hooks/useGetRewardsFromProgrammer";
 
 interface ProgrammerRewardsPanelProps {
 }
 
 export const ProgrammerRewardsPanel: FC<ProgrammerRewardsPanelProps> = ({
 }) => {
-    // const { issues: allIssues, isLoading } = useGetRewardsFromProgrammer();
-    const { issues: allIssues, isLoading } = useGetRewardsFromCreator();
+    const { issues: allIssues, isLoading } = useGetRewardsFromProgrammer();
     const searchParams = useSearchParams();
     const issuePlatformId = searchParams.get('issuePlatformId');
     const issuePlatform = searchParams.get('issuePlatform');
