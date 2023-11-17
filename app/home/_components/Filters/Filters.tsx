@@ -46,8 +46,8 @@ export const Filters: FC<{}> = () => {
             URL_KEYS.PROGRAMMING_LANGUAGES
         )
             ? (searchParams
-                  .get(URL_KEYS.PROGRAMMING_LANGUAGES)!
-                  .split(",") as ProgrammingLanguageType[])
+                .get(URL_KEYS.PROGRAMMING_LANGUAGES)!
+                .split(",") as ProgrammingLanguageType[])
             : [];
 
         return {
@@ -87,6 +87,7 @@ export const Filters: FC<{}> = () => {
 
     return (
         <div
+            className="filters"
             style={{
                 display: "flex",
                 gap: "1rem",

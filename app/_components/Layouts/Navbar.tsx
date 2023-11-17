@@ -3,7 +3,7 @@
 import { FC } from "react";
 import { IconCoinEuro, IconSettings, IconLayoutDashboard, IconMoneybag, IconUserCircle, IconChartHistogram } from "@tabler/icons";
 import { usePathname, useRouter } from "next/navigation";
-import { Divider, NavLink, Space } from "@mantine/core";
+import { Box, Divider, NavLink, Space } from "@mantine/core";
 import { ChartBar, DeviceLaptop } from "tabler-icons-react";
 import { LogoutButton } from "./LogoutButton";
 import { useExternalStateOverride } from "../../../hooks/useExternalStateOverride";
@@ -16,6 +16,7 @@ interface NavbarProps {
 }
 
 interface ItemMenu {
+    id: string;
     icon?: JSX.Element;
     text: string;
     path?: string;
@@ -31,30 +32,35 @@ export const Navbar: FC<NavbarProps> = ({
 
     const menuItems: ItemMenu[] = [
         {
+            id: 'home',
             icon: <IconMoneybag size={18} />,
             text: 'Rewards',
             path: '/home',
             isPublic: true,
         },
         {
+            id: 'dashboard',
             icon: <IconLayoutDashboard size={18} />,
             text: 'My dashboard',
             // path: '/dashboard',
             isPublic: false,
             children: [
                 {
+                    id: 'dashboard-creator',
                     icon: <ChartBar size={18} />,
                     text: 'Creator',
                     // path: '/dashboard/creator',
                     isPublic: false,
                     children: [
                         {
+                            id: 'dashboard-creator-rewards',
                             icon: <IconMoneybag size={18} />,
                             text: 'Rewards',
                             path: '/dashboard/creator/rewards',
                             isPublic: false,
                         },
                         {
+                            id: 'dashboard-creator-tips',
                             icon: <IconCoinEuro size={18} />,
                             text: 'Tips',
                             path: '/dashboard/creator/tips',
@@ -63,18 +69,21 @@ export const Navbar: FC<NavbarProps> = ({
                     ]
                 },
                 {
+                    id: 'dashboard-programmer',
                     icon: <DeviceLaptop size={18} />,
                     text: 'Programmer',
                     // path: '/dashboard/programmer',
                     isPublic: false,
                     children: [
                         {
+                            id: 'dashboard-programmer-rewards',
                             icon: <IconMoneybag size={18} />,
                             text: 'Rewards',
                             path: '/dashboard/programmer/rewards',
                             isPublic: false,
                         },
                         {
+                            id: 'dashboard-programmer-tips',
                             icon: <IconCoinEuro size={18} />,
                             text: 'Tips',
                             path: '/dashboard/programmer/tips',
@@ -91,6 +100,7 @@ export const Navbar: FC<NavbarProps> = ({
             ]
         },
         {
+            id: 'settings',
             icon: <IconSettings size={18} />,
             text: 'Settings',
             path: '/settings',
@@ -123,26 +133,9 @@ export const Navbar: FC<NavbarProps> = ({
 
             <Divider style={{ marginTop: 'auto', marginBottom: '10px' }} />
 
-            <div className={'.links-scrollbar'} style={{ marginBottom: '10px', overflow: 'auto' }}>
+            <div className="links" style={{ marginBottom: '10px', overflow: 'auto' }} >
                 <InterestingLinks />
             </div>
-
-            <style>
-                {`
-                    .links-scrollbar {
-                        scrollbar-width: thin;
-                        scrollbar-color: transparent;
-                    }
-
-                    ::-webkit-scrollbar {
-                        width: 6px;
-                    }
-
-                    ::-webkit-scrollbar-track {
-                        background: transparent;
-                    }
-                `}
-            </style>
         </>
     )
 }
@@ -162,7 +155,7 @@ function NavbarMenu({
         {
             menuItems.filter(item => item.isPublic || userAuth !== null).map(item => (
                 <NavbarMenuItem
-                    key={item.path}
+                    key={item.id}
                     item={item}
                     path={path}
                     userAuth={userAuth}

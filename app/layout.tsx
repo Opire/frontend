@@ -14,7 +14,35 @@ export default function RootLayout({
         <html lang="en">
             <head>
                 <ColorSchemeScript />
+
+                <style>
+                    {`
+                    .filters::-webkit-scrollbar {
+                        height: 0px;
+                        width: 0px;
+                    }
+
+                    .links::-webkit-scrollbar {
+                        width: 4px;
+                    }
+
+                    ::-webkit-scrollbar {
+                        width: 8px;
+                    }
+
+                    ::-webkit-scrollbar-track {
+                        background: transparent;
+                    }
+
+                    ::-webkit-scrollbar-thumb {
+                        background: linear-gradient(45deg, var(--mantine-color-teal-6) 0%, var(--mantine-color-cyan-7) 100%);
+                        border-radius: 8px;
+                        height: 10%;
+                    }
+                `}
+                </style>
             </head>
+
             <body>
                 <MantineProvider
                     defaultColorScheme="dark"
@@ -32,6 +60,8 @@ export default function RootLayout({
                     </ModalsProvider>
                 </MantineProvider>
             </body>
+
+
         </html>
     )
 }
