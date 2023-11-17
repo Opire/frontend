@@ -16,9 +16,14 @@ module.exports = {
                 destination: '/home',
                 permanent: true,
             },
+            // {
+            //     source: '/settings',
+            //     destination: '/settings/profile',
+            //     permanent: true,
+            // },
             {
-                source: '/settings',
-                destination: '/settings/profile',
+                source: '/dashboard',
+                destination: '/dashboard/creator',
                 permanent: true,
             },
             {

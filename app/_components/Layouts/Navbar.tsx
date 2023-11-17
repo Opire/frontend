@@ -18,7 +18,7 @@ interface NavbarProps {
 interface ItemMenu {
     icon?: JSX.Element;
     text: string;
-    path: string;
+    path?: string;
     isPublic: boolean;
     children?: ItemMenu[];
 }
@@ -39,13 +39,13 @@ export const Navbar: FC<NavbarProps> = ({
         {
             icon: <IconLayoutDashboard size={18} />,
             text: 'My dashboard',
-            path: '/dashboard',
+            // path: '/dashboard',
             isPublic: false,
             children: [
                 {
                     icon: <ChartBar size={18} />,
                     text: 'Creator',
-                    path: '/dashboard/creator',
+                    // path: '/dashboard/creator',
                     isPublic: false,
                     children: [
                         {
@@ -65,7 +65,7 @@ export const Navbar: FC<NavbarProps> = ({
                 {
                     icon: <DeviceLaptop size={18} />,
                     text: 'Programmer',
-                    path: '/dashboard/programmer',
+                    // path: '/dashboard/programmer',
                     isPublic: false,
                     children: [
                         {
@@ -82,12 +82,12 @@ export const Navbar: FC<NavbarProps> = ({
                         }
                     ]
                 },
-                {
-                    icon: <IconChartHistogram size={18} />,
-                    text: 'Metrics',
-                    path: '/dashboard/metrics',
-                    isPublic: false,
-                }
+                // {
+                //     icon: <IconChartHistogram size={18} />,
+                //     text: 'Metrics',
+                //     path: '/dashboard/metrics',
+                //     isPublic: false,
+                // }
             ]
         },
         {
@@ -95,14 +95,14 @@ export const Navbar: FC<NavbarProps> = ({
             text: 'Settings',
             path: '/settings',
             isPublic: false,
-            children: [
-                {
-                    icon: <IconUserCircle size={18} />,
-                    text: 'Profile',
-                    path: '/settings/profile',
-                    isPublic: false,
-                }
-            ]
+            // children: [
+            //     {
+            //         icon: <IconUserCircle size={18} />,
+            //         text: 'Profile',
+            //         path: '/settings/profile',
+            //         isPublic: false,
+            //     }
+            // ]
         }
     ];
 
@@ -224,6 +224,10 @@ function NavbarMenuItem({
 
     function handleClickNavLink(item: ItemMenu) {
         return (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+            if (!item.path) {
+                return;
+            }
+
             event.stopPropagation();
             router.push(item.path);
         };
