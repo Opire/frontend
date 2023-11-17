@@ -185,10 +185,7 @@ function NavbarMenuItem({
         {
             <NavLink
                 key={item.text}
-                label={<div onClick={handleClickNavLink(item)}>
-                    {item.text}
-                </div>
-                }
+                label={item.text}
                 leftSection={item.icon}
                 variant={"subtle"}
                 active={path === item.path}
@@ -202,7 +199,10 @@ function NavbarMenuItem({
                         margin: '4px 0'
                     },
                 }}
-                onClick={() => setIsOpen(prev => !prev)}
+                onClick={() => {
+                    setIsOpen(prev => !prev);
+                    handleClickNavLink(item);
+                }}
             >
                 {item.children && item.children.length > 0 && (
                     <NavbarMenu
@@ -216,14 +216,11 @@ function NavbarMenuItem({
     </>
 
     function handleClickNavLink(item: ItemMenu) {
-        return (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-            if (!item.path) {
-                return;
-            }
+        if (!item.path) {
+            return;
+        }
 
-            event.stopPropagation();
-            router.push(item.path);
-        };
+        router.push(item.path);
     }
 
     function shouldStartOpened(item: ItemMenu, path: string): boolean {

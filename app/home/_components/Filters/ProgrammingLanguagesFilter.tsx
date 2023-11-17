@@ -1,8 +1,9 @@
-import { Button, Chip, Container, Modal, MultiSelect, Space, useMantineTheme } from '@mantine/core';
+import { Button, Chip, Container, Group, Modal, MultiSelect, Space, useMantineTheme } from '@mantine/core';
 import { useDisclosure, useMediaQuery } from '@mantine/hooks';
 import React, { FC, useState } from 'react';
 import { ProgrammingLanguageType } from '../../../_core/_types/ProgrammingLanguageType';
 import { ProgrammingLanguage } from '../../../_core/_vos/ProgrammingLanguage';
+import { DEFAULT_REWARD_FILTERS } from './Filters';
 
 interface ProgrammingLanguagesFilterProp {
     value: ProgrammingLanguageType[]
@@ -31,19 +32,8 @@ export const ProgrammingLanguagesFilter: FC<ProgrammingLanguagesFilterProp> = ({
 
     function onLocalApply(programminglanguage: ProgrammingLanguageType[]) {
         onApply(programminglanguage);
+        setFilterValue(programminglanguage);
         closeModal();
-    }
-
-    function toggleProgrammingLanguageFromFilter(programmingLanguage: ProgrammingLanguageType) {
-        setFilterValue((oldFilterValue) => {
-            const wasIncluded = oldFilterValue.includes(programmingLanguage);
-
-            if (wasIncluded) {
-                return oldFilterValue.filter(old => old !== programmingLanguage);
-            }
-
-            return [...oldFilterValue, programmingLanguage];
-        })
     }
 
     return (
@@ -53,7 +43,7 @@ export const ProgrammingLanguagesFilter: FC<ProgrammingLanguagesFilterProp> = ({
             </Chip>
 
             <Modal
-                withCloseButton={false}
+                withCloseButton={true}
                 opened={isModalOpen}
                 onClose={closeModal}
                 overlayProps={{
@@ -63,10 +53,7 @@ export const ProgrammingLanguagesFilter: FC<ProgrammingLanguagesFilterProp> = ({
                 }}
                 fullScreen={isMobile}
             >
-                <Container h={'400px'} m={10}>
-                    <Space h='xl' />
-                    <Space h='xl' />
-
+                <Container h={'25rem'} m={10}>
                     <MultiSelect
                         data={ProgrammingLanguage.ValidValues}
                         label="Programming language"
@@ -75,28 +62,22 @@ export const ProgrammingLanguagesFilter: FC<ProgrammingLanguagesFilterProp> = ({
                         nothingFoundMessage="Nothing found ;("
                         value={filterValue}
                         onChange={(values) => setFilterValue(values as ProgrammingLanguageType[])}
-                    />
 
-                    {/* {ProgrammingLanguage.ValidValues.map(programmingLanguage => (
-                        <>
-                            <Checkbox
-                                key={programmingLanguage}
-                                icon={CheckboxIcon}
-                                label={programmingLanguage}
-                                checked={filterValue.includes(programmingLanguage)}
-                                onChange={() => toggleProgrammingLanguageFromFilter(programmingLanguage)}
-                            />
-                            <Space h='xs' />
-                        </>
-                    ))} */}
+                    />
 
                     <Space h='xl' />
                     <Space h='xl' />
                 </Container>
 
-                <Button onClick={() => onLocalApply(filterValue)}>
-                    Apply
-                </Button>
+                <Group justify='space-between'>
+                    <Button color='red' variant='outline' onClick={() => onLocalApply(DEFAULT_REWARD_FILTERS.programmingLanguages)}>
+                        Clear
+                    </Button>
+
+                    <Button onClick={() => onLocalApply(filterValue)}>
+                        Apply
+                    </Button>
+                </Group>
             </Modal>
         </div>
     );

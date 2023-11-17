@@ -1,6 +1,7 @@
-import { Button, Chip, Container, Modal, RangeSlider, Space, useMantineTheme } from '@mantine/core';
+import { Button, Chip, Container, Group, Modal, RangeSlider, Space, useMantineTheme } from '@mantine/core';
 import { useDisclosure, useMediaQuery } from '@mantine/hooks';
 import React, { FC, useState } from 'react';
+import { DEFAULT_REWARD_FILTERS } from './Filters';
 
 interface PriceFilterProp {
     value: [number, number | null]
@@ -43,8 +44,9 @@ export const PriceFilter: FC<PriceFilterProp> = ({
         return `Up to ${value[1]}€`
     }
 
-    function onLocalApply(min: number, max: number) {
+    function onLocalApply(min: number, max: number | null) {
         onApply(min, max === maxPriceValue ? null : max)
+        setFilterValue({ min, max: max || maxPriceValue })
         closeModal()
     }
 
@@ -55,7 +57,7 @@ export const PriceFilter: FC<PriceFilterProp> = ({
             </Chip>
 
             <Modal
-                withCloseButton={false}
+                withCloseButton={true}
                 opened={isModalOpen}
                 onClose={closeModal}
                 overlayProps={{
@@ -67,7 +69,6 @@ export const PriceFilter: FC<PriceFilterProp> = ({
             >
                 <Container m={10}>
                     <Space h='xl' />
-                    <Space h='xl' />
                     <RangeSlider
                         defaultValue={[filterValue.min, filterValue.max]}
                         min={0}
@@ -75,15 +76,21 @@ export const PriceFilter: FC<PriceFilterProp> = ({
                         onChange={(value) => setFilterValue({ min: value[0], max: value[1] })}
                         marks={marks}
                         labelAlwaysOn
-                        label={(value) => <div>{value === 10001 ? 'Without limit' : `${value} €`}</div>}
+                        label={(value) => <div>{value === maxPriceValue ? 'Without limit' : `${value} €`}</div>}
                     />
                     <Space h='xl' />
                     <Space h='xl' />
                 </Container>
 
-                <Button onClick={() => onLocalApply(filterValue.min, filterValue.max)}>
-                    Apply
-                </Button>
+                <Group justify='space-between'>
+                    <Button color='red' variant='outline' onClick={() => onLocalApply(DEFAULT_REWARD_FILTERS.price.min, DEFAULT_REWARD_FILTERS.price.max)}>
+                        Clear
+                    </Button>
+
+                    <Button onClick={() => onLocalApply(filterValue.min, filterValue.max)}>
+                        Apply
+                    </Button>
+                </Group>
             </Modal>
         </div>
     );

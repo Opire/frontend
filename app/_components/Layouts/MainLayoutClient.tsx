@@ -28,11 +28,20 @@ export const MainLayoutClient: FC<MainLayoutProps> = ({
             <AppShellHeader>
                 <Group h="100%" px="md" justify={'space-between'}>
                     <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
+
+                    {headerContent &&
+                        <Box hiddenFrom="sm" style={{ width: '60%' }}>
+                            {headerContent}
+                        </Box>
+                    }
+
                     <LogoIcon />
 
-                    <Box visibleFrom="sm" style={{ width: 'calc(100% - 300px)' }}>
-                        {headerContent}
-                    </Box>
+                    {headerContent &&
+                        <Box visibleFrom="sm" style={{ width: 'calc(100% - 300px)' }}>
+                            {headerContent}
+                        </Box>
+                    }
                 </Group>
             </AppShellHeader>
 
