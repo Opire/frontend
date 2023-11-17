@@ -14,12 +14,11 @@ export const LoginButton: FC<{}> = ({
         <>
             <Button
                 onClick={openModal}
-                // variant="light"
                 size='md'
                 leftSection={<IconKey size={14} />}
                 rightSection={<IconArrowRight size={14} />}
                 variant='gradient'
-                m={'0 auto'}
+            // m={'0 auto'}
             >
                 Log In
             </Button>

@@ -9,6 +9,7 @@ import { LogoutButton } from "./LogoutButton";
 import { useExternalStateOverride } from "../../../hooks/useExternalStateOverride";
 import { UserInfo } from "../User/UserInfo";
 import { UserAuthDTO } from "../../_core/_dtos/UserAuthDTO";
+import { InterestingLinks } from "./InterestingLinks";
 
 interface NavbarProps {
     userAuth: UserAuthDTO | null;
@@ -119,8 +120,29 @@ export const Navbar: FC<NavbarProps> = ({
                 path={path}
                 userAuth={userAuth}
             />
-            <Divider my="sm" />
-            {/* links */}
+
+            <Divider style={{ marginTop: 'auto', marginBottom: '10px' }} />
+
+            <div className={'.links-scrollbar'} style={{ marginBottom: '10px', overflow: 'auto' }}>
+                <InterestingLinks />
+            </div>
+
+            <style>
+                {`
+                    .links-scrollbar {
+                        scrollbar-width: thin;
+                        scrollbar-color: transparent;
+                    }
+
+                    ::-webkit-scrollbar {
+                        width: 6px;
+                    }
+
+                    ::-webkit-scrollbar-track {
+                        background: transparent;
+                    }
+                `}
+            </style>
         </>
     )
 }
@@ -217,3 +239,4 @@ function NavbarMenuItem({
     }
 
 }
+
