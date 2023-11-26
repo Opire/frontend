@@ -1,7 +1,7 @@
-import { Button, Chip, Container, Group, Modal, RangeSlider, Space, useMantineTheme } from '@mantine/core';
-import { useDisclosure, useMediaQuery } from '@mantine/hooks';
+import { Button, Chip, Container, Group, NumberInput, Popover, RangeSlider, Space } from '@mantine/core';
 import React, { FC, useState } from 'react';
 import { DEFAULT_REWARD_FILTERS } from './Filters';
+import { useMediaQuery } from '@mantine/hooks';
 
 interface PriceFilterProp {
     value: [number, number | null]
@@ -19,9 +19,9 @@ export const PriceFilter: FC<PriceFilterProp> = ({
 
     const [filterValue, setFilterValue] = useState({ min: value[0], max: value[1] || maxPriceValue })
 
-    const theme = useMantineTheme();
+
     const isMobile = useMediaQuery("(max-width: 50em)");
-    const [isModalOpen, { close: closeModal, toggle: toggleModal }] = useDisclosure();
+
 
     const marks = [
         { value: 0, label: '0€' },
@@ -44,55 +44,70 @@ export const PriceFilter: FC<PriceFilterProp> = ({
         return `Up to ${value[1]}€`
     }
 
-    function onLocalApply(min: number, max: number | null) {
-        onApply(min, max === maxPriceValue ? null : max)
-        setFilterValue({ min, max: max || maxPriceValue })
-        closeModal()
+    function clear() {
+        setFilterValue({ min: DEFAULT_REWARD_FILTERS.price.min, max: DEFAULT_REWARD_FILTERS.price.max || maxPriceValue })
+        onApply(DEFAULT_REWARD_FILTERS.price.min, DEFAULT_REWARD_FILTERS.price.max)
     }
 
-    return (
-        <div style={{ position: 'relative' }}>
-            <Chip checked={isFiltering} onClick={toggleModal}>
-                {chipTitle()}
-            </Chip>
 
-            <Modal
-                withCloseButton={true}
-                opened={isModalOpen}
-                onClose={closeModal}
-                overlayProps={{
-                    color: theme.colors.dark[9],
-                    opacity: 0.55,
-                    blur: 3,
-                }}
-                fullScreen={isMobile}
-            >
-                <Container m={10}>
-                    <Space h='xl' />
+    return (
+        <Popover trapFocus position="bottom-start" withArrow shadow="md" arrowPosition="side" arrowOffset={16} arrowSize={12} offset={16}>
+            <Popover.Target>
+                <Chip checked={isFiltering}>
+                    {chipTitle()}
+                </Chip>
+            </Popover.Target>
+
+            <Popover.Dropdown style={{ width: 'auto' }}>
+                <Container>
+                    <Group justify='space-between'>
+                        <NumberInput
+                            size={isMobile ? 'xs' : 'md'}
+                            maw={isMobile ? '100px' : '200px'}
+                            label="Min price"
+                            value={filterValue.min === maxPriceValue ? '' : filterValue.min}
+                            onChange={(value) => setFilterValue({ min: +value, max: filterValue.max })}
+                            placeholder=""
+                            min={DEFAULT_REWARD_FILTERS.price.min}
+                            max={filterValue.max}
+                        />
+                        <NumberInput
+                            size={isMobile ? 'xs' : 'md'}
+                            maw={isMobile ? '100px' : '200px'}
+                            label="Max price"
+                            value={filterValue.max === maxPriceValue ? '' : filterValue.max}
+                            onChange={(value) => setFilterValue({ min: filterValue.min, max: +value > maxPriceValue ? maxPriceValue : +value })}
+                            placeholder=""
+                            min={filterValue.min}
+                            max={DEFAULT_REWARD_FILTERS.price.max ?? maxPriceValue}
+                        />
+                    </Group>
+
+                    <Space h='lg' />
                     <RangeSlider
                         defaultValue={[filterValue.min, filterValue.max]}
+                        value={[filterValue.min, filterValue.max]}
                         min={0}
                         max={maxPriceValue}
                         onChange={(value) => setFilterValue({ min: value[0], max: value[1] })}
+                        onChangeEnd={(value) => onApply(value[0], value[1] === maxPriceValue ? null : value[1])}
                         marks={marks}
-                        labelAlwaysOn
-                        label={(value) => <div>{value === maxPriceValue ? 'Without limit' : `${value} €`}</div>}
+                        label={null}
                     />
+                    <Space h='lg' />
+
+
                     <Space h='xl' />
-                    <Space h='xl' />
+                    <Group justify='space-between'>
+                        <Button color='red' variant='outline' onClick={clear}>
+                            Clear
+                        </Button>
+                    </Group>
                 </Container>
 
-                <Group justify='space-between'>
-                    <Button color='red' variant='outline' onClick={() => onLocalApply(DEFAULT_REWARD_FILTERS.price.min, DEFAULT_REWARD_FILTERS.price.max)}>
-                        Clear
-                    </Button>
+            </Popover.Dropdown>
 
-                    <Button onClick={() => onLocalApply(filterValue.min, filterValue.max)}>
-                        Apply
-                    </Button>
-                </Group>
-            </Modal>
-        </div>
+        </Popover>
     );
 };
 
