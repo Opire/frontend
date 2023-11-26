@@ -3,7 +3,7 @@
 import { FC } from "react";
 import { IconCoinEuro, IconSettings, IconLayoutDashboard, IconMoneybag, IconUserCircle, IconChartHistogram } from "@tabler/icons";
 import { usePathname, useRouter } from "next/navigation";
-import { Box, Divider, NavLink, Space } from "@mantine/core";
+import { Divider, NavLink, Space } from "@mantine/core";
 import { ChartBar, DeviceLaptop } from "tabler-icons-react";
 import { LogoutButton } from "./LogoutButton";
 import { useExternalStateOverride } from "../../../hooks/useExternalStateOverride";

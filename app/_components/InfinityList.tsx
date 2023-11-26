@@ -56,9 +56,9 @@ export function InfinityList<T extends { id: string }>({
                 </GridCol>
             ))} */}
 
-                {isLoading && <Loader size='xl' m='20px auto' />}
             </section>
 
+            {isLoading && <Loader display='block' size='xl' m='30px auto' />}
             {!isLoading && items.length === 0 && <Title order={1}>Nothing found...</Title>}
         </>
     );
