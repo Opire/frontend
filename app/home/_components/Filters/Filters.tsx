@@ -5,6 +5,7 @@ import { usePopulateToURL } from "../../../../hooks/usePopulateToURL";
 import { PriceFilter } from "./PriceFilter";
 import { ProgrammingLanguagesFilter } from "./ProgrammingLanguagesFilter";
 import { ProgrammingLanguageType } from "../../../_core/_types/ProgrammingLanguageType";
+import { RewardFilterUserTrying, UsersTryingFilter } from "./UsersTryingFilter";
 
 export interface RewardFilters {
     price: {
@@ -12,6 +13,7 @@ export interface RewardFilters {
         max: number | null;
     };
     programmingLanguages: ProgrammingLanguageType[];
+    usersTrying: RewardFilterUserTrying;
 }
 
 export const DEFAULT_REWARD_FILTERS: RewardFilters = {
@@ -20,6 +22,7 @@ export const DEFAULT_REWARD_FILTERS: RewardFilters = {
         max: null,
     },
     programmingLanguages: [],
+    usersTrying: 'BOTH',
 };
 
 const URL_KEYS = {
@@ -28,6 +31,7 @@ const URL_KEYS = {
         MAX: "maxPrice",
     },
     PROGRAMMING_LANGUAGES: "programmingLanguages",
+    USERS_TRYING: 'usersTrying',
 };
 
 export const Filters: FC<{}> = () => {
@@ -38,17 +42,24 @@ export const Filters: FC<{}> = () => {
     function getFiltersFromURL(): RewardFilters {
         const minPrice = searchParams.get(URL_KEYS.PRICE.MIN)
             ? +searchParams.get(URL_KEYS.PRICE.MIN)!
-            : 0;
+            : DEFAULT_REWARD_FILTERS.price.min;
         const maxPrice = searchParams.get(URL_KEYS.PRICE.MAX)
             ? +searchParams.get(URL_KEYS.PRICE.MAX)!
-            : null;
+            : DEFAULT_REWARD_FILTERS.price.max;
         const programmingLanguages = searchParams.get(
             URL_KEYS.PROGRAMMING_LANGUAGES
         )
             ? (searchParams
                 .get(URL_KEYS.PROGRAMMING_LANGUAGES)!
                 .split(",") as ProgrammingLanguageType[])
-            : [];
+            : DEFAULT_REWARD_FILTERS.programmingLanguages;
+
+        const usersTrying = searchParams.get(
+            URL_KEYS.USERS_TRYING
+        )
+            ? (searchParams
+                .get(URL_KEYS.USERS_TRYING)! as RewardFilterUserTrying)
+            : DEFAULT_REWARD_FILTERS.usersTrying;
 
         return {
             price: {
@@ -56,6 +67,7 @@ export const Filters: FC<{}> = () => {
                 max: maxPrice,
             },
             programmingLanguages,
+            usersTrying
         };
     }
 
@@ -85,6 +97,21 @@ export const Filters: FC<{}> = () => {
         );
     };
 
+    const updateUsersTryingFilter = (
+        usersTrying: RewardFilterUserTrying
+    ) => {
+        setFilters((oldFilters) => ({
+            ...oldFilters,
+            usersTrying,
+        }));
+
+        populateParamToURL(
+            URL_KEYS.USERS_TRYING,
+            usersTrying,
+        );
+    };
+
+
     return (
         <div
             className="filters"
@@ -103,6 +130,11 @@ export const Filters: FC<{}> = () => {
             <ProgrammingLanguagesFilter
                 value={filters.programmingLanguages}
                 onApply={updateProgrammingLanguageFilter}
+            />
+
+            <UsersTryingFilter
+                value={filters.usersTrying}
+                onApply={updateUsersTryingFilter}
             />
         </div>
     );

@@ -13,15 +13,13 @@ export const PriceFilter: FC<PriceFilterProp> = ({
     value,
     onApply
 }) => {
+    const isMobile = useMediaQuery("(max-width: 50em)");
+
     const isFilteringByMin = value[0] > 0;
     const isFilteringByMax = value[1] !== null;
     const isFiltering = isFilteringByMin || isFilteringByMax;
 
     const [filterValue, setFilterValue] = useState({ min: value[0], max: value[1] || maxPriceValue })
-
-
-    const isMobile = useMediaQuery("(max-width: 50em)");
-
 
     const marks = [
         { value: 0, label: '0€' },

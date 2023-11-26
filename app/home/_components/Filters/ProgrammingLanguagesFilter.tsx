@@ -1,9 +1,8 @@
-import { Button, Chip, Container, Group, Modal, MultiSelect, Space, useMantineTheme } from '@mantine/core';
-import { useDisclosure, useMediaQuery } from '@mantine/hooks';
+import { Chip, Container, MultiSelect, Popover, Space } from '@mantine/core';
+import { useMediaQuery } from '@mantine/hooks';
 import React, { FC, useState } from 'react';
 import { ProgrammingLanguageType } from '../../../_core/_types/ProgrammingLanguageType';
 import { ProgrammingLanguage } from '../../../_core/_vos/ProgrammingLanguage';
-import { DEFAULT_REWARD_FILTERS } from './Filters';
 
 interface ProgrammingLanguagesFilterProp {
     value: ProgrammingLanguageType[]
@@ -14,13 +13,10 @@ export const ProgrammingLanguagesFilter: FC<ProgrammingLanguagesFilterProp> = ({
     value,
     onApply
 }) => {
-    const [filterValue, setFilterValue] = useState([...value]);
-
-    const isFiltering = value.length > 0;
-
-    const theme = useMantineTheme();
     const isMobile = useMediaQuery("(max-width: 50em)");
-    const [isModalOpen, { close: closeModal, toggle: toggleModal }] = useDisclosure();
+
+    const [filterValue, setFilterValue] = useState([...value]);
+    const isFiltering = value.length > 0;
 
     const chipTitle = () => {
         if (!isFiltering) {
@@ -33,52 +29,40 @@ export const ProgrammingLanguagesFilter: FC<ProgrammingLanguagesFilterProp> = ({
     function onLocalApply(programminglanguage: ProgrammingLanguageType[]) {
         onApply(programminglanguage);
         setFilterValue(programminglanguage);
-        closeModal();
     }
 
-    return (
-        <div style={{ position: 'relative' }}>
-            <Chip checked={isFiltering} onClick={toggleModal}>
-                {chipTitle()}
-            </Chip>
 
-            <Modal
-                withCloseButton={true}
-                opened={isModalOpen}
-                onClose={closeModal}
-                overlayProps={{
-                    color: theme.colors.dark[9],
-                    opacity: 0.55,
-                    blur: 3,
-                }}
-                fullScreen={isMobile}
-            >
-                <Container h={'25rem'} m={10}>
+
+    return (
+        <Popover trapFocus withArrow shadow="md" arrowPosition="side" arrowOffset={16} arrowSize={12} offset={16}>
+            <Popover.Target>
+                <Chip checked={isFiltering}>
+                    {chipTitle()}
+                </Chip>
+            </Popover.Target>
+
+            <Popover.Dropdown style={{ width: 'auto' }}>
+                <Container>
+                    <Space h='lg' />
                     <MultiSelect
+                        size={'md'}
+                        maw={isMobile ? undefined : '500px'}
                         data={ProgrammingLanguage.ValidValues}
-                        label="Programming language"
+                        label="Programming languages"
                         placeholder="Pick as many as you like"
                         searchable
-                        nothingFoundMessage="Nothing found ;("
+                        clearable
+                        hidePickedOptions
+                        nothingFoundMessage="Nothing found 😢"
                         value={filterValue}
-                        onChange={(values) => setFilterValue(values as ProgrammingLanguageType[])}
-
+                        onChange={(values) => onLocalApply(values as ProgrammingLanguageType[])}
+                        comboboxProps={{ withinPortal: false }}
                     />
-
-                    <Space h='xl' />
-                    <Space h='xl' />
+                    <Space h='lg' />
                 </Container>
 
-                <Group justify='space-between'>
-                    <Button color='red' variant='outline' onClick={() => onLocalApply(DEFAULT_REWARD_FILTERS.programmingLanguages)}>
-                        Clear
-                    </Button>
+            </Popover.Dropdown>
 
-                    <Button onClick={() => onLocalApply(filterValue)}>
-                        Apply
-                    </Button>
-                </Group>
-            </Modal>
-        </div>
+        </Popover>
     );
 };
