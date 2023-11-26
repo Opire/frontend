@@ -107,7 +107,7 @@ export const Filters: FC<{}> = () => {
 
         populateParamToURL(
             URL_KEYS.USERS_TRYING,
-            usersTrying,
+            usersTrying === 'BOTH' ? '' : usersTrying,
         );
     };
 
