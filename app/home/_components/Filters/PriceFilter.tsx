@@ -57,14 +57,15 @@ export const PriceFilter: FC<PriceFilterProp> = ({
         return `Up to ${value[1]}€`
     }
 
-    function clear() {
-        setFilterValue({ min: DEFAULT_REWARD_FILTERS.price.min, max: DEFAULT_REWARD_FILTERS.price.max || maxPriceValue })
-        onApply(DEFAULT_REWARD_FILTERS.price.min, DEFAULT_REWARD_FILTERS.price.max)
-    }
 
     const debouncedApply = debounce(({ min, max }: { min: number, max: number }) => {
         onApply(min, max === maxPriceValue ? null : max)
     }, 500)
+
+    function clear() {
+        setFilterValue({ min: DEFAULT_REWARD_FILTERS.price.min, max: DEFAULT_REWARD_FILTERS.price.max || maxPriceValue })
+        debouncedApply({ min: DEFAULT_REWARD_FILTERS.price.min, max: DEFAULT_REWARD_FILTERS.price.max || maxPriceValue })
+    }
 
     function onLocalApply(data: { min: number, max: number }) {
         setFilterValue(data);
