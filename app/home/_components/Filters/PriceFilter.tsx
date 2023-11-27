@@ -3,6 +3,21 @@ import React, { FC, useState } from 'react';
 import { DEFAULT_REWARD_FILTERS } from './Filters';
 import { useMediaQuery } from '@mantine/hooks';
 
+type AnyFunction = (...args: any[]) => any;
+
+function debounce<F extends AnyFunction>(func: F, delay: number): (...args: Parameters<F>) => void {
+    let timeoutId: NodeJS.Timeout;
+
+    return function debounced(...args: Parameters<F>): void {
+        clearTimeout(timeoutId);
+
+        timeoutId = setTimeout(() => {
+            func(...args);
+        }, delay);
+    };
+}
+
+
 interface PriceFilterProp {
     value: [number, number | null]
     onApply: (min: number, max: number | null) => void
@@ -47,6 +62,14 @@ export const PriceFilter: FC<PriceFilterProp> = ({
         onApply(DEFAULT_REWARD_FILTERS.price.min, DEFAULT_REWARD_FILTERS.price.max)
     }
 
+    const debouncedApply = debounce(({ min, max }: { min: number, max: number }) => {
+        onApply(min, max === maxPriceValue ? null : max)
+    }, 500)
+
+    function onLocalApply(data: { min: number, max: number }) {
+        setFilterValue(data);
+        debouncedApply(data)
+    }
 
     return (
         <Popover trapFocus position="bottom-start" withArrow shadow="md" arrowPosition="side" arrowOffset={16} arrowSize={12} offset={16}>
@@ -64,7 +87,7 @@ export const PriceFilter: FC<PriceFilterProp> = ({
                             maw={isMobile ? '100px' : '200px'}
                             label="Min price"
                             value={filterValue.min === maxPriceValue ? '' : filterValue.min}
-                            onChange={(value) => setFilterValue({ min: +value, max: filterValue.max })}
+                            onChange={(value) => onLocalApply({ min: +value, max: filterValue.max })}
                             placeholder=""
                             min={DEFAULT_REWARD_FILTERS.price.min}
                             max={filterValue.max}
@@ -74,7 +97,7 @@ export const PriceFilter: FC<PriceFilterProp> = ({
                             maw={isMobile ? '100px' : '200px'}
                             label="Max price"
                             value={filterValue.max === maxPriceValue ? '' : filterValue.max}
-                            onChange={(value) => setFilterValue({ min: filterValue.min, max: +value > maxPriceValue ? maxPriceValue : +value })}
+                            onChange={(value) => onLocalApply({ min: filterValue.min, max: +value > maxPriceValue ? maxPriceValue : +value })}
                             placeholder=""
                             min={filterValue.min}
                             max={DEFAULT_REWARD_FILTERS.price.max ?? maxPriceValue}
@@ -88,7 +111,7 @@ export const PriceFilter: FC<PriceFilterProp> = ({
                         min={0}
                         max={maxPriceValue}
                         onChange={(value) => setFilterValue({ min: value[0], max: value[1] })}
-                        onChangeEnd={(value) => onApply(value[0], value[1] === maxPriceValue ? null : value[1])}
+                        onChangeEnd={(value) => debouncedApply({ min: value[0], max: value[1] })}
                         marks={marks}
                         label={null}
                     />
