@@ -4,6 +4,7 @@ import { RewardFilters } from "./_components/Filters/Filters";
 import { HomeView } from "./view";
 import { ProgrammingLanguageType } from "../_core/_types/ProgrammingLanguageType";
 import crypto from "crypto";
+import { RewardFilterUserTrying } from "./_components/Filters/UsersTryingFilter";
 
 export const metadata: Metadata = {
     title: 'Make my Change',
@@ -16,7 +17,7 @@ export default async function Page({
     const minPrice = typeof searchParams.minPrice === 'string' ? searchParams.minPrice : undefined;
     const maxPrice = typeof searchParams.maxPrice === 'string' ? searchParams.maxPrice : undefined;
     const programmingLanguages = typeof searchParams.programmingLanguages === 'string' ? searchParams.programmingLanguages.split(',') : undefined;
-
+    const usersTrying = typeof searchParams.usersTrying === 'string' ? searchParams.usersTrying : undefined;
 
     const filters: RewardFilters = {
         price: {
@@ -24,6 +25,7 @@ export default async function Page({
             max: maxPrice ? +maxPrice : null,
         },
         programmingLanguages: (programmingLanguages ?? []) as ProgrammingLanguageType[],
+        usersTrying: usersTrying as RewardFilterUserTrying ?? 'BOTH'
     }
 
     const rewards = await getRewards({

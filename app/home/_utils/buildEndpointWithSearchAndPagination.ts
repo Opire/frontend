@@ -24,6 +24,10 @@ export function buildEndpointWithSearchAndPagination(
         )}`;
     }
 
+    if (filters.usersTrying !== 'BOTH') {
+        url += `&usersTrying=${filters.usersTrying}`;
+    }
+
     if (!search) {
         return url;
     }
