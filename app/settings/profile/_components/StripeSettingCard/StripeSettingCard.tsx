@@ -14,7 +14,7 @@ export const StripeSettingCard: FC<StripeSettingCardProps> = ({
     hasStripeConfigured,
 }) => {
     async function completeStripeData() {
-        const response = await clientCustomFetch(API_ROUTES.PAYMENTS.STRIPE_LINK_ACCOUNT());
+        const response = await clientCustomFetch(API_ROUTES.PAYMENTS.STRIPE_LINK_CONFIGURE_ACCOUNT());
         const data = await response.json();
 
         if (data) {

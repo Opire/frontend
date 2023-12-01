@@ -1,11 +1,11 @@
-import { Group, Stack } from "@mantine/core";
+import { Group, Space, Stack, Text } from "@mantine/core";
 import { Metadata } from "next";
 import { redirectToHomeIfNotLogged } from "../_utils/redirectToHomeIfNotLogged";
 import { getUserSettings } from "../_utils/getUserSettings";
 import { BitbucketSettingCard } from "./profile/_components/BitbucketSettingCard/BitbucketSettingCard";
 import { GithubSettingCard } from "./profile/_components/GithubSettingCard/GithubSettingCard";
 import { GitlabSettingCard } from "./profile/_components/GitlabSettingCard/GitlabSettingCard";
-import { StripeSettingCard } from "./profile/_components/StripeSettingCard/StripeSettingCard";
+import { StripeSetting } from "./profile/_components/StripeSetting/StripeSetting";
 
 export const metadata: Metadata = {
     title: 'Make my Change',
@@ -17,11 +17,26 @@ export default async function Page() {
 
     return (
         <Stack gap="xl">
-            <Group justify="center">
-                <StripeSettingCard
+            <Text
+                variant="gradient"
+                style={{ fontSize: "2.4rem", fontWeight: "bold" }}
+            >
+                Payments
+            </Text>
+            <Group>
+                <StripeSetting
                     hasStripeConfigured={userSettings.payments.canReceivePayments}
                 />
             </Group>
+
+            <Space h='1rem' />
+
+            <Text
+                variant="gradient"
+                style={{ fontSize: "2.4rem", fontWeight: "bold" }}
+            >
+                Install app
+            </Text>
 
             {/* <Group justify="center">
                 <GithubSettingCard
