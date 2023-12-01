@@ -43,7 +43,7 @@ export const CreatorRewardsPanel: FC<CreatorRewardsPanelProps> = ({
 
 
     if (isLoading) {
-        return <Loader size='xl' m='20px auto' />
+        return <Loader display='block' size='xl' m='30px auto' />
     }
 
     if (noRewards) {

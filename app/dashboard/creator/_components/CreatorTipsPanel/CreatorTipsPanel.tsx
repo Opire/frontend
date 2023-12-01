@@ -22,7 +22,7 @@ export const CreatorTipsPanel: FC<CreatorTipsPanelProps> = ({
 
 
     if (isLoading) {
-        return <Loader size='xl' m='20px auto' />
+        return <Loader display='block' size='xl' m='30px auto' />
     }
 
     if (noTips) {

@@ -118,7 +118,6 @@ export const PriceFilter: FC<PriceFilterProp> = ({
                     />
                     <Space h='lg' />
 
-
                     <Space h='xl' />
                     <Group justify='space-between'>
                         <Button color='red' variant='outline' onClick={clear}>

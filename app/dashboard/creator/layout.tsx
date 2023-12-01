@@ -1,4 +1,4 @@
-import { Space, Title } from "@mantine/core"
+import { Space, Text } from "@mantine/core"
 
 export default function Layout({
     children,
@@ -8,7 +8,12 @@ export default function Layout({
 
     return (
         <>
-            <Title style={{ textAlign: 'center' }} fw={300}>Creator dashboard</Title>
+            <Text
+                variant="gradient"
+                style={{ textAlign: 'center', fontSize: "2.4rem", fontWeight: "bold" }}
+            >
+                Creator dashboard
+            </Text>
             <Space h='1rem' />
             {children}
         </>

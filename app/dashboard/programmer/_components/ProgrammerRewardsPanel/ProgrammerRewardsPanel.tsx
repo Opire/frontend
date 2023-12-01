@@ -44,7 +44,7 @@ export const ProgrammerRewardsPanel: FC<ProgrammerRewardsPanelProps> = ({
 
 
     if (isLoading) {
-        return <Loader size='xl' m='20px auto' />
+        return <Loader display='block' size='xl' m='30px auto' />
     }
 
     if (noRewards) {
@@ -52,7 +52,6 @@ export const ProgrammerRewardsPanel: FC<ProgrammerRewardsPanelProps> = ({
             <Title order={1}>Nothing found...</Title>
         )
     }
-
 
     return (
         <div>
