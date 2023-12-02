@@ -1,12 +1,11 @@
-import { FC, useMemo } from "react";
-import { useGetRewardsFromCreator } from "../../../../../hooks/useGetRewardsFromCreator";
+import { FC } from "react";
 import { Divider, Loader, Space, Text, Title } from "@mantine/core";
-import { useSearchParams } from "next/navigation";
 import { ProgrammerRewardUnpaidCard } from "../ProgrammerRewardCard/ProgrammerRewardUnpaidCard";
 import { ProgrammerRewardCardSkeletonClient } from "../ProgrammerRewardCard/ProgrammerRewardCardSkeletonClient";
 import { ProgrammerRewardPaidCard } from "../ProgrammerRewardCard/ProgrammerRewardPaidCard";
 import { InfinityList } from "../../../../_components/InfinityList";
 import { useGetRewardsFromProgrammer } from "../../../../../hooks/useGetRewardsFromProgrammer";
+import { useGetFilteredByPlatform } from "../../../../../hooks/useGetFilteredByPlatform";
 
 interface ProgrammerRewardsPanelProps {
 }
@@ -14,25 +13,7 @@ interface ProgrammerRewardsPanelProps {
 export const ProgrammerRewardsPanel: FC<ProgrammerRewardsPanelProps> = ({
 }) => {
     const { issues: allIssues, isLoading } = useGetRewardsFromProgrammer();
-    const searchParams = useSearchParams();
-    const issuePlatformId = searchParams.get('issuePlatformId');
-    const issuePlatform = searchParams.get('issuePlatform');
-
-    const issues = useMemo(() => {
-        if (issuePlatformId && issuePlatform) {
-            return allIssues.filter(issue => issue.platformId === issuePlatformId && issue.platform === issuePlatform)
-        }
-
-        if (issuePlatformId) {
-            return allIssues.filter(issue => issue.platformId === issuePlatformId)
-        }
-
-        if (issuePlatform) {
-            return allIssues.filter(issue => issue.platform === issuePlatform)
-        }
-
-        return allIssues;
-    }, [allIssues, issuePlatformId, issuePlatform]);
+    const issues = useGetFilteredByPlatform(allIssues);
 
     const unpaidRewards = [...issues].filter((issue) => issue.rewards.some((r) => r.status !== 'Completed'))
     const paidRewards = [...issues].filter((issue) => issue.rewards.every((r) => r.status === 'Completed'))

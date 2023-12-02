@@ -1,11 +1,11 @@
-import { FC, useMemo } from "react";
+import { FC } from "react";
 import { useGetRewardsFromCreator } from "../../../../../hooks/useGetRewardsFromCreator";
 import { Divider, Loader, Space, Text, Title } from "@mantine/core";
 import { CreatorRewardCardSkeletonClient } from "../CreatorRewardCard/CreatorRewardCardSkeletonClient";
 import { CreatorRewardPaidCard } from "../CreatorRewardCard/CreatorRewardPaidCard";
 import { CreatorRewardUnpaidCard } from "../CreatorRewardCard/CreatorRewardUnpaidCard";
-import { useSearchParams } from "next/navigation";
 import { InfinityList } from "../../../../_components/InfinityList";
+import { useGetFilteredByPlatform } from "../../../../../hooks/useGetFilteredByPlatform";
 
 interface CreatorRewardsPanelProps {
 }
@@ -13,25 +13,7 @@ interface CreatorRewardsPanelProps {
 export const CreatorRewardsPanel: FC<CreatorRewardsPanelProps> = ({
 }) => {
     const { issues: allIssues, isLoading } = useGetRewardsFromCreator();
-    const searchParams = useSearchParams();
-    const issuePlatformId = searchParams.get('issuePlatformId');
-    const issuePlatform = searchParams.get('issuePlatform');
-
-    const issues = useMemo(() => {
-        if (issuePlatformId && issuePlatform) {
-            return allIssues.filter(issue => issue.platformId === issuePlatformId && issue.platform === issuePlatform)
-        }
-
-        if (issuePlatformId) {
-            return allIssues.filter(issue => issue.platformId === issuePlatformId)
-        }
-
-        if (issuePlatform) {
-            return allIssues.filter(issue => issue.platform === issuePlatform)
-        }
-
-        return allIssues;
-    }, [allIssues, issuePlatformId, issuePlatform]);
+    const issues = useGetFilteredByPlatform(allIssues);
 
     const unpaidRewards = [...issues].filter((issue) => issue.rewards.some((r) => r.status !== 'Completed'))
     const paidRewards = [...issues].filter((issue) => issue.rewards.every((r) => r.status === 'Completed'))
