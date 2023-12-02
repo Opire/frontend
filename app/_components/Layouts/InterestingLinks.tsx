@@ -2,6 +2,7 @@
 
 import { Button, SimpleGrid } from "@mantine/core";
 import { IconListNumbers, IconFileSearch, IconBrandReddit, IconBrandTwitter, IconBrandDiscord, IconBrandYoutube, IconMail, IconCoffee } from "@tabler/icons";
+import { URL_DOCUMENTATION } from "../../../constants";
 
 interface Link {
     icon: JSX.Element;
@@ -15,13 +16,13 @@ export const InterestingLinks = () => {
         {
             icon: <IconListNumbers size={18} />,
             text: 'Start',
-            path: 'https://docs.makemychange.dev/getting-started', // TODO: review
+            path: `${URL_DOCUMENTATION}/getting-started`, // TODO: review
             color: 'gray',
         },
         {
             icon: <IconFileSearch size={18} />,
             text: 'Docs',
-            path: 'https://docs.makemychange.dev', // TODO: review
+            path: `${URL_DOCUMENTATION}`, // TODO: review
             color: 'lime',
         },
         {

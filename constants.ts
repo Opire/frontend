@@ -22,7 +22,7 @@ export const API_ROUTES = {
         LINK_TO_PAY_REWARDS_FOR_ISSUE: (issueId: string) =>
             `${process.env.NEXT_PUBLIC_API_URL}/payments/rewards/${issueId}`,
         STRIPE_LINK_CONFIGURE_ACCOUNT: () =>
-            `${process.env.NEXT_PUBLIC_API_URL}/payments/stripe/linkAccount`,
+            `${process.env.NEXT_PUBLIC_API_URL}/payments/stripe/configure-account`
     },
     USERS: {
         SETTINGS: () => `${process.env.NEXT_PUBLIC_API_URL}/users/settings`,
@@ -46,3 +46,5 @@ export const NEXT_SERVER_ROUTES = {
         LOGOUT: () => `${process.env.NEXT_PUBLIC_URL}/api/auth/logout`,
     },
 };
+
+export const URL_DOCUMENTATION = 'https://docs.makemychange.dev'
