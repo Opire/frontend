@@ -4,13 +4,15 @@ import { Divider, Loader, Space, Text, Title } from "@mantine/core";
 import { TipCard } from "./components/TipCard";
 import { TipCardSkeleton } from "./components/TipCardSkeleton";
 import { InfinityList } from "../../../../_components/InfinityList";
+import { useGetFilteredById } from "../../../../../hooks/useGetFilteredById";
 
 interface CreatorTipsPanelProps {
 }
 
 export const CreatorTipsPanel: FC<CreatorTipsPanelProps> = ({
 }) => {
-    const { tips, isLoading } = useTipsByCreator();
+    const { tips: allTips, isLoading } = useTipsByCreator();
+    const tips = useGetFilteredById(allTips);
 
     const unpaidTips = [...tips].filter((tip) => tip.status === 'Pending payment')
     const paidTips = [...tips].filter((tip) => tip.status === 'Paid')

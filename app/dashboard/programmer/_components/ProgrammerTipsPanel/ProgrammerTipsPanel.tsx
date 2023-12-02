@@ -4,13 +4,15 @@ import { TipCardSkeleton } from "./components/TipCardSkeleton";
 import { ProgrammerTipCard } from "./components/ProgrammerTipCard";
 import { InfinityList } from "../../../../_components/InfinityList";
 import { useTipsByProgrammer } from "../../../../../hooks/useTipsByProgrammer";
+import { useGetFilteredById } from "../../../../../hooks/useGetFilteredById";
 
 interface ProgrammerTipsPanelProps {
 }
 
 export const ProgrammerTipsPanel: FC<ProgrammerTipsPanelProps> = ({
 }) => {
-    const { tips, isLoading } = useTipsByProgrammer();
+    const { tips: allTips, isLoading } = useTipsByProgrammer();
+    const tips = useGetFilteredById(allTips);
 
     const unpaidTips = [...tips].filter((tip) => tip.status === 'Pending payment')
     const paidTips = [...tips].filter((tip) => tip.status === 'Paid')

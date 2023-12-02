@@ -25,15 +25,15 @@ export const StripeSetting: FC<StripeSettingProps> = ({
         },
         {
             id: 'configure-account',
-            icon: hasStripeConfigured ? <Wallet color="lightgray" /> : <WalletOff color="lightgray" />,
-            label: hasStripeConfigured ? 'Account configured and active' : 'Configure your payment account',
+            icon: hasStripeConfigured ? <Wallet color="lightgreen" /> : <WalletOff color="lightgray" />,
+            label: hasStripeConfigured ? 'Stripe account active 🥳 ' : 'Configure your payment account',
             content: hasStripeConfigured ? <ConfigureStripeAccountSuccess /> : <ConfigureStripeAccountPending />,
             defaultOpen: !hasStripeConfigured,
         },
         {
             id: 'access-account',
             icon: hasStripeConfigured ? <Receipt color="#26C6DA" /> : <ReceiptOff color="#26C6DA" />,
-            label: hasStripeConfigured ? 'Check your payments' : 'Check your payments once you have your account fully configured',
+            label: hasStripeConfigured ? 'Check your payments 💰' : 'Check your payments once you have your account fully configured',
             content: hasStripeConfigured ? <GoToStripeAccountSuccess /> : <GoToStripeAccountPending />,
             defaultOpen: hasStripeConfigured,
         },
@@ -144,14 +144,12 @@ function GoToStripeAccountPending(): JSX.Element {
     )
 }
 
-
 function GoToStripeAccountSuccess(): JSX.Element {
     const stripeExpressLoginURL = 'https://connect.stripe.com/express_login';
 
     return (
         <Text c="dimmed">
-            Go to your <Anchor fw='bold' component={Link} href={stripeExpressLoginURL} target="_blank">Stripe account</Anchor> to see your payments.
+            Everything ready to start receiving payments! You can go to your <Anchor fw='bold' component={Link} href={stripeExpressLoginURL} target="_blank">Stripe account</Anchor> to see your payments dashboard.
         </Text>
     )
 }
-
