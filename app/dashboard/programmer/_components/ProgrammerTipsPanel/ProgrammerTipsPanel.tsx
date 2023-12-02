@@ -35,7 +35,7 @@ export const ProgrammerTipsPanel: FC<ProgrammerTipsPanelProps> = ({
         <div>
             {hasUnpaidTips && (
                 <>
-                    <Text fw={900} size={'xl'} variant="gradient">Waiting for payment</Text>
+                    <Text fw={900} size={'xl'}>Waiting for payment</Text>
                     <Space h='12px' />
                     <InfinityList
                         items={unpaidTips}
@@ -51,7 +51,7 @@ export const ProgrammerTipsPanel: FC<ProgrammerTipsPanelProps> = ({
 
             {hasPaidTips && (
                 <>
-                    <Text fw={900} size={'xl'} variant="gradient">Paid</Text>
+                    <Text fw={900} size={'xl'}>Paid</Text>
                     <Space h='12px' />
                     <InfinityList
                         items={paidTips}

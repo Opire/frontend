@@ -9,7 +9,6 @@ export default function Layout({
     return (
         <>
             <Text
-                variant="gradient"
                 style={{ textAlign: 'center', fontSize: "2.4rem", fontWeight: "bold" }}
             >
                 Creator dashboard

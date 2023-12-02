@@ -30,7 +30,7 @@ export const MainLayoutClient: FC<MainLayoutProps> = ({
                     <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
 
                     {headerContent &&
-                        <Box hiddenFrom="sm" style={{ width: '60%' }}>
+                        <Box hiddenFrom="sm" style={{ width: '70%' }}>
                             {headerContent}
                         </Box>
                     }

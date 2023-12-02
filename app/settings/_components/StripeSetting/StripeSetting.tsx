@@ -2,13 +2,10 @@
 
 import { Text, Accordion, Flex, Anchor, LoadingOverlay, Box } from "@mantine/core";
 import { FC, useState } from "react";
-import { API_ROUTES, URL_DOCUMENTATION } from "../../../../../constants";
-import { clientCustomFetch } from "../../../../_utils/clientCustomFetch";
 import { Receipt, ReceiptOff, UserCheck, Wallet, WalletOff } from "tabler-icons-react";
 import Link from "next/link";
-import Loading from "../../../loading";
-
-
+import { API_ROUTES, URL_DOCUMENTATION } from "../../../../constants";
+import { clientCustomFetch } from "../../../_utils/clientCustomFetch";
 
 interface StripeSettingProps {
     hasStripeConfigured: boolean;
@@ -17,7 +14,6 @@ interface StripeSettingProps {
 export const StripeSetting: FC<StripeSettingProps> = ({
     hasStripeConfigured,
 }) => {
-
 
     const stripInfo = [
         {
@@ -68,7 +64,10 @@ function InfoPaymentAccountCreated(): JSX.Element {
 
     return (
         <Text c="dimmed">
-            The first time you logged in MakeMyChange, we automatically created a <Anchor component={Link} href={stripeExpressDocumentationURL} target="_blank">special Stripe account</Anchor> for you. This Stripe account is only used for receiving payments from this app. For more information, check <Anchor component={Link} href={documentationURL} target="_blank">our documentation</Anchor>.
+            The first time you logged in MakeMyChange, we automatically created a <Anchor component={Link} href={stripeExpressDocumentationURL} target="_blank">special Stripe account</Anchor> for you. This Stripe account is only used for receiving payments from this app.
+            <br />
+            <br />
+            For more information, check <Anchor component={Link} href={documentationURL} target="_blank">our documentation</Anchor>.
         </Text>
     )
 }
@@ -103,12 +102,36 @@ function ConfigureStripeAccountPending(): JSX.Element {
 }
 
 function ConfigureStripeAccountSuccess(): JSX.Element {
+    const [isLoadingLink, setIsLoadingLink] = useState(false);
+
+    async function completeStripeData() {
+        setIsLoadingLink(true);
+
+        const response = await clientCustomFetch(API_ROUTES.PAYMENTS.STRIPE_LINK_CONFIGURE_ACCOUNT());
+        const data = await response.json();
+
+
+        if (data) {
+            window.open(data.url, '_blank');
+        }
+        setIsLoadingLink(false);
+    }
+
     const documentationURL = `${URL_DOCUMENTATION}/payments`; //TODO: review
 
     return (
-        <Text c="dimmed">
-            Congrats! 👏🏼 You can receive payments from MakeMyChange 🎉 For more information, check <Anchor component={Link} href={documentationURL} target="_blank">our documentation</Anchor>.
-        </Text>
+        <>
+            <Box pos="relative">
+                <LoadingOverlay visible={isLoadingLink} />
+
+                <Text c="dimmed">
+                    Congrats! 👏🏼 You can receive payments from MakeMyChange 🎉 For more information, check <Anchor component={Link} href={documentationURL} target="_blank">our documentation</Anchor>.
+                    <br />
+                    <br />
+                    If you want to update the configuration of your payment account, <Anchor fw={'bold'} component={'button'} onClick={completeStripeData}>click here</Anchor>.
+                </Text>
+            </Box>
+        </>
     )
 }
 
