@@ -1,12 +1,12 @@
 import { Metadata } from "next";
-import PaymentCodeOverlay from "../../_components/User/PaymentCodeOverlay";
+import { PaymentSuccess } from "../_components/PaymentSuccess";
 
 export const metadata: Metadata = {
-    title: 'Make my Change',
+    title: 'Make my Change - Payment successful',
 }
 
 export default function Page() {
     return (
-        <PaymentCodeOverlay />
+        <PaymentSuccess />
     );
 }

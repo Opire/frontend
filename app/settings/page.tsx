@@ -6,7 +6,7 @@ import { StripeSetting } from "./_components/StripeSetting/StripeSetting";
 import { GitHubInstallApp } from "./_components/GitHubInstallApp/GitHubInstallApp";
 
 export const metadata: Metadata = {
-    title: 'Make my Change',
+    title: 'Make my Change - Settings',
 }
 
 export default async function Page() {
