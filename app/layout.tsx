@@ -1,4 +1,5 @@
 import '@mantine/core/styles.css';
+import '@mantine/notifications/styles.css';
 
 import { ColorSchemeScript, MantineProvider } from "@mantine/core";
 import { ModalsProvider } from "@mantine/modals";
@@ -54,7 +55,7 @@ export default function RootLayout({
                         },
                     }}
                 >
-                    <Notifications limit={5} />
+                    <Notifications limit={5} position='bottom-right' />
                     <ModalsProvider>
                         {children}
                     </ModalsProvider>

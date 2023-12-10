@@ -11,7 +11,7 @@ interface StripeSettingProps {
     hasStripeConfigured: boolean;
 }
 
-export const StripeSetting: FC<StripeSettingProps> = ({
+export const StripePersonalAccountSetting: FC<StripeSettingProps> = ({
     hasStripeConfigured,
 }) => {
 

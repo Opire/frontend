@@ -22,7 +22,9 @@ export const API_ROUTES = {
         LINK_TO_PAY_REWARDS_FOR_ISSUE: (issueId: string) =>
             `${process.env.NEXT_PUBLIC_API_URL}/payments/rewards/${issueId}`,
         STRIPE_LINK_CONFIGURE_ACCOUNT: () =>
-            `${process.env.NEXT_PUBLIC_API_URL}/payments/stripe/configure-account`
+            `${process.env.NEXT_PUBLIC_API_URL}/payments/stripe/configure-account`,
+        STRIPE_LINK_SEND_TO_ORGANIZATION_EMAIL: (organizationId: string) =>
+            `${process.env.NEXT_PUBLIC_API_URL}/payments/stripe/organizations/${organizationId}/send-access-link`
     },
     USERS: {
         SETTINGS: () => `${process.env.NEXT_PUBLIC_API_URL}/users/settings`,

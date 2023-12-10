@@ -1,4 +1,14 @@
+import { PlatformType } from "../_types/PlatformType";
 import { UserPlatformInfoDTO } from "./UserPlatformInfoDTO";
+
+interface UserSettingOrganization {
+    id: string;
+    name: string;
+    url: string;
+    hasEmail: boolean;
+    platform: PlatformType;
+    logoURL: string;
+}
 
 export interface UserSettingsDTO {
     id: string;
@@ -8,5 +18,6 @@ export interface UserSettingsDTO {
     bitbucket: UserPlatformInfoDTO | null;
     payments: {
         canReceivePayments: boolean;
-    }
+        organizations: UserSettingOrganization[];
+    };
 }
