@@ -23,7 +23,7 @@ export const PayClaimerButton: FC<PayButtonProps> = ({
             variant='gradient'
             onClick={() => handleClickPayClaimer(claimerId, issueId)}
         >
-            {priceToPay ? `Pay: ${formatPrice({ unit: 'EUR_CENT', value: priceToPay })}` : 'Pay'}
+            {priceToPay ? `Pay: ${formatPrice({ unit: 'USD_CENT', value: priceToPay })}` : 'Pay'}
         </Button>
 
     );

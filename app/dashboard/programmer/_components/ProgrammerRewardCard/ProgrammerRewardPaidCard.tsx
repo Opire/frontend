@@ -72,7 +72,7 @@ export const ProgrammerRewardPaidCard: FC<ProgrammerRewardPaidCardProps> = ({
                             style={{ fontSize: "2.4rem", fontWeight: "bold" }}
                             variant='gradient'
                         >
-                            {formatPrice({ unit: 'EUR_CENT', value: totalIssueRewardPrice })}
+                            {formatPrice({ unit: 'USD_CENT', value: totalIssueRewardPrice })}
                         </Text>
                     </Text>
                 </Group>

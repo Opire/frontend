@@ -71,7 +71,7 @@ export const CreatorRewardPaidCard: FC<CreatorRewardPaidCardProps> = ({
                             style={{ fontSize: "2.4rem", fontWeight: "bold" }}
                             variant='gradient'
                         >
-                            {formatPrice({ unit: 'EUR_CENT', value: totalIssueRewardPrice })}
+                            {formatPrice({ unit: 'USD_CENT', value: totalIssueRewardPrice })}
                         </Text>
                     </Text>
                 </Group>
@@ -98,7 +98,7 @@ export const CreatorRewardPaidCard: FC<CreatorRewardPaidCardProps> = ({
                                                 <Text
                                                     variant='default'
                                                 >
-                                                    Paid {formatPrice({ unit: 'EUR_CENT', value: totalPaidToUser })}
+                                                    Paid {formatPrice({ unit: 'USD_CENT', value: totalPaidToUser })}
                                                 </Text>
                                             </HoverCardDropdown>
                                         </HoverCard>

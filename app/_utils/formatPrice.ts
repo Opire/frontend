@@ -1,25 +1,25 @@
 import { PriceDTO } from "../_core/_dtos/PriceDTO";
 
 export function formatPrice(price: PriceDTO): string {
-    if (price.unit === "EUR_CENT") {
+    if (price.unit === "USD_CENT") {
         return formatPriceFromCents(price.value);
     }
-    return formatPriceFromEur(price.value);
+    return formatPriceFromUsd(price.value);
 }
 
-function formatPriceFromEur(eurs: number): string {
-    return new Intl.NumberFormat("es-ES", {
+function formatPriceFromUsd(usd: number): string {
+    return new Intl.NumberFormat("en-US", {
         style: "currency",
-        currency: "EUR",
+        currency: "USD",
         maximumFractionDigits: 0,
-    }).format(eurs);
+    }).format(usd);
 }
 
 function formatPriceFromCents(cents: number): string {
-    const eurs = cents / 100;
-    return new Intl.NumberFormat("es-ES", {
+    const usd = cents / 100;
+    return new Intl.NumberFormat("en-US", {
         style: "currency",
-        currency: "EUR",
+        currency: "USD",
         maximumFractionDigits: 2,
-    }).format(eurs);
+    }).format(usd);
 }

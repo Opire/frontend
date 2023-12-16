@@ -1,7 +1,7 @@
 'use client'
 
 import { Container, Divider, Tabs } from "@mantine/core"
-import { IconCoinEuro, IconMoneybag } from "@tabler/icons"
+import { IconCoin, IconMoneybag } from "@tabler/icons"
 import { useRouter } from "next/navigation";
 import { ProgrammerRewardsPanel } from "./ProgrammerRewardsPanel/ProgrammerRewardsPanel";
 import { ProgrammerTipsPanel } from "./ProgrammerTipsPanel/ProgrammerTipsPanel";
@@ -27,7 +27,7 @@ export function ProgrammerView({
                         Rewards
                     </Tabs.Tab>
 
-                    <Tabs.Tab value="tips" leftSection={<IconCoinEuro size={18} />}>
+                    <Tabs.Tab value="tips" leftSection={<IconCoin size={18} />}>
                         Tips
                     </Tabs.Tab>
                 </Tabs.List>

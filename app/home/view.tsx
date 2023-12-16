@@ -77,7 +77,7 @@ export function HomeView({
 //         name: faker.company.name()
 //     },
 //     pendingPrice: {
-//         unit: 'EUR',
+//         unit: 'USD',
 //         value: faker.number.int({ min: 20, max: 10000 })
 //     },
 //     platform: faker.helpers.arrayElement(['GitHub', 'GitLab', 'BitBucket']),

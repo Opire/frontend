@@ -101,7 +101,7 @@ export const CreatorRewardUnpaidCard: FC<CreatorRewardUnpaidCardProps> = ({
                                 style={{ fontSize: "1.2rem", fontWeight: "bold" }}
                                 variant='gradient'
                             >
-                                {formatPrice({ unit: 'EUR_CENT', value: paidIssueRewardPrice })}
+                                {formatPrice({ unit: 'USD_CENT', value: paidIssueRewardPrice })}
                             </Text>
                         </Text>
                     </Group>
@@ -122,7 +122,7 @@ export const CreatorRewardUnpaidCard: FC<CreatorRewardUnpaidCardProps> = ({
                                 style={{ fontSize: "2.4rem", fontWeight: "bold" }}
                                 variant='gradient'
                             >
-                                {formatPrice({ unit: 'EUR_CENT', value: unpaidIssueRewardPrice })}
+                                {formatPrice({ unit: 'USD_CENT', value: unpaidIssueRewardPrice })}
                             </Text>
                         </Text>
 

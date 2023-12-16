@@ -1,7 +1,7 @@
 'use client'
 
 import { FC } from "react";
-import { IconCoinEuro, IconSettings, IconLayoutDashboard, IconMoneybag, IconUserCircle, IconChartHistogram } from "@tabler/icons";
+import { IconCoin, IconSettings, IconLayoutDashboard, IconMoneybag } from "@tabler/icons";
 import { usePathname, useRouter } from "next/navigation";
 import { Divider, NavLink, Space } from "@mantine/core";
 import { ChartBar, DeviceLaptop } from "tabler-icons-react";
@@ -61,7 +61,7 @@ export const Navbar: FC<NavbarProps> = ({
                         },
                         {
                             id: 'dashboard-creator-tips',
-                            icon: <IconCoinEuro size={18} />,
+                            icon: <IconCoin size={18} />,
                             text: 'Tips',
                             path: '/dashboard/creator/tips',
                             isPublic: false,
@@ -84,7 +84,7 @@ export const Navbar: FC<NavbarProps> = ({
                         },
                         {
                             id: 'dashboard-programmer-tips',
-                            icon: <IconCoinEuro size={18} />,
+                            icon: <IconCoin size={18} />,
                             text: 'Tips',
                             path: '/dashboard/programmer/tips',
                             isPublic: false,

@@ -1,3 +1,3 @@
 export type PriceUnitType =
-  | 'EUR'
-  | 'EUR_CENT'
+    | 'USD'
+    | 'USD_CENT'

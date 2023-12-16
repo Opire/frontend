@@ -78,7 +78,7 @@ export function ClaimerUserCard({
                                     style={{ fontSize: "0.8rem" }}
                                     c='dimmed'
                                 >
-                                    {formatPrice({ unit: 'EUR_CENT', value: paidPrice })}
+                                    {formatPrice({ unit: 'USD_CENT', value: paidPrice })}
                                 </Text>
                             </Text>
                         }

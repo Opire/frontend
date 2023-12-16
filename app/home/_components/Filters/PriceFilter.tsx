@@ -37,7 +37,7 @@ export const PriceFilter: FC<PriceFilterProp> = ({
     const [filterValue, setFilterValue] = useState({ min: value[0], max: value[1] || maxPriceValue })
 
     const marks = [
-        { value: 0, label: '0€' },
+        { value: 0, label: '$0' },
         { value: maxPriceValue, label: '∞' }
     ];
 
@@ -47,14 +47,14 @@ export const PriceFilter: FC<PriceFilterProp> = ({
         }
 
         if (isFilteringByMin && isFilteringByMax) {
-            return `${value[0]}€ - ${value[1]}€`;
+            return `$${value[0]} - $${value[1]}`;
         }
 
         if (!isFilteringByMax) {
-            return `From ${value[0]}€`
+            return `From $${value[0]}`
         }
 
-        return `Up to ${value[1]}€`
+        return `Up to $${value[1]}`
     }
 
 
