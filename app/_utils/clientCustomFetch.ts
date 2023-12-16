@@ -1,5 +1,5 @@
 import { TokenServiceLocalStorage } from "../../TokenServiceLocalStorage";
-import { API_ROUTES } from "../../constants";
+import { NEXT_SERVER_ROUTES } from "../../constants";
 import { errorNotification } from "./errorNotification";
 
 export async function clientCustomFetch(
@@ -29,7 +29,7 @@ export async function clientCustomFetch(
         errorNotification({
             title: "You need to login in order to perform this action",
         });
-        clientCustomFetch(API_ROUTES.AUTH.LOGOUT(), { method: "POST" });
+        clientCustomFetch(NEXT_SERVER_ROUTES.AUTH.LOGOUT(), { method: "POST" });
         TokenServiceLocalStorage.removeToken();
     }
 
