@@ -19,6 +19,6 @@ export async function openGithubExternalLoginPage() {
 export const GitHubLoginButton: FC<{}> = ({
 }) => {
     return (
-        <Button rightSection={<BrandGithub size='1rem' />} onClick={openGithubExternalLoginPage}>Continue with GitHub</Button>
+        <Button leftSection={<BrandGithub size='1rem' />} onClick={openGithubExternalLoginPage} variant="gradient">Continue with GitHub</Button>
     )
 }

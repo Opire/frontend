@@ -20,6 +20,6 @@ export async function openGitlabExternalLoginPage() {
 export const GitLabLoginButton: FC<{}> = ({
 }) => {
     return (
-        <Button rightSection={<BrandGitlab size='1rem' />} onClick={openGitlabExternalLoginPage}>Continue with GitLab</Button>
+        <Button leftSection={<BrandGitlab size='1rem' />} onClick={openGitlabExternalLoginPage} variant="gradient">Continue with GitLab</Button>
     )
 }

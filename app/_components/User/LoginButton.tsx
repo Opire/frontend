@@ -20,7 +20,7 @@ export const LoginButton: FC<{}> = ({
                 variant='gradient'
             // m={'0 auto'}
             >
-                Log In
+                Log in
             </Button>
 
             <LoginModal isOpened={isModalOpen} onClose={closeModal} />

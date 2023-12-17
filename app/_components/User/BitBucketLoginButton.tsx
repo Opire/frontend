@@ -16,6 +16,6 @@ export async function openBitbucketExternalLoginPage() {
 export const BitBucketLoginButton: FC<{}> = ({
 }) => {
     return (
-        <Button rightSection={<BrandBitbucket size='1rem' />} onClick={openBitbucketExternalLoginPage}>Continue with BitBucket</Button>
+        <Button leftSection={<BrandBitbucket size='1rem' />} onClick={openBitbucketExternalLoginPage} variant="gradient">Continue with BitBucket</Button>
     )
 }
