@@ -15,8 +15,8 @@ export const ProgrammerRewardsPanel: FC<ProgrammerRewardsPanelProps> = ({
     const { issues: allIssues, isLoading } = useGetRewardsFromProgrammer();
     const issues = useGetFilteredByPlatform(allIssues);
 
-    const unpaidRewards = [...issues].filter((issue) => issue.rewards.some((r) => r.status !== 'Completed'))
-    const paidRewards = [...issues].filter((issue) => issue.rewards.every((r) => r.status === 'Completed'))
+    const unpaidRewards = [...issues].filter((issue) => issue.rewards.some((r) => r.status !== 'Paid'))
+    const paidRewards = [...issues].filter((issue) => issue.rewards.every((r) => r.status === 'Paid'))
 
     const hasUnpaidRewards = unpaidRewards.length > 0
     const hasPaidRewards = paidRewards.length > 0

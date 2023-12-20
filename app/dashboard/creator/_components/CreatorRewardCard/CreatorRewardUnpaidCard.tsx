@@ -24,11 +24,11 @@ export const CreatorRewardUnpaidCard: FC<CreatorRewardUnpaidCardProps> = ({
     const [opened, { open, close }] = useDisclosure(false);
 
     // TODO: be careful we are adding assuming that are the same currency
-    const paidIssueRewardPrice = data.rewards.filter(reward => reward.status === 'Completed').reduce((acc, reward) => {
+    const paidIssueRewardPrice = data.rewards.filter(reward => reward.status === 'Paid').reduce((acc, reward) => {
         return acc + reward.price.value
     }, 0);
 
-    const unpaidIssueRewardPrice = data.rewards.filter(reward => reward.status !== 'Completed').reduce((acc, reward) => {
+    const unpaidIssueRewardPrice = data.rewards.filter(reward => reward.status !== 'Paid').reduce((acc, reward) => {
         return acc + reward.price.value
     }, 0);
 

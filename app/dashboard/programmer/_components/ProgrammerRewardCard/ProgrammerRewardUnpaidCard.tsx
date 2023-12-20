@@ -22,11 +22,11 @@ export const ProgrammerRewardUnpaidCard: FC<ProgrammerRewardUnpaidCardProps> = (
     const userAuth = useUserAuth()!;
 
     // TODO: be careful we are adding assuming that are the same currency
-    const paidIssueRewardPrice = data.rewards.filter(reward => reward.status === 'Completed' && reward.rewardedUserId === userAuth.userId).reduce((acc, reward) => {
+    const paidIssueRewardPrice = data.rewards.filter(reward => reward.status === 'Paid' && reward.rewardedUserId === userAuth.userId).reduce((acc, reward) => {
         return acc + reward.price.value
     }, 0);
 
-    const unpaidIssueRewardPrice = data.rewards.filter(reward => reward.status !== 'Completed').reduce((acc, reward) => {
+    const unpaidIssueRewardPrice = data.rewards.filter(reward => reward.status !== 'Paid').reduce((acc, reward) => {
         return acc + reward.price.value
     }, 0);
 

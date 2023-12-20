@@ -1,4 +1,3 @@
 export type RewardStatusType =
-  | 'Unassigned'
-  | 'In progress'
-  | 'Completed'
+    | 'Available'
+    | 'Paid'
