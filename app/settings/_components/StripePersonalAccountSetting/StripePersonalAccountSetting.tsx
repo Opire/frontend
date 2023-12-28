@@ -60,11 +60,11 @@ export const StripePersonalAccountSetting: FC<StripeSettingProps> = ({
 
 function InfoPaymentAccountCreated(): JSX.Element {
     const documentationURL = `${URL_DOCUMENTATION}/payment-account`; //TODO: review
-    const stripeExpressDocumentationURL = 'https://support.stripe.com/express/topics/account';
+    const stripeDocumentationURL = 'https://stripe.com/docs/connect/standard-accounts';
 
     return (
         <Text c="dimmed">
-            The first time you logged in MakeMyChange, we automatically created a <Anchor component={Link} href={stripeExpressDocumentationURL} target="_blank">special Stripe account</Anchor> for you. This Stripe account is only used for receiving payments from this app.
+            The first time you logged in MakeMyChange, we automatically created a <Anchor component={Link} href={stripeDocumentationURL} target="_blank">Stripe account</Anchor> for you. This Stripe account will be used for receiving payments from this app.
             <br />
             <br />
             For more information, check <Anchor component={Link} href={documentationURL} target="_blank">our documentation</Anchor>.
@@ -145,11 +145,11 @@ function GoToStripeAccountPending(): JSX.Element {
 }
 
 function GoToStripeAccountSuccess(): JSX.Element {
-    const stripeExpressLoginURL = 'https://connect.stripe.com/express_login';
+    const stripeLoginURL = 'https://connect.stripe.com/login';
 
     return (
         <Text c="dimmed">
-            Everything ready to start receiving payments! You can go to your <Anchor fw='bold' component={Link} href={stripeExpressLoginURL} target="_blank">Stripe account</Anchor> to see your payments dashboard.
+            Everything ready to start receiving payments! You can go to your <Anchor fw='bold' component={Link} href={stripeLoginURL} target="_blank">Stripe account</Anchor> to see your payments dashboard.
         </Text>
     )
 }
