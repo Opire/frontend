@@ -1,6 +1,6 @@
 'use client'
 
-import { Container, Divider, Tabs } from "@mantine/core"
+import { Container, Divider, Space, Tabs } from "@mantine/core"
 import { IconCoin, IconMoneybag } from "@tabler/icons"
 import { useRouter } from "next/navigation";
 import { CreatorRewardsPanel } from "./CreatorRewardsPanel/CreatorRewardsPanel";
@@ -15,6 +15,8 @@ export function CreatorView({
 
     return (
         <>
+            <Space h={'7px'} />
+
             <Tabs
                 value={view}
                 onChange={(value) => router.push(`/dashboard/creator/${value}`)}
