@@ -9,6 +9,7 @@ import { useGetFilteredByPlatform } from "../../../../../hooks/useGetFilteredByP
 import { useUserAuth } from "../../../../../hooks/useUserAuth";
 import { getRewardsPriceForProgrammer } from "../../../../_utils/getRewardsPriceForProgrammer";
 import { ProgrammerRewardPaidOthersCard } from "../ProgrammerRewardCard/ProgrammerRewardPaidOthersCard";
+import { NothingFound } from "../../../../_components/NothingFound";
 
 interface ProgrammerRewardsPanelProps {
 }
@@ -37,7 +38,7 @@ export const ProgrammerRewardsPanel: FC<ProgrammerRewardsPanelProps> = ({
 
     if (noRewards) {
         return (
-            <Title order={1}>Nothing found...</Title>
+            <NothingFound />
         )
     }
 

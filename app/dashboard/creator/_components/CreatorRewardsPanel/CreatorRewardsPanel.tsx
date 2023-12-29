@@ -6,6 +6,7 @@ import { CreatorRewardPaidCard } from "../CreatorRewardCard/CreatorRewardPaidCar
 import { CreatorRewardUnpaidCard } from "../CreatorRewardCard/CreatorRewardUnpaidCard";
 import { InfinityList } from "../../../../_components/InfinityList";
 import { useGetFilteredByPlatform } from "../../../../../hooks/useGetFilteredByPlatform";
+import { NothingFound } from "../../../../_components/NothingFound";
 
 interface CreatorRewardsPanelProps {
 }
@@ -30,7 +31,7 @@ export const CreatorRewardsPanel: FC<CreatorRewardsPanelProps> = ({
 
     if (noRewards) {
         return (
-            <Title order={1}>Nothing found...</Title>
+            <NothingFound />
         )
     }
 

@@ -5,6 +5,7 @@ import { TipCard } from "./components/TipCard";
 import { TipCardSkeleton } from "./components/TipCardSkeleton";
 import { InfinityList } from "../../../../_components/InfinityList";
 import { useGetFilteredById } from "../../../../../hooks/useGetFilteredById";
+import { NothingFound } from "../../../../_components/NothingFound";
 
 interface CreatorTipsPanelProps {
 }
@@ -29,7 +30,7 @@ export const CreatorTipsPanel: FC<CreatorTipsPanelProps> = ({
 
     if (noTips) {
         return (
-            <Title order={1}>Nothing found...</Title>
+            <NothingFound />
         )
     }
 

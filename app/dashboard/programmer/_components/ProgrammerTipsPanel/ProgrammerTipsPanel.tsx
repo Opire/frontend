@@ -5,6 +5,7 @@ import { ProgrammerTipCard } from "./components/ProgrammerTipCard";
 import { InfinityList } from "../../../../_components/InfinityList";
 import { useTipsByProgrammer } from "../../../../../hooks/useTipsByProgrammer";
 import { useGetFilteredById } from "../../../../../hooks/useGetFilteredById";
+import { NothingFound } from "../../../../_components/NothingFound";
 
 interface ProgrammerTipsPanelProps {
 }
@@ -29,7 +30,7 @@ export const ProgrammerTipsPanel: FC<ProgrammerTipsPanelProps> = ({
 
     if (noTips) {
         return (
-            <Title order={1}>Nothing found...</Title>
+            <NothingFound />
         )
     }
 

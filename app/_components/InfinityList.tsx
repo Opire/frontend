@@ -1,6 +1,7 @@
 import { GridCol, Loader, SimpleGrid, Text, Title } from "@mantine/core";
 import { useIntersection } from "@mantine/hooks";
 import { FC, Ref, useEffect } from "react";
+import { NothingFound } from "./NothingFound";
 
 /**
  * We may have to memo this component so the icons doesn't "flash" when we load another page
@@ -59,7 +60,7 @@ export function InfinityList<T extends { id: string }>({
             </section>
 
             {isLoading && <Loader display='block' size='xl' m='30px auto' />}
-            {!isLoading && items.length === 0 && <Title order={1}>Nothing found...</Title>}
+            {!isLoading && items.length === 0 && <NothingFound />}
         </>
     );
 }
