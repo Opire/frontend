@@ -33,10 +33,7 @@ export const ProgrammerRewardUnpaidCard: FC<ProgrammerRewardUnpaidCardProps> = (
     const claimerUsers = data.usersTrying.filter(userTrying => userTrying.hasClaimed && userTrying.id !== userAuth.userId);
     const [claimerUsersToShow, claimerUsersHidden] = splitToShow(claimerUsers, MAX_NUMBER_OF_USERS_TO_SHOW);
     const hasMoreUsers = claimerUsersHidden.length > 0;
-
     const amountOfExtraUsers = claimerUsersHidden.length;
-
-    const hasProgrammerClaimed = data.usersTrying.find(userTrying => userTrying.id === userAuth.userId)!.hasClaimed;
 
     return (
         <>
@@ -130,7 +127,7 @@ export const ProgrammerRewardUnpaidCard: FC<ProgrammerRewardUnpaidCardProps> = (
                         <Flex direction="column" gap="8px">
                             {claimerUsersToShow.length > 0 && (
                                 <Text c="dimmed" size={"sm"}>
-                                    Claimed by
+                                    Also claimed by
                                 </Text>
                             )}
 

@@ -6,22 +6,29 @@ import { ProgrammerRewardPaidCard } from "../ProgrammerRewardCard/ProgrammerRewa
 import { InfinityList } from "../../../../_components/InfinityList";
 import { useGetRewardsFromProgrammer } from "../../../../../hooks/useGetRewardsFromProgrammer";
 import { useGetFilteredByPlatform } from "../../../../../hooks/useGetFilteredByPlatform";
+import { useUserAuth } from "../../../../../hooks/useUserAuth";
+import { getRewardsPriceForProgrammer } from "../../../../_utils/getRewardsPriceForProgrammer";
+import { ProgrammerRewardPaidOthersCard } from "../ProgrammerRewardCard/ProgrammerRewardPaidOthersCard";
 
 interface ProgrammerRewardsPanelProps {
 }
 
 export const ProgrammerRewardsPanel: FC<ProgrammerRewardsPanelProps> = ({
 }) => {
+    const userAuth = useUserAuth()!;
     const { issues: allIssues, isLoading } = useGetRewardsFromProgrammer();
     const issues = useGetFilteredByPlatform(allIssues);
 
-    const unpaidRewards = [...issues].filter((issue) => issue.rewards.some((r) => r.status !== 'Paid'))
-    const paidRewards = [...issues].filter((issue) => issue.rewards.every((r) => r.status === 'Paid'))
+    const unpaidRewards = [...issues].filter((issue) => issue.rewards.some((r) => r.status !== 'Paid'));
+    const paidRewards = [...issues].filter((issue) => issue.rewards.every((r) => r.status === 'Paid'));
+    const paidRewardsToTheProgrammer = paidRewards.filter((issue) => getRewardsPriceForProgrammer({ issue, userAuth }) > 0);
+    const paidRewardsToOthers = paidRewards.filter((issue) => getRewardsPriceForProgrammer({ issue, userAuth }) === 0);
 
     const hasUnpaidRewards = unpaidRewards.length > 0
-    const hasPaidRewards = paidRewards.length > 0
+    const hasPaidRewardsToTheProgrammer = paidRewardsToTheProgrammer.length > 0
+    const hasPaidRewardsToOthers = paidRewardsToOthers.length > 0
 
-    const noRewards = !hasUnpaidRewards && !hasPaidRewards;
+    const noRewards = !hasUnpaidRewards && !hasPaidRewardsToTheProgrammer && !hasPaidRewardsToOthers;
 
 
     if (isLoading) {
@@ -50,17 +57,33 @@ export const ProgrammerRewardsPanel: FC<ProgrammerRewardsPanelProps> = ({
                 </>
             )}
 
-            {hasUnpaidRewards && hasPaidRewards && <Divider my="xl" />}
+            {hasUnpaidRewards && hasPaidRewardsToTheProgrammer && <Divider my="xl" />}
 
-            {hasPaidRewards && (
+            {hasPaidRewardsToTheProgrammer && (
                 <>
                     <Text fw={900} size={'xl'}>Paid</Text>
                     <Space h='12px' />
                     <InfinityList
-                        items={paidRewards}
+                        items={paidRewardsToTheProgrammer}
                         isLoading={isLoading}
                         loadNextPage={() => { }}
                         ItemComponent={ProgrammerRewardPaidCard}
+                        ItemSkeletonComponent={ProgrammerRewardCardSkeletonClient}
+                    />
+                </>
+            )}
+
+            {((hasPaidRewardsToTheProgrammer && hasPaidRewardsToOthers) || (hasUnpaidRewards && hasPaidRewardsToOthers)) && <Divider my="xl" />}
+
+            {hasPaidRewardsToOthers && (
+                <>
+                    <Text fw={900} size={'xl'}>Paid to others</Text>
+                    <Space h='12px' />
+                    <InfinityList
+                        items={paidRewardsToOthers}
+                        isLoading={isLoading}
+                        loadNextPage={() => { }}
+                        ItemComponent={ProgrammerRewardPaidOthersCard}
                         ItemSkeletonComponent={ProgrammerRewardCardSkeletonClient}
                     />
                 </>

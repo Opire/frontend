@@ -6,6 +6,7 @@ import { formatPrice } from "../../../../_utils/formatPrice";
 import { getRelativeTime } from "../../../../_utils/getRelativeTime";
 import { IssueByProgrammerDTO } from "../../../../_core/_dtos/IssueByProgrammerDTO";
 import { useUserAuth } from "../../../../../hooks/useUserAuth";
+import { getRewardsPriceForProgrammer } from "../../../../_utils/getRewardsPriceForProgrammer";
 
 interface ProgrammerRewardPaidCardProps {
     data: IssueByProgrammerDTO;
@@ -17,11 +18,7 @@ export const ProgrammerRewardPaidCard: FC<ProgrammerRewardPaidCardProps> = ({
     inputRef
 }) => {
     const userAuth = useUserAuth()!;
-
-    // TODO: be careful we are adding assuming that are the same currency
-    const totalIssueRewardPrice = data.rewards.filter(reward => reward.rewardedUserId === userAuth.userId).reduce((acc, reward) => {
-        return acc + reward.price.value
-    }, 0);
+    const totalIssueRewardPrice = getRewardsPriceForProgrammer({ issue: data, userAuth })
 
     return (
         <Card
