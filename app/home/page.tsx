@@ -3,7 +3,6 @@ import { getRewards } from "../_utils/getRewards";
 import { RewardFilters } from "./_components/Filters/Filters";
 import { HomeView } from "./view";
 import { ProgrammingLanguageType } from "../_core/_types/ProgrammingLanguageType";
-import crypto from "crypto";
 import { RewardFilterUserTrying } from "./_components/Filters/UsersTryingFilter";
 
 export const metadata: Metadata = {
@@ -35,7 +34,6 @@ export default async function Page({
 
     return (
         <HomeView
-            key={crypto.randomUUID()}
             initialRewards={rewards}
             filters={filters}
             search={search}

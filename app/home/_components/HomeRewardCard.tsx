@@ -45,7 +45,7 @@ export const HomeRewardCard: FC<HomeRewardCardProps> = ({ data, inputRef }) => {
     )
 
     return (
-        <Card ref={inputRef} withBorder shadow="md" radius="md">
+        <Card ref={inputRef} withBorder shadow="md" radius="md" style={{ display: 'flex', justifyContent: 'space-between' }}>
             <CardSection withBorder p="sm">
                 <Group justify="space-between">
                     <Group wrap="nowrap" h={"50px"}>
