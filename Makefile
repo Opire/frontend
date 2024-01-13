@@ -1,4 +1,4 @@
-SERVICE_NAME=make_my_change_front
+SERVICE_NAME=opire_front
 
 up:
 	@docker compose up -d

@@ -1,7 +1,7 @@
 import { Metadata } from "next"
 
 export const metadata: Metadata = {
-    title: 'Make my Change - Not found',
+    title: 'Opire - Not found',
 }
 
 export default function Page() {

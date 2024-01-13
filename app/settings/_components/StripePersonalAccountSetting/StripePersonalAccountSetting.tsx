@@ -64,7 +64,7 @@ function InfoPaymentAccountCreated(): JSX.Element {
 
     return (
         <Text c="dimmed">
-            The first time you logged in MakeMyChange, we automatically created a <Anchor component={Link} href={stripeDocumentationURL} target="_blank">Stripe account</Anchor> for you. This Stripe account will be used for receiving payments from this app.
+            The first time you logged in Opire, we automatically created a <Anchor component={Link} href={stripeDocumentationURL} target="_blank">Stripe account</Anchor> for you. This Stripe account will be used for receiving payments from this app.
             <br />
             <br />
             For more information, check <Anchor component={Link} href={documentationURL} target="_blank">our documentation</Anchor>.
@@ -94,7 +94,7 @@ function ConfigureStripeAccountPending(): JSX.Element {
                 <LoadingOverlay visible={isLoadingLink} />
 
                 <Text c="dimmed">
-                    If you want to receive payments from MakeMyChange, you need to finish the configuration of your Stripe account. <Anchor fw={'bold'} component={'button'} onClick={completeStripeData}>Click here to complete your Stripe account data</Anchor>.
+                    If you want to receive payments from Opire, you need to finish the configuration of your Stripe account. <Anchor fw={'bold'} component={'button'} onClick={completeStripeData}>Click here to complete your Stripe account data</Anchor>.
                 </Text>
             </Box>
         </>
@@ -125,7 +125,7 @@ function ConfigureStripeAccountSuccess(): JSX.Element {
                 <LoadingOverlay visible={isLoadingLink} />
 
                 <Text c="dimmed">
-                    Congrats! 👏🏼 You can receive payments from MakeMyChange 🎉 For more information, check <Anchor component={Link} href={documentationURL} target="_blank">our documentation</Anchor>.
+                    Congrats! 👏🏼 You can receive payments from Opire 🎉 For more information, check <Anchor component={Link} href={documentationURL} target="_blank">our documentation</Anchor>.
                     <br />
                     <br />
                     If you want to update the configuration of your payment account, <Anchor fw={'bold'} component={'button'} onClick={completeStripeData}>click here</Anchor>.

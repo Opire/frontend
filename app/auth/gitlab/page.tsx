@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import { AuthGitlabView } from "./view";
 
 export const metadata: Metadata = {
-    title: 'Make my Change - GitLab',
+    title: 'Opire - GitLab',
 }
 
 export default function Page() {

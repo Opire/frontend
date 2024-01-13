@@ -6,7 +6,7 @@ import { ProgrammingLanguageType } from "../_core/_types/ProgrammingLanguageType
 import { RewardFilterUserTrying } from "./_components/Filters/UsersTryingFilter";
 
 export const metadata: Metadata = {
-    title: 'Make my Change',
+    title: 'Opire',
 }
 
 export default async function Page({

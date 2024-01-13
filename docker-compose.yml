@@ -1,9 +1,9 @@
 version: "3.7"
 
 services:
-    make_my_change_front:
+    opire_front:
         image: node:20-alpine
-        container_name: make_my_change_front
+        container_name: opire_front
         working_dir: "/app"
         tty: true
         network_mode: host

@@ -49,4 +49,4 @@ export const NEXT_SERVER_ROUTES = {
     },
 };
 
-export const URL_DOCUMENTATION = 'https://docs.makemychange.dev'
+export const URL_DOCUMENTATION = 'https://docs.opire.dev'

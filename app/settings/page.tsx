@@ -8,7 +8,7 @@ import { StripeOrganizationAccountSetting } from "./_components/StripeOrganizati
 import { IconInfoCircle } from "@tabler/icons";
 
 export const metadata: Metadata = {
-    title: 'Make my Change - Settings',
+    title: 'Opire - Settings',
 }
 
 export default async function Page() {

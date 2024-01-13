@@ -8,7 +8,7 @@ type RewardDTOPropsToOmit = 'price';
 export interface RewardDetailedDTO extends Omit<RewardPrimitive, RewardDTOPropsToOmit> {
     price: {
         programmerReward: PriceDTO,
-        makeMyChangeFee: PriceDTO,
+        opireFee: PriceDTO,
         paymentFee: PriceDTO,
         eSignFee: PriceDTO,
         totalPrice: PriceDTO,

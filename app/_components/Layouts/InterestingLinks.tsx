@@ -28,37 +28,37 @@ export const InterestingLinks = () => {
         {
             icon: <IconBrandReddit size={18} />,
             text: 'Reddit',
-            path: 'https://www.reddit.com/r/makemychange', // TODO: review
+            path: 'https://www.reddit.com/r/opire', // TODO: review
             color: 'orange',
         },
         {
             icon: <IconBrandTwitter size={18} />,
             text: 'Twitter',
-            path: 'https://twitter.com/makemychange', // TODO: review
+            path: 'https://twitter.com/opiredev', // TODO: review
             color: 'blue',
         },
         {
             icon: <IconBrandDiscord size={18} />,
             text: 'Discord',
-            path: 'https://discord.com/servers/makemychange', // TODO: review
+            path: 'https://discord.com/servers/opiredev', // TODO: review
             color: 'violet',
         },
         {
             icon: <IconBrandYoutube size={18} />,
             text: 'YouTube',
-            path: 'https://www.youtube.com/@lacuevadelcodigo', // TODO: review
+            path: 'https://www.youtube.com/@opire', // TODO: review
             color: 'red',
         },
         {
             icon: <IconMail size={18} />,
             text: 'Contact',
-            path: 'mailto:makemychangedev@gmail.com', // TODO: review
+            path: 'mailto:opiredev@gmail.com', // TODO: review
             color: 'teal',
         },
         {
             icon: <IconCoffee size={18} />,
             text: 'Donate',
-            path: 'https://ko-fi.com/makemychange', // TODO: review
+            path: 'https://ko-fi.com/opire', // TODO: review
             color: 'cyan',
         },
     ];

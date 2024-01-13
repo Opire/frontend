@@ -3,7 +3,7 @@ import { redirectToHomeIfNotLogged } from "../../../_utils/redirectToHomeIfNotLo
 import { DashboardProgrammerRewardsView } from "./view";
 
 export const metadata: Metadata = {
-    title: 'Make my Change',
+    title: 'Opire',
 }
 
 export default async function Page() {

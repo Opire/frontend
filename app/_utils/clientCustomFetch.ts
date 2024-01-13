@@ -62,7 +62,7 @@ function mapErrorText(error: BackendError): { title: string; message?: string } 
         case "PaymentAccountNotFound":
             return {
                 title: "The programmer doesn't have their payment account ready yet",
-                message: "Contact the programmer, ask them to login into MakeMyChange to activate their payment account, and try again after they are done"
+                message: "Contact the programmer, ask them to login into Opire to activate their payment account, and try again after they are done"
             };
         default:
             return {
