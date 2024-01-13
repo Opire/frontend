@@ -8,6 +8,7 @@ import { InfinityList } from "../_components/InfinityList";
 import { clientCustomFetch } from "../_utils/clientCustomFetch";
 import { buildEndpointWithSearchAndPagination } from "./_utils/buildEndpointWithSearchAndPagination";
 import { IssueListDTO } from "../_core/_dtos/IssueListDTO";
+import { useExternalStateOverride } from "../../hooks/useExternalStateOverride";
 // import { faker } from "@faker-js/faker";
 
 const PAGE_SIZE = 30;
@@ -22,7 +23,7 @@ export function HomeView({
     search: string | undefined,
 }) {
     const [isLoading, setIsLoading] = useState(false);
-    const [rewards, setRewards] = useState(initialRewards);
+    const [rewards, setRewards] = useExternalStateOverride(initialRewards);
     const [page, setPage] = useState(1);
 
     async function loadMoreRewards() {
