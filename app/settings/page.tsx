@@ -1,4 +1,4 @@
-import { Blockquote, Divider, Group, SimpleGrid, Space, Stack, Text } from "@mantine/core";
+import { Blockquote, Divider, Group, SimpleGrid, Stack, Text } from "@mantine/core";
 import { Metadata } from "next";
 import { redirectToHomeIfNotLogged } from "../_utils/redirectToHomeIfNotLogged";
 import { getUserSettings } from "../_utils/getUserSettings";
