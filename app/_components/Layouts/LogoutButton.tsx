@@ -1,7 +1,7 @@
 'use client'
 
 import { NavLink } from "@mantine/core";
-import { IconLogout } from "@tabler/icons";
+import { IconLogout } from "@tabler/icons-react";
 import { useRouter } from "next/navigation";
 import { FC } from "react";
 import { clientCustomFetch } from "../../_utils/clientCustomFetch";

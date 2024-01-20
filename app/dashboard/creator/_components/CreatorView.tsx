@@ -1,7 +1,7 @@
 'use client'
 
 import { Container, Divider, Space, Tabs } from "@mantine/core"
-import { IconCoin, IconMoneybag } from "@tabler/icons"
+import { IconCoin, IconMoneybag } from "@tabler/icons-react"
 import { useRouter } from "next/navigation";
 import { CreatorRewardsPanel } from "./CreatorRewardsPanel/CreatorRewardsPanel";
 import { CreatorTipsPanel } from "./CreatorTipsPanel/CreatorTipsPanel";

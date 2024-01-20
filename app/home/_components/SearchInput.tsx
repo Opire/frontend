@@ -2,7 +2,7 @@
 
 import { useDebouncedValue } from "@mantine/hooks";
 import React, { FC, useEffect, useState } from "react";
-import { Search } from "tabler-icons-react";
+import { IconSearch } from "@tabler/icons-react";
 import { usePopulateToURL } from "../../../hooks/usePopulateToURL";
 import { BaseInputText } from "../../_components/Form/BaseInputText";
 
@@ -19,7 +19,7 @@ export const SearchInput: FC<{}> = () => {
 
     return (
         <BaseInputText
-            leftSection={<Search />}
+            leftSection={<IconSearch />}
             placeholder="Search issues"
             value={search}
             radius="xl"

@@ -1,7 +1,7 @@
 import { Button } from "@mantine/core";
 import querystring from "querystring";
 import { FC } from "react";
-import { BrandGithub } from "tabler-icons-react";
+import { IconBrandGithub } from "@tabler/icons-react";
 
 export async function openGithubExternalLoginPage() {
     const params = querystring.stringify({
@@ -19,6 +19,6 @@ export async function openGithubExternalLoginPage() {
 export const GitHubLoginButton: FC<{}> = ({
 }) => {
     return (
-        <Button leftSection={<BrandGithub size='1rem' />} onClick={openGithubExternalLoginPage} variant="gradient">Continue with GitHub</Button>
+        <Button leftSection={<IconBrandGithub size='1rem' />} onClick={openGithubExternalLoginPage} variant="gradient">Continue with GitHub</Button>
     )
 }

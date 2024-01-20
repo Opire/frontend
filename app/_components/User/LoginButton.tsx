@@ -2,7 +2,7 @@
 
 import { Button } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
-import { IconKey, IconArrowRight } from "@tabler/icons";
+import { IconKey, IconArrowRight } from "@tabler/icons-react";
 import { FC } from "react";
 import { LoginModal } from "./LoginModal";
 

@@ -8,7 +8,7 @@ import { clientCustomFetch } from "../../../_utils/clientCustomFetch";
 import { UserSettingsDTO } from "../../../_core/_dtos/UserSettingsDTO";
 import { CustomImage } from "../../../_components/CustomImage";
 import { notifications } from "@mantine/notifications";
-import { IconCheck } from "@tabler/icons";
+import { IconCheck } from "@tabler/icons-react";
 
 interface StripeOrganizationAccountSettingProps {
     organizations: UserSettingsDTO['payments']['organizations'];

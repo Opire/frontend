@@ -2,7 +2,7 @@
 
 import { Text, Accordion, Flex, Anchor, LoadingOverlay, Box } from "@mantine/core";
 import { FC, useState } from "react";
-import { Receipt, ReceiptOff, UserCheck, Wallet, WalletOff } from "tabler-icons-react";
+import { IconReceipt, IconReceiptOff, IconUserCheck, IconWallet, IconWalletOff } from "@tabler/icons-react";
 import Link from "next/link";
 import { API_ROUTES, URL_DOCUMENTATION } from "../../../../constants";
 import { clientCustomFetch } from "../../../_utils/clientCustomFetch";
@@ -18,21 +18,21 @@ export const StripePersonalAccountSetting: FC<StripeSettingProps> = ({
     const stripInfo = [
         {
             id: 'create-account',
-            icon: <UserCheck color="lightgreen" />,
+            icon: <IconUserCheck color="lightgreen" />,
             label: 'Payment account automatically created',
             content: <InfoPaymentAccountCreated />,
             defaultOpen: false,
         },
         {
             id: 'configure-account',
-            icon: hasStripeConfigured ? <Wallet color="lightgreen" /> : <WalletOff color="lightgray" />,
+            icon: hasStripeConfigured ? <IconWallet color="lightgreen" /> : <IconWalletOff color="lightgray" />,
             label: hasStripeConfigured ? 'Stripe account active 🥳 ' : 'Configure your payment account',
             content: hasStripeConfigured ? <ConfigureStripeAccountSuccess /> : <ConfigureStripeAccountPending />,
             defaultOpen: !hasStripeConfigured,
         },
         {
             id: 'access-account',
-            icon: hasStripeConfigured ? <Receipt color="#26C6DA" /> : <ReceiptOff color="#26C6DA" />,
+            icon: hasStripeConfigured ? <IconReceipt color="#26C6DA" /> : <IconReceiptOff color="#26C6DA" />,
             label: hasStripeConfigured ? 'Check your payments 💰' : 'Check your payments once you have your account fully configured',
             content: hasStripeConfigured ? <GoToStripeAccountSuccess /> : <GoToStripeAccountPending />,
             defaultOpen: hasStripeConfigured,

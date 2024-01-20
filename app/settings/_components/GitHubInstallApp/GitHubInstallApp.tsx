@@ -2,7 +2,7 @@
 
 import { Card, Title, Button, Center } from "@mantine/core";
 import { FC } from "react";
-import { IconBrandGithub } from "@tabler/icons";
+import { IconBrandGithub } from "@tabler/icons-react";
 import Link from "next/link";
 
 interface GitHubInstallAppProps {

@@ -5,7 +5,7 @@ import { getUserSettings } from "../_utils/getUserSettings";
 import { StripePersonalAccountSetting } from "./_components/StripePersonalAccountSetting/StripePersonalAccountSetting";
 import { GitHubInstallApp } from "./_components/GitHubInstallApp/GitHubInstallApp";
 import { StripeOrganizationAccountSetting } from "./_components/StripeOrganizationAccountSetting/StripeOrganizationAccountSetting";
-import { IconInfoCircle } from "@tabler/icons";
+import { IconInfoCircle } from "@tabler/icons-react";
 
 export const metadata: Metadata = {
     title: 'Opire - Settings',

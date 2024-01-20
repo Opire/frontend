@@ -1,10 +1,9 @@
 'use client'
 
 import { FC } from "react";
-import { IconCoin, IconSettings, IconLayoutDashboard, IconMoneybag } from "@tabler/icons";
 import { usePathname, useRouter } from "next/navigation";
 import { Divider, NavLink, Space } from "@mantine/core";
-import { ChartBar, DeviceLaptop } from "tabler-icons-react";
+import { IconChartBar, IconDeviceLaptop, IconCoin, IconSettings, IconLayoutDashboard, IconMoneybag } from "@tabler/icons-react";
 import { LogoutButton } from "./LogoutButton";
 import { useExternalStateOverride } from "../../../hooks/useExternalStateOverride";
 import { UserInfo } from "../User/UserInfo";
@@ -47,7 +46,7 @@ export const Navbar: FC<NavbarProps> = ({
             children: [
                 {
                     id: 'dashboard-creator',
-                    icon: <ChartBar size={18} />,
+                    icon: <IconChartBar size={18} />,
                     text: 'Creator',
                     // path: '/dashboard/creator',
                     isPublic: false,
@@ -70,7 +69,7 @@ export const Navbar: FC<NavbarProps> = ({
                 },
                 {
                     id: 'dashboard-programmer',
-                    icon: <DeviceLaptop size={18} />,
+                    icon: <IconDeviceLaptop size={18} />,
                     text: 'Programmer',
                     // path: '/dashboard/programmer',
                     isPublic: false,

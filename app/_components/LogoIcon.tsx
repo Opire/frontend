@@ -1,6 +1,6 @@
 'use client'
 
-import { IconGitBranch } from "@tabler/icons";
+import { IconGitBranch } from "@tabler/icons-react";
 import { useRouter } from "next/navigation";
 import { FC } from "react";
 

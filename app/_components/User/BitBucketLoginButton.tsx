@@ -1,7 +1,7 @@
 import { Button } from "@mantine/core";
 import querystring from "querystring";
 import { FC } from "react";
-import { BrandBitbucket } from "tabler-icons-react";
+import { IconBrandBitbucket } from "@tabler/icons-react";
 
 export async function openBitbucketExternalLoginPage() {
     const params = querystring.stringify({
@@ -16,6 +16,6 @@ export async function openBitbucketExternalLoginPage() {
 export const BitBucketLoginButton: FC<{}> = ({
 }) => {
     return (
-        <Button leftSection={<BrandBitbucket size='1rem' />} onClick={openBitbucketExternalLoginPage} variant="gradient">Continue with BitBucket</Button>
+        <Button leftSection={<IconBrandBitbucket size='1rem' />} onClick={openBitbucketExternalLoginPage} variant="gradient">Continue with BitBucket</Button>
     )
 }
