@@ -59,6 +59,7 @@ function mapErrorText(error: BackendError): { title: string; message?: string } 
                 title: "The programmer doesn't have their payment account ready yet",
                 message: "Contact the programmer and ask them to activate their payment account, and try again after they are done"
             };
+        case "ProgrammerPaymentAccountIsNotCreated":
         case "PaymentAccountNotFound":
             return {
                 title: "The programmer doesn't have their payment account ready yet",
