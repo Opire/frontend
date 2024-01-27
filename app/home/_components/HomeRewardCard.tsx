@@ -63,8 +63,18 @@ export const HomeRewardCard: FC<HomeRewardCardProps> = ({ data, inputRef }) => {
                             style={{ color: "inherit", textDecoration: "none" }}
                         >
                             <Text lineClamp={2}>{data.title}</Text>
+
+
+
                         </Link>
+
                     </Group>
+                    {
+                        !data.project.isPublic &&
+                        <Badge variant="dot" color="yellow">
+                            Private
+                        </Badge>
+                    }
                 </Group>
             </CardSection>
 
