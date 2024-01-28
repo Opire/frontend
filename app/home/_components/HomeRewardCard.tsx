@@ -90,12 +90,6 @@ export const HomeRewardCard: FC<HomeRewardCardProps> = ({ data, inputRef }) => {
                         <Text lineClamp={1}>{data.organization.name}</Text>
                     </Link>
 
-                    {
-                        !data.project.isPublic &&
-                        <Badge variant="dot" color="yellow">
-                            Private
-                        </Badge>
-                    }
                 </Group>
 
                 <Space h="8px" />

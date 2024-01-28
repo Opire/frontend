@@ -3,7 +3,7 @@
 import { FC } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { Divider, NavLink, Space } from "@mantine/core";
-import { IconChartBar, IconDeviceLaptop, IconCoin, IconSettings, IconLayoutDashboard, IconMoneybag } from "@tabler/icons-react";
+import { IconChartBar, IconDeviceLaptop, IconCoin, IconSettings, IconLayoutDashboard, IconMoneybag, IconBrandGit } from "@tabler/icons-react";
 import { LogoutButton } from "./LogoutButton";
 import { useExternalStateOverride } from "../../../hooks/useExternalStateOverride";
 import { UserInfo } from "../User/UserInfo";
@@ -35,6 +35,13 @@ export const Navbar: FC<NavbarProps> = ({
             icon: <IconMoneybag size={18} />,
             text: 'Rewards',
             path: '/home',
+            isPublic: true,
+        },
+        {
+            id: 'projects',
+            icon: <IconBrandGit size={18} />,
+            text: 'Projects',
+            path: '/projects',
             isPublic: true,
         },
         {

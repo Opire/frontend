@@ -35,6 +35,9 @@ export const API_ROUTES = {
         RECEIVED_BY_ME: () =>
             `${process.env.NEXT_PUBLIC_API_URL}/tips/received`, // TODO: Change endpoint, do all route
     },
+    PROJECTS: {
+        ALL: () => `${process.env.NEXT_PUBLIC_API_URL}/projects`,
+    },
 };
 
 export const NEXT_SERVER_ROUTES = {
