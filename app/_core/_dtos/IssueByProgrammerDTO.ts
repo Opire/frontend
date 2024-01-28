@@ -35,5 +35,7 @@ export interface IssueByProgrammerDTO {
     organizationName: string;
     usersTrying: UserTrying[];
     rewards: Reward[];
+    isClosed: boolean;
+    isDeleted: boolean;
     createdAt: number;
 }

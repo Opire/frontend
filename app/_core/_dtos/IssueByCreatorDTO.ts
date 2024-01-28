@@ -1,4 +1,3 @@
-import { IssueStatusType } from "../_types/IssueStatusType";
 import { PlatformType } from "../_types/PlatformType";
 import { ProgrammingLanguageType } from "../_types/ProgrammingLanguageType";
 import { RewardStatusType } from "../_types/RewardStatusType";
@@ -10,7 +9,7 @@ interface User {
     avatarURL: string | null;
 }
 
-interface UserTring extends User {
+interface UserTrying extends User {
     hasClaimed: boolean;
 }
 
@@ -26,7 +25,6 @@ interface Reward {
 
 export interface IssueByCreatorDTO {
     id: string;
-    status: IssueStatusType;
     title: string;
     url: string;
     labels: string[];
@@ -35,7 +33,9 @@ export interface IssueByCreatorDTO {
     programmingLanguages: ProgrammingLanguageType[];
     organizationLogoURL: string;
     organizationName: string;
-    usersTrying: UserTring[];
+    usersTrying: UserTrying[];
     rewards: Reward[];
+    isClosed: boolean;
+    isDeleted: boolean;
     createdAt: number;
 }

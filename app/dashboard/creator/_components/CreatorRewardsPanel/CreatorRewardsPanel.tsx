@@ -16,14 +16,13 @@ export const CreatorRewardsPanel: FC<CreatorRewardsPanelProps> = ({
     const { issues: allIssues, isLoading } = useGetRewardsFromCreator();
     const issues = useGetFilteredByPlatform(allIssues);
 
-    const unpaidRewards = [...issues].filter((issue) => issue.rewards.some((r) => r.status !== 'Paid'))
-    const paidRewards = [...issues].filter((issue) => issue.rewards.every((r) => r.status === 'Paid'))
+    const unpaidRewards = [...issues].filter((issue) => issue.rewards.some((r) => r.status !== 'Paid') && (!issue.isDeleted || (issue.isDeleted && issue.usersTrying.some(u => u.hasClaimed))));
+    const paidRewards = [...issues].filter((issue) => issue.rewards.every((r) => r.status === 'Paid'));
 
-    const hasUnpaidRewards = unpaidRewards.length > 0
-    const hasPaidRewards = paidRewards.length > 0
+    const hasUnpaidRewards = unpaidRewards.length > 0;
+    const hasPaidRewards = paidRewards.length > 0;
 
     const noRewards = !hasUnpaidRewards && !hasPaidRewards;
-
 
     if (isLoading) {
         return <Loader display='block' size='xl' m='30px auto' />
