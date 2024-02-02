@@ -35,7 +35,7 @@ export interface ProjectListDTO {
     platformId: string;
     id: string;
     name: string;
-    description: string;
+    description: string | null;
     url: string;
     organization: Organization;
     installationId: string;
