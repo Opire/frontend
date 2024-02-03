@@ -6,15 +6,24 @@ import { NothingFound } from "./NothingFound";
 /**
  * We may have to memo this component so the icons doesn't "flash" when we load another page
  */
+type IndexableType = string | number;
 
-export function InfinityList<T extends { id: string }>({
+type IndexableKeyof<Interface> = {
+    [Key in keyof Interface]: Interface[Key] extends IndexableType | undefined
+    ? Key
+    : never;
+}[keyof Interface];
+
+export function InfinityList<T, TId extends IndexableKeyof<T>>({
     items,
+    keyIdentifier,
     isLoading,
     loadNextPage,
     ItemComponent,
     ItemSkeletonComponent
 }: {
     items: T[];
+    keyIdentifier: TId;
     isLoading: boolean;
     loadNextPage: () => void;
     ItemComponent: FC<{
@@ -43,7 +52,7 @@ export function InfinityList<T extends { id: string }>({
             >
                 {items.map((data, index) => (
                     <ItemComponent
-                        key={data.id}
+                        key={data[keyIdentifier] as string ?? ''}
                         {...{
                             data,
                             inputRef: index === items.length - 15 ? ref : undefined

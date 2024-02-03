@@ -43,6 +43,7 @@ export const CreatorTipsPanel: FC<CreatorTipsPanelProps> = ({
 
                     <InfinityList
                         items={unpaidTips}
+                        keyIdentifier="id"
                         isLoading={isLoading}
                         loadNextPage={() => { }}
                         ItemComponent={TipCard}
@@ -59,6 +60,7 @@ export const CreatorTipsPanel: FC<CreatorTipsPanelProps> = ({
                     <Space h='12px' />
                     <InfinityList
                         items={paidTips}
+                        keyIdentifier="id"
                         isLoading={isLoading}
                         loadNextPage={() => { }}
                         ItemComponent={TipCard}

@@ -52,6 +52,7 @@ export function ProjectView({
         <InfinityList
             items={projects}
             isLoading={isLoading}
+            keyIdentifier="id"
             loadNextPage={loadMoreProject}
             ItemComponent={ProjectCard}
             ItemSkeletonComponent={() => <div />} // TODO: with the new approach we don't need this

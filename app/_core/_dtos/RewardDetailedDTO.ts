@@ -1,17 +1,17 @@
 import { RewardPrimitive } from "../_primitives/RewardPrimitive";
 import { UserPrimitive } from "../_primitives/UserPrimitive";
-import { PriceDTO } from "./PriceDTO";
+import { PricePrimitive } from "../_primitives/PricePrimitive";
 
 type RewardDTOPropsToOmit = 'price';
 
 // TODO: we need it?
 export interface RewardDetailedDTO extends Omit<RewardPrimitive, RewardDTOPropsToOmit> {
     price: {
-        programmerReward: PriceDTO,
-        opireFee: PriceDTO,
-        paymentFee: PriceDTO,
-        eSignFee: PriceDTO,
-        totalPrice: PriceDTO,
+        programmerReward: PricePrimitive,
+        opireFee: PricePrimitive,
+        paymentFee: PricePrimitive,
+        eSignFee: PricePrimitive,
+        totalPrice: PricePrimitive,
     },
     enrolledProgrammers: UserPrimitive[]
 }

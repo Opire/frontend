@@ -23,15 +23,6 @@ export const CreatorRewardUnpaidCard: FC<CreatorRewardUnpaidCardProps> = ({
 }) => {
     const [opened, { open, close }] = useDisclosure(false);
 
-    // TODO: be careful we are adding assuming that are the same currency
-    const paidIssueRewardPrice = data.rewards.filter(reward => reward.status === 'Paid').reduce((acc, reward) => {
-        return acc + reward.price.value
-    }, 0);
-
-    const unpaidIssueRewardPrice = data.rewards.filter(reward => reward.status !== 'Paid').reduce((acc, reward) => {
-        return acc + reward.price.value
-    }, 0);
-
     const claimerUsers = data.usersTrying.filter(userTrying => userTrying.hasClaimed);
     const [claimerUsersToShow, claimerUsersHidden] = splitToShow(claimerUsers, MAX_NUMBER_OF_USERS_TO_SHOW);
     const hasMoreUsers = claimerUsersHidden.length > 0;
@@ -46,7 +37,7 @@ export const CreatorRewardUnpaidCard: FC<CreatorRewardUnpaidCardProps> = ({
 
         if (claimerUsers.length === 1) {
             const claimer = claimerUsers[0];
-            await handleClickPayClaimer(claimer.id, data.id);
+            await handleClickPayClaimer(claimer.id, data.issueId);
         }
     }
 
@@ -62,8 +53,8 @@ export const CreatorRewardUnpaidCard: FC<CreatorRewardUnpaidCardProps> = ({
                 <CardSection withBorder p="sm">
                     <Group justify="space-between">
                         <Group>
-                            <Avatar src={data.organizationLogoURL} size='md' radius='xl' />
-                            <Text>{data.organizationName}</Text>
+                            <Avatar src={data.organization.logoURL} size='md' radius='xl' />
+                            <Text>{data.organization.name}</Text>
                         </Group>
 
                         <Group>
@@ -101,7 +92,7 @@ export const CreatorRewardUnpaidCard: FC<CreatorRewardUnpaidCardProps> = ({
                                 style={{ fontSize: "1.2rem", fontWeight: "bold" }}
                                 variant='gradient'
                             >
-                                {formatPrice({ unit: 'USD_CENT', value: paidIssueRewardPrice })}
+                                {formatPrice(data.alreadyPaid)}
                             </Text>
                         </Text>
                     </Group>
@@ -122,7 +113,7 @@ export const CreatorRewardUnpaidCard: FC<CreatorRewardUnpaidCardProps> = ({
                                 style={{ fontSize: "2.4rem", fontWeight: "bold" }}
                                 variant='gradient'
                             >
-                                {formatPrice({ unit: 'USD_CENT', value: unpaidIssueRewardPrice })}
+                                {formatPrice(data.pendingToBePaid)}
                             </Text>
                         </Text>
 
@@ -156,9 +147,7 @@ export const CreatorRewardUnpaidCard: FC<CreatorRewardUnpaidCardProps> = ({
                                 <AvatarGroup>
                                     {
                                         claimerUsersToShow.map((claimerUser) => {
-                                            const totalPaidToUser = data.rewards.filter(reward => reward.rewardedUserId === claimerUser.id).reduce((acc, reward) => {
-                                                return acc + reward.price.value
-                                            }, 0)
+                                            const totalPaidToUser = claimerUser.alreadyPaid;
 
                                             return (
                                                 <HoverCard
@@ -230,20 +219,13 @@ export const CreatorRewardUnpaidCard: FC<CreatorRewardUnpaidCardProps> = ({
                     cols={1}
                     verticalSpacing="xl"
                 >
-                    {claimerUsers.map(claimerUser => {
-                        const totalPaidToUser = data.rewards.filter(reward => reward.rewardedUserId === claimerUser.id).reduce((acc, reward) => {
-                            return acc + reward.price.value
-                        }, 0)
-
-                        return <ClaimerUserCard
-                            key={claimerUser.id}
-                            user={claimerUser}
-                            issueId={data.id}
-                            paidPrice={totalPaidToUser}
-                            pendingPrice={unpaidIssueRewardPrice}
-                        />
-                    }
-                    )}
+                    {claimerUsers.map(claimerUser => <ClaimerUserCard
+                        key={claimerUser.id}
+                        user={claimerUser}
+                        issueId={data.issueId}
+                        paidPrice={claimerUser.alreadyPaid}
+                        pendingPrice={data.pendingToBePaid}
+                    />)}
                 </SimpleGrid>
             </Modal>
         </>

@@ -49,6 +49,7 @@ export const ProgrammerRewardsPanel: FC<ProgrammerRewardsPanelProps> = ({
                     <Text fw={900} size={'xl'}>Waiting for payment</Text>
                     <Space h='12px' />
                     <InfinityList
+                        keyIdentifier='id'
                         items={unpaidRewards}
                         isLoading={isLoading}
                         loadNextPage={() => { }}
@@ -65,6 +66,7 @@ export const ProgrammerRewardsPanel: FC<ProgrammerRewardsPanelProps> = ({
                     <Text fw={900} size={'xl'}>Paid</Text>
                     <Space h='12px' />
                     <InfinityList
+                        keyIdentifier="id"
                         items={paidRewardsToTheProgrammer}
                         isLoading={isLoading}
                         loadNextPage={() => { }}
@@ -84,6 +86,7 @@ export const ProgrammerRewardsPanel: FC<ProgrammerRewardsPanelProps> = ({
                         items={paidRewardsToOthers}
                         isLoading={isLoading}
                         loadNextPage={() => { }}
+                        keyIdentifier='id'
                         ItemComponent={ProgrammerRewardPaidOthersCard}
                         ItemSkeletonComponent={ProgrammerRewardCardSkeletonClient}
                     />

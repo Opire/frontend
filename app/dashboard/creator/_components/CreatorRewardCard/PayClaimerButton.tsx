@@ -5,11 +5,12 @@ import { Button } from "@mantine/core";
 import { API_ROUTES } from "../../../../../constants";
 import { clientCustomFetch } from "../../../../_utils/clientCustomFetch";
 import { formatPrice } from "../../../../_utils/formatPrice";
+import { PricePrimitive } from "../../../../_core/_primitives/PricePrimitive";
 
 interface PayButtonProps {
     claimerId: string;
     issueId: string;
-    priceToPay?: number;
+    priceToPay?: PricePrimitive;
 }
 
 export const PayClaimerButton: FC<PayButtonProps> = ({
@@ -23,7 +24,7 @@ export const PayClaimerButton: FC<PayButtonProps> = ({
             variant='gradient'
             onClick={() => handleClickPayClaimer(claimerId, issueId)}
         >
-            {priceToPay ? `Pay: ${formatPrice({ unit: 'USD_CENT', value: priceToPay })}` : 'Pay'}
+            {priceToPay ? `Pay: ${formatPrice(priceToPay)}` : 'Pay'}
         </Button>
 
     );

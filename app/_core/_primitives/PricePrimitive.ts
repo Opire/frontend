@@ -1,6 +1,6 @@
 import { PriceUnitType } from "../_types/PriceUnitType";
 
-export interface PriceDTO {
+export interface PricePrimitive {
     value: number;
     unit: PriceUnitType;
 }

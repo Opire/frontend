@@ -1,6 +1,7 @@
 import { Avatar, Button, Card, Group, Text } from "@mantine/core";
 import { PayClaimerButton } from "./CreatorRewardCard/PayClaimerButton";
 import { formatPrice } from "../../../_utils/formatPrice";
+import { PricePrimitive } from "../../../_core/_primitives/PricePrimitive";
 
 interface UserInfo {
     id: string;
@@ -12,14 +13,14 @@ interface UserInfo {
 interface PropsWithPrice {
     user: UserInfo;
     issueId: string;
-    paidPrice: number;
-    pendingPrice: number;
+    paidPrice: PricePrimitive;
+    pendingPrice: PricePrimitive;
 }
 
 interface PropsWithoutPrice {
     user: UserInfo;
     issueId?: undefined;
-    paidPrice: number;
+    paidPrice: PricePrimitive;
     pendingPrice?: undefined;
 }
 
@@ -31,8 +32,8 @@ export function ClaimerUserCard({
     paidPrice,
     pendingPrice,
 }: ClaimerUserCardProps) {
-    const haveToShowPayButton = pendingPrice !== undefined && pendingPrice > 0;
-    const haveToShowSomePrices = haveToShowPayButton || paidPrice > 0;
+    const haveToShowPayButton = pendingPrice !== undefined && pendingPrice.value > 0;
+    const haveToShowSomePrices = haveToShowPayButton || paidPrice.value > 0;
 
     return (
         <Group align="start" gap='16px' display='flex'>
@@ -63,7 +64,7 @@ export function ClaimerUserCard({
                         }
 
                         {
-                            paidPrice > 0
+                            paidPrice.value > 0
                             &&
                             <Text
                                 component="div"
@@ -78,14 +79,12 @@ export function ClaimerUserCard({
                                     style={{ fontSize: "0.8rem" }}
                                     c='dimmed'
                                 >
-                                    {formatPrice({ unit: 'USD_CENT', value: paidPrice })}
+                                    {formatPrice(paidPrice)}
                                 </Text>
                             </Text>
                         }
-
                     </Group>
                 }
-
             </Card>
         </Group>
     )

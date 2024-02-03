@@ -41,6 +41,7 @@ export const ProgrammerTipsPanel: FC<ProgrammerTipsPanelProps> = ({
                     <Text fw={900} size={'xl'}>Waiting for payment</Text>
                     <Space h='12px' />
                     <InfinityList
+                        keyIdentifier="id"
                         items={unpaidTips}
                         isLoading={isLoading}
                         loadNextPage={() => { }}
@@ -57,6 +58,7 @@ export const ProgrammerTipsPanel: FC<ProgrammerTipsPanelProps> = ({
                     <Text fw={900} size={'xl'}>Paid</Text>
                     <Space h='12px' />
                     <InfinityList
+                        keyIdentifier='id'
                         items={paidTips}
                         isLoading={isLoading}
                         loadNextPage={() => { }}

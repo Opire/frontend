@@ -1,5 +1,5 @@
 import { TipStatusType } from "../_types/TipStatusType";
-import { PriceDTO } from "./PriceDTO";
+import { PricePrimitive } from "../_primitives/PricePrimitive";
 
 interface User {
     id: string;
@@ -9,7 +9,7 @@ interface User {
 
 export interface TipByCreatorDTO {
     id: string,
-    price: PriceDTO,
+    price: PricePrimitive,
     commentURL: string,
     creatorId: string,
     programmer: User,

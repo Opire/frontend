@@ -1,6 +1,6 @@
-import { PriceDTO } from "../_core/_dtos/PriceDTO";
+import { PricePrimitive } from "../_core/_primitives/PricePrimitive";
 
-export function formatPrice(price: PriceDTO): string {
+export function formatPrice(price: PricePrimitive): string {
     if (price.unit === "USD_CENT") {
         return formatPriceFromCents(price.value);
     }

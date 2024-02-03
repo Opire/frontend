@@ -16,8 +16,8 @@ export const CreatorRewardsPanel: FC<CreatorRewardsPanelProps> = ({
     const { issues: allIssues, isLoading } = useGetRewardsFromCreator();
     const issues = useGetFilteredByPlatform(allIssues);
 
-    const unpaidRewards = [...issues].filter((issue) => issue.rewards.some((r) => r.status !== 'Paid') && (!issue.isDeleted || (issue.isDeleted && issue.usersTrying.some(u => u.hasClaimed))));
-    const paidRewards = [...issues].filter((issue) => issue.rewards.every((r) => r.status === 'Paid'));
+    const unpaidRewards = [...issues].filter((issue) => !issue.isFullyPaid);
+    const paidRewards = [...issues].filter((issue) => issue.isFullyPaid);
 
     const hasUnpaidRewards = unpaidRewards.length > 0;
     const hasPaidRewards = paidRewards.length > 0;
@@ -43,6 +43,7 @@ export const CreatorRewardsPanel: FC<CreatorRewardsPanelProps> = ({
                     <Space h='12px' />
                     <InfinityList
                         items={unpaidRewards}
+                        keyIdentifier="issueId"
                         isLoading={isLoading}
                         loadNextPage={() => { }}
                         ItemComponent={CreatorRewardUnpaidCard}
@@ -59,6 +60,7 @@ export const CreatorRewardsPanel: FC<CreatorRewardsPanelProps> = ({
                     <Space h='12px' />
                     <InfinityList
                         items={paidRewards}
+                        keyIdentifier="issueId"
                         isLoading={isLoading}
                         loadNextPage={() => { }}
                         ItemComponent={CreatorRewardPaidCard}

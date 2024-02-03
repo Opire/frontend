@@ -1,9 +1,9 @@
-import { PriceDTO } from "../_dtos/PriceDTO";
+import { PricePrimitive } from "./PricePrimitive";
 import { RewardStatusType } from "../_types/RewardStatusType";
 
 export interface RewardPrimitive {
     id: string;
-    price: PriceDTO,
+    price: PricePrimitive,
     commentURL: string;
     creatorId: string;
     rewardedUserId: string | null;

@@ -5,6 +5,7 @@ import { CustomImage } from "../../../../_components/CustomImage";
 import { formatPrice } from "../../../../_utils/formatPrice";
 import { getRelativeTime } from "../../../../_utils/getRelativeTime";
 import { IssueByCreatorDTO } from "../../../../_core/_dtos/IssueByCreatorDTO";
+import { Price } from "../../../../_core/_vos/Price";
 
 interface CreatorRewardPaidCardProps {
     data: IssueByCreatorDTO;
@@ -15,12 +16,7 @@ export const CreatorRewardPaidCard: FC<CreatorRewardPaidCardProps> = ({
     data,
     inputRef
 }) => {
-    // TODO: be careful we are adding assuming that are the same currency
-    const totalIssueRewardPrice = data.rewards.reduce((acc, reward) => {
-        return acc + reward.price.value
-    }, 0);
-
-    const rewardedUsersIds = data.rewards.map(reward => reward.rewardedUserId);
+    const totalIssueRewardPrice = Price.sum([Price.fromPrimitives(data.alreadyPaid), Price.fromPrimitives(data.pendingToBePaid)]);
 
     return (
         <Card
@@ -32,8 +28,8 @@ export const CreatorRewardPaidCard: FC<CreatorRewardPaidCardProps> = ({
             <CardSection withBorder p="sm">
                 <Group justify="space-between">
                     <Group>
-                        <Avatar src={data.organizationLogoURL} size='md' radius='xl' />
-                        <Text>{data.organizationName}</Text>
+                        <Avatar src={data.organization.logoURL} size='md' radius='xl' />
+                        <Text>{data.organization.name}</Text>
                     </Group>
 
                     <Group>
@@ -71,7 +67,7 @@ export const CreatorRewardPaidCard: FC<CreatorRewardPaidCardProps> = ({
                             style={{ fontSize: "2.4rem", fontWeight: "bold" }}
                             variant='gradient'
                         >
-                            {formatPrice({ unit: 'USD_CENT', value: totalIssueRewardPrice })}
+                            {formatPrice(totalIssueRewardPrice.toPrimitives())}
                         </Text>
                     </Text>
                 </Group>
@@ -83,11 +79,7 @@ export const CreatorRewardPaidCard: FC<CreatorRewardPaidCardProps> = ({
                 <Group justify="space-between" align='flex-end' style={{ height: '100%' }}>
                     <AvatarGroup>
                         {
-                            data.usersTrying.filter(userTrying => rewardedUsersIds.includes(userTrying.id)).map((userTrying) => {
-                                const totalPaidToUser = data.rewards.filter(reward => reward.rewardedUserId === userTrying.id).reduce((acc, reward) => {
-                                    return acc + reward.price.value
-                                }, 0)
-
+                            data.usersTrying.filter(userTrying => userTrying.alreadyPaid.value > 0).map((userTrying) => {
                                 return (
                                     <>
                                         <HoverCard withArrow shadow="md" closeDelay={0} openDelay={0} key={userTrying.id}>
@@ -98,7 +90,7 @@ export const CreatorRewardPaidCard: FC<CreatorRewardPaidCardProps> = ({
                                                 <Text
                                                     variant='default'
                                                 >
-                                                    Paid {formatPrice({ unit: 'USD_CENT', value: totalPaidToUser })}
+                                                    Paid {formatPrice(userTrying.alreadyPaid)}
                                                 </Text>
                                             </HoverCardDropdown>
                                         </HoverCard>

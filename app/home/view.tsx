@@ -55,6 +55,7 @@ export function HomeView({
     return (
         <InfinityList
             items={rewards}
+            keyIdentifier="id"
             isLoading={isLoading}
             loadNextPage={loadMoreRewards}
             ItemComponent={HomeRewardCard}

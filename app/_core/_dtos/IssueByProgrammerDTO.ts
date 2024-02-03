@@ -1,7 +1,7 @@
 import { PlatformType } from "../_types/PlatformType";
 import { ProgrammingLanguageType } from "../_types/ProgrammingLanguageType";
 import { RewardStatusType } from "../_types/RewardStatusType";
-import { PriceDTO } from "./PriceDTO";
+import { PricePrimitive } from "../_primitives/PricePrimitive";
 
 interface User {
     id: string;
@@ -16,7 +16,7 @@ interface UserTrying extends User {
 interface Reward {
     id: string;
     status: RewardStatusType;
-    price: PriceDTO;
+    price: PricePrimitive;
     commentURL: string;
     rewardedUserId: string | null;
     creator: User;

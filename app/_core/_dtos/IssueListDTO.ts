@@ -1,6 +1,6 @@
 import { PlatformType } from "../_types/PlatformType";
 import { ProgrammingLanguageType } from "../_types/ProgrammingLanguageType";
-import { PriceDTO } from "./PriceDTO";
+import { PricePrimitive } from "../_primitives/PricePrimitive";
 
 interface IssueListUser {
     id: string;
@@ -30,7 +30,7 @@ export interface IssueListDTO {
     organization: Organization;
     project: Project;
     programmingLanguages: ProgrammingLanguageType[];
-    pendingPrice: PriceDTO;
+    pendingPrice: PricePrimitive;
     claimerUsers: IssueListUser[];
     tryingUsers: IssueListUser[];
     createdAt: number;
