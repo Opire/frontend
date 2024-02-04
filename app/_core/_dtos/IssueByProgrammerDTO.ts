@@ -1,41 +1,48 @@
 import { PlatformType } from "../_types/PlatformType";
 import { ProgrammingLanguageType } from "../_types/ProgrammingLanguageType";
-import { RewardStatusType } from "../_types/RewardStatusType";
 import { PricePrimitive } from "../_primitives/PricePrimitive";
 
-interface User {
+
+interface IssueDashboardUser {
     id: string;
     username: string;
     avatarURL: string | null;
 }
 
-interface UserTrying extends User {
+interface UserTrying extends IssueDashboardUser {
     hasClaimed: boolean;
+    alreadyPaid: PricePrimitive;
 }
 
-interface Reward {
+interface Organization {
     id: string;
-    status: RewardStatusType;
-    price: PricePrimitive;
-    commentURL: string;
-    rewardedUserId: string | null;
-    creator: User;
-    createdAt: number;
+    name: string;
+    logoURL: string;
+    url: string;
+}
+
+interface Project {
+    id: string;
+    url: string;
+    name: string;
+    programmingLanguages: ProgrammingLanguageType[];
 }
 
 export interface IssueByProgrammerDTO {
-    id: string;
-    title: string;
-    url: string;
-    labels: string[];
+    issueId: string;
+    programmerId: string;
+
     platform: PlatformType;
     platformId: string;
-    programmingLanguages: ProgrammingLanguageType[];
-    organizationLogoURL: string;
-    organizationName: string;
-    usersTrying: UserTrying[];
-    rewards: Reward[];
+    title: string;
+    url: string;
+    organization: Organization;
+    project: Project;
+    otherUsersTrying: UserTrying[];
+    programmer: UserTrying;
     isClosed: boolean;
     isDeleted: boolean;
+    isFullyPaid: boolean;
+    pendingToBePaid: PricePrimitive;
     createdAt: number;
 }

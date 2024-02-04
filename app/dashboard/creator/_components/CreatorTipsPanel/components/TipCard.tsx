@@ -24,7 +24,7 @@ export const TipCard: FC<OwnerRewardCardProps> = ({
         }
     }
 
-    const canBePayed = data.status === 'Pending payment';
+    const canBePaid = data.status === 'Pending payment';
 
     return (
         <Card
@@ -61,9 +61,9 @@ export const TipCard: FC<OwnerRewardCardProps> = ({
                 <Button
                     variant='gradient'
                     onClick={() => completePayTip(data.id)}
-                    disabled={!canBePayed}
+                    disabled={!canBePaid}
                 >
-                    {canBePayed ? 'Pay' : 'Paid'}
+                    {canBePaid ? 'Pay' : 'Paid'}
                 </Button>
             </Group>
         </Card>

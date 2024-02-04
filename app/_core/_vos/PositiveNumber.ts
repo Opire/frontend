@@ -9,8 +9,10 @@ export class PositiveNumber extends ValueObject<number> {
     }
 
     private ensureIsPositive(value: number) {
-        if (value < 0) {
-            throw new PositiveNumberMustBeGreaterThan0(value);
+        const numValue = +value;
+
+        if (!Number.isNaN(numValue) && numValue < 0) {
+            throw new PositiveNumberMustBeGreaterThan0(numValue);
         }
     }
 

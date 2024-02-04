@@ -1,12 +1,10 @@
 import { FC, Ref } from "react";
-import { Avatar, AvatarGroup, Card, CardSection, Group, Text, Title } from "@mantine/core";
+import { Avatar, Card, CardSection, Group, Text, Title } from "@mantine/core";
 import Link from "next/link";
 import { CustomImage } from "../../../../_components/CustomImage";
 import { formatPrice } from "../../../../_utils/formatPrice";
 import { getRelativeTime } from "../../../../_utils/getRelativeTime";
 import { IssueByProgrammerDTO } from "../../../../_core/_dtos/IssueByProgrammerDTO";
-import { useUserAuth } from "../../../../../hooks/useUserAuth";
-import { getRewardsPriceForProgrammer } from "../../../../_utils/getRewardsPriceForProgrammer";
 
 interface ProgrammerRewardPaidCardProps {
     data: IssueByProgrammerDTO;
@@ -17,8 +15,7 @@ export const ProgrammerRewardPaidCard: FC<ProgrammerRewardPaidCardProps> = ({
     data,
     inputRef
 }) => {
-    const userAuth = useUserAuth()!;
-    const totalIssueRewardPrice = getRewardsPriceForProgrammer({ issue: data, userAuth })
+    const totalIssueRewardPrice = data.programmer.alreadyPaid;
 
     return (
         <Card
@@ -30,8 +27,8 @@ export const ProgrammerRewardPaidCard: FC<ProgrammerRewardPaidCardProps> = ({
             <CardSection withBorder p="sm">
                 <Group justify="space-between">
                     <Group>
-                        <Avatar src={data.organizationLogoURL} size='md' radius='xl' />
-                        <Text>{data.organizationName}</Text>
+                        <Avatar src={data.organization.logoURL} size='md' radius='xl' />
+                        <Text>{data.organization.name}</Text>
                     </Group>
 
                     <Group>
@@ -69,7 +66,7 @@ export const ProgrammerRewardPaidCard: FC<ProgrammerRewardPaidCardProps> = ({
                             style={{ fontSize: "2.4rem", fontWeight: "bold" }}
                             variant='gradient'
                         >
-                            {formatPrice({ unit: 'USD_CENT', value: totalIssueRewardPrice })}
+                            {formatPrice(totalIssueRewardPrice)}
                         </Text>
                     </Text>
                 </Group>

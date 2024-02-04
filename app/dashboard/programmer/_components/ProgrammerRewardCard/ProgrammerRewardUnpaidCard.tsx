@@ -6,7 +6,6 @@ import { formatPrice } from "../../../../_utils/formatPrice";
 import { getRelativeTime } from "../../../../_utils/getRelativeTime";
 import { splitToShow } from "../../../../_utils/splitToShow";
 import { IssueByProgrammerDTO } from "../../../../_core/_dtos/IssueByProgrammerDTO";
-import { useUserAuth } from "../../../../../hooks/useUserAuth";
 
 interface ProgrammerRewardUnpaidCardProps {
     data: IssueByProgrammerDTO;
@@ -19,25 +18,16 @@ export const ProgrammerRewardUnpaidCard: FC<ProgrammerRewardUnpaidCardProps> = (
     data,
     inputRef
 }) => {
-    const userAuth = useUserAuth()!;
+    const paidIssueRewardPrice = data.programmer.alreadyPaid;
+    const unpaidIssueRewardPrice = data.pendingToBePaid;
 
-    // TODO: be careful we are adding assuming that are the same currency
-    const paidIssueRewardPrice = data.rewards.filter(reward => reward.status === 'Paid' && reward.rewardedUserId === userAuth.userId).reduce((acc, reward) => {
-        return acc + reward.price.value
-    }, 0);
-
-    const unpaidIssueRewardPrice = data.rewards.filter(reward => reward.status !== 'Paid').reduce((acc, reward) => {
-        return acc + reward.price.value
-    }, 0);
-
-    const claimerUsers = data.usersTrying.filter(userTrying => userTrying.hasClaimed && userTrying.id !== userAuth.userId);
+    const claimerUsers = data.otherUsersTrying.filter(userTrying => userTrying.hasClaimed);
     const [claimerUsersToShow, claimerUsersHidden] = splitToShow(claimerUsers, MAX_NUMBER_OF_USERS_TO_SHOW);
     const hasMoreUsers = claimerUsersHidden.length > 0;
     const amountOfExtraUsers = claimerUsersHidden.length;
 
     return (
         <>
-
             <Card
                 ref={inputRef}
                 withBorder
@@ -47,8 +37,8 @@ export const ProgrammerRewardUnpaidCard: FC<ProgrammerRewardUnpaidCardProps> = (
                 <CardSection withBorder p="sm">
                     <Group justify="space-between">
                         <Group>
-                            <Avatar src={data.organizationLogoURL} size='md' radius='xl' />
-                            <Text>{data.organizationName}</Text>
+                            <Avatar src={data.organization.logoURL} size='md' radius='xl' />
+                            <Text>{data.organization.name}</Text>
                         </Group>
 
                         <Group>
@@ -73,7 +63,7 @@ export const ProgrammerRewardUnpaidCard: FC<ProgrammerRewardUnpaidCardProps> = (
 
                 <CardSection p="sm">
                     {
-                        paidIssueRewardPrice > 0
+                        paidIssueRewardPrice.value > 0
                         &&
                         <>
                             <Group justify="space-between">
@@ -90,7 +80,7 @@ export const ProgrammerRewardUnpaidCard: FC<ProgrammerRewardUnpaidCardProps> = (
                                         style={{ fontSize: "1.2rem", fontWeight: "bold" }}
                                         variant='gradient'
                                     >
-                                        {formatPrice({ unit: 'USD_CENT', value: paidIssueRewardPrice })}
+                                        {formatPrice(paidIssueRewardPrice)}
                                     </Text>
                                 </Text>
                             </Group>
@@ -114,7 +104,7 @@ export const ProgrammerRewardUnpaidCard: FC<ProgrammerRewardUnpaidCardProps> = (
                                 style={{ fontSize: "2.4rem", fontWeight: "bold" }}
                                 variant='gradient'
                             >
-                                {formatPrice({ unit: 'USD_CENT', value: unpaidIssueRewardPrice })}
+                                {formatPrice(unpaidIssueRewardPrice)}
                             </Text>
                         </Text>
                     </Group>

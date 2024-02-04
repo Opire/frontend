@@ -17,8 +17,7 @@ export const ProgrammerRewardPaidOthersCard: FC<ProgrammerRewardPaidOthersCardPr
     data,
     inputRef
 }) => {
-    const rewardedUsersIds = data.rewards.map(reward => reward.rewardedUserId);
-    const rewardedUsers = data.usersTrying.filter(user => rewardedUsersIds.includes(user.id));
+    const rewardedUsers = data.otherUsersTrying.filter(user => user.alreadyPaid.value > 0);
 
     const [rewardedUsersToShow, rewardedUsersHidden] = splitToShow(rewardedUsers, MAX_NUMBER_OF_USERS_TO_SHOW);
     const hasMoreUsers = rewardedUsersHidden.length > 0;
@@ -34,8 +33,8 @@ export const ProgrammerRewardPaidOthersCard: FC<ProgrammerRewardPaidOthersCardPr
             <CardSection withBorder p="sm">
                 <Group justify="space-between">
                     <Group>
-                        <Avatar src={data.organizationLogoURL} size='md' radius='xl' />
-                        <Text>{data.organizationName}</Text>
+                        <Avatar src={data.organization.logoURL} size='md' radius='xl' />
+                        <Text>{data.organization.name}</Text>
                     </Group>
 
                     <Group>
