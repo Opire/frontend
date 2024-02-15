@@ -1,4 +1,4 @@
-import { Anchor, Blockquote, Divider, Group, SimpleGrid, Stack, Text } from "@mantine/core";
+import { Anchor, Blockquote, Divider, Group, SimpleGrid, Space, Stack, Text } from "@mantine/core";
 import { Metadata } from "next";
 import { redirectToHomeIfNotLogged } from "../_utils/redirectToHomeIfNotLogged";
 import { getUserSettings } from "../_utils/getUserSettings";
@@ -30,7 +30,6 @@ export default async function Page() {
                 <GitHubInstallApp />
             </SimpleGrid>
 
-
             <Divider mt={'1rem'} />
 
             <Text
@@ -43,7 +42,6 @@ export default async function Page() {
                     hasStripeConfigured={userSettings.payments.canReceivePayments}
                 />
             </Group>
-
 
             {
                 belongsToSomeOrganization &&
@@ -62,16 +60,15 @@ export default async function Page() {
                         </Text>
                     </Blockquote>
 
-
                     <Group>
                         <StripeOrganizationAccountSetting
                             organizations={userSettings.payments.organizations}
                         />
                     </Group>
                 </>
-
             }
 
+            <Space h='2rem' />
         </Stack>
     );
 }
