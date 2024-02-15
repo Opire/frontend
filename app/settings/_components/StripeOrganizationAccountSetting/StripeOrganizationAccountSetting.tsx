@@ -8,7 +8,7 @@ import { clientCustomFetch } from "../../../_utils/clientCustomFetch";
 import { UserSettingsDTO } from "../../../_core/_dtos/UserSettingsDTO";
 import { CustomImage } from "../../../_components/CustomImage";
 import { notifications } from "@mantine/notifications";
-import { IconCheck } from "@tabler/icons-react";
+import { IconCheck, IconX } from "@tabler/icons-react";
 
 interface StripeOrganizationAccountSettingProps {
     organizations: UserSettingsDTO['payments']['organizations'];
@@ -35,20 +35,33 @@ export const StripeOrganizationAccountSettingCard: FC<StripeOrganizationAccountS
     const [isSendingEmail, setIsSendingEmail] = useState(false);
 
     async function sendStripeLinkByOrganizationEmail() {
-        setIsSendingEmail(true);
+        try {
+            setIsSendingEmail(true);
 
-        await clientCustomFetch(API_ROUTES.PAYMENTS.STRIPE_LINK_SEND_TO_ORGANIZATION_EMAIL(organization.id), { method: 'POST' });
+            await clientCustomFetch(API_ROUTES.PAYMENTS.STRIPE_LINK_SEND_TO_ORGANIZATION_EMAIL(organization.id), { method: 'POST' });
 
-        notifications.show({
-            title: `Link sent to ${organization.name}'s email address ✉️`,
-            message: "If you don't receive it in some minutes, try checking the spam folder 📬",
-            withBorder: true,
-            withCloseButton: true,
-            autoClose: 10_000,
-            icon: <IconCheck />,
-        })
-
-        setIsSendingEmail(false);
+            notifications.show({
+                title: `Link sent to ${organization.name}'s email address ✉️`,
+                message: "If you don't receive it in some minutes, try checking the spam folder 📬",
+                withBorder: true,
+                withCloseButton: true,
+                autoClose: 10_000,
+                color: 'teal',
+                icon: <IconCheck />,
+            })
+        } catch (error) {
+            notifications.show({
+                title: `Error while trying to send link to ${organization.name}'s email address 🥲`,
+                message: "Please, try again later",
+                withBorder: true,
+                withCloseButton: true,
+                autoClose: 10_000,
+                color: 'red',
+                icon: <IconX />,
+            })
+        } finally {
+            setIsSendingEmail(false);
+        }
     }
 
 
