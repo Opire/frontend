@@ -8,6 +8,7 @@ interface UserSettingOrganization {
     hasEmail: boolean;
     platform: PlatformType;
     logoURL: string;
+    canReceivePayments: boolean;
 }
 
 export interface UserSettingsDTO {

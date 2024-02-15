@@ -1,6 +1,6 @@
 'use client'
 
-import { Text, SimpleGrid, Card, Center, Button, Group, Avatar, Space } from "@mantine/core";
+import { Text, SimpleGrid, Card, Center, Button, Group, Avatar, Space, Badge } from "@mantine/core";
 import { FC, useState } from "react";
 import Link from "next/link";
 import { API_ROUTES } from "../../../../constants";
@@ -51,6 +51,9 @@ export const StripeOrganizationAccountSettingCard: FC<StripeOrganizationAccountS
         setIsSendingEmail(false);
     }
 
+
+    const hasCompletedTheOrganizationOnboarding = organization.canReceivePayments;
+
     return (
         <Card shadow="xl" padding="xl">
             <Card.Section p='md'>
@@ -87,6 +90,22 @@ export const StripeOrganizationAccountSettingCard: FC<StripeOrganizationAccountS
                         </Text>
                     </Link>
                 </Center>
+                <Center>
+
+                    {
+                        hasCompletedTheOrganizationOnboarding &&
+                        <Badge color="teal">
+                            Setup completed
+                        </Badge>
+                    }
+
+                    {
+                        !hasCompletedTheOrganizationOnboarding &&
+                        <Badge color="yellow">
+                            Needs onboarding
+                        </Badge>
+                    }
+                </Center>
             </Card.Section>
 
             <Card.Section p='md'>
@@ -100,7 +119,7 @@ export const StripeOrganizationAccountSettingCard: FC<StripeOrganizationAccountS
                         w='80%'
                     >
                         <Text lineClamp={2} style={{ fontSize: '1.2rem' }}>
-                            Send link
+                            Send instructions
                         </Text>
                     </Button>
                 </Center>
