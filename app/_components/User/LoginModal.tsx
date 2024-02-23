@@ -1,8 +1,8 @@
 import { Center, Modal, Space, Title, Text, Flex } from "@mantine/core";
 import { FC } from "react";
-import { BitBucketLoginButton } from "./BitBucketLoginButton";
 import { GitHubLoginButton } from "./GitHubLoginButton";
-import { GitLabLoginButton } from "./GitLabLoginButton";
+// import { GitLabLoginButton } from "./GitLabLoginButton";
+// import { BitBucketLoginButton } from "./BitBucketLoginButton";
 
 interface LoginModalProps {
     isOpened: boolean;
@@ -39,13 +39,13 @@ export const LoginModal: FC<LoginModalProps> = ({
             <div style={{ display: 'flex', flexDirection: 'column' }}>
                 <GitHubLoginButton />
 
-                <Space h="lg" />
+                {/* <Space h="lg" /> */}
 
-                <GitLabLoginButton />
+                {/* <GitLabLoginButton /> */}
 
-                <Space h="lg" />
+                {/* <Space h="lg" /> */}
 
-                <BitBucketLoginButton />
+                {/* <BitBucketLoginButton /> */}
             </div>
 
         </Modal>
