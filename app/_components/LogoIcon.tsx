@@ -1,17 +1,20 @@
 'use client'
 
-import { IconGitBranch } from "@tabler/icons-react";
+import { useMediaQuery } from "@mantine/hooks";
 import { useRouter } from "next/navigation";
 import { FC } from "react";
 
 export const LogoIcon: FC<{}> = () => {
-    const router = useRouter()
+    const router = useRouter();
+    const isMobile = useMediaQuery("(max-width: 50em)");
+    const logoSize = isMobile ? '26px' : '48px';
 
     function goToHome() {
         router.push('/')
     }
 
     return (
-        <IconGitBranch onClick={goToHome} style={{ cursor: 'pointer' }} />
+        <img src={'/opire_logo.svg'} onClick={goToHome} style={{ cursor: 'pointer', width: logoSize, height: logoSize }} />
     )
 }
+
