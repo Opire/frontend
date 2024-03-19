@@ -19,6 +19,7 @@ export async function serverCustomFetch(
         headers: {
             "Content-Type": "application/json",
             "Authorization": `Bearer ${cookieStore.get('token')?.value}`,
+            "x-opire-handshake": process.env.OPIRE_HANDSHAKE || '',
             ...options.headers,
         },
         body: JSON.stringify(options.body),
