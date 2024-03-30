@@ -50,7 +50,7 @@ export const ProjectCard: FC<ProjectCardProps> = ({ data, inputRef }) => {
                         <Text lineClamp={2} fz='1.5rem' fw={600}>{data.name}</Text>
                     </Link>
 
-                    {data.description && <Text size="sm" lineClamp={2}>{data.description}</Text>}
+                    {data.description && <Text size="sm" lineClamp={2} w='100%'>{data.description}</Text>}
                 </Group>
 
             </CardSection>
