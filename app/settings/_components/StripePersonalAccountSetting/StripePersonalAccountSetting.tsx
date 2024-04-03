@@ -145,7 +145,8 @@ function GoToStripeAccountPending(): JSX.Element {
 }
 
 function GoToStripeAccountSuccess(): JSX.Element {
-    const stripeLoginURL = 'https://connect.stripe.com/login';
+    // const stripeLoginURL = 'https://connect.stripe.com/login';
+    const stripeLoginURL = 'https://connect.stripe.com/express_login';
 
     return (
         <Text c="dimmed">
