@@ -1,6 +1,6 @@
 'use client'
 
-import { Text, SimpleGrid, Card, Center, Button, Group, Avatar, Space, Badge } from "@mantine/core";
+import { Text, SimpleGrid, Card, Center, Button, Group, Avatar, Space, Badge, Tooltip } from "@mantine/core";
 import { FC, useState } from "react";
 import Link from "next/link";
 import { API_ROUTES } from "../../../../constants";
@@ -8,7 +8,7 @@ import { clientCustomFetch } from "../../../_utils/clientCustomFetch";
 import { UserSettingsDTO } from "../../../_core/_dtos/UserSettingsDTO";
 import { CustomImage } from "../../../_components/CustomImage";
 import { notifications } from "@mantine/notifications";
-import { IconCheck, IconX } from "@tabler/icons-react";
+import { IconAlertCircle, IconCheck, IconX } from "@tabler/icons-react";
 
 interface StripeOrganizationAccountSettingProps {
     organizations: UserSettingsDTO['payments']['organizations'];
@@ -135,7 +135,19 @@ export const StripeOrganizationAccountSettingCard: FC<StripeOrganizationAccountS
                             Send instructions
                         </Text>
                     </Button>
+
+                    {!organization.hasEmail &&
+                        <Tooltip
+                            multiline
+                            w='16rem'
+                            events={{ hover: true, focus: true, touch: true }}
+                            label={`We couldn't detect the public email of the organization. To allow us to send the onboarding link, please add the public email in ${organization.platform} and suspend & unsuspend the installation of Opire's bot, so we can detect the change in the organization email`}
+                        >
+                            <IconAlertCircle color="yellow" />
+                        </Tooltip>
+                    }
                 </Center>
+
             </Card.Section>
         </Card >
     );
