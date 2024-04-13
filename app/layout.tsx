@@ -4,7 +4,6 @@ import '@mantine/notifications/styles.css';
 import { ColorSchemeScript, MantineProvider } from "@mantine/core";
 import { ModalsProvider } from "@mantine/modals";
 import { Notifications } from "@mantine/notifications";
-import { Analytics } from '@vercel/analytics/react';
 
 export default function RootLayout({
     children,
@@ -16,6 +15,7 @@ export default function RootLayout({
         <html lang="en">
             <head>
                 <link rel="shortcut icon" href="/opire_logo.svg" />
+
                 <ColorSchemeScript />
 
                 <style>
@@ -44,6 +44,7 @@ export default function RootLayout({
                     }
                 `}
                 </style>
+                <script defer src="https://eu.umami.is/script.js" data-website-id="719a59c8-5ecb-4611-bc3d-23436a11db77"></script>
             </head>
 
             <body>
@@ -62,7 +63,6 @@ export default function RootLayout({
                         {children}
                     </ModalsProvider>
                 </MantineProvider>
-                <Analytics />
             </body>
 
 
