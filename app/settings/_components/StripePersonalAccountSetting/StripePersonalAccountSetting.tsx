@@ -60,7 +60,7 @@ export const StripePersonalAccountSetting: FC<StripeSettingProps> = ({
 
 function InfoPaymentAccountCreated(): JSX.Element {
     const documentationURL = `${URL_DOCUMENTATION}/payment-account`; //TODO: review
-    const stripeDocumentationURL = 'https://stripe.com/docs/connect/standard-accounts';
+    const stripeDocumentationURL = 'https://stripe.com/docs/connect/express-accounts';
 
     return (
         <Text c="dimmed">
