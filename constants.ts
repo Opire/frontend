@@ -7,6 +7,9 @@ export const API_ROUTES = {
         ALL: () => `${process.env.NEXT_PUBLIC_API_URL}/rewards`,
         CREATE_FROM_ISSUE_URL: () => `${process.env.NEXT_PUBLIC_API_URL}/rewards/fromIssueURL`,
     },
+    ISSUES: {
+        CLAIM_FROM_ISSUE_URL: () => `${process.env.NEXT_PUBLIC_API_URL}/issues/claim/fromIssueURL`,
+    },
     AUTH: {
         GITHUB: (code: string) =>
             `${process.env.NEXT_PUBLIC_API_URL}/auth/github/${code}`,

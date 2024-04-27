@@ -35,10 +35,26 @@ export const CreatorRewardsPanel: FC<CreatorRewardsPanelProps> = ({
 
     if (noRewards) {
         return (
-            <NothingFound />
+            <div>
+                <div>
+                    <Button
+                        onClick={openModal}
+                        size='md'
+                        leftSection={<IconMoneybag size={14} />}
+                        variant='gradient'
+                    >
+                        Create a new reward
+                    </Button>
+
+                    <CreateNewRewardModal isOpened={isModalOpen} onClose={closeModal} />
+                </div>
+
+                <Space h='xl' />
+
+                <NothingFound />
+            </div>
         )
     }
-
 
     return (
         <div>

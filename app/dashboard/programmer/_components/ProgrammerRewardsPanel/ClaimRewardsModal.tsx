@@ -7,22 +7,22 @@ import { API_ROUTES } from "../../../../../constants";
 import { notifications } from "@mantine/notifications";
 import { mutate } from "swr";
 
-interface CreateNewRewardModalProps {
+interface ClaimRewardsModalProps {
     isOpened: boolean;
     onClose: () => void;
 }
 
-export const CreateNewRewardModal: FC<CreateNewRewardModalProps> = ({
+export const ClaimRewardsModal: FC<ClaimRewardsModalProps> = ({
     isOpened,
     onClose
 }) => {
-    const [isCreatingReward, setIsCreatingReward] = useState(false);
+    const [isClaimingRewards, setIsClaimingRewards] = useState(false);
 
 
     const form = useForm({
         initialValues: {
             issueURL: '',
-            rewardPrice: 0,
+            pullRequestURL: '',
         },
         validate: {
             issueURL: (value: string) => {
@@ -40,36 +40,42 @@ export const CreateNewRewardModal: FC<CreateNewRewardModalProps> = ({
                     return 'Invalid issue URL'
                 }
             },
-            rewardPrice: (value: number) => {
-                const isValid = value >= 20;
+            pullRequestURL: (value: string) => {
+                let validURL;
+
+                try {
+                    validURL = new URL(value);
+                } catch (_) {
+                    return 'Invalid pull request URL'
+
+                }
+                const isValid = validURL.protocol === 'http:' || validURL.protocol === 'https:';
 
                 if (!isValid) {
-                    return 'Invalid reward price';
+                    return 'Invalid pull request URL'
                 }
             },
         },
     });
 
-    async function createNewReward({ issueURL, rewardPrice }: { issueURL: string; rewardPrice: number }) {
+    async function claimRewards({ issueURL, pullRequestURL }: { issueURL: string; pullRequestURL: string }) {
         try {
-            setIsCreatingReward(true);
+            setIsClaimingRewards(true);
 
-            await clientCustomFetch(API_ROUTES.REWARDS.CREATE_FROM_ISSUE_URL(), {
-                method: 'POST', body: {
-                    reward: {
-                        price: {
-                            value: rewardPrice,
-                            unit: "USD"
-                        },
-                    },
+            await clientCustomFetch(API_ROUTES.ISSUES.CLAIM_FROM_ISSUE_URL(), {
+                method: 'POST',
+                body: {
                     issue: {
                         url: issueURL
+                    },
+                    pullRequest: {
+                        url: pullRequestURL
                     }
                 }
             });
 
             notifications.show({
-                title: 'Reward created sucesfully',
+                title: 'Rewards claimed sucesfully',
                 message: "",
                 withBorder: true,
                 withCloseButton: true,
@@ -77,12 +83,12 @@ export const CreateNewRewardModal: FC<CreateNewRewardModalProps> = ({
                 color: 'teal',
                 icon: <IconCheck />,
             })
-            mutate(API_ROUTES.REWARDS.CREATED_BY_ME)
-            onClose()
+            mutate(API_ROUTES.REWARDS.TRYING_BY_ME);
+            onClose();
         } catch (error) {
             notifications.show({
-                title: 'Error while trying to create the reward',
-                message: "Please review that the issue is public and can be accessed by anyone",
+                title: 'Error while trying to claim the rewards',
+                message: "Please review that the issue and the pull request are public and can be accessed by anyone",
                 withBorder: true,
                 withCloseButton: true,
                 autoClose: 10_000,
@@ -90,7 +96,7 @@ export const CreateNewRewardModal: FC<CreateNewRewardModalProps> = ({
                 icon: <IconX />,
             })
         } finally {
-            setIsCreatingReward(false);
+            setIsClaimingRewards(false);
         }
     }
 
@@ -100,12 +106,12 @@ export const CreateNewRewardModal: FC<CreateNewRewardModalProps> = ({
             opened={isOpened}
             onClose={onClose}
             size={'xl'}
-            title={<div style={{ display: 'flex', gap: '8px', justifyContent: 'center', alignItems: 'ce' }}><IconDiamond size={16} color="teal" /> Create a new reward on issue</div>}
+            title={<div style={{ display: 'flex', gap: '8px', justifyContent: 'center', alignItems: 'ce' }}><IconDiamond size={16} color="teal" />Claim rewards from an issue</div>}
             closeOnEscape={true}
             closeOnClickOutside={false}
             withCloseButton={true}
         >
-            <form onSubmit={form.onSubmit(createNewReward)}>
+            <form onSubmit={form.onSubmit(claimRewards)}>
                 <Container size='xs'>
                     <TextInput
                         withAsterisk
@@ -118,16 +124,15 @@ export const CreateNewRewardModal: FC<CreateNewRewardModalProps> = ({
 
                     <Space h='1rem' />
 
-                    <NumberInput
+                    <TextInput
                         withAsterisk
-                        label="Reward price"
-                        placeholder="Dollars"
-                        prefix="$"
-                        min={20}
-                        key='rewardPrice'
+                        label="Pull Request URL"
+                        placeholder="https://github.com/Opire/docs/pull/10"
+                        key='pullRequestURL'
                         required
-                        {...form.getInputProps('rewardPrice')}
+                        {...form.getInputProps('pullRequestURL')}
                     />
+
                 </Container>
 
                 <Space h='1rem' />
@@ -137,9 +142,9 @@ export const CreateNewRewardModal: FC<CreateNewRewardModalProps> = ({
                         type="submit"
                         variant="gradient"
                         size="md"
-                        loading={isCreatingReward}
+                        loading={isClaimingRewards}
                     >
-                        Create
+                        Claim
                     </Button>
                 </Group>
             </form>

@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { Divider, Loader, Space, Text } from "@mantine/core";
+import { Button, Divider, Loader, Space, Text } from "@mantine/core";
 import { ProgrammerRewardUnpaidCard } from "../ProgrammerRewardCard/ProgrammerRewardUnpaidCard";
 import { ProgrammerRewardCardSkeletonClient } from "../ProgrammerRewardCard/ProgrammerRewardCardSkeletonClient";
 import { ProgrammerRewardPaidCard } from "../ProgrammerRewardCard/ProgrammerRewardPaidCard";
@@ -9,6 +9,9 @@ import { useGetFilteredByPlatform } from "../../../../../hooks/useGetFilteredByP
 import { ProgrammerRewardPaidOthersCard } from "../ProgrammerRewardCard/ProgrammerRewardPaidOthersCard";
 import { NothingFound } from "../../../../_components/NothingFound";
 import { IssueByProgrammerDTO } from "../../../../_core/_dtos/IssueByProgrammerDTO";
+import { useDisclosure } from "@mantine/hooks";
+import { IconMoneybag } from "@tabler/icons-react";
+import { ClaimRewardsModal } from "./ClaimRewardsModal";
 
 
 
@@ -17,6 +20,8 @@ interface ProgrammerRewardsPanelProps {
 }
 
 export const ProgrammerRewardsPanel: FC<ProgrammerRewardsPanelProps> = ({ }) => {
+    const [isModalOpen, { close: closeModal, open: openModal }] = useDisclosure();
+
     const { issues: allIssues, isLoading } = useGetRewardsFromProgrammer();
     const issues = useGetFilteredByPlatform(allIssues);
 
@@ -60,11 +65,45 @@ export const ProgrammerRewardsPanel: FC<ProgrammerRewardsPanelProps> = ({ }) => 
     }
 
     if (!hasSections) {
-        return <NothingFound />;
+        return (
+            <div>
+                <div>
+                    <Button
+                        onClick={openModal}
+                        size='md'
+                        leftSection={<IconMoneybag size={14} />}
+                        variant='gradient'
+                    >
+                        Claim rewards manually
+                    </Button>
+
+                    <ClaimRewardsModal isOpened={isModalOpen} onClose={closeModal} />
+                </div>
+
+                <Space h='xl' />
+
+                <NothingFound />
+            </div>
+        )
     }
 
     return (
         <div>
+            <div>
+                <Button
+                    onClick={openModal}
+                    size='md'
+                    leftSection={<IconMoneybag size={14} />}
+                    variant='gradient'
+                >
+                    Claim rewards manually
+                </Button>
+
+                <ClaimRewardsModal isOpened={isModalOpen} onClose={closeModal} />
+            </div>
+
+            <Space h='xl' />
+
             {sections.map((section, index) => (
                 <div key={section.key}>
                     {section.rewards.length > 0 && (
