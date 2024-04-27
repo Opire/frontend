@@ -5,6 +5,7 @@ export const API_ROUTES = {
         TRYING_BY_ME: () =>
             `${process.env.NEXT_PUBLIC_API_URL}/rewards/trying`,
         ALL: () => `${process.env.NEXT_PUBLIC_API_URL}/rewards`,
+        CREATE_FROM_ISSUE_URL: () => `${process.env.NEXT_PUBLIC_API_URL}/rewards/fromIssueURL`,
     },
     AUTH: {
         GITHUB: (code: string) =>
