@@ -1,19 +1,24 @@
 import { FC } from "react";
 import { useGetRewardsFromCreator } from "../../../../../hooks/useGetRewardsFromCreator";
-import { Divider, Loader, Space, Text, Title } from "@mantine/core";
+import { Button, Divider, Loader, Space, Text, Title } from "@mantine/core";
 import { CreatorRewardCardSkeletonClient } from "../CreatorRewardCard/CreatorRewardCardSkeletonClient";
 import { CreatorRewardPaidCard } from "../CreatorRewardCard/CreatorRewardPaidCard";
 import { CreatorRewardUnpaidCard } from "../CreatorRewardCard/CreatorRewardUnpaidCard";
 import { InfinityList } from "../../../../_components/InfinityList";
 import { useGetFilteredByPlatform } from "../../../../../hooks/useGetFilteredByPlatform";
 import { NothingFound } from "../../../../_components/NothingFound";
+import { IconMoneybag } from "@tabler/icons-react";
+import { useDisclosure } from "@mantine/hooks";
+import { CreateNewRewardModal } from "./CreateNewRewardModal";
 
 interface CreatorRewardsPanelProps {
 }
 
 export const CreatorRewardsPanel: FC<CreatorRewardsPanelProps> = ({
 }) => {
-    const { issues: allIssues, isLoading } = useGetRewardsFromCreator();
+    const [isModalOpen, { close: closeModal, open: openModal }] = useDisclosure();
+
+    const { issues: allIssues, isLoading } = useGetRewardsFromCreator({ revalidateOnFocus: !isModalOpen });
     const issues = useGetFilteredByPlatform(allIssues);
 
     const unpaidRewards = [...issues].filter((issue) => !issue.isFullyPaid);
@@ -30,13 +35,44 @@ export const CreatorRewardsPanel: FC<CreatorRewardsPanelProps> = ({
 
     if (noRewards) {
         return (
-            <NothingFound />
+            <div>
+                <div>
+                    <Button
+                        onClick={openModal}
+                        size='md'
+                        leftSection={<IconMoneybag size={14} />}
+                        variant='gradient'
+                    >
+                        Create a new reward
+                    </Button>
+
+                    <CreateNewRewardModal isOpened={isModalOpen} onClose={closeModal} />
+                </div>
+
+                <Space h='xl' />
+
+                <NothingFound />
+            </div>
         )
     }
 
-
     return (
         <div>
+            <div>
+                <Button
+                    onClick={openModal}
+                    size='md'
+                    leftSection={<IconMoneybag size={14} />}
+                    variant='gradient'
+                >
+                    Create a new reward
+                </Button>
+
+                <CreateNewRewardModal isOpened={isModalOpen} onClose={closeModal} />
+            </div>
+
+            <Space h='xl' />
+
             {hasUnpaidRewards && (
                 <>
                     <Text fw={900} size={'xl'}>To be paid</Text>
