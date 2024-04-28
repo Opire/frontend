@@ -94,12 +94,18 @@ export const HomeRewardCard: FC<HomeRewardCardProps> = ({ data, inputRef }) => {
 
                 <Space h="8px" />
 
-                <Group style={{ gap: "4px" }}>
+                <Group style={{ gap: "6px" }}>
                     {programmingLanguagesToShow.map((programmingLanguage) => (
                         <Badge variant={"outline"} key={programmingLanguage}>
                             {programmingLanguage}
                         </Badge>
                     ))}
+
+                    {
+                        !data.project.isBotInstalled &&
+                        <Badge variant="outline" color="orange">Commands not available</Badge>
+                    }
+
                 </Group>
             </CardSection>
 

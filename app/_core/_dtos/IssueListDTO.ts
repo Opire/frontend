@@ -20,6 +20,7 @@ interface Project {
     url: string;
     name: string;
     isPublic: boolean;
+    isBotInstalled: boolean;
 }
 
 export interface IssueListDTO {
