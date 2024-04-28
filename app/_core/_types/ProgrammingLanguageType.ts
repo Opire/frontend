@@ -26,4 +26,5 @@ export type ProgrammingLanguageType =
     | 'Swift'
     | 'TypeScript'
     | 'MDX'
+    | 'SCSS'
     | 'Others'

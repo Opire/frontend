@@ -30,6 +30,7 @@ export class ProgrammingLanguage {
         'Swift',
         'TypeScript',
         'MDX',
+        'SCSS',
         'Others',
     ];
 
