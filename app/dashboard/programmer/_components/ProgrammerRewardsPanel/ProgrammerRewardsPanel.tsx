@@ -22,7 +22,7 @@ interface ProgrammerRewardsPanelProps {
 export const ProgrammerRewardsPanel: FC<ProgrammerRewardsPanelProps> = ({ }) => {
     const [isModalOpen, { close: closeModal, open: openModal }] = useDisclosure();
 
-    const { issues: allIssues, isLoading } = useGetRewardsFromProgrammer();
+    const { issues: allIssues, isLoading } = useGetRewardsFromProgrammer({ revalidateOnFocus: !isModalOpen });
     const issues = useGetFilteredByPlatform(allIssues);
 
     const unclaimedRewards = [...issues].filter((issue) => !issue.isFullyPaid && !issue.programmer.hasClaimed);

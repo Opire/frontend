@@ -18,7 +18,7 @@ export const CreatorRewardsPanel: FC<CreatorRewardsPanelProps> = ({
 }) => {
     const [isModalOpen, { close: closeModal, open: openModal }] = useDisclosure();
 
-    const { issues: allIssues, isLoading } = useGetRewardsFromCreator();
+    const { issues: allIssues, isLoading } = useGetRewardsFromCreator({ revalidateOnFocus: !isModalOpen });
     const issues = useGetFilteredByPlatform(allIssues);
 
     const unpaidRewards = [...issues].filter((issue) => !issue.isFullyPaid);
