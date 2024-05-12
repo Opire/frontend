@@ -52,6 +52,8 @@ export const NEXT_SERVER_ROUTES = {
             `${process.env.NEXT_PUBLIC_URL}/api/auth/gitlab/${code}`,
         BITBUCKET: (code: string) =>
             `${process.env.NEXT_PUBLIC_URL}/api/auth/bitbucket/${code}`,
+        PAYPAL: (code: string) =>
+            `${process.env.NEXT_PUBLIC_URL}/api/auth/paypal/${code}`,
         LOGOUT: () => `${process.env.NEXT_PUBLIC_URL}/api/auth/logout`,
     },
 };

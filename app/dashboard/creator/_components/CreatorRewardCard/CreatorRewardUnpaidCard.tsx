@@ -1,4 +1,4 @@
-import { FC, Ref } from "react";
+import { FC, Ref, useState } from "react";
 import { Avatar, AvatarGroup, Button, Card, CardSection, Flex, Group, HoverCard, HoverCardDropdown, HoverCardTarget, Modal, SimpleGrid, Space, Text, Title } from "@mantine/core";
 import Link from "next/link";
 import { useDisclosure } from "@mantine/hooks";
@@ -21,6 +21,7 @@ export const CreatorRewardUnpaidCard: FC<CreatorRewardUnpaidCardProps> = ({
     data,
     inputRef
 }) => {
+    const [isGettingLink, setIsGettingLink] = useState(false);
     const [opened, { open, close }] = useDisclosure(false);
 
     const claimerUsers = data.usersTrying.filter(userTrying => userTrying.hasClaimed);
@@ -37,7 +38,16 @@ export const CreatorRewardUnpaidCard: FC<CreatorRewardUnpaidCardProps> = ({
 
         if (claimerUsers.length === 1) {
             const claimer = claimerUsers[0];
-            await handleClickPayClaimer(claimer.id, data.issueId);
+
+            try {
+                setIsGettingLink(true);
+                await handleClickPayClaimer(claimer.id, data.issueId);
+
+            } catch (error) {
+                console.error({ error })
+            } finally {
+                setIsGettingLink(false);
+            }
         }
     }
 
@@ -125,6 +135,7 @@ export const CreatorRewardUnpaidCard: FC<CreatorRewardUnpaidCardProps> = ({
                                 size="compact-xl"
                                 variant='gradient'
                                 onClick={handleClickPay}
+                                loading={isGettingLink}
                             >
                                 Pay
                             </Button>

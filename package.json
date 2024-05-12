@@ -20,6 +20,7 @@
         "@mantine/modals": "^7.2.2",
         "@mantine/next": "^6.0.21",
         "@mantine/notifications": "^7.2.2",
+        "@paypal/react-paypal-js": "^8.3.0",
         "@tabler/icons-react": "2.46.0",
         "@vercel/analytics": "^1.2.2",
         "cookie": "^0.5.0",

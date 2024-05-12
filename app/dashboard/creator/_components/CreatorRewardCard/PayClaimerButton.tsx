@@ -1,6 +1,6 @@
 'use client'
 
-import { FC } from "react";
+import { FC, useState } from "react";
 import { Button } from "@mantine/core";
 import { API_ROUTES } from "../../../../../constants";
 import { clientCustomFetch } from "../../../../_utils/clientCustomFetch";
@@ -18,17 +18,32 @@ export const PayClaimerButton: FC<PayButtonProps> = ({
     issueId,
     priceToPay,
 }) => {
+    const [isGettingLink, setIsGettingLink] = useState(false);
+
+    const handleClickPay = async () => {
+        try {
+            setIsGettingLink(true);
+            await handleClickPayClaimer(claimerId, issueId)
+
+        } catch (error) {
+            console.error({ error })
+        } finally {
+            setIsGettingLink(false);
+        }
+    }
+
     return (
         <Button
             size={'md'}
             variant='gradient'
-            onClick={() => handleClickPayClaimer(claimerId, issueId)}
+            onClick={handleClickPay}
+            loading={isGettingLink}
         >
             {priceToPay ? `Pay: ${formatPrice(priceToPay)}` : 'Pay'}
         </Button>
 
     );
-};
+}
 
 export async function handleClickPayClaimer(claimerId: string, issueId: string): Promise<void> {
     const response = await clientCustomFetch(
