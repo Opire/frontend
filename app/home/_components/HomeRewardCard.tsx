@@ -64,7 +64,6 @@ export const HomeRewardCard: FC<HomeRewardCardProps> = ({ data, inputRef }) => {
                         >
                             <Text lineClamp={2}>{data.title}</Text>
                         </Link>
-
                     </Group>
 
                 </Group>
@@ -84,10 +83,12 @@ export const HomeRewardCard: FC<HomeRewardCardProps> = ({ data, inputRef }) => {
 
                     <Link
                         // href={`/organization/${data.organization.id}`}
-                        href={data.organization.url}
-                        style={{ color: "inherit", textDecoration: "none" }}
+                        href={data.project.url}
+                        style={{ color: "inherit", textDecoration: "none", display: 'flex', flexWrap: 'wrap' }}
                     >
-                        <Text lineClamp={1}>{data.organization.name}</Text>
+                        <Text lineClamp={1} c={"dimmed"}>{data.organization.name}</Text>
+                        <span>&nbsp;/&nbsp;</span>
+                        <Text lineClamp={1}>{data.project.name}</Text>
                     </Link>
 
                 </Group>

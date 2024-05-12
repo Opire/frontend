@@ -54,23 +54,26 @@ export const CreatorRewardUnpaidCard: FC<CreatorRewardUnpaidCardProps> = ({
                     <Group justify="space-between">
                         <Group>
                             <Avatar src={data.organization.logoURL} size='md' radius='xl' />
-                            <Text>{data.organization.name}</Text>
-                        </Group>
-
-                        <Group>
-                            <CustomImage
-                                src={`/icons/${data.platform.toLowerCase()}.png`}
-                                fallbackSrc='/icons/fallback.png'
-                                alt={data.platform}
-                                height={30}
-                                width={30}
-                            />
+                            <div
+                                style={{ display: 'flex', flexWrap: 'wrap' }}
+                            >
+                                <Text lineClamp={1} c={"dimmed"}>{data.organization.name}</Text>
+                                <span>&nbsp;/&nbsp;</span>
+                                <Text lineClamp={1}>{data.project.name}</Text>
+                            </div>
                         </Group>
                     </Group>
                 </CardSection>
 
                 <CardSection p="sm">
-                    <Group>
+                    <Group wrap="nowrap">
+                        <CustomImage
+                            src={`/icons/${data.platform.toLowerCase()}.png`}
+                            fallbackSrc='/icons/fallback.png'
+                            alt={data.platform}
+                            height={44}
+                            width={44}
+                        />
                         <Link href={data.url} style={{ color: 'inherit', textDecoration: 'none' }}>
                             <Title order={3}>{data.title}</Title>
                         </Link>
