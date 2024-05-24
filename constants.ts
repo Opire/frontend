@@ -28,7 +28,9 @@ export const API_ROUTES = {
         STRIPE_LINK_CONFIGURE_ACCOUNT: () =>
             `${process.env.NEXT_PUBLIC_API_URL}/payments/stripe/configure-account`,
         STRIPE_LINK_SEND_TO_ORGANIZATION_EMAIL: (organizationId: string) =>
-            `${process.env.NEXT_PUBLIC_API_URL}/payments/stripe/organizations/${organizationId}/send-access-link`
+            `${process.env.NEXT_PUBLIC_API_URL}/payments/stripe/organizations/${organizationId}/send-access-link`,
+        PAYPAL_LINK_CONFIGURE_ACCOUNT: () =>
+            `${process.env.NEXT_PUBLIC_API_URL}/payments/paypal/configure-account`,
     },
     USERS: {
         SETTINGS: () => `${process.env.NEXT_PUBLIC_API_URL}/users/settings`,
