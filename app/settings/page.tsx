@@ -8,6 +8,7 @@ import { StripeOrganizationAccountSetting } from "./_components/StripeOrganizati
 import { IconInfoCircle } from "@tabler/icons-react";
 import Link from "next/link";
 import { URL_DOCUMENTATION } from "../../constants";
+import { StripePersonalAccountSetting2 } from "./_components/StripePersonalAccountSetting/StripePersonalAccountSetting2";
 
 export const metadata: Metadata = {
     title: 'Opire - Settings',
@@ -38,7 +39,10 @@ export default async function Page() {
                 Payments
             </Text>
             <Group>
-                <StripePersonalAccountSetting
+                {/* <StripePersonalAccountSetting
+                    hasStripeConfigured={userSettings.payments.canReceivePayments}
+                /> */}
+                <StripePersonalAccountSetting2
                     hasStripeConfigured={userSettings.payments.canReceivePayments}
                 />
             </Group>
