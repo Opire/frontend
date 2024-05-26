@@ -58,7 +58,7 @@ export default async function Page() {
 
                     <Blockquote color='green' icon={<IconInfoCircle />}>
                         <Text style={{ fontSize: '1.2rem' }}>
-                            We will send an email to the organization's email address containing the link to configure the Stripe account and access the Stripe dashboard. This step is required for organizations intending to receive payments from rewards created by individuals outside the project. If you want to know more read <Anchor component={Link} href={`${URL_DOCUMENTATION}/overview/getting-started#set-up-the-organizations-stripe-account`}>our docs</Anchor>.
+                            We will send an email to the organization's email address containing the link to connect the Stripe account and access the Stripe dashboard. This step is required for organizations intending to receive payments from rewards created by individuals outside the project. If you want to know more read <Anchor component={Link} href={`${URL_DOCUMENTATION}/overview/getting-started#set-up-the-organizations-stripe-account`}>our docs</Anchor>.
                         </Text>
                     </Blockquote>
 

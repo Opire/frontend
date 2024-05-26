@@ -2,7 +2,7 @@
 'use client'
 
 import { Button, Center, Flex, Space, Text } from "@mantine/core";
-import { IconBrandStripe } from "@tabler/icons-react";
+import { IconBrandStripe, IconCornerDownRight } from "@tabler/icons-react";
 import { FC, useState } from "react";
 import { API_ROUTES } from "../../../../constants";
 import { useRouter } from "next/navigation";
@@ -28,9 +28,9 @@ export const StripePersonalAccountSetting: FC<StripeSettingsProps> = ({
         const clientId = process.env.NEXT_PUBLIC_STRIPE_CLIENT_ID!;
         const scope: 'read_write' | 'read_only' = 'read_write';
         const redirectUri = `${process.env.NEXT_PUBLIC_URL}/auth/stripe`;
+        const state = userId;
 
-        const urlForAuth = `https://connect.stripe.com/oauth/authorize?response_type=code&amp;client_id=${clientId}&amp;scope=${scope}&amp;redirect_uri=${redirectUri}&amp;`;
-        // window.open(urlForAuth, '_blank');
+        const urlForAuth = `https://connect.stripe.com/oauth/authorize?response_type=code&amp;client_id=${clientId}&amp;scope=${scope}&amp;redirect_uri=${redirectUri}&amp;state=${state}`;
         window.open(urlForAuth, '_self');
     }
 
@@ -68,6 +68,7 @@ export const StripePersonalAccountSetting: FC<StripeSettingsProps> = ({
                             target="_blank"
                             href={stripeLoginURL}
                         >
+                            <IconCornerDownRight style={{ marginRight: '8px' }} />
                             <Text lineClamp={2} style={{ fontSize: '1.2rem' }}>
                                 Go to your Stripe dashboard
                             </Text>

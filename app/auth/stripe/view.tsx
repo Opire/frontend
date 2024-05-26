@@ -6,19 +6,20 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { clientCustomFetch } from "../../_utils/clientCustomFetch";
 import { API_ROUTES } from "../../../constants";
 
-export function AuthStripeView({ userId }: { userId: string }) {
+export function AuthStripeView() {
     const router = useRouter();
     const searchParams = useSearchParams();
 
     useEffect(() => {
         const code = searchParams.get("code") as string;
-        configureStripe(code);
+        const ownerId = searchParams.get("state") as string;
+        configureStripe({ code, ownerId });
     }, [searchParams]);
 
-    async function configureStripe(code: string) {
+    async function configureStripe({ code, ownerId }: { code: string, ownerId: string }) {
         await clientCustomFetch(API_ROUTES.PAYMENTS.STRIPE_CONNECT_ACCOUNT(), {
             method: "POST",
-            body: { code, ownerId: userId },
+            body: { code, ownerId },
         });
         router.push('/settings')
     }

@@ -1,6 +1,11 @@
 import { PlatformType } from "../_types/PlatformType";
 import { UserPlatformInfoDTO } from "./UserPlatformInfoDTO";
 
+interface UserSettingOrganizationPayments {
+    canReceivePayments: boolean;
+    email: string | null;
+}
+
 interface UserSettingOrganization {
     id: string;
     name: string;
@@ -8,7 +13,7 @@ interface UserSettingOrganization {
     hasEmail: boolean;
     platform: PlatformType;
     logoURL: string;
-    canReceivePayments: boolean;
+    payments: UserSettingOrganizationPayments;
 }
 
 interface UserSettingPayments {
