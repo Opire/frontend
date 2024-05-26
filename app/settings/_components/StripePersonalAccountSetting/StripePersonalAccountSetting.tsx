@@ -44,14 +44,11 @@ export const StripePersonalAccountSetting: FC<StripeSettingsProps> = ({
                     ownerId: userId
                 }
             });
-
-            router.refresh()
         } finally {
             setIsDisconnectingAccount(false);
+            router.refresh()
         }
-
     }
-
 
     if (hasStripeConfigured) {
         const stripeLoginURL = 'https://connect.stripe.com/login';
