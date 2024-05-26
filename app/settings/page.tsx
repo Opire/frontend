@@ -2,13 +2,12 @@ import { Anchor, Blockquote, Divider, Group, SimpleGrid, Space, Stack, Text } fr
 import { Metadata } from "next";
 import { redirectToHomeIfNotLogged } from "../_utils/redirectToHomeIfNotLogged";
 import { getUserSettings } from "../_utils/getUserSettings";
-import { StripePersonalAccountSetting } from "./_components/StripePersonalAccountSetting/StripePersonalAccountSetting";
 import { GitHubInstallApp } from "./_components/GitHubInstallApp/GitHubInstallApp";
 import { StripeOrganizationAccountSetting } from "./_components/StripeOrganizationAccountSetting/StripeOrganizationAccountSetting";
 import { IconInfoCircle } from "@tabler/icons-react";
 import Link from "next/link";
 import { URL_DOCUMENTATION } from "../../constants";
-import { StripePersonalAccountSetting2 } from "./_components/StripePersonalAccountSetting/StripePersonalAccountSetting2";
+import { StripePersonalAccountSetting } from "./_components/StripePersonalAccountSetting/StripePersonalAccountSetting";
 
 export const metadata: Metadata = {
     title: 'Opire - Settings',
@@ -39,11 +38,10 @@ export default async function Page() {
                 Payments
             </Text>
             <Group>
-                {/* <StripePersonalAccountSetting
+                <StripePersonalAccountSetting
                     hasStripeConfigured={userSettings.payments.canReceivePayments}
-                /> */}
-                <StripePersonalAccountSetting2
-                    hasStripeConfigured={userSettings.payments.canReceivePayments}
+                    email={userSettings.payments.email}
+                    userId={userSettings.id}
                 />
             </Group>
 

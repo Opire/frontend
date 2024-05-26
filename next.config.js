@@ -1,7 +1,8 @@
 module.exports = {
     pageExtensions: ['js', 'jsx', 'ts', 'tsx'],
     // swcMinify: true,
-    reactStrictMode: true,
+    // reactStrictMode: true,
+    reactStrictMode: false, // This is done to avoid useEffect running twice
     images: {
         remotePatterns: [
             {

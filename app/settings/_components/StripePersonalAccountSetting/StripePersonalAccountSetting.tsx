@@ -1,156 +1,113 @@
+
 'use client'
 
-import { Text, Accordion, Flex, Anchor, LoadingOverlay, Box } from "@mantine/core";
+import { Button, Center, Flex, Space, Text } from "@mantine/core";
+import { IconBrandStripe } from "@tabler/icons-react";
 import { FC, useState } from "react";
-import { IconReceipt, IconReceiptOff, IconUserCheck, IconWallet, IconWalletOff } from "@tabler/icons-react";
-import Link from "next/link";
-import { API_ROUTES, URL_DOCUMENTATION } from "../../../../constants";
+import { API_ROUTES } from "../../../../constants";
+import { useRouter } from "next/navigation";
 import { clientCustomFetch } from "../../../_utils/clientCustomFetch";
 
-interface StripeSettingProps {
+
+interface StripeSettingsProps {
     hasStripeConfigured: boolean;
+    email: string | null,
+    userId: string,
 }
 
-export const StripePersonalAccountSetting: FC<StripeSettingProps> = ({
+export const StripePersonalAccountSetting: FC<StripeSettingsProps> = ({
     hasStripeConfigured,
+    email,
+    userId,
 }) => {
+    const [isDisconnectingAccount, setIsDisconnectingAccount] = useState(false);
 
-    const stripInfo = [
-        {
-            id: 'create-account',
-            icon: <IconUserCheck color="lightgreen" />,
-            label: 'Payment account automatically created',
-            content: <InfoPaymentAccountCreated />,
-            defaultOpen: false,
-        },
-        {
-            id: 'configure-account',
-            icon: hasStripeConfigured ? <IconWallet color="lightgreen" /> : <IconWalletOff color="lightgray" />,
-            label: hasStripeConfigured ? 'Stripe account active 🥳 ' : 'Configure your payment account',
-            content: hasStripeConfigured ? <ConfigureStripeAccountSuccess /> : <ConfigureStripeAccountPending />,
-            defaultOpen: !hasStripeConfigured,
-        },
-        {
-            id: 'access-account',
-            icon: hasStripeConfigured ? <IconReceipt color="#26C6DA" /> : <IconReceiptOff color="#26C6DA" />,
-            label: hasStripeConfigured ? 'Check your payments 💰' : 'Check your payments once you have your account fully configured',
-            content: hasStripeConfigured ? <GoToStripeAccountSuccess /> : <GoToStripeAccountPending />,
-            defaultOpen: hasStripeConfigured,
-        },
-    ];
+    const router = useRouter();
 
-    return (
-        <Accordion chevronPosition="left" variant="contained" w='100%' defaultValue={stripInfo.find(info => info.defaultOpen)!.id}>
-            {stripInfo.map((item) => (
-                <Accordion.Item value={item.id} key={item.label}>
-                    <Accordion.Control>
-                        <Flex gap='8px'>
-                            {item.icon} {item.label}
-                        </Flex>
-                    </Accordion.Control>
+    async function connectStripeAccount() {
+        const clientId = process.env.NEXT_PUBLIC_STRIPE_CLIENT_ID!;
+        const scope: 'read_write' | 'read_only' = 'read_write';
+        const redirectUri = `${process.env.NEXT_PUBLIC_URL}/auth/stripe`;
 
-                    <Accordion.Panel>
-                        {item.content}
-                    </Accordion.Panel>
-                </Accordion.Item>
-            ))}
-        </Accordion >
-    );
-}
+        const urlForAuth = `https://connect.stripe.com/oauth/authorize?response_type=code&amp;client_id=${clientId}&amp;scope=${scope}&amp;redirect_uri=${redirectUri}&amp;`;
+        // window.open(urlForAuth, '_blank');
+        window.open(urlForAuth, '_self');
+    }
 
-function InfoPaymentAccountCreated(): JSX.Element {
-    const documentationURL = `${URL_DOCUMENTATION}/payment-account`; //TODO: review
-    const stripeDocumentationURL = 'https://stripe.com/docs/connect/express-accounts';
+    async function disconnectStripeAccount() {
+        try {
+            setIsDisconnectingAccount(true);
 
-    return (
-        <Text c="dimmed">
-            The first time you logged in Opire, we automatically created a <Anchor component={Link} href={stripeDocumentationURL} target="_blank">Stripe account</Anchor> for you. This Stripe account will be used for receiving payments from this app.
-            <br />
-            <br />
-            For more information, check <Anchor component={Link} href={documentationURL} target="_blank">our documentation</Anchor>.
-        </Text>
-    )
-}
+            await clientCustomFetch(API_ROUTES.PAYMENTS.STRIPE_DISCONNECT_ACCOUNT(), {
+                method: "POST",
+                body: {
+                    ownerId: userId
+                }
+            });
 
-function ConfigureStripeAccountPending(): JSX.Element {
-    const [isLoadingLink, setIsLoadingLink] = useState(false);
-
-    async function completeStripeData() {
-        setIsLoadingLink(true);
-
-        const response = await clientCustomFetch(API_ROUTES.PAYMENTS.STRIPE_LINK_CONFIGURE_ACCOUNT());
-        const data = await response.json();
-
-
-        if (data) {
-            window.open(data.url, '_blank');
+            router.refresh()
+        } finally {
+            setIsDisconnectingAccount(false);
         }
-        setIsLoadingLink(false);
+
+    }
+
+
+    if (hasStripeConfigured) {
+        const stripeLoginURL = 'https://connect.stripe.com/login';
+
+        return (
+            <div>
+                {email && <Text c='dimmed'>Connected with {email}</Text>}
+                <Space h='0.6rem' />
+
+                <Center>
+                    <Flex gap='1rem' wrap={'wrap'}>
+                        <Button
+                            radius='2rem'
+                            size="lg"
+                            variant="gradient"
+                            component="a"
+                            target="_blank"
+                            href={stripeLoginURL}
+                        >
+                            <Text lineClamp={2} style={{ fontSize: '1.2rem' }}>
+                                Go to your Stripe dashboard
+                            </Text>
+                        </Button>
+
+                        <Button
+                            radius='2rem'
+                            size="lg"
+                            variant="outline"
+                            color="red"
+                            loading={isDisconnectingAccount}
+                            onClick={disconnectStripeAccount}
+                        >
+                            <IconBrandStripe style={{ marginRight: '8px' }} />
+                            <Text lineClamp={2} style={{ fontSize: '1.2rem' }}>
+                                Disconnect Stripe account
+                            </Text>
+                        </Button>
+                    </Flex>
+                </Center>
+            </div>
+        )
     }
 
     return (
-        <>
-            <Box pos="relative">
-                <LoadingOverlay visible={isLoadingLink} />
-
-                <Text c="dimmed">
-                    If you want to receive payments from Opire, you need to finish the configuration of your Stripe account. <Anchor fw={'bold'} component={'button'} onClick={completeStripeData}>Click here to complete your Stripe account data</Anchor>.
+        <Center>
+            <Button
+                radius='2rem'
+                size="lg"
+                variant="gradient"
+                onClick={connectStripeAccount}
+            >
+                <IconBrandStripe style={{ marginRight: '8px' }} />
+                <Text lineClamp={2} style={{ fontSize: '1.2rem' }}>
+                    Connect with Stripe
                 </Text>
-            </Box>
-        </>
-    )
-}
-
-function ConfigureStripeAccountSuccess(): JSX.Element {
-    const [isLoadingLink, setIsLoadingLink] = useState(false);
-
-    async function completeStripeData() {
-        setIsLoadingLink(true);
-
-        const response = await clientCustomFetch(API_ROUTES.PAYMENTS.STRIPE_LINK_CONFIGURE_ACCOUNT());
-        const data = await response.json();
-
-
-        if (data) {
-            window.open(data.url, '_blank');
-        }
-        setIsLoadingLink(false);
-    }
-
-    const documentationURL = `${URL_DOCUMENTATION}/payments`; //TODO: review
-
-    return (
-        <>
-            <Box pos="relative">
-                <LoadingOverlay visible={isLoadingLink} />
-
-                <Text c="dimmed">
-                    Congrats! 👏🏼 You can receive payments from Opire 🎉 For more information, check <Anchor component={Link} href={documentationURL} target="_blank">our documentation</Anchor>.
-                    <br />
-                    <br />
-                    If you want to update the configuration of your payment account, <Anchor fw={'bold'} component={'button'} onClick={completeStripeData}>click here</Anchor>.
-                </Text>
-            </Box>
-        </>
-    )
-}
-
-function GoToStripeAccountPending(): JSX.Element {
-
-    return (
-        <Text c="dimmed">
-            😔 Sorry, you need to have your Stripe account configured before you can start checking your payments.
-        </Text>
-    )
-}
-
-function GoToStripeAccountSuccess(): JSX.Element {
-    // const stripeLoginURL = 'https://connect.stripe.com/login';
-    const stripeLoginURL = 'https://connect.stripe.com/express_login';
-
-    return (
-        <Text c="dimmed">
-            Everything ready to start receiving payments! You can go to your <Anchor fw='bold' component={Link} href={stripeLoginURL} target="_blank">Stripe account</Anchor> to see your payments dashboard.
-        </Text>
+            </Button>
+        </Center>
     )
 }

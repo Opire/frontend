@@ -4,6 +4,7 @@ import { LoadingOverlay } from "@mantine/core";
 import { useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { clientCustomFetch } from "../../_utils/clientCustomFetch";
+import { API_ROUTES } from "../../../constants";
 
 export function AuthStripeView({ userId }: { userId: string }) {
     const router = useRouter();
@@ -15,7 +16,7 @@ export function AuthStripeView({ userId }: { userId: string }) {
     }, [searchParams]);
 
     async function configureStripe(code: string) {
-        await clientCustomFetch(`${process.env.NEXT_PUBLIC_API_URL}/payments/stripe/connect`, {
+        await clientCustomFetch(API_ROUTES.PAYMENTS.STRIPE_CONNECT_ACCOUNT(), {
             method: "POST",
             body: { code, ownerId: userId },
         });
