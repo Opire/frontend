@@ -2,12 +2,12 @@ import { Anchor, Blockquote, Divider, Group, SimpleGrid, Space, Stack, Text } fr
 import { Metadata } from "next";
 import { redirectToHomeIfNotLogged } from "../_utils/redirectToHomeIfNotLogged";
 import { getUserSettings } from "../_utils/getUserSettings";
-import { StripePersonalAccountSetting } from "./_components/StripePersonalAccountSetting/StripePersonalAccountSetting";
 import { GitHubInstallApp } from "./_components/GitHubInstallApp/GitHubInstallApp";
 import { StripeOrganizationAccountSetting } from "./_components/StripeOrganizationAccountSetting/StripeOrganizationAccountSetting";
 import { IconInfoCircle } from "@tabler/icons-react";
 import Link from "next/link";
 import { URL_DOCUMENTATION } from "../../constants";
+import { StripePersonalAccountSetting } from "./_components/StripePersonalAccountSetting/StripePersonalAccountSetting";
 
 export const metadata: Metadata = {
     title: 'Opire - Settings',
@@ -40,6 +40,8 @@ export default async function Page() {
             <Group>
                 <StripePersonalAccountSetting
                     hasStripeConfigured={userSettings.payments.canReceivePayments}
+                    email={userSettings.payments.email}
+                    userId={userSettings.id}
                 />
             </Group>
 
@@ -56,7 +58,7 @@ export default async function Page() {
 
                     <Blockquote color='green' icon={<IconInfoCircle />}>
                         <Text style={{ fontSize: '1.2rem' }}>
-                            We will send an email to the organization's email address containing the link to configure the Stripe account and access the Stripe dashboard. This step is required for organizations intending to receive payments from rewards created by individuals outside the project. If you want to know more read <Anchor component={Link} href={`${URL_DOCUMENTATION}/overview/getting-started#set-up-the-organizations-stripe-account`}>our docs</Anchor>.
+                            We will send an email to the organization's email address containing the link to connect the Stripe account and access the Stripe dashboard. This step is required for organizations intending to receive payments from rewards created by individuals outside the project. If you want to know more read <Anchor component={Link} href={`${URL_DOCUMENTATION}/overview/getting-started#set-up-the-organizations-stripe-account`}>our docs</Anchor>.
                         </Text>
                     </Blockquote>
 

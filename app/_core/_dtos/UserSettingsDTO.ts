@@ -1,6 +1,11 @@
 import { PlatformType } from "../_types/PlatformType";
 import { UserPlatformInfoDTO } from "./UserPlatformInfoDTO";
 
+interface UserSettingOrganizationPayments {
+    canReceivePayments: boolean;
+    email: string | null;
+}
+
 interface UserSettingOrganization {
     id: string;
     name: string;
@@ -8,7 +13,13 @@ interface UserSettingOrganization {
     hasEmail: boolean;
     platform: PlatformType;
     logoURL: string;
+    payments: UserSettingOrganizationPayments;
+}
+
+interface UserSettingPayments {
     canReceivePayments: boolean;
+    organizations: UserSettingOrganization[];
+    email: string | null;
 }
 
 export interface UserSettingsDTO {
@@ -17,8 +28,5 @@ export interface UserSettingsDTO {
     github: UserPlatformInfoDTO | null;
     gitlab: UserPlatformInfoDTO | null;
     bitbucket: UserPlatformInfoDTO | null;
-    payments: {
-        canReceivePayments: boolean;
-        organizations: UserSettingOrganization[];
-    };
+    payments: UserSettingPayments;
 }

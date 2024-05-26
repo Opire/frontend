@@ -65,7 +65,7 @@ export const StripeOrganizationAccountSettingCard: FC<StripeOrganizationAccountS
     }
 
 
-    const hasCompletedTheOrganizationOnboarding = organization.canReceivePayments;
+    const hasCompletedTheOrganizationOnboarding = organization.payments.canReceivePayments;
 
     return (
         <Card shadow="xl" padding="xl">
@@ -119,6 +119,9 @@ export const StripeOrganizationAccountSettingCard: FC<StripeOrganizationAccountS
                         </Badge>
                     }
                 </Center>
+
+                <Space h='0.4rem' />
+                {organization.payments.email && <Text ta='center' c='dimmed'>Connected with {organization.payments.email}</Text>}
             </Card.Section>
 
             <Card.Section p='md'>
