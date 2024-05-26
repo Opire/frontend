@@ -120,8 +120,13 @@ export const StripeOrganizationAccountSettingCard: FC<StripeOrganizationAccountS
                     }
                 </Center>
 
-                <Space h='0.4rem' />
-                {organization.payments.email && <Text ta='center' c='dimmed'>Connected with {organization.payments.email}</Text>}
+                {
+                    hasCompletedTheOrganizationOnboarding &&
+                    <>
+                        <Space h='0.4rem' />
+                        {organization.payments.email && <Text ta='center' c='dimmed'>Connected with {organization.payments.email}</Text>}
+                    </>
+                }
             </Card.Section>
 
             <Card.Section p='md'>
