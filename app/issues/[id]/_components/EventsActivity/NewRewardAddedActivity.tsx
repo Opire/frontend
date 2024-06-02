@@ -1,12 +1,13 @@
 import { FC } from "react";
 import { IssuePrimitive } from "../../../../_core/_primitives/IssuePrimitive";
 import { BaseEventPrimitives } from "../../../../_core/_primitives/BaseEventPrimitives";
-import { Avatar, Skeleton, Text, Timeline } from "@mantine/core";
+import { Avatar, AvatarGroup, Skeleton, Text, Timeline } from "@mantine/core";
 import { getRelativeTime } from "../../../../_utils/getRelativeTime";
 import { formatPrice } from "../../../../_utils/formatPrice";
 import { RewardPrimitive } from "../../../../_core/_primitives/RewardPrimitive";
 import Link from "next/link";
 import { useGetUserPublicInfoFromPlatform } from "../../../../../hooks/useGetUserPublicInfoFromPlatform";
+import { IconCoins } from "@tabler/icons-react";
 
 interface NewRewardAddedActivityProps {
     event: BaseEventPrimitives;
@@ -20,7 +21,14 @@ export const NewRewardAddedActivity: FC<NewRewardAddedActivityProps> = ({ event 
     const { isLoading, username, avatarURL, usernameLink } = useGetUserPublicInfoFromPlatform({ userId: attributes.reward.creatorId, platform })
 
     return (
-        <Timeline.Item title="New reward" bullet={<Avatar src={avatarURL} alt={username} size='sm' radius='xl' />} >
+        <Timeline.Item title="New reward" bullet={
+            <AvatarGroup>
+                <Avatar src={avatarURL} alt={username} size='sm' radius='xl' />
+                <Avatar size='sm'>
+                    <IconCoins stroke='1.5' />
+                </Avatar>
+            </AvatarGroup>
+        }>
             {isLoading &&
                 <Skeleton height={'2rem'} radius="xl" />
             }

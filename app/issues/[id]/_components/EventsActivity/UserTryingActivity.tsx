@@ -1,10 +1,11 @@
-import { Avatar, Skeleton, Text, Timeline } from "@mantine/core";
+import { Avatar, AvatarGroup, Skeleton, Text, Timeline } from "@mantine/core";
 import { FC } from "react";
 import { IssuePrimitive } from "../../../../_core/_primitives/IssuePrimitive";
 import { BaseEventPrimitives } from "../../../../_core/_primitives/BaseEventPrimitives";
 import { getRelativeTime } from "../../../../_utils/getRelativeTime";
 import { useGetUserPublicInfoFromPlatform } from "../../../../../hooks/useGetUserPublicInfoFromPlatform";
 import Link from "next/link";
+import { IconHeartHandshake } from "@tabler/icons-react";
 
 interface UserTryingActivityProps {
     event: BaseEventPrimitives;
@@ -19,7 +20,14 @@ export const UserTryingActivity: FC<UserTryingActivityProps> = ({ event }) => {
     const { isLoading, username, usernameLink, avatarURL } = useGetUserPublicInfoFromPlatform({ userId: attributes.userId, platform })
 
     return (
-        <Timeline.Item title="New attempt" bullet={<Avatar src={avatarURL} alt={username} size='sm' radius='xl' />} >
+        <Timeline.Item title="New attempt" bullet={
+            <AvatarGroup>
+                <Avatar src={avatarURL} alt={username} size='sm' radius='xl' />
+                <Avatar size='sm'>
+                    <IconHeartHandshake stroke='1.5' />
+                </Avatar>
+            </AvatarGroup>
+        } >
             {isLoading &&
                 <Skeleton height={'2rem'} radius="xl" />
             }

@@ -1,4 +1,4 @@
-import { Box, Card, Skeleton, Timeline } from "@mantine/core";
+import { Card, Center, Skeleton, Timeline, Text, Space } from "@mantine/core";
 import { useGetActivityFromIssue } from "../../../../hooks/useGetActivityFromIssue";
 import { IssuePrimitive } from "../../../_core/_primitives/IssuePrimitive";
 import { FC } from "react";
@@ -21,13 +21,33 @@ export const IssueActivity: FC<IssueActivityProps> = ({ issue }) => {
     if (isLoading) {
         return (
             <Card withBorder shadow="md" radius='md' h={'100%'}>
+                <Center>
+                    <Text
+                        style={{ fontSize: "1.2rem", fontWeight: "bold" }}
+                    >
+                        Activity
+                    </Text>
+                </Center>
+
+                <Space h={'1rem'} />
+
                 <Skeleton height={'70vh'} radius="xl" />
             </Card>
         )
     }
 
     return (
-        <Card withBorder shadow="md" radius='md' h={'100%'} mih={'50vh'}>
+        <Card withBorder shadow="md" radius='md' h={'100%'}>
+            <Center>
+                <Text
+                    style={{ fontSize: "1.2rem", fontWeight: "bold" }}
+                >
+                    Activity
+                </Text>
+            </Center>
+
+            <Space h={'1rem'} />
+
             <Timeline active={1} bulletSize={24} lineWidth={2}>
                 {activity.map(event => {
                     const component = activityMaperComponent[event.eventName];
