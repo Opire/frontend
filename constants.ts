@@ -1,4 +1,7 @@
 export const API_ROUTES = {
+    ACTIVITY: {
+        BY_ISSUE_ID: (id: string) => `${process.env.NEXT_PUBLIC_API_URL}/activity/issues/${id}`,
+    },
     REWARDS: {
         CREATED_BY_ME: () =>
             `${process.env.NEXT_PUBLIC_API_URL}/rewards/created`,
@@ -9,6 +12,7 @@ export const API_ROUTES = {
     },
     ISSUES: {
         CLAIM_FROM_ISSUE_URL: () => `${process.env.NEXT_PUBLIC_API_URL}/issues/claim/fromIssueURL`,
+        BY_ID: (id: string) => `${process.env.NEXT_PUBLIC_API_URL}/issues/${id}`,
     },
     AUTH: {
         GITHUB: (code: string) =>
@@ -32,6 +36,7 @@ export const API_ROUTES = {
     },
     USERS: {
         SETTINGS: () => `${process.env.NEXT_PUBLIC_API_URL}/users/settings`,
+        BY_ID: (userId: string) => `${process.env.NEXT_PUBLIC_API_URL}/users/${userId}`,
     },
     TIPS: {
         CREATED_BY_ME: () =>

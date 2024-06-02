@@ -12,13 +12,14 @@ import {
     Space,
     Text,
 } from "@mantine/core";
-import Link from "next/link";
 import { FC, Ref, useEffect } from "react";
 import { CustomImage } from "../../_components/CustomImage";
 import { splitToShow } from "../../_utils/splitToShow";
 import { formatPrice } from "../../_utils/formatPrice";
 import { getRelativeTime } from "../../_utils/getRelativeTime";
 import { IssueListDTO } from "../../_core/_dtos/IssueListDTO";
+import { useRouter } from "next/navigation";
+import { useHover } from "@mantine/hooks";
 
 interface HomeRewardCardProps {
     data: IssueListDTO;
@@ -29,6 +30,10 @@ const MAX_NUMBER_OF_USERS_TO_SHOW = 3;
 const MAX_NUMBER_OF_PROGRAMMING_LANGUAGES_TO_SHOW = 4;
 
 export const HomeRewardCard: FC<HomeRewardCardProps> = ({ data, inputRef }) => {
+    const { hovered, ref: hoverRef } = useHover();
+    const router = useRouter();
+
+    // This is here to render the card in the client side
     useEffect(() => { }, []);
 
     const [usersToShow, usersHidden] = splitToShow(
@@ -44,9 +49,13 @@ export const HomeRewardCard: FC<HomeRewardCardProps> = ({ data, inputRef }) => {
         MAX_NUMBER_OF_PROGRAMMING_LANGUAGES_TO_SHOW
     )
 
+    const redirectToDetails = () => {
+        router.push(`/issues/${data.id}`)
+    }
+
     return (
-        <Card ref={inputRef} withBorder shadow="md" radius="md" style={{ display: 'flex', justifyContent: 'space-between' }}>
-            <CardSection withBorder p="sm">
+        <Card ref={hoverRef} withBorder shadow={'md'} radius="md" style={{ display: 'flex', justifyContent: 'space-between', cursor: 'pointer', transition: 'transform 100ms ease-out', transform: hovered ? 'scale(1.01)' : '' }} onClick={redirectToDetails}>
+            <CardSection withBorder p="sm" ref={inputRef}>
                 <Group justify="space-between">
                     <Group wrap="nowrap" h={"50px"}>
                         <CustomImage
@@ -57,13 +66,7 @@ export const HomeRewardCard: FC<HomeRewardCardProps> = ({ data, inputRef }) => {
                             width={44}
                         />
 
-                        <Link
-                            href={data.url}
-                            target="_blank"
-                            style={{ color: "inherit", textDecoration: "none" }}
-                        >
-                            <Text lineClamp={2}>{data.title}</Text>
-                        </Link>
+                        <Text lineClamp={2}>{data.title}</Text>
                     </Group>
 
                 </Group>
@@ -81,15 +84,11 @@ export const HomeRewardCard: FC<HomeRewardCardProps> = ({ data, inputRef }) => {
                         radius="xl"
                     />
 
-                    <Link
-                        // href={`/organization/${data.organization.id}`}
-                        href={data.project.url}
-                        style={{ color: "inherit", textDecoration: "none", display: 'flex', flexWrap: 'wrap' }}
-                    >
+                    <div style={{ display: 'flex', flexWrap: 'wrap' }}>
                         <Text lineClamp={1} c={"dimmed"}>{data.organization.name}</Text>
                         <span>&nbsp;/&nbsp;</span>
                         <Text lineClamp={1}>{data.project.name}</Text>
-                    </Link>
+                    </div>
 
                 </Group>
 

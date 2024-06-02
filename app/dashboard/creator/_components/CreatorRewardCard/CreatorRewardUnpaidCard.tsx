@@ -1,7 +1,6 @@
-import { FC, Ref } from "react";
+import { FC, MouseEventHandler, Ref } from "react";
 import { Avatar, AvatarGroup, Button, Card, CardSection, Flex, Group, HoverCard, HoverCardDropdown, HoverCardTarget, Modal, SimpleGrid, Space, Text, Title } from "@mantine/core";
-import Link from "next/link";
-import { useDisclosure } from "@mantine/hooks";
+import { useDisclosure, useHover } from "@mantine/hooks";
 import { ClaimerUserCard } from "../ClaimerUserCard";
 import { handleClickPayClaimer } from "./PayClaimerButton";
 import { CustomImage } from "../../../../_components/CustomImage";
@@ -9,6 +8,7 @@ import { formatPrice } from "../../../../_utils/formatPrice";
 import { getRelativeTime } from "../../../../_utils/getRelativeTime";
 import { splitToShow } from "../../../../_utils/splitToShow";
 import { IssueByCreatorDTO } from "../../../../_core/_dtos/IssueByCreatorDTO";
+import { useRouter } from "next/navigation";
 
 interface CreatorRewardUnpaidCardProps {
     data: IssueByCreatorDTO;
@@ -22,6 +22,8 @@ export const CreatorRewardUnpaidCard: FC<CreatorRewardUnpaidCardProps> = ({
     inputRef
 }) => {
     const [opened, { open, close }] = useDisclosure(false);
+    const { hovered, ref: hoverRef } = useHover();
+    const router = useRouter();
 
     const claimerUsers = data.usersTrying.filter(userTrying => userTrying.hasClaimed);
     const [claimerUsersToShow, claimerUsersHidden] = splitToShow(claimerUsers, MAX_NUMBER_OF_USERS_TO_SHOW);
@@ -29,7 +31,9 @@ export const CreatorRewardUnpaidCard: FC<CreatorRewardUnpaidCardProps> = ({
 
     const amountOfExtraUsers = claimerUsersHidden.length;
 
-    const handleClickPay = async () => {
+    const handleClickPay = async (event: React.MouseEvent<HTMLButtonElement>) => {
+        event.stopPropagation();
+
         if (claimerUsers.length > 1) {
             open();
             return;
@@ -41,16 +45,21 @@ export const CreatorRewardUnpaidCard: FC<CreatorRewardUnpaidCardProps> = ({
         }
     }
 
+    const redirectToDetails = () => {
+        router.push(`/issues/${data.issueId}`)
+    }
+
     return (
         <>
-
             <Card
-                ref={inputRef}
+                ref={hoverRef}
                 withBorder
-                shadow="md"
+                shadow={'md'}
                 radius="md"
+                style={{ cursor: 'pointer', transition: 'transform 100ms ease-out', transform: hovered ? 'scale(1.01)' : '' }}
+                onClick={redirectToDetails}
             >
-                <CardSection withBorder p="sm">
+                <CardSection withBorder p="sm" ref={inputRef}>
                     <Group justify="space-between">
                         <Group>
                             <Avatar src={data.organization.logoURL} size='md' radius='xl' />
@@ -74,9 +83,7 @@ export const CreatorRewardUnpaidCard: FC<CreatorRewardUnpaidCardProps> = ({
                             height={44}
                             width={44}
                         />
-                        <Link href={data.url} style={{ color: 'inherit', textDecoration: 'none' }}>
-                            <Title order={3}>{data.title}</Title>
-                        </Link>
+                        <Title order={3}>{data.title}</Title>
                     </Group>
                 </CardSection>
 

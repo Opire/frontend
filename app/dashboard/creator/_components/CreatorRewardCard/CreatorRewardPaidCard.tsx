@@ -1,11 +1,12 @@
 import { FC, Ref } from "react";
 import { Avatar, AvatarGroup, Card, CardSection, Group, HoverCard, HoverCardDropdown, HoverCardTarget, Text, Title } from "@mantine/core";
-import Link from "next/link";
 import { CustomImage } from "../../../../_components/CustomImage";
 import { formatPrice } from "../../../../_utils/formatPrice";
 import { getRelativeTime } from "../../../../_utils/getRelativeTime";
 import { IssueByCreatorDTO } from "../../../../_core/_dtos/IssueByCreatorDTO";
 import { Price } from "../../../../_core/_vos/Price";
+import { useHover } from "@mantine/hooks";
+import { useRouter } from "next/navigation";
 
 interface CreatorRewardPaidCardProps {
     data: IssueByCreatorDTO;
@@ -17,15 +18,23 @@ export const CreatorRewardPaidCard: FC<CreatorRewardPaidCardProps> = ({
     inputRef
 }) => {
     const totalIssueRewardPrice = Price.sum([Price.fromPrimitives(data.alreadyPaid), Price.fromPrimitives(data.pendingToBePaid)]);
+    const { hovered, ref: hoverRef } = useHover();
+    const router = useRouter();
+
+    const redirectToDetails = () => {
+        router.push(`/issues/${data.issueId}`)
+    }
 
     return (
         <Card
-            ref={inputRef}
+            ref={hoverRef}
             withBorder
             shadow="md"
             radius="md"
+            style={{ cursor: 'pointer', transition: 'transform 100ms ease-out', transform: hovered ? 'scale(1.01)' : '' }}
+            onClick={redirectToDetails}
         >
-            <CardSection withBorder p="sm">
+            <CardSection withBorder p="sm" ref={inputRef}>
                 <Group justify="space-between">
                     <Group>
                         <Avatar src={data.organization.logoURL} size='md' radius='xl' />
@@ -49,9 +58,7 @@ export const CreatorRewardPaidCard: FC<CreatorRewardPaidCardProps> = ({
                         height={44}
                         width={44}
                     />
-                    <Link href={data.url} style={{ color: 'inherit', textDecoration: 'none' }}>
-                        <Title order={3}>{data.title}</Title>
-                    </Link>
+                    <Title order={3}>{data.title}</Title>
                 </Group>
             </CardSection>
 
