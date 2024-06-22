@@ -8,7 +8,7 @@ import { PricePrimitive } from "../../../_core/_primitives/PricePrimitive";
 import { RewardPrimitive } from "../../../_core/_primitives/RewardPrimitive";
 import { useGetUserPublicInfoFromPlatform } from "../../../../hooks/useGetUserPublicInfoFromPlatform";
 import { PlatformType } from "../../../_core/_types/PlatformType";
-
+import { ShareModal } from "./ShareModal";
 interface DetailedIssueMainDataProps {
     issue: IssuePrimitive;
 }
@@ -116,6 +116,11 @@ export const DetailedIssueMainData: FC<DetailedIssueMainDataProps> = ({ issue })
                             </Flex>
                         </Flex>
 
+                    </Center>
+                    <Space h={'0.4rem'} />
+
+                    <Center>
+                        <ShareModal issue={issue} />
                     </Center>
                     {/* </Card> */}
                 </Grid.Col>
