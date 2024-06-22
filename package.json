@@ -22,6 +22,7 @@
         "@mantine/notifications": "^7.2.2",
         "@tabler/icons-react": "2.46.0",
         "@vercel/analytics": "^1.2.2",
+        "@vercel/og": "^0.6.2",
         "cookie": "^0.5.0",
         "cookies-next": "^4.0.0",
         "dayjs": "^1.11.10",
