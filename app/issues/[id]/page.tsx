@@ -19,12 +19,13 @@ export default async function Page({
         acc.value += el.price.value
         return acc;
 
-    }, { unit: 'USD_CENT', value: 0 })
+    }, { unit: 'USD_CENT', value: 0 });
 
     return (
         <>
             <head>
                 <meta property="og:type" content="website" />
+                <meta property="og:url" content={`${process.env.NEXT_PUBLIC_URL}/issues/${issue.id}`} />
                 <meta
                     property="og:title"
                     content={`${formatPrice(totalPrice)} bounty: ${issue.title}`}
@@ -32,6 +33,10 @@ export default async function Page({
                 <meta
                     property="og:description"
                     content={`Earn up to ${formatPrice(totalPrice)} with Opire by solving this issue in ${issue.project.organization.name}/${issue.project.name}`}
+                />
+                <meta
+                    property="og:image"
+                    content={`${process.env.NEXT_PUBLIC_URL}/api/issues/${issue.id}/og`}
                 />
             </head>
 

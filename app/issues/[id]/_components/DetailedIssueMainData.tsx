@@ -29,7 +29,6 @@ export const DetailedIssueMainData: FC<DetailedIssueMainDataProps> = ({ issue })
 
     }, { unit: 'USD_CENT', value: 0 })
 
-
     const labelsAndProgrammingLanguagesToShow = [...issue.labels.filter(label => !label.includes('Reward')), ...issue.project.programmingLanguages]
 
     return (
