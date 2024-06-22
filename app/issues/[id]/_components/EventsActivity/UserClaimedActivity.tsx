@@ -34,7 +34,7 @@ export const UserClaimedActivity: FC<UserClaimedActivityProps> = ({ event }) => 
 
             {!isLoading &&
                 <Text c="dimmed" size="sm">
-                    <Link href={usernameLink}>@{username}</Link> has proposed a solution for the issue and its claiming the rewards
+                    <Link href={usernameLink}>@{username}</Link> has proposed a solution for the issue and is claiming the rewards
                 </Text>
             }
 

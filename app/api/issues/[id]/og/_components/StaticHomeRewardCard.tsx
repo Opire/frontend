@@ -1,4 +1,4 @@
-import { FC, Ref } from "react";
+import { FC } from "react";
 import { splitToShow } from "../../../../../_utils/splitToShow";
 import { IssueListDTO } from "../../../../../_core/_dtos/IssueListDTO";
 import { formatPrice } from "../../../../../_utils/formatPrice";
