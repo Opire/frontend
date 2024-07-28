@@ -23,8 +23,6 @@ export enum EVENT_NAMES {
     PaymentAccountDeactivated = 'opire.paymentAccount.deactivated',
     PaymentAccountDisconnected = 'opire.paymentAccount.disconnected',
     PaymentAccountEmailChanged = 'opire.paymentAccount.emailChanged',
-    ProgrammerRewardTransfered = 'opire.payments.rewards.programmerRewardTransfered',
-    ProgrammerRewardTransferFailed = 'opire.payments.rewards.programmerRewardTransferFailed',
     RewardsPaymentProcessed = 'opire.payments.issue.paid',
     RewardsPaymentStoppedByProgrammerAccountInactive = 'opire.payments.rewards.stoppedByProgrammerAccountInactive',
     RewardsPaymentStoppedByProgrammerAccountNotCreated = 'opire.payments.rewards.stoppedByProgrammerAccountNotCreated',
