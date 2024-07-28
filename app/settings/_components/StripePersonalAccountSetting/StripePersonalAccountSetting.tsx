@@ -41,7 +41,7 @@ export const StripePersonalAccountSetting: FC<StripeSettingsProps> = ({
             await clientCustomFetch(API_ROUTES.PAYMENTS.STRIPE_DISCONNECT_ACCOUNT(), {
                 method: "POST",
                 body: {
-                    ownerId: userId
+                    userId
                 }
             });
         } finally {
