@@ -15,8 +15,6 @@ export enum EVENT_NAMES {
     OrganizationDeleted = 'opire.organization.deleted',
     OrganizationEmailAdded = 'opire.organization.email.added',
     OrganizationUpdated = 'opire.organization.updated',
-    CodeOwnerFeeTransfered = 'opire.payments.rewards.codeOwnerFeeTransfered',
-    CodeOwnerFeeTransferFailed = 'opire.payments.rewards.codeOwnerFeeTransferFailed',
     PaymentAccountActivated = 'opire.paymentAccount.activated',
     PaymentAccountConnected = 'opire.paymentAccount.connected',
     PaymentAccountCreated = 'opire.paymentAccount.created',
