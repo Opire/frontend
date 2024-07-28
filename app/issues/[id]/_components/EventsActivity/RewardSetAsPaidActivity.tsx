@@ -15,7 +15,7 @@ interface RewardSetAsPaidActivityProps {
 }
 
 export const RewardSetAsPaidActivity: FC<RewardSetAsPaidActivityProps> = ({ event }) => {
-    const attributes = event.attributes as { rewards: RewardPrimitive[], issue: IssuePrimitive, rewardsTotalPrice: PricePrimitive, opireFee: PricePrimitive, codeOwnerFee: PricePrimitive | null, creatorId: string };
+    const attributes = event.attributes as { rewards: RewardPrimitive[], issue: IssuePrimitive, rewardsTotalPrice: PricePrimitive, opireFee: PricePrimitive, creatorId: string };
 
     const platform = attributes.issue.platform;
 

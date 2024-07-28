@@ -12,26 +12,26 @@ export function AuthStripeView() {
 
     useEffect(() => {
         const code = searchParams.get("code");
-        const ownerId = searchParams.get("state");
+        const userId = searchParams.get("state");
 
-        if (!code || !ownerId) {
+        if (!code || !userId) {
             router.push("/settings");
             return;
         }
 
-        configureStripe({ code, ownerId });
+        configureStripe({ code, userId });
     }, [searchParams]);
 
     async function configureStripe({
         code,
-        ownerId,
+        userId,
     }: {
         code: string;
-        ownerId: string;
+        userId: string;
     }) {
         await clientCustomFetch(API_ROUTES.PAYMENTS.STRIPE_CONNECT_ACCOUNT(), {
             method: "POST",
-            body: { code, ownerId },
+            body: { code, userId },
         });
         router.push("/settings");
     }
