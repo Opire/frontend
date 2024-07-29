@@ -29,7 +29,6 @@ export const API_ROUTES = {
             `${process.env.NEXT_PUBLIC_API_URL}/payments/tips/${tipId}`,
         LINK_TO_PAY_REWARDS_FOR_ISSUE: (issueId: string) =>
             `${process.env.NEXT_PUBLIC_API_URL}/payments/rewards/${issueId}`,
-        STRIPE_CONNECT_ACCOUNT: () => `${process.env.NEXT_PUBLIC_API_URL}/payments/stripe/connect`,
         STRIPE_DISCONNECT_ACCOUNT: () => `${process.env.NEXT_PUBLIC_API_URL}/payments/stripe/disconnect`,
         EXPRESS_ACCOUNT: () => `${process.env.NEXT_PUBLIC_API_URL}/payments/stripe/express-account`,
     },
