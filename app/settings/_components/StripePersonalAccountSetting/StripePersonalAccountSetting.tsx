@@ -1,12 +1,17 @@
 
 'use client'
 
-import { Button, Center, Flex, Space, Text } from "@mantine/core";
-import { IconBrandStripe, IconCornerDownRight, IconCirclePlus } from "@tabler/icons-react";
+import { Autocomplete, Button, Center, Container, Flex, Group, Modal, rem, Select, Space, Text, TextInput } from "@mantine/core";
+import { IconBrandStripe, IconCornerDownRight, IconCirclePlus, IconAt, IconUpload } from "@tabler/icons-react";
 import { FC, useState } from "react";
 import { API_ROUTES } from "../../../../constants";
 import { useRouter } from "next/navigation";
 import { clientCustomFetch } from "../../../_utils/clientCustomFetch";
+import { useDisclosure } from "@mantine/hooks";
+import { useForm } from "@mantine/form";
+import { Email } from "../../../_core/_vos/Email";
+import { STRIPE_SUPPORTED_COUNTRY_OPTIONS } from "./StripeSupportedCountryOptions";
+import { SupportedCountry } from "../../../_core/_vos/SupportedCountry";
 
 
 interface StripeSettingsProps {
@@ -20,21 +25,36 @@ export const StripePersonalAccountSetting: FC<StripeSettingsProps> = ({
     email,
     userId,
 }) => {
+    const router = useRouter();
+
     const [isDisconnectingAccount, setIsDisconnectingAccount] = useState(false);
     const [isCreatingExpressAccount, setIsCreatingExpressAccount] = useState(false);
     const [isOpeningExpressAccountOnboarding, setIsOpeningExpressAccountOnboarding] = useState(false);
 
-    const router = useRouter();
+    const [isModalForNewAccountOpened, { open: openModalForNewAccount, close: closeModalForNewAccount }] = useDisclosure(false);
 
-    async function connectStripeAccount() {
-        const clientId = process.env.NEXT_PUBLIC_STRIPE_CLIENT_ID!;
-        const scope: 'read_write' | 'read_only' = 'read_write';
-        const redirectUri = `${process.env.NEXT_PUBLIC_URL}/auth/stripe`;
-        const state = userId;
-
-        const urlForAuth = `https://connect.stripe.com/oauth/authorize?response_type=code&amp;client_id=${clientId}&amp;scope=${scope}&amp;redirect_uri=${redirectUri}&amp;state=${state}`;
-        window.open(urlForAuth, '_self');
-    }
+    const form = useForm({
+        initialValues: {
+            country: '',
+            emailForStripe: email || '',
+        },
+        validate: {
+            emailForStripe: (value: string) => {
+                try {
+                    new Email(value);
+                } catch (error) {
+                    return 'Invalid email';
+                }
+            },
+            country: (value: string) => {
+                try {
+                    SupportedCountry.fromString(value);
+                } catch (error) {
+                    return 'Invalid country';
+                }
+            },
+        },
+    });
 
     async function disconnectStripeAccount() {
         try {
@@ -53,12 +73,16 @@ export const StripePersonalAccountSetting: FC<StripeSettingsProps> = ({
     }
 
 
-    async function createExpressAccount() {
+    async function createExpressAccount({ emailForStripe, country }: { emailForStripe: string, country: string }) {
         try {
             setIsCreatingExpressAccount(true);
 
             const response = await clientCustomFetch(API_ROUTES.PAYMENTS.EXPRESS_ACCOUNT(), {
-                method: "POST"
+                method: "POST",
+                body: {
+                    country,
+                    email: emailForStripe
+                }
             });
             const data = await response.json();
 
@@ -87,7 +111,8 @@ export const StripePersonalAccountSetting: FC<StripeSettingsProps> = ({
     }
 
     if (hasStripeConfigured) {
-        const stripeLoginURL = 'https://connect.stripe.com/login';
+        // const stripeLoginURL = 'https://connect.stripe.com/login';
+        const stripeLoginURL = 'https://connect.stripe.com/express_login';
 
         return (
             <div>
@@ -114,13 +139,13 @@ export const StripePersonalAccountSetting: FC<StripeSettingsProps> = ({
                             radius='2rem'
                             size="lg"
                             variant="outline"
-                            color="red"
+                            color="blue"
                             loading={isOpeningExpressAccountOnboarding}
                             onClick={openExpressAccountOnboarding}
                         >
-                            <IconBrandStripe style={{ marginRight: '8px' }} />
+                            <IconUpload style={{ marginRight: '8px' }} />
                             <Text lineClamp={2} style={{ fontSize: '1.2rem' }}>
-                                Configure your Stripe account
+                                Update your Stripe configuration
                             </Text>
                         </Button>
 
@@ -134,7 +159,7 @@ export const StripePersonalAccountSetting: FC<StripeSettingsProps> = ({
                         >
                             <IconBrandStripe style={{ marginRight: '8px' }} />
                             <Text lineClamp={2} style={{ fontSize: '1.2rem' }}>
-                                Disconnect Stripe account
+                                Disconnect Stripe
                             </Text>
                         </Button>
                     </Flex>
@@ -144,38 +169,85 @@ export const StripePersonalAccountSetting: FC<StripeSettingsProps> = ({
     }
 
     return (
-        <Center>
-            <Flex gap='1rem' wrap={'wrap'}>
+        <>
 
-                <Button
-                    radius='2rem'
-                    size="lg"
-                    variant="gradient"
-                    onClick={connectStripeAccount}
-                >
-                    <IconBrandStripe style={{ marginRight: '8px' }} />
-                    <Text lineClamp={2} style={{ fontSize: '1.2rem' }}>
-                        Connect with Stripe (~40 countries)
-                    </Text>
-                </Button>
-
+            <Center>
                 <Button
                     radius='2rem'
                     size="lg"
                     variant="gradient"
                     color="green"
-                    loading={isCreatingExpressAccount}
-                    onClick={createExpressAccount}
+                    onClick={openModalForNewAccount}
                 >
                     <IconCirclePlus style={{ marginRight: '8px' }} />
                     <Text lineClamp={2} style={{ fontSize: '1.2rem' }}>
-                        Create Express account (+120 countries)
+                        Connect with Stripe
                     </Text>
                 </Button>
+            </Center>
 
-            </Flex>
+            <Modal
+                centered={true}
+                opened={isModalForNewAccountOpened}
+                onClose={closeModalForNewAccount}
+                size={'lg'}
+                title={
+                    <div style={{ display: 'flex', gap: '8px', justifyContent: 'center', alignItems: 'ce' }}>
+                        <IconBrandStripe size={16} color="teal" />
+                        Create a new Stripe Express account
+                    </div>
+                }
+                closeOnEscape={true}
+                closeOnClickOutside={false}
+                withCloseButton={true}
+            >
+                <form onSubmit={form.onSubmit(createExpressAccount)}>
+                    <Container size='xs'>
+                        <Space h='2rem' />
 
+                        <TextInput
+                            withAsterisk
+                            label="Email for payments"
+                            placeholder="Your email"
+                            key='emailForStripe'
+                            required
+                            {...form.getInputProps('emailForStripe')}
+                            leftSectionPointerEvents="none"
+                            leftSection={<IconAt style={{ width: rem(16), height: rem(16) }} />}
+                        />
 
-        </Center>
+                        <Space h='2rem' />
+
+                        <Select
+                            withAsterisk
+                            label="Country"
+                            placeholder="Your country"
+                            key='country'
+                            searchable
+                            clearable
+                            required
+                            {...form.getInputProps('country')}
+                            data={STRIPE_SUPPORTED_COUNTRY_OPTIONS}
+                        />
+                    </Container>
+
+                    <Space h='3rem' />
+
+                    <Group justify="flex-end" mt="md">
+                        <Button
+                            type="submit"
+                            variant="gradient"
+                            size="md"
+                            loading={isCreatingExpressAccount}
+                        >
+                            {isCreatingExpressAccount ? 'Waiting for Stripe...' : 'Create new Stripe account'}
+                        </Button>
+                    </Group>
+
+                    <Space h='1rem' />
+
+                </form>
+            </Modal>
+        </>
     )
 }
