@@ -1,4 +1,5 @@
 import { PlatformType } from "../_types/PlatformType";
+import { INDIVIDUAL_TIER_NAMES, ORGANIZATION_TIER_NAMES } from "../_types/TierNames";
 import { UserPlatformInfoDTO } from "./UserPlatformInfoDTO";
 
 
@@ -9,6 +10,7 @@ interface UserSettingOrganization {
     hasEmail: boolean;
     platform: PlatformType;
     logoURL: string;
+    tierName: ORGANIZATION_TIER_NAMES;
 }
 
 interface UserSettingPayments {
@@ -20,6 +22,7 @@ interface UserSettingPayments {
 export interface UserSettingsDTO {
     id: string;
     isDefaulter: boolean;
+    tierName: INDIVIDUAL_TIER_NAMES;
     github: UserPlatformInfoDTO | null;
     gitlab: UserPlatformInfoDTO | null;
     bitbucket: UserPlatformInfoDTO | null;
