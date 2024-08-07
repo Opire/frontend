@@ -1,8 +1,8 @@
 
 'use client'
 
-import { Autocomplete, Button, Center, Container, Flex, Group, Modal, rem, Select, Space, Text, TextInput } from "@mantine/core";
-import { IconBrandStripe, IconCornerDownRight, IconCirclePlus, IconAt, IconUpload } from "@tabler/icons-react";
+import { Button, Center, Container, Flex, Group, Modal, rem, Select, Space, Text, TextInput} from "@mantine/core";
+import { IconBrandStripe, IconCornerDownRight, IconCirclePlus, IconAt, IconUpload, IconFileInvoice } from "@tabler/icons-react";
 import { FC, useState } from "react";
 import { API_ROUTES } from "../../../../constants";
 import { useRouter } from "next/navigation";
@@ -16,13 +16,13 @@ import { SupportedCountry } from "../../../_core/_vos/SupportedCountry";
 
 interface StripeSettingsProps {
     hasStripeConfigured: boolean;
-    email: string | null,
+    paymentsEmail: string | null,
     userId: string,
 }
 
 export const StripePersonalAccountSetting: FC<StripeSettingsProps> = ({
     hasStripeConfigured,
-    email,
+    paymentsEmail,
     userId,
 }) => {
     const router = useRouter();
@@ -36,7 +36,7 @@ export const StripePersonalAccountSetting: FC<StripeSettingsProps> = ({
     const form = useForm({
         initialValues: {
             country: '',
-            emailForStripe: email || '',
+            emailForStripe: paymentsEmail || '',
         },
         validate: {
             emailForStripe: (value: string) => {
@@ -76,7 +76,6 @@ export const StripePersonalAccountSetting: FC<StripeSettingsProps> = ({
     async function createExpressAccount({ emailForStripe, country }: { emailForStripe: string, country: string }) {
         try {
             setIsCreatingExpressAccount(true);
-
             const response = await clientCustomFetch(API_ROUTES.PAYMENTS.EXPRESS_ACCOUNT(), {
                 method: "POST",
                 body: {
@@ -114,9 +113,13 @@ export const StripePersonalAccountSetting: FC<StripeSettingsProps> = ({
         // const stripeLoginURL = 'https://connect.stripe.com/login';
         const stripeLoginURL = 'https://connect.stripe.com/express_login';
 
+        const downloadInvoicesURL = paymentsEmail 
+        ? `https://zenvoice.io/p/66b37d99f1bbae9758e307b6?email=${paymentsEmail}` 
+        : 'https://zenvoice.io/p/66b37d99f1bbae9758e307b6';
+
         return (
             <div>
-                {email && <Text c='dimmed'>Connected with {email}</Text>}
+                {paymentsEmail && <Text c='dimmed'>Connected with {paymentsEmail}</Text>}
                 <Space h='0.6rem' />
 
                 <Center>
@@ -138,18 +141,37 @@ export const StripePersonalAccountSetting: FC<StripeSettingsProps> = ({
                         <Button
                             radius='2rem'
                             size="lg"
-                            variant="outline"
                             color="blue"
                             loading={isOpeningExpressAccountOnboarding}
                             onClick={openExpressAccountOnboarding}
                         >
                             <IconUpload style={{ marginRight: '8px' }} />
                             <Text lineClamp={2} style={{ fontSize: '1.2rem' }}>
-                                Update your Stripe configuration
+                                Update Stripe configuration
                             </Text>
                         </Button>
 
                         <Button
+                            radius='2rem'
+                            size="lg"
+                            color="indigo.9"
+                            component="a"
+                            target="_blank"
+                            href={downloadInvoicesURL}
+                        >
+                            <IconFileInvoice style={{ marginRight: '8px' }} />
+                            <div style={{ display: 'flex', flexDirection: 'column'}}>
+                                <Text lineClamp={2} style={{ fontSize: '0.6rem', lineHeight: 'normal' }} c={'gray.4'}>
+                                    Powered by <span style={{ fontSize: '0.62rem', fontWeight: 'bold', color: '#06AB78'  }}>Zenvoice.io</span>
+                                </Text>
+                                <Text lineClamp={2} style={{ fontSize: '1.2rem', lineHeight: 'inherit', marginBottom: '8px' }} >
+                                    Download invoices
+                                </Text>
+                            </div>
+                        </Button>
+
+                        <Button
+                            mt={'2rem'}
                             radius='2rem'
                             size="lg"
                             variant="outline"
