@@ -160,8 +160,8 @@ export const StripePersonalAccountSetting: FC<StripeSettingsProps> = ({
                             href={downloadInvoicesURL}
                         >
                             <IconFileInvoice style={{ marginRight: '8px' }} />
-                            <div style={{ display: 'flex', flexDirection: 'column'}}>
-                                <Text lineClamp={2} style={{ fontSize: '0.6rem', lineHeight: 'normal' }} c={'gray.4'}>
+                            <div style={{ display: 'flex', flexDirection: 'column' }}>
+                                <Text lineClamp={2} style={{ fontSize: '0.6rem', lineHeight: 'normal' }} c={'gray.4'} ml='auto'>
                                     Powered by <span style={{ fontSize: '0.62rem', fontWeight: 'bold', color: '#06AB78'  }}>Zenvoice.io</span>
                                 </Text>
                                 <Text lineClamp={2} style={{ fontSize: '1.2rem', lineHeight: 'inherit', marginBottom: '8px' }} >
