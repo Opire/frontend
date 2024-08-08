@@ -108,7 +108,7 @@ export const OrganizationSettingsCard: FC<OrganizationSettingsCardProps> = ({
                 centered={true}
                 opened={isModalOpen}
                 onClose={closeModal}
-                size={'xl'}
+                size={'70%'}
                 title={<div style={{ display: 'flex', gap: '8px', justifyContent: 'center', alignItems: 'ce' }}><IconGift size={16} color="teal" />Subscribe and get features for all members of <span style={{ fontWeight: 'bold', color: '#91a7ff' }}>{organization.name}</span> </div>}
                 closeOnEscape={false}
                 closeOnClickOutside={false}

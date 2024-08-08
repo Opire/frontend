@@ -6,8 +6,7 @@ export interface OrganizationTiersStripePricingPageProps {
 
 export function OrganizationTiersStripePricingPage({ organizationId }: OrganizationTiersStripePricingPageProps) {
     // TODO: use .env var
-    const pricingTableId = "prctbl_1PlDKsAiqyUpICJDbA2t0SD6";
-    // const pricingTableId = "";
+    const pricingTableId = "prctbl_1Pla1dAiqyUpICJDKK2oOhCh";
     const clientReference = `organization_${organizationId}`
 
     return (
