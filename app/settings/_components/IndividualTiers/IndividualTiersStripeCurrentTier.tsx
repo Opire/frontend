@@ -26,7 +26,7 @@ export function IndividualTiersStripeCurrentTier({ }: IndividualTiersStripeCurre
             >
             <IconBrandStripe style={{ marginRight: '8px' }} />
             <Text lineClamp={2} style={{ fontSize: '1.2rem' }}>
-                Manage subscription
+                Manage your individual subscription
             </Text>
         </Button>
     );
