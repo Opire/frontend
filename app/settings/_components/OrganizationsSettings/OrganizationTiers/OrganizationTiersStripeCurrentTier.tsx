@@ -1,18 +1,14 @@
-// https://billing.stripe.com/p/login/test_eVadSM2vK0CldTq3cc
-
-
 import { Button, Text } from "@mantine/core";
-import { INDIVIDUAL_TIER_NAMES } from "../../../_core/_types/TierNames";
 import { IconBrandStripe } from "@tabler/icons-react";
+import { ORGANIZATION_TIER_NAMES } from "../../../../_core/_types/TierNames";
 
-export interface IndividualTiersStripeCurrentTierProps {
-    currentTier: INDIVIDUAL_TIER_NAMES;
+export interface OrganizationTiersStripeCurrentTierProps {
+    currentTier: ORGANIZATION_TIER_NAMES;
 }
 
-export function IndividualTiersStripeCurrentTier({ }: IndividualTiersStripeCurrentTierProps) {
+export function OrganizationTiersStripeCurrentTier({ }: OrganizationTiersStripeCurrentTierProps) {
     // TODO: Use .env var
     const stripeCustomerPortalURL = 'https://billing.stripe.com/p/login/test_eVadSM2vK0CldTq3cc'
-
 
     return (
         <Button

@@ -1,3 +1,4 @@
+'use client'
 import { INDIVIDUAL_TIER_NAMES } from "../../../_core/_types/TierNames";
 import { IndividualTiersStripeCurrentTier } from "./IndividualTiersStripeCurrentTier";
 import { IndividualTiersStripePricingPage } from "./IndividualTiersStripePricingTable";
