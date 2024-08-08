@@ -2,7 +2,6 @@ import { TokenServiceLocalStorage } from "../../TokenServiceLocalStorage";
 import { NEXT_SERVER_ROUTES } from "../../constants";
 import { errorNotification } from "./errorNotification";
 
-
 export async function clientCustomFetch(
     url: string,
     options: {
@@ -15,35 +14,47 @@ export async function clientCustomFetch(
             headers: {},
         }
 ): Promise<Response> {
-    const response = await fetch(url, {
-        headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${TokenServiceLocalStorage.getToken()}`,
-            ...options.headers,
-        },
-        body: JSON.stringify(options.body),
-        method: options.method,
-        cache: "no-store",
-    });
-
-    if (response.status === 401) {
-        errorNotification({
-            title: "You need to login in order to perform this action",
+    try {
+        const response = await fetch(url, {
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${TokenServiceLocalStorage.getToken()}`,
+                ...options.headers,
+            },
+            body: JSON.stringify(options.body),
+            method: options.method,
+            cache: "no-store",
         });
-        clientCustomFetch(NEXT_SERVER_ROUTES.AUTH.LOGOUT(), { method: "POST" });
-        TokenServiceLocalStorage.removeToken();
+    
+        if (response.status === 401) {
+            errorNotification({
+                title: "You need to login in order to perform this action",
+            });
+            clientCustomFetch(NEXT_SERVER_ROUTES.AUTH.LOGOUT(), { method: "POST" });
+            TokenServiceLocalStorage.removeToken();
+        }
+    
+        if (!response.ok) {
+            const body = await response.json();
+            const { errorType, error } = body;
+    
+            errorNotification(mapErrorText(body));
+    
+            throw new Error(`${errorType}: ${error}`);
+        }
+    
+        return response;
+    } catch (error) {
+        console.error(error);
+
+        errorNotification({
+            title: 'Unknown error',
+            message: "Something unexpected happened. Please, refresh your page and try again later. If the problem continues, contact us at opiredev@gmail.com"
+        });
+
+        throw error;
     }
-
-    if (!response.ok) {
-        const body = await response.json();
-        const { errorType, error } = body;
-
-        errorNotification(mapErrorText(body));
-
-        throw new Error(`${errorType}: ${error}`);
-    }
-
-    return response;
+    
 }
 
 interface BackendError {
@@ -68,7 +79,7 @@ function mapErrorText(error: BackendError): { title: string; message?: string } 
         default:
             return {
                 title: 'Ups...',
-                message: error.error,
+                message: error.error ?? "Something unexpected happened. Please, refresh your page and try again later. If the problem continues, contact us at opiredev@gmail.com",
             };
     }
 }

@@ -48,9 +48,9 @@ export default async function Page() {
                 <Group>
                     <StripePersonalAccountSetting
                         hasStripeConfigured={userSettings.payments.canReceivePayments}
-                        email={userSettings.payments.email}
+                        paymentsEmail={userSettings.payments.email}
                         userId={userSettings.id}
-                        />
+                    />
                 </Group>
             </section>
 
