@@ -5,8 +5,7 @@ export interface IndividualTiersStripePricingPageProps {
 }
 
 export function IndividualTiersStripePricingPage({ userId }: IndividualTiersStripePricingPageProps) {
-    // TODO: use .env var
-    const pricingTableId = "prctbl_1PlDKsAiqyUpICJDbA2t0SD6";
+    const pricingTableId = process.env.NEXT_PUBLIC_STRIPE_INDIVIDUAL_PRICING_TABLE_ID ?? 'prctbl_1PlDKsAiqyUpICJDbA2t0SD6';
     const clientReference = `user_${userId}`
 
     return (

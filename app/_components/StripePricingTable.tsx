@@ -14,8 +14,7 @@ export interface StripePricingPageProps {
 }
 
 export function StripePricingPage({ pricingTableId, clientReference }: StripePricingPageProps) {
-    // TODO: use .env var
-    const publishableKey = "pk_test_51PLoVWAiqyUpICJD6r0n2rDAUo4imcRJ29enjeM0BoSTjP7Pqez8loy3KuGAmVK2k6X0K5vCKPqidw1ghAk7x2FD003mZANGdZ";
+    const publishableKey = process.env.NEXT_PUBLIC_STRIPE_PRICING_TABLE_PUBLISHABLE_KEY;
 
     return (
         <stripe-pricing-table

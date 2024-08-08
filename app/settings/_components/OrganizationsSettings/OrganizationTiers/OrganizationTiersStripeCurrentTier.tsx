@@ -7,8 +7,7 @@ export interface OrganizationTiersStripeCurrentTierProps {
 }
 
 export function OrganizationTiersStripeCurrentTier({ }: OrganizationTiersStripeCurrentTierProps) {
-    // TODO: Use .env var
-    const stripeCustomerPortalURL = 'https://billing.stripe.com/p/login/test_eVadSM2vK0CldTq3cc'
+    const stripeCustomerPortalURL = process.env.NEXT_PUBLIC_STRIPE_CUSTOMER_PORTAL_URL;
 
     return (
         <Button

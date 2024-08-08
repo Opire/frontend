@@ -5,8 +5,7 @@ export interface OrganizationTiersStripePricingPageProps {
 }
 
 export function OrganizationTiersStripePricingPage({ organizationId }: OrganizationTiersStripePricingPageProps) {
-    // TODO: use .env var
-    const pricingTableId = "prctbl_1Pla1dAiqyUpICJDKK2oOhCh";
+    const pricingTableId = process.env.NEXT_PUBLIC_STRIPE_ORGANIZATION_PRICING_TABLE_ID ?? 'prctbl_1Pla1dAiqyUpICJDKK2oOhCh';
     const clientReference = `organization_${organizationId}`
 
     return (
