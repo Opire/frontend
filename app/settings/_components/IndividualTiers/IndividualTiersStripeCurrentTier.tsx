@@ -1,6 +1,3 @@
-// https://billing.stripe.com/p/login/test_eVadSM2vK0CldTq3cc
-
-
 import { Button, Text } from "@mantine/core";
 import { INDIVIDUAL_TIER_NAMES } from "../../../_core/_types/TierNames";
 import { IconUser } from "@tabler/icons-react";
