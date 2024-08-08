@@ -3,7 +3,7 @@
 
 import { Button, Text } from "@mantine/core";
 import { INDIVIDUAL_TIER_NAMES } from "../../../_core/_types/TierNames";
-import { IconBrandStripe } from "@tabler/icons-react";
+import { IconUser } from "@tabler/icons-react";
 
 export interface IndividualTiersStripeCurrentTierProps {
     currentTier: INDIVIDUAL_TIER_NAMES;
@@ -24,9 +24,9 @@ export function IndividualTiersStripeCurrentTier({ }: IndividualTiersStripeCurre
             mt={'1rem'}
             href={stripeCustomerPortalURL}
             >
-            <IconBrandStripe style={{ marginRight: '8px' }} />
-            <Text lineClamp={2} style={{ fontSize: '1.2rem' }}>
-                Manage your individual subscription
+            <IconUser style={{ marginRight: '8px' }} />
+            <Text style={{ fontSize: '1.2rem' }}>
+                Manage subscription
             </Text>
         </Button>
     );

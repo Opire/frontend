@@ -19,12 +19,12 @@ export const OrganizationsSettings: FC<OrganizationsSettingsProps> = ({
         <>
             {hasAccessToSomeOrganizationCustomerPortal &&
                 <Blockquote color='green' icon={<IconInfoCircle />}>
-                    <Text style={{ fontSize: '1.2rem' }}>
+                    <Text style={{ fontSize: '1rem' }}>
                        To manage an organization subscription, you will need to provide the email address that was used when making the first payment of the subscription 
                     </Text>
                 </Blockquote>
             }
-            
+
             <SimpleGrid cols={{ xs: 1, md: 2, lg: 3 }} w='100%' spacing='xl' verticalSpacing='xl' >
                 {organizations.map(organization => (<OrganizationSettingsCard key={organization.id} organization={organization} />))}
             </SimpleGrid>

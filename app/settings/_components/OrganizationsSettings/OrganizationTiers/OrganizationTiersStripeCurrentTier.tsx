@@ -1,5 +1,5 @@
 import { Button, Text } from "@mantine/core";
-import { IconBrandStripe } from "@tabler/icons-react";
+import { IconUsersGroup } from "@tabler/icons-react";
 import { ORGANIZATION_TIER_NAMES } from "../../../../_core/_types/TierNames";
 
 export interface OrganizationTiersStripeCurrentTierProps {
@@ -19,10 +19,10 @@ export function OrganizationTiersStripeCurrentTier({ }: OrganizationTiersStripeC
             target="_blank"
             mt={'1rem'}
             href={stripeCustomerPortalURL}
-            >
-            <IconBrandStripe style={{ marginRight: '8px' }} />
-            <Text lineClamp={2} style={{ fontSize: '1.2rem' }}>
-                Manage organization subscription
+        >
+            <IconUsersGroup style={{ marginRight: '8px' }} />
+            <Text style={{ fontSize: '1.2rem' }}>
+                Manage subscription
             </Text>
         </Button>
     );

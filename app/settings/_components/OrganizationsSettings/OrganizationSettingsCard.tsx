@@ -63,8 +63,8 @@ export const OrganizationSettingsCard: FC<OrganizationSettingsCardProps> = ({
                             </Text>
                         </Link>
                     </Center>
-                    <Center>
 
+                    <Center>
                         {
                             isPayingSomeSubscription &&
                             <Badge color="indigo" variant="outline">
