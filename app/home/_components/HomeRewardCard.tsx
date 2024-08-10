@@ -185,7 +185,7 @@ export const HomeRewardCard: FC<HomeRewardCardProps> = ({ data, inputRef }) => {
                         </Group>
                     </Flex>
 
-                    <Text
+                    {/* <Text
                         c="dimmed"
                         size="xs"
                         style={{
@@ -196,7 +196,10 @@ export const HomeRewardCard: FC<HomeRewardCardProps> = ({ data, inputRef }) => {
                     >
                         <span>Created</span>
                         <span>{getRelativeTime(new Date(data.createdAt))}</span>
-                    </Text>
+                    </Text> */}
+                    
+                    {/* Remove when putting back "Created at" */}
+                    <Space h={'34px'}/>
                 </Group>
             </CardSection>
         </Card>
