@@ -77,6 +77,7 @@ export default async function Page() {
 
                 <IndividualTiersSettings
                     userId={userSettings.id}
+                    paymentsEmail={userSettings.payments.email}
                     currentTier={userSettings.tierName}
                 />
             </section>
