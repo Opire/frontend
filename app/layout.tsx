@@ -45,6 +45,7 @@ export default function RootLayout({
                 `}
                 </style>
                 <script defer src="https://eu.umami.is/script.js" data-website-id={process.env.NEXT_PUBLIC_UMAMI_TOKEN}></script>
+                <script async src="https://js.stripe.com/v3/pricing-table.js"></script>
             </head>
 
             <body>
