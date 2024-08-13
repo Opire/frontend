@@ -143,10 +143,8 @@ export const ClaimRewardsModal: FC<ClaimRewardsModalProps> = ({
                         variant="gradient"
                         size="md"
                         loading={isClaimingRewards}
-                        disabled={true}
                     >
-                        {/* Claim */}
-                        Temporarily disabled
+                        Claim
                     </Button>
                 </Group>
             </form>

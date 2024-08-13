@@ -138,10 +138,8 @@ export const CreateNewRewardModal: FC<CreateNewRewardModalProps> = ({
                         variant="gradient"
                         size="md"
                         loading={isCreatingReward}
-                        disabled={true}
                     >
-                        {/* Create */}
-                        Temporarily disabled
+                        Create
                     </Button>
                 </Group>
             </form>
