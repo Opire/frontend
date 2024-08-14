@@ -214,9 +214,11 @@ export const StripePersonalAccountSetting: FC<StripeSettingsProps> = ({
                 onClose={closeModalForNewAccount}
                 size={'lg'}
                 title={
-                    <div style={{ display: 'flex', gap: '8px', justifyContent: 'center', alignItems: 'ce' }}>
+                    <div style={{ display: 'flex', gap: '8px', justifyContent: 'center', alignItems: 'center' }}>
                         <IconBrandStripe size={16} color="teal" />
-                        Create a new Stripe Express account
+                        <span>
+                            Create a new Stripe Express account
+                        </span>
                     </div>
                 }
                 closeOnEscape={true}

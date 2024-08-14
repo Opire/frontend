@@ -106,7 +106,7 @@ export const ClaimRewardsModal: FC<ClaimRewardsModalProps> = ({
             opened={isOpened}
             onClose={onClose}
             size={'xl'}
-            title={<div style={{ display: 'flex', gap: '8px', justifyContent: 'center', alignItems: 'ce' }}><IconDiamond size={16} color="teal" />Claim rewards from an issue</div>}
+            title={<div style={{ display: 'flex', gap: '8px', justifyContent: 'center', alignItems: 'center' }}><IconDiamond size={16} color="teal" /><span>Claim rewards from an issue</span></div>}
             closeOnEscape={true}
             closeOnClickOutside={false}
             withCloseButton={true}

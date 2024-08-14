@@ -100,7 +100,7 @@ export const CreateNewRewardModal: FC<CreateNewRewardModalProps> = ({
             opened={isOpened}
             onClose={onClose}
             size={'xl'}
-            title={<div style={{ display: 'flex', gap: '8px', justifyContent: 'center', alignItems: 'ce' }}><IconDiamond size={16} color="teal" /> Create a new reward on issue</div>}
+            title={<div style={{ display: 'flex', gap: '8px', justifyContent: 'center', alignItems: 'center' }}><IconDiamond size={16} color="teal" /><span>Create a new reward on issue</span></div>}
             closeOnEscape={true}
             closeOnClickOutside={false}
             withCloseButton={true}

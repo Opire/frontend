@@ -6,7 +6,7 @@ import Link from "next/link";
 import { ORGANIZATION_TIER_NAMES } from "../../../_core/_types/TierNames";
 import { TierLabelMapper } from "../../../_core/_types/TierLabelMapper";
 import { OrganizationTiersStripeCurrentTier } from "./OrganizationTiers/OrganizationTiersStripeCurrentTier";
-import { useDisclosure } from "@mantine/hooks";
+import { useDisclosure, useMediaQuery } from "@mantine/hooks";
 import { IconGift } from "@tabler/icons-react";
 import { OrganizationTiersStripePricingPage } from "./OrganizationTiers/OrganizationTiersStripePricingTable";
 
@@ -21,6 +21,7 @@ export const OrganizationSettingsCard: FC<OrganizationSettingsCardProps> = ({
     const isPayingSomeSubscription = currentTier !== ORGANIZATION_TIER_NAMES.ORGANIZATION_BASIC
 
     const [isModalOpen, { close: closeModal, open: openModal }] = useDisclosure();
+    const isMobile = useMediaQuery("(max-width: 50em)");
 
     const showPricingTable = () => {
         openModal()
@@ -109,7 +110,8 @@ export const OrganizationSettingsCard: FC<OrganizationSettingsCardProps> = ({
                 opened={isModalOpen}
                 onClose={closeModal}
                 size={'70%'}
-                title={<div style={{ display: 'flex', gap: '8px', justifyContent: 'center', alignItems: 'ce' }}><IconGift size={16} color="teal" />Subscribe and get features for all members of <span style={{ fontWeight: 'bold', color: '#91a7ff' }}>{organization.name}</span> </div>}
+                fullScreen={isMobile ? true : false}
+                title={<div style={{ display: 'flex', gap: '8px', justifyContent: 'center', alignItems: 'center' }}><IconGift size={16} color="teal" /><span>Subscribe and get features for all members of <span style={{ fontWeight: 'bold', color: '#91a7ff' }}>{organization.name}</span></span> </div>}
                 closeOnEscape={false}
                 closeOnClickOutside={false}
                 withCloseButton={true}
