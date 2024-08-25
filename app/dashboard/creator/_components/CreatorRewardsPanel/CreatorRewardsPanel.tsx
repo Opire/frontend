@@ -75,7 +75,7 @@ export const CreatorRewardsPanel: FC<CreatorRewardsPanelProps> = ({
 
             {hasUnpaidRewards && (
                 <>
-                    <Text fw={900} size={'xl'}>To be paid</Text>
+                    <Text fw={900} size={'xl'}>Active</Text>
                     <Space h='12px' />
                     <InfinityList
                         items={unpaidRewards}
