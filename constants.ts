@@ -9,6 +9,7 @@ export const API_ROUTES = {
             `${process.env.NEXT_PUBLIC_API_URL}/rewards/trying`,
         ALL: () => `${process.env.NEXT_PUBLIC_API_URL}/rewards`,
         CREATE_FROM_ISSUE_URL: () => `${process.env.NEXT_PUBLIC_API_URL}/rewards/fromIssueURL`,
+        DELETE_ALL_FROM_CREATOR: () => `${process.env.NEXT_PUBLIC_API_URL}/rewards/all`,
     },
     ISSUES: {
         CLAIM_FROM_ISSUE_URL: () => `${process.env.NEXT_PUBLIC_API_URL}/issues/claim/fromIssueURL`,

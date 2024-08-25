@@ -77,7 +77,12 @@ export const CreateNewRewardModal: FC<CreateNewRewardModalProps> = ({
                 color: 'teal',
                 icon: <IconCheck />,
             })
-            mutate(API_ROUTES.REWARDS.CREATED_BY_ME)
+
+            setTimeout(() => {
+                mutate(API_ROUTES.REWARDS.CREATED_BY_ME());
+                setIsCreatingReward(false);
+            }, 500);
+
             onClose()
         } catch (error) {
             notifications.show({
@@ -89,7 +94,6 @@ export const CreateNewRewardModal: FC<CreateNewRewardModalProps> = ({
                 color: 'red',
                 icon: <IconX />,
             })
-        } finally {
             setIsCreatingReward(false);
         }
     }

@@ -83,7 +83,11 @@ export const ClaimRewardsModal: FC<ClaimRewardsModalProps> = ({
                 color: 'teal',
                 icon: <IconCheck />,
             })
-            mutate(API_ROUTES.REWARDS.TRYING_BY_ME);
+            setTimeout(() => {
+                mutate(API_ROUTES.REWARDS.TRYING_BY_ME());
+                setIsClaimingRewards(false);
+            }, 500);
+
             onClose();
         } catch (error) {
             notifications.show({
@@ -95,7 +99,6 @@ export const ClaimRewardsModal: FC<ClaimRewardsModalProps> = ({
                 color: 'red',
                 icon: <IconX />,
             })
-        } finally {
             setIsClaimingRewards(false);
         }
     }
