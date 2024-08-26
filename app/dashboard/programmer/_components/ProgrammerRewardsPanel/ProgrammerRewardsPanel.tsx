@@ -13,9 +13,6 @@ import { useDisclosure } from "@mantine/hooks";
 import { IconMoneybag } from "@tabler/icons-react";
 import { ClaimRewardsModal } from "./ClaimRewardsModal";
 
-
-
-
 interface ProgrammerRewardsPanelProps {
 }
 

@@ -29,6 +29,8 @@ export const DetailedIssueMainData: FC<DetailedIssueMainDataProps> = ({ issue })
 
     }, { unit: 'USD_CENT', value: 0 })
 
+    const somethingHasBeenAlreadyPaid = totalPrice.value !== availablePrice.value;
+
     const labelsAndProgrammingLanguagesToShow = [...issue.labels.filter(label => !label.includes('Reward')), ...issue.project.programmingLanguages]
 
     return (
@@ -97,22 +99,27 @@ export const DetailedIssueMainData: FC<DetailedIssueMainDataProps> = ({ issue })
                                 {formatPrice(totalPrice)}
                             </Text>
 
-                            <Flex
+
+                            {
+                                somethingHasBeenAlreadyPaid 
+                                && 
+                                <Flex
                                 align={"center"}
                                 columnGap={'0.4rem'}
                                 wrap={'wrap'}
-                            >
-                                <Text >
-                                    Available:
-                                </Text>
-
-                                <Text
-                                    style={{ fontSize: "1.4rem", fontWeight: "bold" }}
-                                    variant='gradient'
                                 >
-                                    {formatPrice(availablePrice)}
-                                </Text>
-                            </Flex>
+                                    <Text >
+                                        Available:
+                                    </Text>
+
+                                    <Text
+                                        style={{ fontSize: "1.4rem", fontWeight: "bold" }}
+                                        variant='gradient'
+                                        >
+                                        {formatPrice(availablePrice)}
+                                    </Text>
+                                </Flex>
+                            }
                         </Flex>
 
                     </Center>

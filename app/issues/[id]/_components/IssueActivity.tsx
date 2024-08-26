@@ -9,6 +9,7 @@ import { NewRewardAddedActivity } from "./EventsActivity/NewRewardAddedActivity"
 import { UserTryingActivity } from "./EventsActivity/UserTryingActivity";
 import { UserClaimedActivity } from "./EventsActivity/UserClaimedActivity";
 import { RewardSetAsPaidActivity } from "./EventsActivity/RewardSetAsPaidActivity";
+import { RewardRemovedFromIssueActivity } from "./EventsActivity/RewardRemovedFromIssueActivity";
 
 interface IssueActivityProps {
     issue: IssuePrimitive;
@@ -69,4 +70,5 @@ const activityMaperComponent: Partial<Record<EVENT_NAMES, ({ event, issue }: { e
     [EVENT_NAMES.UserTryingIssue]: (params) => <UserTryingActivity {...params} />,
     [EVENT_NAMES.UserClaimedIssue]: (params) => <UserClaimedActivity {...params} />,
     [EVENT_NAMES.RewardsSetAsPaid]: (params) => <RewardSetAsPaidActivity {...params} />,
+    [EVENT_NAMES.RewardRemovedFromIssue]: (params) => <RewardRemovedFromIssueActivity {...params} />,
 }
