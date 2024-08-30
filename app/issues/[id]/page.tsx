@@ -3,6 +3,7 @@ import { DetailedIssueView } from "./view";
 import { getIssueById } from "../../_utils/getIssueById";
 import { PricePrimitive } from "../../_core/_primitives/PricePrimitive";
 import { formatPrice } from "../../_utils/formatPrice";
+import { getUserAuth } from "../../_utils/getUserAuth";
 
 export const metadata: Metadata = {
     title: 'Opire - Issue',
@@ -14,6 +15,8 @@ export default async function Page({
     const issue = await getIssueById({
         id: params.id,
     });
+
+    const userAuth = getUserAuth();
 
     const totalPrice: PricePrimitive = issue.rewards.reduce((acc, el) => {
         acc.value += el.price.value
@@ -40,7 +43,7 @@ export default async function Page({
                 />
             </head>
 
-            <DetailedIssueView issue={issue} />
+            <DetailedIssueView issue={issue} userAuth={userAuth} />
         </>
     );
 
