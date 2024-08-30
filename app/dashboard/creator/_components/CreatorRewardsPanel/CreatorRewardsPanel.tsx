@@ -10,6 +10,8 @@ import { NothingFound } from "../../../../_components/NothingFound";
 import { IconMoneybag } from "@tabler/icons-react";
 import { useDisclosure } from "@mantine/hooks";
 import { CreateNewRewardModal } from "./CreateNewRewardModal";
+import { mutate } from "swr";
+import { API_ROUTES } from "../../../../../constants";
 
 interface CreatorRewardsPanelProps {
 }
@@ -46,7 +48,11 @@ export const CreatorRewardsPanel: FC<CreatorRewardsPanelProps> = ({
                         Create a new reward
                     </Button>
 
-                    <CreateNewRewardModal isOpened={isModalOpen} onClose={closeModal} />
+                    <CreateNewRewardModal 
+                        isOpened={isModalOpen} 
+                        onClose={closeModal} 
+                        onNewRewardCreated={onNewRewardCreated} 
+                    />
                 </div>
 
                 <Space h='xl' />
@@ -68,7 +74,11 @@ export const CreatorRewardsPanel: FC<CreatorRewardsPanelProps> = ({
                     Create a new reward
                 </Button>
 
-                <CreateNewRewardModal isOpened={isModalOpen} onClose={closeModal} />
+                <CreateNewRewardModal 
+                    isOpened={isModalOpen} 
+                    onClose={closeModal} 
+                    onNewRewardCreated={onNewRewardCreated} 
+                />
             </div>
 
             <Space h='xl' />
@@ -106,4 +116,8 @@ export const CreatorRewardsPanel: FC<CreatorRewardsPanelProps> = ({
             )}
         </div>
     );
+}
+
+function onNewRewardCreated() {
+    mutate(API_ROUTES.REWARDS.CREATED_BY_ME());
 }

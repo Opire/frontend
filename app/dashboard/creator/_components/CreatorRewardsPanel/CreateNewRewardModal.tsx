@@ -5,23 +5,25 @@ import { IconCheck, IconDiamond, IconX } from "@tabler/icons-react";
 import { clientCustomFetch } from "../../../../_utils/clientCustomFetch";
 import { API_ROUTES } from "../../../../../constants";
 import { notifications } from "@mantine/notifications";
-import { mutate } from "swr";
 
 interface CreateNewRewardModalProps {
     isOpened: boolean;
     onClose: () => void;
+    prefilledIssueURL?: string;
+    onNewRewardCreated?: () => void;
 }
 
 export const CreateNewRewardModal: FC<CreateNewRewardModalProps> = ({
     isOpened,
-    onClose
+    onClose,
+    prefilledIssueURL,
+    onNewRewardCreated = () => {},
 }) => {
     const [isCreatingReward, setIsCreatingReward] = useState(false);
 
-
     const form = useForm({
         initialValues: {
-            issueURL: '',
+            issueURL: prefilledIssueURL ?? '',
             rewardPrice: 0,
         },
         validate: {
@@ -44,7 +46,7 @@ export const CreateNewRewardModal: FC<CreateNewRewardModalProps> = ({
                 const isValid = value >= 20;
 
                 if (!isValid) {
-                    return 'Invalid reward price';
+                    return 'Invalid reward price. Rewards start at $20';
                 }
             },
         },
@@ -79,7 +81,7 @@ export const CreateNewRewardModal: FC<CreateNewRewardModalProps> = ({
             })
 
             setTimeout(() => {
-                mutate(API_ROUTES.REWARDS.CREATED_BY_ME());
+                onNewRewardCreated();
                 setIsCreatingReward(false);
             }, 500);
 
@@ -117,6 +119,7 @@ export const CreateNewRewardModal: FC<CreateNewRewardModalProps> = ({
                         placeholder="https://github.com/Opire/docs/issues/2"
                         key='issueURL'
                         required
+                        disabled={prefilledIssueURL !== undefined}
                         {...form.getInputProps('issueURL')}
                     />
 
@@ -127,7 +130,7 @@ export const CreateNewRewardModal: FC<CreateNewRewardModalProps> = ({
                         label="Reward price"
                         placeholder="Dollars"
                         prefix="$"
-                        min={20}
+                        min={0}
                         key='rewardPrice'
                         required
                         {...form.getInputProps('rewardPrice')}

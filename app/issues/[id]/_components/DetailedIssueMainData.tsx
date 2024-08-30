@@ -1,4 +1,4 @@
-import { Avatar, Badge, Card, Center, Flex, Grid, Group, Skeleton, Space, Table, Text } from "@mantine/core";
+import { Avatar, Badge, Button, Card, Center, Flex, Grid, Group, Skeleton, Space, Table, Text } from "@mantine/core";
 import { IssuePrimitive } from "../../../_core/_primitives/IssuePrimitive";
 import { FC } from "react";
 import { CustomImage } from "../../../_components/CustomImage";
@@ -9,11 +9,41 @@ import { RewardPrimitive } from "../../../_core/_primitives/RewardPrimitive";
 import { useGetUserPublicInfoFromPlatform } from "../../../../hooks/useGetUserPublicInfoFromPlatform";
 import { PlatformType } from "../../../_core/_types/PlatformType";
 import { ShareModal } from "./ShareModal";
+import { IconPlus } from "@tabler/icons-react";
+import { CreateNewRewardModal } from "../../../dashboard/creator/_components/CreatorRewardsPanel/CreateNewRewardModal";
+import { useDisclosure } from "@mantine/hooks";
+import { UserAuthDTO } from "../../../_core/_dtos/UserAuthDTO";
+import { redirectAfterLogin } from "../../../_utils/redirectAfterLogin";
+import { useRouter } from "next/navigation";
+import { mutate } from "swr";
+import { API_ROUTES } from "../../../../constants";
+import { useTriggerCallbackOnQueryParamFirstMatch } from "../../../../hooks/useTriggerCallbackOnQueryParamFirstMatch";
+
 interface DetailedIssueMainDataProps {
     issue: IssuePrimitive;
+    userAuth: UserAuthDTO | null;
 }
 
-export const DetailedIssueMainData: FC<DetailedIssueMainDataProps> = ({ issue }) => {
+export const DetailedIssueMainData: FC<DetailedIssueMainDataProps> = ({ issue, userAuth }) => {
+    const router = useRouter();
+
+    const [isAddRewardModalOpen, { close: closeAddRewardModal, open: openAddRewardModal }] = useDisclosure();
+    useTriggerCallbackOnQueryParamFirstMatch({ queryParamKey: 'add-reward', callback: openAddRewardModal })
+
+    function handleClickAddReward() {
+        if(userAuth) {
+            openAddRewardModal()
+            return;
+        }
+        
+        redirectAfterLogin.prepareNextRedirection(`/issues/${issue.id}?add-reward=true`);
+        router.push('?login=true');      
+    }
+
+    function onNewRewardCreated() {
+        mutate(API_ROUTES.ACTIVITY.BY_ISSUE_ID(issue.id));
+        router.refresh();
+    }
 
     const totalPrice: PricePrimitive = issue.rewards.reduce((acc, el) => {
         acc.value += el.price.value
@@ -125,7 +155,22 @@ export const DetailedIssueMainData: FC<DetailedIssueMainDataProps> = ({ issue })
                     </Center>
                     <Space h={'0.4rem'} />
 
-                    <Center>
+                    <Center style={{ gap: '1rem' }}>
+                        <Button
+                            leftSection={<IconPlus size={18} />}
+                            variant='gradient'
+                            onClick={handleClickAddReward}
+                        >
+                            Add reward
+                        </Button>
+
+                        <CreateNewRewardModal 
+                            isOpened={isAddRewardModalOpen} 
+                            onClose={closeAddRewardModal}
+                            prefilledIssueURL={issue.issueURL}
+                            onNewRewardCreated={onNewRewardCreated} 
+                        />
+
                         <ShareModal issue={issue} />
                     </Center>
                     {/* </Card> */}
