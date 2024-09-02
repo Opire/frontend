@@ -1,27 +1,29 @@
-import { Button, Container, Group, Modal, NumberInput, Space, TextInput } from "@mantine/core";
+import { Button, Container, Group, Modal, Space, TextInput } from "@mantine/core";
 import { FC, useState } from "react";
 import { useForm } from '@mantine/form';
 import { IconCheck, IconDiamond, IconX } from "@tabler/icons-react";
 import { clientCustomFetch } from "../../../../_utils/clientCustomFetch";
 import { API_ROUTES } from "../../../../../constants";
 import { notifications } from "@mantine/notifications";
-import { mutate } from "swr";
 
 interface ClaimRewardsModalProps {
     isOpened: boolean;
     onClose: () => void;
+    prefilledIssueURL?: string;
+    onRewardsClaimed?: () => void;
 }
 
 export const ClaimRewardsModal: FC<ClaimRewardsModalProps> = ({
     isOpened,
-    onClose
+    onClose,
+    prefilledIssueURL,
+    onRewardsClaimed = () => {},
 }) => {
     const [isClaimingRewards, setIsClaimingRewards] = useState(false);
 
-
     const form = useForm({
         initialValues: {
-            issueURL: '',
+            issueURL: prefilledIssueURL ?? '',
             pullRequestURL: '',
         },
         validate: {
@@ -84,7 +86,7 @@ export const ClaimRewardsModal: FC<ClaimRewardsModalProps> = ({
                 icon: <IconCheck />,
             })
             setTimeout(() => {
-                mutate(API_ROUTES.REWARDS.TRYING_BY_ME());
+                onRewardsClaimed();
                 setIsClaimingRewards(false);
             }, 500);
 
@@ -122,6 +124,7 @@ export const ClaimRewardsModal: FC<ClaimRewardsModalProps> = ({
                         placeholder="https://github.com/Opire/docs/issues/2"
                         key='issueURL'
                         required
+                        disabled={prefilledIssueURL !== undefined}
                         {...form.getInputProps('issueURL')}
                     />
 
@@ -135,7 +138,6 @@ export const ClaimRewardsModal: FC<ClaimRewardsModalProps> = ({
                         required
                         {...form.getInputProps('pullRequestURL')}
                     />
-
                 </Container>
 
                 <Space h='1rem' />

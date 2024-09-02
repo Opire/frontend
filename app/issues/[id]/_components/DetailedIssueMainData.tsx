@@ -9,8 +9,9 @@ import { RewardPrimitive } from "../../../_core/_primitives/RewardPrimitive";
 import { useGetUserPublicInfoFromPlatform } from "../../../../hooks/useGetUserPublicInfoFromPlatform";
 import { PlatformType } from "../../../_core/_types/PlatformType";
 import { ShareModal } from "./ShareModal";
-import { IconPlus } from "@tabler/icons-react";
+import { IconMoneybag, IconPlus } from "@tabler/icons-react";
 import { CreateNewRewardModal } from "../../../dashboard/creator/_components/CreatorRewardsPanel/CreateNewRewardModal";
+import { ClaimRewardsModal } from "../../../dashboard/programmer/_components/ProgrammerRewardsPanel/ClaimRewardsModal";
 import { useDisclosure } from "@mantine/hooks";
 import { UserAuthDTO } from "../../../_core/_dtos/UserAuthDTO";
 import { redirectAfterLogin } from "../../../_utils/redirectAfterLogin";
@@ -28,11 +29,14 @@ export const DetailedIssueMainData: FC<DetailedIssueMainDataProps> = ({ issue, u
     const router = useRouter();
 
     const [isAddRewardModalOpen, { close: closeAddRewardModal, open: openAddRewardModal }] = useDisclosure();
-    useTriggerCallbackOnQueryParamFirstMatch({ queryParamKey: 'add-reward', callback: openAddRewardModal })
+    const [isClaimRewardsModalOpen, { close: closeClaimRewardsModal, open: openClaimRewardsModal }] = useDisclosure();
+    
+    useTriggerCallbackOnQueryParamFirstMatch({ queryParamKey: 'add-reward', callback: openAddRewardModal });
+    useTriggerCallbackOnQueryParamFirstMatch({ queryParamKey: 'claim-rewards', callback: openClaimRewardsModal });
 
     function handleClickAddReward() {
         if(userAuth) {
-            openAddRewardModal()
+            openAddRewardModal();
             return;
         }
         
@@ -40,7 +44,22 @@ export const DetailedIssueMainData: FC<DetailedIssueMainDataProps> = ({ issue, u
         router.push('?login=true');      
     }
 
+    function handleClickClaimRewards() {
+        if(userAuth) {
+            openClaimRewardsModal();
+            return;
+        }
+        
+        redirectAfterLogin.prepareNextRedirection(`/issues/${issue.id}?claim-rewards=true`);
+        router.push('?login=true');      
+    }
+
     function onNewRewardCreated() {
+        mutate(API_ROUTES.ACTIVITY.BY_ISSUE_ID(issue.id));
+        router.refresh();
+    }
+
+    function onRewardsClaimed() {
         mutate(API_ROUTES.ACTIVITY.BY_ISSUE_ID(issue.id));
         router.refresh();
     }
@@ -203,6 +222,25 @@ export const DetailedIssueMainData: FC<DetailedIssueMainDataProps> = ({ issue, u
                     >
                         Rewards
                     </Text>
+                </Center>
+
+                <Space h={'1rem'} />
+
+                <Center>
+                    <Button
+                        leftSection={<IconMoneybag size={18} />}
+                        variant='filled'
+                        onClick={handleClickClaimRewards}
+                    >
+                        Claim available rewards
+                    </Button>
+
+                    <ClaimRewardsModal 
+                        isOpened={isClaimRewardsModalOpen} 
+                        onClose={closeClaimRewardsModal}
+                        prefilledIssueURL={issue.issueURL}
+                        onRewardsClaimed={onRewardsClaimed} 
+                    />
                 </Center>
 
                 <Space h={'1rem'} />
