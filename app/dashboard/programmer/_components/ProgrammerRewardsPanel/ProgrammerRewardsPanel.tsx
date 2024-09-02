@@ -12,6 +12,8 @@ import { IssueByProgrammerDTO } from "../../../../_core/_dtos/IssueByProgrammerD
 import { useDisclosure } from "@mantine/hooks";
 import { IconMoneybag } from "@tabler/icons-react";
 import { ClaimRewardsModal } from "./ClaimRewardsModal";
+import { mutate } from "swr";
+import { API_ROUTES } from "../../../../../constants";
 
 interface ProgrammerRewardsPanelProps {
 }
@@ -74,7 +76,11 @@ export const ProgrammerRewardsPanel: FC<ProgrammerRewardsPanelProps> = ({ }) => 
                         Claim rewards manually
                     </Button>
 
-                    <ClaimRewardsModal isOpened={isModalOpen} onClose={closeModal} />
+                    <ClaimRewardsModal 
+                        isOpened={isModalOpen} 
+                        onClose={closeModal} 
+                        onRewardsClaimed={onRewardsClaimed} 
+                    />
                 </div>
 
                 <Space h='xl' />
@@ -126,3 +132,7 @@ export const ProgrammerRewardsPanel: FC<ProgrammerRewardsPanelProps> = ({ }) => 
         </div>
     );
 };
+
+function onRewardsClaimed() {
+    mutate(API_ROUTES.REWARDS.TRYING_BY_ME());
+}
