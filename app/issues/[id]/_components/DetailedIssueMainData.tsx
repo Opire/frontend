@@ -229,7 +229,7 @@ export const DetailedIssueMainData: FC<DetailedIssueMainDataProps> = ({ issue, u
                 <Center>
                     <Button
                         leftSection={<IconMoneybag size={18} />}
-                        variant='filled'
+                        variant='light'
                         onClick={handleClickClaimRewards}
                     >
                         Claim available rewards
