@@ -311,6 +311,8 @@ const DetailedIssueReward: FC<{ reward: RewardPrimitive, issue: IssuePrimitive }
         usernameLink
     } = useGetUserPublicInfoFromPlatform({ userId: reward.creatorId, platform })
 
+    const wasRewardCreatedFromComment = reward.commentURL !== issue.issueURL;
+
     if (isLoading) {
         return (
             <Table.Td colSpan={5}>
@@ -355,9 +357,11 @@ const DetailedIssueReward: FC<{ reward: RewardPrimitive, issue: IssuePrimitive }
             <Table.Td>
                 <Text c="dimmed" size="sm">
                     {
-                        reward.commentURL !== issue.issueURL
-                        &&
+                        wasRewardCreatedFromComment
+                        ?
                         <Link href={reward.commentURL}>Go to comment</Link>
+                        :
+                        <span>Created from dashboard</span>
                     }
                 </Text>
             </Table.Td>
