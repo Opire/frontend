@@ -354,7 +354,11 @@ const DetailedIssueReward: FC<{ reward: RewardPrimitive, issue: IssuePrimitive }
 
             <Table.Td>
                 <Text c="dimmed" size="sm">
-                    <Link href={reward.commentURL}>Go to comment</Link>
+                    {
+                        reward.commentURL !== issue.issueURL
+                        &&
+                        <Link href={reward.commentURL}>Go to comment</Link>
+                    }
                 </Text>
             </Table.Td>
         </>
