@@ -23,7 +23,6 @@ interface ItemMenu {
     children?: ItemMenu[];
 }
 
-
 export const Navbar: FC<NavbarProps> = ({
     userAuth,
 }) => {

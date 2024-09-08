@@ -13,7 +13,6 @@ export function DetailedIssueView({
     issue: IssuePrimitive;
     userAuth: UserAuthDTO | null;
 }) {
-
     return (
         <Grid h={'100%'}>
             <Grid.Col span={{ base: 12, md: 8, lg: 9 }}>
