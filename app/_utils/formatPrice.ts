@@ -23,3 +23,10 @@ function formatPriceFromCents(cents: number): string {
         maximumFractionDigits: 2,
     }).format(usd);
 }
+
+export function getPriceInUSD(price: PricePrimitive): number {
+    if (price.unit === "USD_CENT") {
+        return price.value / 100;
+    }
+    return price.value
+}
