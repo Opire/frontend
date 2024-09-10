@@ -15,6 +15,11 @@ export const API_ROUTES = {
         CLAIM_FROM_ISSUE_URL: () => `${process.env.NEXT_PUBLIC_API_URL}/issues/claim/fromIssueURL`,
         BY_ID: (id: string) => `${process.env.NEXT_PUBLIC_API_URL}/issues/${id}`,
     },
+    CHALLENGES: {
+        BY_ID: (id: string) => `${process.env.NEXT_PUBLIC_API_URL}/challenges/${id}`,
+        TEMPLATES: () => `${process.env.NEXT_PUBLIC_API_URL}/challenges/templates`,
+        CREATE: () => `${process.env.NEXT_PUBLIC_API_URL}/challenges`,
+    },
     AUTH: {
         GITHUB: (code: string) =>
             `${process.env.NEXT_PUBLIC_API_URL}/auth/github/${code}`,
