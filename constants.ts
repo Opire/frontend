@@ -19,6 +19,9 @@ export const API_ROUTES = {
         BY_ID: (id: string) => `${process.env.NEXT_PUBLIC_API_URL}/challenges/${id}`,
         TEMPLATES: () => `${process.env.NEXT_PUBLIC_API_URL}/challenges/templates`,
         CREATE: () => `${process.env.NEXT_PUBLIC_API_URL}/challenges`,
+        EDIT_DRAFT: (id: string) => `${process.env.NEXT_PUBLIC_API_URL}/challenges/${id}`,
+        CREATED_BY_ME: () =>
+            `${process.env.NEXT_PUBLIC_API_URL}/challenges/created`,
     },
     AUTH: {
         GITHUB: (code: string) =>

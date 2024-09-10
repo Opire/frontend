@@ -17,3 +17,4 @@ export interface ChallengePrimitive {
 type ChallengePrimitivePropsToOmit = 'id' | 'creatorId' | 'participations' | 'isPublished' | 'isAcceptingParticipations' | 'isCompleted' | 'createdAt' | 'updatedAt';
 
 export interface CreateChallengeDTO extends Omit<ChallengePrimitive, ChallengePrimitivePropsToOmit> {}
+export interface EditDraftChallengeDTO extends Omit<ChallengePrimitive, ChallengePrimitivePropsToOmit> {}

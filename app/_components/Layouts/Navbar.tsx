@@ -3,7 +3,7 @@
 import { FC } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { Divider, NavLink, Space } from "@mantine/core";
-import { IconChartBar, IconDeviceLaptop, IconCoin, IconSettings, IconLayoutDashboard, IconMoneybag, IconBrandGit } from "@tabler/icons-react";
+import { IconChartBar, IconDeviceLaptop, IconCoin, IconSettings, IconLayoutDashboard, IconMoneybag, IconBrandGit, IconTrophy } from "@tabler/icons-react";
 import { LogoutButton } from "./LogoutButton";
 import { useExternalStateOverride } from "../../../hooks/useExternalStateOverride";
 import { UserInfo } from "../User/UserInfo";
@@ -69,6 +69,13 @@ export const Navbar: FC<NavbarProps> = ({
                             icon: <IconCoin size={18} />,
                             text: 'Tips',
                             path: '/dashboard/creator/tips',
+                            isPublic: false,
+                        },
+                        {
+                            id: 'dashboard-creator-challenges',
+                            icon: <IconTrophy size={18} />,
+                            text: 'Challenges',
+                            path: '/dashboard/creator/challenges',
                             isPublic: false,
                         }
                     ]
