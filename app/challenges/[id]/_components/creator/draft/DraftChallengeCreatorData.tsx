@@ -22,8 +22,8 @@ interface DraftChallengeCreatorDataProps {
     creator: UserAuthDTO;
 }
 
-export const DraftChallengeCreatorData: FC<DraftChallengeCreatorDataProps> = ({ challenge, creator }) => {
-    const { challenge: draft } = useGetChallengeById({ challengeId: challenge.id, initialChallenge: challenge, revalidateOnFocus: true });
+export const DraftChallengeCreatorData: FC<DraftChallengeCreatorDataProps> = ({ challenge: initialChallenge, creator }) => {
+    const { challenge, reloadChallenge } = useGetChallengeById({ challengeId: initialChallenge.id, initialChallenge, revalidateOnFocus: true });
 
     const { templates, isLoadingTemplates } = useGetCreateChallengeTemplates();
     const [isModalToSelectTemplateOpen, { close: closeModalToSelectTemplate, open: openModalToSelectTemplate }] = useDisclosure()
@@ -34,14 +34,14 @@ export const DraftChallengeCreatorData: FC<DraftChallengeCreatorDataProps> = ({ 
     const form = useForm<CreateChallengeDTO>({
         mode: 'uncontrolled',
         initialValues: {
-            title: challenge.title,
+            title: challenge?.title ?? initialChallenge.title,
             configuration: {
-                ...challenge.configuration,
-                budget: challenge.configuration.budget ? { unit: 'USD', value: getPriceInUSD(challenge.configuration.budget) } : null
+                ...challenge?.configuration ?? initialChallenge.configuration,
+                budget: challenge?.configuration.budget ? { unit: 'USD', value: getPriceInUSD(challenge.configuration.budget) } : initialChallenge.configuration.budget
             },
         },
         onValuesChange: (values) => {
-            debouncedOnUpdateDraft(challenge.id, values)
+            debouncedOnUpdateDraft(initialChallenge.id, values, reloadChallenge)
         }
     });
 
@@ -72,13 +72,13 @@ export const DraftChallengeCreatorData: FC<DraftChallengeCreatorDataProps> = ({ 
     const prizes = useMemo(() => sortPrizes(form.getValues().configuration.prizes), [form.getValues()]);
 
     useEffect(() => {
-        if (draft) {
+        if (challenge) {
             form.setInitialValues({
-                title: draft.title,
-                configuration: draft.configuration,
+                title: challenge.title,
+                configuration: challenge.configuration,
             })
         }
-    }, [draft])
+    }, [challenge])
 
     return (
         <>
@@ -301,7 +301,7 @@ const PrizeRow: FC<{ prize: ChallengePrizePrimitive, onRemovePrize: () => void; 
     )
 }
 
-async function onUpdateDraft(challengeId: string, draft: CreateChallengeDTO) {
+async function onUpdateDraft(challengeId: string, draft: CreateChallengeDTO, onDraftUpdated: () => void) {
     try {
         await clientCustomFetch(API_ROUTES.CHALLENGES.EDIT_DRAFT(challengeId), {
             method: 'PUT',
@@ -309,6 +309,7 @@ async function onUpdateDraft(challengeId: string, draft: CreateChallengeDTO) {
                 challenge: draft,
             },
         })
+        onDraftUpdated();
     } catch (error) {
         console.error('Error while saving the draft challenge', { error })
     }
