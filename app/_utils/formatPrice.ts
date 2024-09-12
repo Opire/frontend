@@ -28,5 +28,15 @@ export function getPriceInUSD(price: PricePrimitive): number {
     if (price.unit === "USD_CENT") {
         return price.value / 100;
     }
+    
+    return price.value
+}
+
+
+export function getPriceInUSD_CENT(price: PricePrimitive): number {
+    if (price.unit === "USD") {
+        return price.value * 100;
+    }
+
     return price.value
 }

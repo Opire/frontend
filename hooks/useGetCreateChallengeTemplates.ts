@@ -8,7 +8,6 @@ export interface CreateChallengeTemplate {
     template: CreateChallengeDTO;
 }
 
-
 export const useGetCreateChallengeTemplates = () => {
     const { data: templatesResponse, error, isValidating } = useSWR(API_ROUTES.CHALLENGES.TEMPLATES(), (url: string) => fetcher<CreateChallengeTemplate[]>(url));
     const templates = templatesResponse ?? [];

@@ -9,7 +9,7 @@ import { useForm } from "@mantine/form";
 import { DatePickerInput } from '@mantine/dates';
 import { getChallengePrizeMaxPosition, getChallengePrizeMinPosition, isPrimitiveSpecificPositionPrize, isPrimitiveThresholdPrize, isPrimitiveThresholdWithoutLimitPrize, sortPrizes } from "../../../../../_utils/challengePrizes";
 import { ChallengePrizePrimitive } from "../../../../../_core/_primitives/ChallengePrizePrimitive";
-import { formatPrice } from "../../../../../_utils/formatPrice";
+import { formatPrice, getPriceInUSD } from "../../../../../_utils/formatPrice";
 import { IconPlus, IconTrash } from "@tabler/icons-react";
 import { AddChallengePrizeModal } from "./AddChallengePrizeModal";
 import { clientCustomFetch } from "../../../../../_utils/clientCustomFetch";
@@ -32,7 +32,10 @@ export const DraftChallengeCreatorData: FC<DraftChallengeCreatorDataProps> = ({ 
         mode: 'uncontrolled',
         initialValues: {
             title: challenge.title,
-            configuration: challenge.configuration,
+            configuration: {
+                ...challenge.configuration,
+                budget: challenge.configuration.budget ? { unit: 'USD', value: getPriceInUSD(challenge.configuration.budget) } : null
+            },
         },
         onValuesChange: (values) => {
             debouncedOnUpdateDraft(challenge.id, values)
