@@ -12,26 +12,3 @@ export function debounce<F extends AnyFunction>(func: F, delay: number): (...arg
         }, delay);
     };
 }
-
-export function prepareDebounceFunction<R = void>(
-    callback: (...args: any[]) => R,
-    delay: number,
-): [(...args: any[]) => Promise<R>, () => void] {
-    let timer: NodeJS.Timeout;
-
-    function debouncedFunction(...args: any[]): Promise<R> {
-        return new Promise((resolve) => {
-            if (timer) {
-                clearTimeout(timer);
-            }
-
-            timer = setTimeout(() => {
-                resolve(callback(...args));
-            }, delay);
-        });
-    }
-
-    const stopExecution = () => clearTimeout(timer);
-
-    return [debouncedFunction, stopExecution];
-}

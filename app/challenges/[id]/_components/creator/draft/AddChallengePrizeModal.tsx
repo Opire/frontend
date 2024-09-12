@@ -6,6 +6,7 @@ import { CHALLENGE_PRIZE_WITHOUT_LIMIT_VALUE, ChallengePrizePrimitive, SpecificP
 import { getChallengePrizeMaxPosition, getChallengePrizeMinPosition, isPrimitiveSpecificPositionPrize, isPrimitiveThresholdPrize, isPrimitiveThresholdWithoutLimitPrize } from "../../../../../_utils/challengePrizes";
 import { clientCustomFetch } from "../../../../../_utils/clientCustomFetch";
 import { API_ROUTES } from "../../../../../../constants";
+import { debounce } from "../../../../../_utils/debounce";
 
 interface AddChallengePrizeModalProps {
     currentPrizes: ChallengePrizePrimitive[];
@@ -45,6 +46,8 @@ export const AddChallengePrizeModal: FC<AddChallengePrizeModalProps> = ({
         return 1;
     }, [currentPrizes]);
 
+    const debouncedCheckIsPrizeValid = debounce(checkIsPrizeValid, 500);
+
     const form = useForm<ChallengePrizePrimitive>({
         initialValues: {
             amount: {
@@ -54,6 +57,9 @@ export const AddChallengePrizeModal: FC<AddChallengePrizeModalProps> = ({
             position: initialAvailablePosition,
             fromPosition: undefined,
             toPosition: undefined,
+        },
+        onValuesChange: (values) => {
+            debouncedCheckIsPrizeValid(values)
         }
     });
 
@@ -96,6 +102,34 @@ export const AddChallengePrizeModal: FC<AddChallengePrizeModalProps> = ({
         onClose();
     }
 
+    async function checkIsPrizeValid(newPrize: ChallengePrizePrimitive) {
+        try {
+            setIsCheckingPrize(true);
+
+            await clientCustomFetch(API_ROUTES.CHALLENGES.CHECK_DRAFT_PRIZES(), {
+                method: 'POST',
+                body: {
+                    challenge: {
+                        configuration: {
+                            prizes: [...currentPrizes, newPrize]
+                        }
+                    }
+                },
+                showNotificationOnError: false,
+                onError: (error) => {
+                    setPrizeInvalidReason(error.error)
+                }
+            });
+
+            setPrizeInvalidReason(null);
+        } catch (error) {
+            // Do nothing
+        } finally {
+            setIsCheckingPrize(false);
+        }
+    }
+
+
     // Reset initial values when modal open
     useEffect(() => {
         if (isOpened) {
@@ -112,39 +146,6 @@ export const AddChallengePrizeModal: FC<AddChallengePrizeModalProps> = ({
             setIsPrizeForSpecificPosition(true);
         }
     }, [isOpened])
-
-    // Check if prize is valid on change
-    useEffect(() => {
-        async function checkIsPrizeValid() {
-            try {
-                setIsCheckingPrize(true);
-
-                await clientCustomFetch(API_ROUTES.CHALLENGES.CHECK_DRAFT_PRIZES(), {
-                    method: 'POST',
-                    body: {
-                        challenge: {
-                            configuration: {
-                                prizes: [...currentPrizes, form.getValues()]
-                            }
-                        }
-                    },
-                    showNotificationOnError: false,
-                    onError: (error) => {
-                        setPrizeInvalidReason(error.error)
-                    }
-                });
-
-                setPrizeInvalidReason(null);
-            } catch (error) {
-                // Do nothing
-            } finally {
-                setIsCheckingPrize(false);
-            }
-        }
-
-        checkIsPrizeValid();
-    }, [form.getValues()])
-
 
     return (
         <Modal
