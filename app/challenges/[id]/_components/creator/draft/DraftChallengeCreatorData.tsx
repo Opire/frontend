@@ -245,6 +245,7 @@ export const DraftChallengeCreatorData: FC<DraftChallengeCreatorDataProps> = ({ 
                 opened={isModalToSelectTemplateOpen}
                 onClose={closeModalToSelectTemplate}
                 title="Choose a template to apply to your challenge"
+                centered
             >
                 <Space h={'1rem'} />
 
