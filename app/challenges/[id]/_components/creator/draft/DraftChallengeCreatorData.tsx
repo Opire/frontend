@@ -12,6 +12,9 @@ import { ChallengePrizePrimitive } from "../../../../../_core/_primitives/Challe
 import { formatPrice } from "../../../../../_utils/formatPrice";
 import { IconPlus, IconTrash } from "@tabler/icons-react";
 import { AddChallengePrizeModal } from "./AddChallengePrizeModal";
+import { clientCustomFetch } from "../../../../../_utils/clientCustomFetch";
+import { API_ROUTES } from "../../../../../../constants";
+import { debounce } from "../../../../../_utils/debounce";
 
 interface DraftChallengeCreatorDataProps {
     challenge: ChallengePrimitive;
@@ -31,6 +34,9 @@ export const DraftChallengeCreatorData: FC<DraftChallengeCreatorDataProps> = ({ 
             title: challenge.title,
             configuration: challenge.configuration,
         },
+        onValuesChange: (values) => {
+            debouncedOnUpdateDraft(challenge.id, values)
+        }
     });
 
     function onChangeTemplate(value: string | null) {
@@ -279,3 +285,19 @@ const PrizeRow: FC<{ prize: ChallengePrizePrimitive, onRemovePrize: () => void; 
         </>
     )
 }
+
+async function onUpdateDraft(challengeId: string, draft: CreateChallengeDTO) {
+    try {
+        await clientCustomFetch(API_ROUTES.CHALLENGES.EDIT_DRAFT(challengeId), {
+            method: 'PUT',
+            body: {
+                challenge: draft,
+            },
+        })
+
+    } catch (error) {
+        console.error('Error while saving the draft challenge', { error })
+    }
+}
+
+const debouncedOnUpdateDraft = debounce(onUpdateDraft, 2000);
