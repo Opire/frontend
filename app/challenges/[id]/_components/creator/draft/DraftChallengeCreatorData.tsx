@@ -1,5 +1,5 @@
 import { ChallengePrimitive, CreateChallengeDTO } from "../../../../../_core/_primitives/ChallengePrimitive";
-import { FC, useMemo, useState } from "react";
+import { FC, useEffect, useMemo, useState } from "react";
 import { UserAuthDTO } from "../../../../../_core/_dtos/UserAuthDTO";
 import React from "react";
 import { CreateChallengeTemplate, useGetCreateChallengeTemplates } from "../../../../../../hooks/useGetCreateChallengeTemplates";
@@ -15,6 +15,7 @@ import { AddChallengePrizeModal } from "./AddChallengePrizeModal";
 import { clientCustomFetch } from "../../../../../_utils/clientCustomFetch";
 import { API_ROUTES } from "../../../../../../constants";
 import { debounce } from "../../../../../_utils/debounce";
+import { useGetChallengeById } from "../../../../../../hooks/useGetChallengeById";
 
 interface DraftChallengeCreatorDataProps {
     challenge: ChallengePrimitive;
@@ -22,6 +23,8 @@ interface DraftChallengeCreatorDataProps {
 }
 
 export const DraftChallengeCreatorData: FC<DraftChallengeCreatorDataProps> = ({ challenge, creator }) => {
+    const { challenge: draft } = useGetChallengeById({ challengeId: challenge.id, initialChallenge: challenge, revalidateOnFocus: true });
+
     const { templates, isLoadingTemplates } = useGetCreateChallengeTemplates();
     const [isModalToSelectTemplateOpen, { close: closeModalToSelectTemplate, open: openModalToSelectTemplate }] = useDisclosure()
     const [isModalToAddPrizeOpen, { close: closeAddPrizeModal, open: openAddPrizeModal }] = useDisclosure();
@@ -67,6 +70,15 @@ export const DraftChallengeCreatorData: FC<DraftChallengeCreatorDataProps> = ({ 
     }
 
     const prizes = useMemo(() => sortPrizes(form.getValues().configuration.prizes), [form.getValues()]);
+
+    useEffect(() => {
+        if (draft) {
+            form.setInitialValues({
+                title: draft.title,
+                configuration: draft.configuration,
+            })
+        }
+    }, [draft])
 
     return (
         <>
@@ -297,7 +309,6 @@ async function onUpdateDraft(challengeId: string, draft: CreateChallengeDTO) {
                 challenge: draft,
             },
         })
-
     } catch (error) {
         console.error('Error while saving the draft challenge', { error })
     }
