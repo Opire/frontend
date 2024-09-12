@@ -6,7 +6,6 @@ import { CHALLENGE_PRIZE_WITHOUT_LIMIT_VALUE, ChallengePrizePrimitive, SpecificP
 import { getChallengePrizeMaxPosition, getChallengePrizeMinPosition, isPrimitiveSpecificPositionPrize, isPrimitiveThresholdPrize, isPrimitiveThresholdWithoutLimitPrize } from "../../../../../_utils/challengePrizes";
 import { clientCustomFetch } from "../../../../../_utils/clientCustomFetch";
 import { API_ROUTES } from "../../../../../../constants";
-import { debounce } from "../../../../../_utils/debounce";
 
 interface AddChallengePrizeModalProps {
     currentPrizes: ChallengePrizePrimitive[];
@@ -46,8 +45,6 @@ export const AddChallengePrizeModal: FC<AddChallengePrizeModalProps> = ({
         return 1;
     }, [currentPrizes]);
 
-    const debouncedCheckIsPrizeValid = debounce(checkIsPrizeValid, 500);
-
     const form = useForm<ChallengePrizePrimitive>({
         initialValues: {
             amount: {
@@ -59,7 +56,7 @@ export const AddChallengePrizeModal: FC<AddChallengePrizeModalProps> = ({
             toPosition: undefined,
         },
         onValuesChange: (values) => {
-            debouncedCheckIsPrizeValid(values)
+            checkIsPrizeValid(values)
         }
     });
 
@@ -84,14 +81,22 @@ export const AddChallengePrizeModal: FC<AddChallengePrizeModalProps> = ({
     }, [form.getValues()])
 
     function handleChangeIsPrizeForSpecificPosition(isChecked: boolean) {
+        const amount = form.getValues().amount;
+
         if (isChecked) {
-            form.setFieldValue('position', initialAvailablePosition);
-            form.setFieldValue('fromPosition', undefined);
-            form.setFieldValue('toPosition', undefined);
+            form.setValues({
+                amount,
+                position: initialAvailablePosition,
+                fromPosition: undefined,
+                toPosition: undefined,
+            } as SpecificPositionPrizePrimitive);
         } else {
-            form.setFieldValue('position', undefined);
-            form.setFieldValue('fromPosition', initialAvailablePosition);
-            form.setFieldValue('toPosition', CHALLENGE_PRIZE_WITHOUT_LIMIT_VALUE);
+            form.setValues({
+                amount,
+                position: undefined,
+                fromPosition: initialAvailablePosition,
+                toPosition: CHALLENGE_PRIZE_WITHOUT_LIMIT_VALUE,
+            } as ThresholdWithoutLimitPrizePrimitive);
         }
 
         setIsPrizeForSpecificPosition(isChecked);
