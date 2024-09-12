@@ -158,7 +158,7 @@ export const DraftChallengeCreatorData: FC<DraftChallengeCreatorDataProps> = ({ 
                             </Grid.Col>
 
                             <Grid.Col span={{ base: 12 }} mt='1rem'>
-                                <Card withBorder shadow="md" radius='md' bg={'dark.7'}>
+                                <Card withBorder shadow="md" >
                                     <Center>
                                         <Text
                                             style={{ textAlign: 'center', fontSize: "1.4rem", fontWeight: "bold" }}
