@@ -11,7 +11,7 @@ export class PositiveNumber extends ValueObject<number> {
     private ensureIsPositive(value: number) {
         const numValue = +value;
 
-        if (!Number.isNaN(numValue) && numValue < 0) {
+        if (Number.isNaN(+numValue) || numValue < 0) {
             throw new PositiveNumberMustBeGreaterThan0(numValue);
         }
     }

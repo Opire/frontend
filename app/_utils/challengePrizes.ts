@@ -40,13 +40,13 @@ export function getChallengePrizeMaxPosition(primitive: ChallengePrizePrimitive)
 }
 
 export function isPrimitiveSpecificPositionPrize(primitive: ChallengePrizePrimitive): primitive is SpecificPositionPrizePrimitive {
-    return 'position' in primitive;
+    return 'position' in primitive && !Number.isNaN(+primitive.position);
 }
 
 export function isPrimitiveThresholdPrize(primitive: ChallengePrizePrimitive): primitive is ThresholdPrizePrimitive {
-    return 'fromPosition' in primitive && 'toPosition' in primitive && primitive.toPosition !== CHALLENGE_PRIZE_WITHOUT_LIMIT_VALUE;
+    return 'fromPosition' in primitive && !Number.isNaN(+primitive.fromPosition) && 'toPosition' in primitive && primitive.toPosition !== CHALLENGE_PRIZE_WITHOUT_LIMIT_VALUE && !Number.isNaN(+primitive.toPosition);
 }
 
 export function isPrimitiveThresholdWithoutLimitPrize(primitive: ChallengePrizePrimitive): primitive is ThresholdWithoutLimitPrizePrimitive {
-    return 'fromPosition' in primitive && primitive.toPosition === CHALLENGE_PRIZE_WITHOUT_LIMIT_VALUE;
+    return 'fromPosition' in primitive && !Number.isNaN(+primitive.fromPosition) && primitive.toPosition === CHALLENGE_PRIZE_WITHOUT_LIMIT_VALUE;
 }

@@ -3,13 +3,15 @@ import { FC, useMemo, useState } from "react";
 import { UserAuthDTO } from "../../../../../_core/_dtos/UserAuthDTO";
 import React from "react";
 import { CreateChallengeTemplate, useGetCreateChallengeTemplates } from "../../../../../../hooks/useGetCreateChallengeTemplates";
-import { Button, Card, Center, Checkbox, Grid, Modal, NumberInput, Select, Space, Table, Text, Textarea, TextInput } from "@mantine/core";
+import { ActionIcon, Button, Card, Center, Checkbox, Grid, Modal, NumberInput, Select, Space, Table, Text, Textarea, TextInput, Tooltip } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { useForm } from "@mantine/form";
 import { DatePickerInput } from '@mantine/dates';
 import { getChallengePrizeMaxPosition, getChallengePrizeMinPosition, isPrimitiveSpecificPositionPrize, isPrimitiveThresholdPrize, isPrimitiveThresholdWithoutLimitPrize, sortPrizes } from "../../../../../_utils/challengePrizes";
 import { ChallengePrizePrimitive } from "../../../../../_core/_primitives/ChallengePrizePrimitive";
 import { formatPrice } from "../../../../../_utils/formatPrice";
+import { IconPlus, IconTrash } from "@tabler/icons-react";
+import { AddChallengePrizeModal } from "./AddChallengePrizeModal";
 
 interface DraftChallengeCreatorDataProps {
     challenge: ChallengePrimitive;
@@ -18,14 +20,16 @@ interface DraftChallengeCreatorDataProps {
 
 export const DraftChallengeCreatorData: FC<DraftChallengeCreatorDataProps> = ({ challenge, creator }) => {
     const { templates, isLoadingTemplates } = useGetCreateChallengeTemplates();
-    const [isModalToSelectTemplateOpenes, { close: closeModalToSelectTemplate, open: openModalToSelectTemplate }] = useDisclosure();
+    const [isModalToSelectTemplateOpen, { close: closeModalToSelectTemplate, open: openModalToSelectTemplate }] = useDisclosure()
+    const [isModalToAddPrizeOpen, { close: closeAddPrizeModal, open: openAddPrizeModal }] = useDisclosure();
+
     const [selectedTemplate, setSelectedTemplate] = useState<CreateChallengeTemplate | null>(null);
 
     const form = useForm<CreateChallengeDTO>({
         mode: 'uncontrolled',
         initialValues: {
-          title: challenge.title,
-          configuration: challenge.configuration,
+            title: challenge.title,
+            configuration: challenge.configuration,
         },
     });
 
@@ -36,11 +40,21 @@ export const DraftChallengeCreatorData: FC<DraftChallengeCreatorDataProps> = ({ 
     }
 
     function applyTemplate() {
-        if(selectedTemplate) {
+        if (selectedTemplate) {
             form.setValues(selectedTemplate.template);
         }
 
         closeModalToSelectTemplate();
+    }
+
+    function onNewPrize(newPrize: ChallengePrizePrimitive) {
+        const newPrizes = [...form.getValues().configuration.prizes, newPrize];
+        form.setFieldValue('configuration.prizes', sortPrizes(newPrizes))
+    }
+
+    function onRemovePrize(indexPrizeToRemove: number) {
+        const newPrizes = form.getValues().configuration.prizes.filter((_, i) => i !== indexPrizeToRemove);
+        form.setFieldValue('configuration.prizes', sortPrizes(newPrizes))
     }
 
     const prizes = useMemo(() => sortPrizes(form.getValues().configuration.prizes), [form.getValues()]);
@@ -58,9 +72,9 @@ export const DraftChallengeCreatorData: FC<DraftChallengeCreatorDataProps> = ({ 
 
                 <Card withBorder shadow="md" radius='md' padding='2rem'>
                     <div style={{ display: 'flex', justifyContent: 'end' }}>
-                        <Button 
-                            onClick={openModalToSelectTemplate} 
-                            loading={isLoadingTemplates} 
+                        <Button
+                            onClick={openModalToSelectTemplate}
+                            loading={isLoadingTemplates}
                             disabled={isLoadingTemplates}
                             color="indigo"
                             variant="outline"
@@ -82,15 +96,6 @@ export const DraftChallengeCreatorData: FC<DraftChallengeCreatorDataProps> = ({ 
                                 />
                             </Grid.Col>
 
-                            <Grid.Col span={{ base: 12 }}>
-                                <Textarea
-                                    label="Description"
-                                    rows={10}
-                                    resize="vertical"
-                                    placeholder="Include descriptive instructions about how to participate and win the challenge prizes"
-                                />
-                            </Grid.Col>
-
                             <Grid.Col span={{ base: 12, md: 6 }}>
                                 <DatePickerInput
                                     label="Deadline"
@@ -103,7 +108,7 @@ export const DraftChallengeCreatorData: FC<DraftChallengeCreatorDataProps> = ({ 
                             </Grid.Col>
 
                             <Grid.Col span={{ base: 12, md: 6 }}>
-                                 <NumberInput
+                                <NumberInput
                                     label="Max. budget (USD)"
                                     placeholder="Enter the max amount of money you want to spend in prizes (USD)"
                                     prefix="$"
@@ -126,19 +131,38 @@ export const DraftChallengeCreatorData: FC<DraftChallengeCreatorDataProps> = ({ 
                                 <Checkbox
                                     mt="xl"
                                     label="Allow multiple participations per user"
-                                    key={form.key('configuration.allowMultipleParticipationsPerUser')}
-                                    {...form.getInputProps('configuration.allowMultipleParticipationsPerUser')}
+                                    checked={form.getValues().configuration.allowMultipleParticipationsPerUser}
+                                    onChange={(event) => form.setFieldValue('configuration.allowMultipleParticipationsPerUser', event.target.checked)}
                                 />
                             </Grid.Col>
 
                             <Grid.Col span={{ base: 12 }} mt='1rem'>
-                                <Card withBorder shadow="md" radius='md' bg={'dark.8'}>
+                                <Card withBorder shadow="md" radius='md' bg={'dark.7'}>
                                     <Center>
                                         <Text
                                             style={{ textAlign: 'center', fontSize: "1.4rem", fontWeight: "bold" }}
                                         >
                                             Prizes
                                         </Text>
+                                    </Center>
+
+                                    <Space h={'1rem'} />
+
+                                    <Center>
+                                        <Button
+                                            leftSection={<IconPlus size={18} />}
+                                            variant='light'
+                                            onClick={openAddPrizeModal}
+                                        >
+                                            Add prize
+                                        </Button>
+
+                                        <AddChallengePrizeModal
+                                            currentPrizes={prizes}
+                                            isOpened={isModalToAddPrizeOpen}
+                                            onClose={closeAddPrizeModal}
+                                            onNewPrize={onNewPrize}
+                                        />
                                     </Center>
 
                                     <Space h={'1rem'} />
@@ -156,7 +180,7 @@ export const DraftChallengeCreatorData: FC<DraftChallengeCreatorDataProps> = ({ 
                                                 <Table.Tbody ta={'center'}>
                                                     {prizes.map((prize, index) => (
                                                         <Table.Tr key={index}>
-                                                            <PrizeRow prize={prize} />
+                                                            <PrizeRow prize={prize} onRemovePrize={() => onRemovePrize(index)} />
                                                         </Table.Tr>
                                                     ))}
                                                 </Table.Tbody>
@@ -165,30 +189,39 @@ export const DraftChallengeCreatorData: FC<DraftChallengeCreatorDataProps> = ({ 
                                     </Center>
                                 </Card>
                             </Grid.Col>
+
+                            <Grid.Col span={{ base: 12 }}>
+                                <Textarea
+                                    label="Description"
+                                    rows={10}
+                                    resize="vertical"
+                                    placeholder="Include descriptive instructions about how to participate and win the challenge prizes"
+                                />
+                            </Grid.Col>
                         </Grid>
 
 
                         <Space h={'2rem'} />
                     </form>
 
-                 
+
                 </Card>
 
                 <Space h={'1rem'} />
 
                 <div style={{ display: 'flex', justifyContent: 'end' }}>
-                        <Button 
-                            onClick={() => {}} 
-                            variant="gradient"
-                            disabled={true}
-                        >
-                            Publish challenge
-                        </Button>
-                    </div>
+                    <Button
+                        onClick={() => { }}
+                        variant="gradient"
+                        disabled={true}
+                    >
+                        Publish challenge
+                    </Button>
+                </div>
             </section >
 
             <Modal
-                opened={isModalToSelectTemplateOpenes}
+                opened={isModalToSelectTemplateOpen}
                 onClose={closeModalToSelectTemplate}
                 title="Choose a template to apply to your challenge"
             >
@@ -205,11 +238,11 @@ export const DraftChallengeCreatorData: FC<DraftChallengeCreatorDataProps> = ({ 
                 <Space h={'1rem'} />
 
                 <div style={{ display: 'flex', justifyContent: 'end' }}>
-                    <Button 
+                    <Button
                         onClick={applyTemplate}
                         color="indigo"
                         variant="filled"
-                        >
+                    >
                         Apply selected template
                     </Button>
                 </div>
@@ -218,7 +251,7 @@ export const DraftChallengeCreatorData: FC<DraftChallengeCreatorDataProps> = ({ 
     );
 };
 
-const PrizeRow: FC<{ prize: ChallengePrizePrimitive }> = ({ prize }) => {
+const PrizeRow: FC<{ prize: ChallengePrizePrimitive, onRemovePrize: () => void; }> = ({ prize, onRemovePrize }) => {
     const isSpecificPositionPrize = isPrimitiveSpecificPositionPrize(prize)
     const isThresholdPrize = isPrimitiveThresholdPrize(prize)
     const isThresholdWithoutLimitPrize = isPrimitiveThresholdWithoutLimitPrize(prize)
@@ -226,13 +259,21 @@ const PrizeRow: FC<{ prize: ChallengePrizePrimitive }> = ({ prize }) => {
     return (
         <>
             <Table.Td>
-               {isSpecificPositionPrize && `${getChallengePrizeMinPosition(prize)}`}
-               {isThresholdPrize && `From ${getChallengePrizeMinPosition(prize)} to ${getChallengePrizeMaxPosition(prize)}`}
-               {isThresholdWithoutLimitPrize && `From ${getChallengePrizeMinPosition(prize)} onwards`}
+                {isSpecificPositionPrize && `${getChallengePrizeMinPosition(prize)}`}
+                {isThresholdPrize && `From ${getChallengePrizeMinPosition(prize)} to ${getChallengePrizeMaxPosition(prize)}`}
+                {isThresholdWithoutLimitPrize && `From ${getChallengePrizeMinPosition(prize)} onwards`}
             </Table.Td>
 
             <Table.Td>
                 {formatPrice(prize.amount)}
+            </Table.Td>
+
+            <Table.Td>
+                <Tooltip label="Remove prize">
+                    <ActionIcon variant="light" aria-label="Remove prize" color="red" onClick={onRemovePrize}>
+                        <IconTrash size={18} />
+                    </ActionIcon>
+                </Tooltip>
             </Table.Td>
 
         </>
