@@ -6,17 +6,17 @@ export function sortPrizes(prizes: ChallengePrizePrimitive[]): ChallengePrizePri
         const minPositionB = getChallengePrizeMinPosition(b);
         const maxPositionA = getChallengePrizeMaxPosition(a);
         const maxPositionB = getChallengePrizeMaxPosition(b);
-
-        if (minPositionA !== minPositionB) {
-            return minPositionA - minPositionB;
-        }
-
+     
         if (maxPositionA === CHALLENGE_PRIZE_WITHOUT_LIMIT_VALUE) {
             return 1;
         }
 
         if (maxPositionB === CHALLENGE_PRIZE_WITHOUT_LIMIT_VALUE) {
             return -1;
+        }
+
+        if (minPositionA !== minPositionB) {
+            return minPositionA - minPositionB;
         }
 
         return maxPositionA - maxPositionB;

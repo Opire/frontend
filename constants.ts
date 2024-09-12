@@ -22,6 +22,7 @@ export const API_ROUTES = {
         EDIT_DRAFT: (id: string) => `${process.env.NEXT_PUBLIC_API_URL}/challenges/${id}`,
         CREATED_BY_ME: () =>
             `${process.env.NEXT_PUBLIC_API_URL}/challenges/created`,
+        CHECK_DRAFT_PRIZES: () => `${process.env.NEXT_PUBLIC_API_URL}/challenges/draft/prizes/are-valid` 
     },
     AUTH: {
         GITHUB: (code: string) =>
