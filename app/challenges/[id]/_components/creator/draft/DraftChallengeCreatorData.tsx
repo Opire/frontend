@@ -3,7 +3,7 @@ import { FC, useEffect, useMemo, useState } from "react";
 import { UserAuthDTO } from "../../../../../_core/_dtos/UserAuthDTO";
 import React from "react";
 import { CreateChallengeTemplate, useGetCreateChallengeTemplates } from "../../../../../../hooks/useGetCreateChallengeTemplates";
-import { ActionIcon, Button, Card, Center, Checkbox, Grid, Modal, NumberInput, Select, Space, Table, Text, Textarea, TextInput, Tooltip } from "@mantine/core";
+import { ActionIcon, Box, Button, Card, Center, Checkbox, Grid, Modal, NumberInput, Select, Space, Table, Text, Textarea, TextInput, Tooltip } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { useForm } from "@mantine/form";
 import { DatePickerInput } from '@mantine/dates';
@@ -85,13 +85,13 @@ export const DraftChallengeCreatorData: FC<DraftChallengeCreatorDataProps> = ({ 
             <section style={{ height: 'auto' }}>
                 <Center>
                     <Text
-                        style={{ textAlign: 'center', padding: '0 0 20px', fontSize: "2rem", fontWeight: "bold" }}
+                        style={{ textAlign: 'center', fontSize: "2rem", fontWeight: "bold" }}
                     >
                         Configure your challenge
                     </Text>
                 </Center>
 
-                <Card withBorder shadow="md" radius='md' padding='2rem'>
+                <Box style={{ padding: '0 2rem' }}>
                     <div style={{ display: 'flex', justifyContent: 'end' }}>
                         <Button
                             onClick={openModalToSelectTemplate}
@@ -100,7 +100,7 @@ export const DraftChallengeCreatorData: FC<DraftChallengeCreatorDataProps> = ({ 
                             color="indigo"
                             variant="outline"
                         >
-                            Use a template
+                            Use template
                         </Button>
                     </div>
 
@@ -226,7 +226,7 @@ export const DraftChallengeCreatorData: FC<DraftChallengeCreatorDataProps> = ({ 
                     </form>
 
 
-                </Card>
+                </Box>
 
                 <Space h={'1rem'} />
 
