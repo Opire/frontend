@@ -3,19 +3,21 @@ import { FC, useEffect, useMemo, useState } from "react";
 import { UserAuthDTO } from "../../../../../_core/_dtos/UserAuthDTO";
 import React from "react";
 import { CreateChallengeTemplate, useGetCreateChallengeTemplates } from "../../../../../../hooks/useGetCreateChallengeTemplates";
-import { ActionIcon, Box, Button, Card, Center, Checkbox, Grid, Modal, NumberInput, Select, Space, Table, Text, Textarea, TextInput, Tooltip } from "@mantine/core";
+import { ActionIcon, Box, Button, Card, Center, Checkbox, Grid, Loader, Modal, NumberInput, Select, Space, Table, Text, TextInput, Tooltip } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { useForm } from "@mantine/form";
 import { DatePickerInput } from '@mantine/dates';
 import { getChallengePrizeMaxPosition, getChallengePrizeMinPosition, isPrimitiveSpecificPositionPrize, isPrimitiveThresholdPrize, isPrimitiveThresholdWithoutLimitPrize, sortPrizes } from "../../../../../_utils/challengePrizes";
 import { ChallengePrizePrimitive } from "../../../../../_core/_primitives/ChallengePrizePrimitive";
 import { formatPrice, getPriceInUSD } from "../../../../../_utils/formatPrice";
-import { IconPlus, IconTrash } from "@tabler/icons-react";
+import { IconCircleCheckFilled, IconPlus, IconTrash } from "@tabler/icons-react";
 import { AddChallengePrizeModal } from "./AddChallengePrizeModal";
 import { clientCustomFetch } from "../../../../../_utils/clientCustomFetch";
 import { API_ROUTES } from "../../../../../../constants";
 import { debounce } from "../../../../../_utils/debounce";
 import { useGetChallengeById } from "../../../../../../hooks/useGetChallengeById";
+import { ChallengeDescriptionEditor } from "./ChallengeDescriptionEditor/ChallengeDescriptionEditor";
+import { formatDateTime } from "../../../../../_utils/formatDate";
 
 interface DraftChallengeCreatorDataProps {
     challenge: ChallengePrimitive;
@@ -28,8 +30,27 @@ export const DraftChallengeCreatorData: FC<DraftChallengeCreatorDataProps> = ({ 
     const { templates, isLoadingTemplates } = useGetCreateChallengeTemplates();
     const [isModalToSelectTemplateOpen, { close: closeModalToSelectTemplate, open: openModalToSelectTemplate }] = useDisclosure()
     const [isModalToAddPrizeOpen, { close: closeAddPrizeModal, open: openAddPrizeModal }] = useDisclosure();
+    const [isUpdatingDraft, setIsUpdatingDraft] = useState(false);
 
     const [selectedTemplate, setSelectedTemplate] = useState<CreateChallengeTemplate | null>(null);
+
+    async function onUpdateDraft(challengeId: string, draft: CreateChallengeDTO, onDraftUpdated: () => void) {
+        try {
+            await clientCustomFetch(API_ROUTES.CHALLENGES.EDIT_DRAFT(challengeId), {
+                method: 'PUT',
+                body: {
+                    challenge: draft,
+                },
+            })
+            onDraftUpdated();
+        } catch (error) {
+            console.error('Error while saving the draft challenge', { error })
+        } finally {
+            setIsUpdatingDraft(false);
+        }
+    }
+
+    const debouncedOnUpdateDraft = debounce(onUpdateDraft, 2000);
 
     const form = useForm<CreateChallengeDTO>({
         mode: 'uncontrolled',
@@ -41,6 +62,7 @@ export const DraftChallengeCreatorData: FC<DraftChallengeCreatorDataProps> = ({ 
             },
         },
         onValuesChange: (values) => {
+            setIsUpdatingDraft(true);
             debouncedOnUpdateDraft(initialChallenge.id, values, reloadChallenge)
         }
     });
@@ -83,12 +105,27 @@ export const DraftChallengeCreatorData: FC<DraftChallengeCreatorDataProps> = ({ 
     return (
         <>
             <section style={{ height: 'auto' }}>
-                <Center>
+                <Center style={{ alignItems: 'baseline' }}>
                     <Text
-                        style={{ textAlign: 'center', fontSize: "2rem", fontWeight: "bold" }}
+                        style={{ textAlign: 'center', fontSize: "2rem", fontWeight: "bold", marginRight: '1rem' }}
                     >
                         Configure your challenge
                     </Text>
+
+                    {
+                        isUpdatingDraft
+                        &&
+                        <Tooltip label="Saving changes...">
+                            <Loader size={18} />
+                        </Tooltip>
+                    }
+                    {
+                        !isUpdatingDraft
+                        &&
+                        <Tooltip label={`Updated at ${formatDateTime(challenge ? new Date(challenge.updatedAt) : new Date())}`}>
+                            <IconCircleCheckFilled size={18} />
+                        </Tooltip>
+                    }
                 </Center>
 
                 <Box style={{ padding: '0 2rem' }}>
@@ -212,12 +249,7 @@ export const DraftChallengeCreatorData: FC<DraftChallengeCreatorDataProps> = ({ 
                             </Grid.Col>
 
                             <Grid.Col span={{ base: 12 }}>
-                                <Textarea
-                                    label="Description"
-                                    rows={10}
-                                    resize="vertical"
-                                    placeholder="Include descriptive instructions about how to participate and win the challenge prizes"
-                                />
+                                <ChallengeDescriptionEditor onChange={(description) => form.setFieldValue('title', description)} />
                             </Grid.Col>
                         </Grid>
 
@@ -234,7 +266,7 @@ export const DraftChallengeCreatorData: FC<DraftChallengeCreatorDataProps> = ({ 
                     <Button
                         onClick={() => { }}
                         variant="gradient"
-                        disabled={true}
+                        disabled={isUpdatingDraft}
                     >
                         Publish challenge
                     </Button>
@@ -306,18 +338,3 @@ const PrizeRow: FC<{ prize: ChallengePrizePrimitive, onRemovePrize: () => void; 
     )
 }
 
-async function onUpdateDraft(challengeId: string, draft: CreateChallengeDTO, onDraftUpdated: () => void) {
-    try {
-        await clientCustomFetch(API_ROUTES.CHALLENGES.EDIT_DRAFT(challengeId), {
-            method: 'PUT',
-            body: {
-                challenge: draft,
-            },
-        })
-        onDraftUpdated();
-    } catch (error) {
-        console.error('Error while saving the draft challenge', { error })
-    }
-}
-
-const debouncedOnUpdateDraft = debounce(onUpdateDraft, 2000);
