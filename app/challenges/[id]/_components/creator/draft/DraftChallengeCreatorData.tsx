@@ -201,7 +201,7 @@ export const DraftChallengeCreatorData: FC<DraftChallengeCreatorDataProps> = ({ 
                                                 <Table.Tbody ta={'center'}>
                                                     {prizes.map((prize, index) => (
                                                         <Table.Tr key={index}>
-                                                            <PrizeRow prize={prize} onRemovePrize={() => onRemovePrize(index)} />
+                                                            <PrizeRow prize={prize} onRemovePrize={() => onRemovePrize(index)} isLastRow={(index + 1) === prizes.length} />
                                                         </Table.Tr>
                                                     ))}
                                                 </Table.Tbody>
@@ -273,7 +273,7 @@ export const DraftChallengeCreatorData: FC<DraftChallengeCreatorDataProps> = ({ 
     );
 };
 
-const PrizeRow: FC<{ prize: ChallengePrizePrimitive, onRemovePrize: () => void; }> = ({ prize, onRemovePrize }) => {
+const PrizeRow: FC<{ prize: ChallengePrizePrimitive, onRemovePrize: () => void; isLastRow: boolean }> = ({ prize, onRemovePrize, isLastRow }) => {
     const isSpecificPositionPrize = isPrimitiveSpecificPositionPrize(prize)
     const isThresholdPrize = isPrimitiveThresholdPrize(prize)
     const isThresholdWithoutLimitPrize = isPrimitiveThresholdWithoutLimitPrize(prize)
@@ -291,11 +291,15 @@ const PrizeRow: FC<{ prize: ChallengePrizePrimitive, onRemovePrize: () => void; 
             </Table.Td>
 
             <Table.Td>
-                <Tooltip label="Remove prize">
-                    <ActionIcon variant="light" aria-label="Remove prize" color="red" onClick={onRemovePrize}>
-                        <IconTrash size={18} />
-                    </ActionIcon>
-                </Tooltip>
+
+                {
+                    isLastRow &&
+                    <Tooltip label="Remove prize">
+                        <ActionIcon variant="light" aria-label="Remove prize" color="red" onClick={onRemovePrize}>
+                            <IconTrash size={18} />
+                        </ActionIcon>
+                    </Tooltip>
+                }
             </Table.Td>
 
         </>
