@@ -22,11 +22,11 @@ export function ChallengeDescriptionEditor({ onChange }: { onChange: (descriptio
         onError,
     };
 
-    function handleChangeEditorState(editorState: EditorState, editor: LexicalEditor, tags: Set<string>) {
+    function handleChangeEditorState(editorState: EditorState) {
         onChange(JSON.stringify(editorState));
     }
 
-    const debouncedHandleChangeEditorState = debounce(handleChangeEditorState, 1000);
+    const debouncedHandleChangeEditorState = debounce(handleChangeEditorState, 500);
 
     return (
         <LexicalComposer initialConfig={initialConfig}>
