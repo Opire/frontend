@@ -46,7 +46,7 @@
 
 /* Editor inner */
 .editor-inner {
-    background: #0d1117; /* GitHub dark mode background */
+    background: #151B23; /* GitHub dark mode background */
     position: relative;
 }
 
@@ -115,7 +115,7 @@
 
 /* Code block styling */
 .editor-code {
-    background-color: #0d1117;
+    background-color: #151B23;
     font-family: Menlo, Consolas, Monaco, monospace;
     display: block;
     padding: 8px 8px 8px 52px;
@@ -310,7 +310,7 @@ pre::-webkit-scrollbar-thumb {
 .toolbar {
     display: flex;
     margin-bottom: 1px;
-    background: #0d1117; /* Dark toolbar background */
+    background: #151B23; /* Dark toolbar background */
     padding: 4px;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
