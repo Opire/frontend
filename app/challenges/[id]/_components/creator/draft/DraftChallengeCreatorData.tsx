@@ -3,14 +3,14 @@ import { FC, useEffect, useMemo, useState } from "react";
 import { UserAuthDTO } from "../../../../../_core/_dtos/UserAuthDTO";
 import React from "react";
 import { CreateChallengeTemplate, useGetCreateChallengeTemplates } from "../../../../../../hooks/useGetCreateChallengeTemplates";
-import { ActionIcon, Box, Button, Card, Center, Checkbox, Grid, Loader, Modal, NumberInput, Select, Space, Table, Text, TextInput, Tooltip } from "@mantine/core";
+import { ActionIcon, Box, Button, Card, Center, Checkbox, Grid, InputLabel, Loader, Modal, NumberInput, Select, Space, Table, Text, TextInput, Tooltip } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { useForm } from "@mantine/form";
 import { DatePickerInput } from '@mantine/dates';
 import { getChallengePrizeMaxPosition, getChallengePrizeMinPosition, isPrimitiveSpecificPositionPrize, isPrimitiveThresholdPrize, isPrimitiveThresholdWithoutLimitPrize, sortPrizes } from "../../../../../_utils/challengePrizes";
 import { ChallengePrizePrimitive } from "../../../../../_core/_primitives/ChallengePrizePrimitive";
 import { formatPrice, getPriceInUSD } from "../../../../../_utils/formatPrice";
-import { IconCircleCheckFilled, IconPlus, IconTrash } from "@tabler/icons-react";
+import { IconCircleCheckFilled, IconInfoCircle, IconPlus, IconTrash } from "@tabler/icons-react";
 import { AddChallengePrizeModal } from "./AddChallengePrizeModal";
 import { clientCustomFetch } from "../../../../../_utils/clientCustomFetch";
 import { API_ROUTES } from "../../../../../../constants";
@@ -56,6 +56,7 @@ export const DraftChallengeCreatorData: FC<DraftChallengeCreatorDataProps> = ({ 
         mode: 'uncontrolled',
         initialValues: {
             title: challenge?.title ?? initialChallenge.title,
+            description: challenge?.description ?? initialChallenge.description,
             configuration: {
                 ...challenge?.configuration ?? initialChallenge.configuration,
                 budget: challenge?.configuration.budget ? { unit: 'USD', value: getPriceInUSD(challenge.configuration.budget) } : initialChallenge.configuration.budget
@@ -97,6 +98,7 @@ export const DraftChallengeCreatorData: FC<DraftChallengeCreatorDataProps> = ({ 
         if (challenge) {
             form.setInitialValues({
                 title: challenge.title,
+                description: challenge.description,
                 configuration: challenge.configuration,
             })
         }
@@ -249,7 +251,16 @@ export const DraftChallengeCreatorData: FC<DraftChallengeCreatorDataProps> = ({ 
                             </Grid.Col>
 
                             <Grid.Col span={{ base: 12 }}>
-                                <ChallengeDescriptionEditor onChange={(description) => form.setFieldValue('title', description)} />
+
+
+                                <Tooltip label="This will be published and used as the details/instructions of the challenge. Provide usefull and well structured information" position="right" withArrow>
+                                    <span style={{ display: 'inline-flex', alignItems: 'center', gap: '4px', marginBottom: '4px' }}>
+                                        <InputLabel>Description</InputLabel>
+                                        <IconInfoCircle size={18} />
+                                    </span>
+                                </Tooltip>
+
+                                <ChallengeDescriptionEditor onChange={(description) => form.setFieldValue('description', description)} />
                             </Grid.Col>
                         </Grid>
 

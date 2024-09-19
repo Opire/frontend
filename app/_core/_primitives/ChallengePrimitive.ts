@@ -5,6 +5,7 @@ export interface ChallengePrimitive {
     id: string;
     creatorId: string;
     title: string;
+    description: string;
     configuration: ChallengeConfigurationPrimitive;
     participations: ChallengeParticipationPrimitive[];
     isPublished: boolean;
