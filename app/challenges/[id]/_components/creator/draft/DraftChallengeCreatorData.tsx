@@ -260,7 +260,10 @@ export const DraftChallengeCreatorData: FC<DraftChallengeCreatorDataProps> = ({ 
                                     </span>
                                 </Tooltip>
 
-                                <ChallengeDescriptionEditor onChange={(description) => form.setFieldValue('description', description)} />
+                                <ChallengeDescriptionEditor
+                                    value={form.getValues().description}
+                                    onChange={(description) => form.setFieldValue('description', description)}
+                                />
                             </Grid.Col>
                         </Grid>
 

@@ -1,456 +1,92 @@
-/* Styling based on GitHub's dark mode for the rich text editor */
-
-/* Headings */
-.other h2 {
-    font-size: 18px;
-    color: #c9d1d9; /* Light text */
-    margin-bottom: 7px;
-}
-
-/* Links */
-.other a {
-    color: #58a6ff; /* GitHub dark mode link color */
-    text-decoration: underline;
-    font-size: 14px;
-}
-
-/* Unordered list */
-.other ul {
-    padding: 0;
-    margin: 0;
-    list-style-type: none;
-}
-
-/* Text direction */
-.ltr {
-    text-align: left;
-}
-
-.rtl {
-    text-align: right;
-}
-
-/* Editor container */
-.editor-container {
-    margin: auto;
-    border-radius: 2px;
-    color: #c9d1d9; /* Light text */
-    position: relative;
-    line-height: 20px;
-    font-weight: 400;
-    text-align: left;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-    background-color: #161b22; /* Dark background */
-}
-
-/* Editor inner */
-.editor-inner {
-    background: #151B23; /* GitHub dark mode background */
-    position: relative;
-}
-
-/* Editor input */
-.editor-input {
-    min-height: 150px;
-    resize: none;
-    font-size: 15px;
-    caret-color: #c9d1d9; /* Light caret color */
-    position: relative;
-    tab-size: 1;
-    outline: 0;
-    padding: 15px 10px;
-    color: #c9d1d9; /* Light text */
-    background-color: #2E2E2E; /* Dark input background */
-}
-
-/* Placeholder */
-.editor-placeholder {
-    color: #8b949e; /* Placeholder color */
-    overflow: hidden;
-    position: absolute;
-    text-overflow: ellipsis;
-    top: 15px;
-    left: 10px;
-    font-size: 15px;
-    user-select: none;
-    display: inline-block;
-    pointer-events: none;
-}
-
-/* Text styles */
-.editor-text-bold {
-    font-weight: bold;
-}
-
-.editor-text-italic {
-    font-style: italic;
-}
-
-.editor-text-underline {
-    text-decoration: underline;
-}
-
-.editor-text-strikethrough {
-    text-decoration: line-through;
-}
-
-.editor-text-underlineStrikethrough {
-    text-decoration: underline line-through;
-}
-
-.editor-text-code {
-    background-color: #161b22; /* Code block background */
-    padding: 1px 0.25rem;
-    font-family: Menlo, Consolas, Monaco, monospace;
-    font-size: 94%;
-    color: #f97583; /* Code text color */
-}
-
-/* Links inside the editor */
-.editor-link {
-    color: #58a6ff; /* Link color */
-    text-decoration: none;
-}
-
-/* Code block styling */
-.editor-code {
-    background-color: #151B23;
-    font-family: Menlo, Consolas, Monaco, monospace;
-    display: block;
-    padding: 8px 8px 8px 52px;
-    line-height: 1.53;
-    font-size: 13px;
-    margin: 0;
-    margin-top: 8px;
-    margin-bottom: 8px;
-    color: #c9d1d9; /* Light text */
-    tab-size: 2;
-    overflow-x: auto;
-    position: relative;
-}
-
-.editor-code:before {
-    content: attr(data-gutter);
-    position: absolute;
-    background-color: #161b22;
-    left: 0;
-    top: 0;
-    border-right: 1px solid #21262d; /* Border for gutter */
-    padding: 8px;
-    color: #8b949e; /* Gutter color */
-    white-space: pre-wrap;
-    text-align: right;
-    min-width: 25px;
-}
-
-.editor-code:after {
-    content: attr(data-highlight-language);
-    top: 0;
-    right: 3px;
-    padding: 3px;
-    font-size: 10px;
-    text-transform: uppercase;
-    position: absolute;
-    color: #8b949e; /* Language label */
-}
-
-/* Syntax highlighting */
-.editor-tokenComment {
-    color: #8b949e; /* Comment color */
-}
-
-.editor-tokenPunctuation {
-    color: #c9d1d9; /* Light punctuation */
-}
-
-.editor-tokenProperty {
-    color: #d2a8ff; /* Property color */
-}
-
-.editor-tokenSelector {
-    color: #79c0ff; /* Selector color */
-}
-
-.editor-tokenOperator {
-    color: #ff7b72; /* Operator color */
-}
-
-.editor-tokenAttr {
-    color: #ffa657;
-}
-
-.editor-tokenVariable {
-    color: #e3b341;
-}
-
-.editor-tokenFunction {
-    color: #7ee787; /* Function color */
-}
-
-/* Paragraph styling */
-.editor-paragraph {
-    margin: 0;
-    margin-bottom: 8px;
-    position: relative;
-}
-
-.editor-paragraph:last-child {
-    margin-bottom: 0;
-}
-
-/* Headings */
-.editor-heading-h1 {
-    font-size: 24px;
-    color: #c9d1d9; /* Light text */
-    font-weight: 400;
-    margin: 0;
-    margin-bottom: 12px;
-    padding: 0;
-}
-
-.editor-heading-h2 {
-    font-size: 15px;
-    color: #c9d1d9;
-    font-weight: 700;
-    margin: 0;
-    margin-top: 10px;
-    padding: 0;
-    text-transform: uppercase;
-}
-
-/* Block quote styling */
-.editor-quote {
-    margin: 0;
-    margin-left: 20px;
-    font-size: 15px;
-    color: #8b949e; /* Lighter text */
-    border-left-color: #21262d; /* Border color */
-    border-left-width: 4px;
-    border-left-style: solid;
-    padding-left: 16px;
-}
-
-/* Ordered list */
-.editor-list-ol {
-    padding: 0;
-    margin: 0;
-    margin-left: 16px;
-}
-
-/* Unordered list */
-.editor-list-ul {
-    padding: 0;
-    margin: 0;
-    margin-left: 16px;
-}
-
-/* List items */
-.editor-listitem {
-    margin: 8px 32px 8px 32px;
-}
-
-/* Nested list items */
-.editor-nested-listitem {
-    list-style-type: none;
-}
-
-/* Scrollbars */
-pre::-webkit-scrollbar {
-    background: transparent;
-    width: 10px;
-}
-
-pre::-webkit-scrollbar-thumb {
-    background: #999;
-}
-
-/* Debugging timetravel panel */
-.debug-timetravel-panel {
-    overflow: hidden;
-    padding: 0 0 10px 0;
-    margin: auto;
-    display: flex;
-}
-
-.debug-timetravel-panel-slider {
-    padding: 0;
-    flex: 8;
-}
-
-.debug-timetravel-panel-button {
-    padding: 0;
-    border: 0;
-    background: none;
-    flex: 1;
-    color: #c9d1d9; /* Light button text */
-    font-size: 12px;
-}
-
-.debug-timetravel-panel-button:hover {
-    text-decoration: underline;
-}
-
-.debug-timetravel-button {
-    border: 0;
-    padding: 0;
-    font-size: 12px;
-    top: 10px;
-    right: 15px;
-    position: absolute;
-    background: none;
-    color: #c9d1d9; /* Light text */
-}
-
-.debug-timetravel-button:hover {
-    text-decoration: underline;
-}
-
-/* Toolbar */
-.toolbar {
-    display: flex;
-    margin-bottom: 1px;
-    background: #151B23; /* Dark toolbar background */
-    padding: 4px;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-    vertical-align: middle;
-}
-
-/* Toolbar buttons */
-.toolbar button.toolbar-item {
-    border: 0;
-    display: flex;
-    background: none;
-    border-radius: 10px;
-    padding: 8px;
-    cursor: pointer;
-    vertical-align: middle;
-}
-
-.toolbar button.toolbar-item:disabled {
-    cursor: not-allowed;
-}
-
-.toolbar button.toolbar-item.spaced {
-    margin-right: 2px;
-}
-
-/* Toolbar icon styling */
-.toolbar button.toolbar-item i.format {
-    background-size: contain;
-    display: inline-block;
-    height: 18px;
-    width: 18px;
-    margin-top: 2px;
-    vertical-align: -0.25em;
-    display: flex;
-    opacity: 0.8; /* Increase opacity for better visibility */
-    filter: invert(80%); /* Lightens the icon for dark backgrounds */
-}
-
-.toolbar button.toolbar-item:disabled i.format {
-    opacity: 0.2;
-}
-
-.toolbar button.toolbar-item.active {
-    background-color: rgba(223, 232, 250, 0.3);
-}
-
-.toolbar button.toolbar-item.active i {
-    opacity: 1;
-}
-
-.toolbar button.toolbar-item:hover i.format {
-    opacity: 1; /* Fully opaque on hover */
-}
-
-.toolbar .toolbar-item:hover:not([disabled]) {
-    background-color: #21262d; /* Hover state for dark mode */
-}
-
-/* Toolbar divider */
-.toolbar .divider {
-    width: 1px;
-    background-color: #21262d;
-    margin: 0 4px;
-}
-
-/* Toolbar text and icons */
-.toolbar .toolbar-item .text {
-    display: flex;
-    line-height: 20px;
-    width: 200px;
-    vertical-align: middle;
-    font-size: 14px;
-    color: #8b949e; /* Toolbar text */
-    text-overflow: ellipsis;
-    width: 70px;
-    overflow: hidden;
-    height: 20px;
-    text-align: left;
-}
-
-.toolbar .toolbar-item .icon {
-    display: flex;
-    width: 20px;
-    height: 20px;
-    user-select: none;
-    margin-right: 8px;
-    line-height: 16px;
-    background-size: contain;
-}
-
-/* Icon styling */
-i.undo {
-    background-image: url(/icons/opire-editor-icons/arrow-counterclockwise.svg);
-}
-
-i.redo {
-    background-image: url(/icons/opire-editor-icons/arrow-clockwise.svg);
-}
-
-i.bold {
-    background-image: url(/icons/opire-editor-icons/type-bold.svg);
-}
-
-i.italic {
-    background-image: url(/icons/opire-editor-icons/type-italic.svg);
-}
-
-i.underline {
-    background-image: url(/icons/opire-editor-icons/type-underline.svg);
-}
-
-i.strikethrough {
-    background-image: url(/icons/opire-editor-icons/type-strikethrough.svg);
-}
-
-i.left-align {
-    background-image: url(/icons/opire-editor-icons/text-left.svg);
-}
-
-i.center-align {
-    background-image: url(/icons/opire-editor-icons/text-center.svg);
-}
-
-i.right-align {
-    background-image: url(/icons/opire-editor-icons/text-right.svg);
-}
-
-i.justify-align {
-    background-image: url(/icons/opire-editor-icons/justify.svg);
-}
-
-i.undo,
-i.redo,
-i.bold,
-i.italic,
-i.underline,
-i.strikethrough,
-i.left-align,
-i.center-align,
-i.right-align,
-i.justify-align {
-    filter: invert(80%); /* Lighten all icons */
-}
+/* Dark Theme for Quill.js Snow Theme */
+.ql-container {
+    background-color: #1e1e1e !important;
+    color: #f5f5f5 !important;
+    border: none !important;
+  }
+  
+  .ql-toolbar {
+    background-color: #2c2c2c !important;
+    border: 1px solid #444 !important;
+    border-top-left-radius: 6px !important;
+    border-top-right-radius: 6px !important;
+  }
+  
+  .ql-toolbar .ql-picker {
+    color: #f5f5f5 !important;
+  }
+  
+  .ql-toolbar .ql-picker-item {
+    color: #f5f5f5 !important;
+  }
+  
+  .ql-toolbar .ql-stroke {
+    stroke: #f5f5f5 !important;
+  }
+  
+  .ql-toolbar .ql-fill {
+    fill: #f5f5f5 !important;
+  }
+  
+  .ql-toolbar .ql-picker-label {
+    color: #f5f5f5 !important;
+  }
+  
+  .ql-editor {
+    background-color: #1e1e1e !important;
+    color: #f5f5f5 !important;
+    border: 1px solid #444 !important;
+  }
+  
+  .ql-editor a {
+    color: #4a90e2 !important;
+  }
+  
+  .ql-editor .ql-blank::before {
+    color: #777 !important;
+  }
+  
+  .ql-snow .ql-tooltip {
+    background-color: #2c2c2c !important;
+    color: #f5f5f5 !important;
+    border: 1px solid #444 !important;
+  }
+  
+  .ql-snow .ql-tooltip .ql-editing {
+    color: #f5f5f5 !important;
+  }
+  
+  .ql-snow .ql-tooltip a {
+    color: #4a90e2 !important;
+  }
+  
+  .ql-snow .ql-tooltip.ql-hidden {
+    visibility: hidden !important;
+  }
+  
+  .ql-snow .ql-picker-label:hover,
+  .ql-snow .ql-picker-options:hover {
+    background-color: #444 !important;
+  }
+  
+  .ql-snow .ql-picker-options {
+    background-color: #2c2c2c !important;
+    border: 1px solid #444 !important;
+  }
+  
+  .ql-snow .ql-picker-options .ql-picker-item {
+    color: #f5f5f5 !important;
+  }
+  
+  .ql-snow .ql-picker-options .ql-picker-item.ql-selected {
+    background-color: #444 !important;
+  }
+  
+  .ql-snow .ql-picker-label.ql-active {
+    color: #f5f5f5 !important;
+  }
+  
+  .ql-snow .ql-picker-label.ql-selected {
+    background-color: #444 !important;
+  }
+  

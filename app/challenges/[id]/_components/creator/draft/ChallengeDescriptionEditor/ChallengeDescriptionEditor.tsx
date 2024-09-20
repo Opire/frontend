@@ -1,57 +1,57 @@
-import { EditorState, LexicalEditor } from 'lexical';
+'use client';
+import ReactQuill from 'react-quill'
+import 'react-quill/dist/quill.snow.css';
+import './styles.css'; // Add dark version of snow theme
 
-import { LexicalComposer } from '@lexical/react/LexicalComposer';
-import { RichTextPlugin } from '@lexical/react/LexicalRichTextPlugin';
-import { ContentEditable } from '@lexical/react/LexicalContentEditable';
-import { HistoryPlugin } from '@lexical/react/LexicalHistoryPlugin';
-import { LexicalErrorBoundary } from '@lexical/react/LexicalErrorBoundary';
-import { OnChangePlugin } from '@lexical/react/LexicalOnChangePlugin';
-import { DefaultTheme } from './DefaultTheme';
-import './styles.css';
-import ToolbarPlugin from './plugins/ToolbarPlugin';
-import { debounce } from '../../../../../../_utils/debounce';
 
-function onError(error: unknown) {
-    console.error(error);
-}
 
-export function ChallengeDescriptionEditor({ onChange }: { onChange: (description: string) => void; }) {
-    const initialConfig = {
-        namespace: 'Challenge description',
-        theme: DefaultTheme,
-        onError,
-    };
-
-    function handleChangeEditorState(editorState: EditorState) {
-        onChange(JSON.stringify(editorState));
-    }
-
-    const debouncedHandleChangeEditorState = debounce(handleChangeEditorState, 500);
+export function ChallengeDescriptionEditor({
+    value,
+    onChange,
+}: {
+    value: string;
+    onChange: (description: string) => void;
+}) {
 
     return (
-        <LexicalComposer initialConfig={initialConfig}>
-            <div className="editor-container" onClick={(event) => {
-                event.preventDefault()
-                event.stopPropagation()
-            }}>
-                <ToolbarPlugin />
-                <div className="editor-inner">
-                    <RichTextPlugin
-                        contentEditable={
-                            <ContentEditable
-                                className="editor-input"
-                                aria-placeholder={''}
-                                placeholder={
-                                    <div className="editor-placeholder">{''}</div>
-                                }
-                            />
-                        }
-                        ErrorBoundary={LexicalErrorBoundary}
-                    />
-                    <HistoryPlugin />
-                    <OnChangePlugin onChange={debouncedHandleChangeEditorState} />
-                </div>
-            </div>
-        </LexicalComposer>
+        <ReactQuill
+            theme="snow"
+            modules={modules}
+            formats={formats}
+            value={value}
+            onChange={onChange}
+        />
     );
 }
+
+const modules = {
+    toolbar: [
+        [{ 'header': [1, 2, 3, 4, 5, false] }],
+        ['bold', 'italic', 'underline', 'strike'], // toggled buttons
+        ['blockquote', 'code-block'],
+        [{ 'list': 'ordered' }, { 'list': 'bullet' }, { 'indent': '-1' }, { 'indent': '+1' }, { 'align': [] }],
+        [{ 'script': 'sub' }, { 'script': 'super' }], // superscript/subscript
+        [{ 'color': [] }, { 'background': [] }], // dropdown with defaults from theme
+        ['link', 'image'],
+        ['clean']
+    ]
+};
+
+const formats = [
+    "header",
+    "bold",
+    "italic",
+    "underline",
+    "strike",
+    "blockquote",
+    "code-block",
+    "list",
+    "bullet",
+    "indent",
+    "link",
+    "image",
+    "color",
+    "background",
+    "align",
+    "script"
+];
