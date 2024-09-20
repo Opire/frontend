@@ -1,9 +1,10 @@
 'use client';
-import ReactQuill from 'react-quill'
+import ReactQuill, { Quill } from 'react-quill'
 import 'react-quill/dist/quill.snow.css';
 import './styles.css'; // Add dark version of snow theme
 
-
+import ImageResize from 'quill-image-resize-module-react'
+Quill.register('modules/imageResize', ImageResize)
 
 export function ChallengeDescriptionEditor({
     value,
@@ -33,8 +34,11 @@ const modules = {
         [{ 'script': 'sub' }, { 'script': 'super' }], // superscript/subscript
         [{ 'color': [] }, { 'background': [] }], // dropdown with defaults from theme
         ['link', 'image'],
-        ['clean']
-    ]
+        ['clean'],
+    ],
+    imageResize: {
+        modules: ['Resize', 'DisplaySize']
+    }
 };
 
 const formats = [
@@ -53,5 +57,6 @@ const formats = [
     "color",
     "background",
     "align",
-    "script"
+    "script",
+    "width",
 ];

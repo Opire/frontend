@@ -9,7 +9,7 @@ export interface CreateChallengeTemplate {
 }
 
 export const useGetCreateChallengeTemplates = () => {
-    const { data: templatesResponse, error, isValidating } = useSWR(API_ROUTES.CHALLENGES.TEMPLATES(), (url: string) => fetcher<CreateChallengeTemplate[]>(url));
+    const { data: templatesResponse, error, isValidating } = useSWR(API_ROUTES.CHALLENGES.TEMPLATES(), (url: string) => fetcher<CreateChallengeTemplate[]>(url), { revalidateOnFocus: false });
     const templates = templatesResponse ?? [];
 
     return {
