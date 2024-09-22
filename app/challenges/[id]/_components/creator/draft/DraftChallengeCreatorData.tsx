@@ -1,22 +1,59 @@
-import { ChallengePrimitive, CreateChallengeDTO } from "../../../../../_core/_primitives/ChallengePrimitive";
+import {
+    ChallengePrimitive,
+    CreateChallengeDTO,
+} from "../../../../../_core/_primitives/ChallengePrimitive";
 import { FC, useEffect, useMemo, useState } from "react";
 import { UserAuthDTO } from "../../../../../_core/_dtos/UserAuthDTO";
 import React from "react";
-import { CreateChallengeTemplate, useGetCreateChallengeTemplates } from "../../../../../../hooks/useGetCreateChallengeTemplates";
-import { ActionIcon, Box, Button, Card, Center, Checkbox, Grid, InputLabel, Loader, Modal, NumberInput, Select, Space, Table, Text, TextInput, Tooltip } from "@mantine/core";
-import { useDisclosure } from "@mantine/hooks";
+import {
+    CreateChallengeTemplate,
+    useGetCreateChallengeTemplates,
+} from "../../../../../../hooks/useGetCreateChallengeTemplates";
+import {
+    ActionIcon,
+    Alert,
+    Box,
+    Button,
+    Card,
+    Center,
+    Checkbox,
+    Fieldset,
+    Grid,
+    InputLabel,
+    Loader,
+    Modal,
+    NumberInput,
+    Select,
+    Space,
+    Table,
+    Text,
+    Textarea,
+    TextInput,
+    Tooltip,
+} from "@mantine/core";
+import { useDebouncedCallback, useDisclosure } from "@mantine/hooks";
 import { useForm } from "@mantine/form";
-import { DatePickerInput } from '@mantine/dates';
-import { getChallengePrizeMaxPosition, getChallengePrizeMinPosition, isPrimitiveSpecificPositionPrize, isPrimitiveThresholdPrize, isPrimitiveThresholdWithoutLimitPrize, sortPrizes } from "../../../../../_utils/challengePrizes";
+import { DatePickerInput } from "@mantine/dates";
+import {
+    getChallengePrizeMaxPosition,
+    getChallengePrizeMinPosition,
+    isPrimitiveSpecificPositionPrize,
+    isPrimitiveThresholdPrize,
+    isPrimitiveThresholdWithoutLimitPrize,
+    sortPrizes,
+} from "../../../../../_utils/challengePrizes";
 import { ChallengePrizePrimitive } from "../../../../../_core/_primitives/ChallengePrizePrimitive";
 import { formatPrice, getPriceInUSD } from "../../../../../_utils/formatPrice";
-import { IconCircleCheckFilled, IconInfoCircle, IconPlus, IconTrash } from "@tabler/icons-react";
+import {
+    IconCircleCheckFilled,
+    IconInfoCircle,
+    IconPlus,
+    IconTrash,
+} from "@tabler/icons-react";
 import { AddChallengePrizeModal } from "./AddChallengePrizeModal";
 import { clientCustomFetch } from "../../../../../_utils/clientCustomFetch";
 import { API_ROUTES } from "../../../../../../constants";
-import { debounce } from "../../../../../_utils/debounce";
 import { useGetChallengeById } from "../../../../../../hooks/useGetChallengeById";
-import { ChallengeDescriptionEditor } from "./ChallengeDescriptionEditor/ChallengeDescriptionEditor";
 import { formatDateTime } from "../../../../../_utils/formatDate";
 
 interface DraftChallengeCreatorDataProps {
@@ -24,54 +61,67 @@ interface DraftChallengeCreatorDataProps {
     creator: UserAuthDTO;
 }
 
-export const DraftChallengeCreatorData: FC<DraftChallengeCreatorDataProps> = ({ challenge: initialChallenge, creator }) => {
-    const { challenge, reloadChallenge } = useGetChallengeById({ challengeId: initialChallenge.id, initialChallenge, revalidateOnFocus: true });
+export const DraftChallengeCreatorData: FC<DraftChallengeCreatorDataProps> = ({
+    challenge: initialChallenge,
+    creator,
+}) => {
+    const { challenge, reloadChallenge } = useGetChallengeById({
+        challengeId: initialChallenge.id,
+        initialChallenge,
+        revalidateOnFocus: true,
+    });
 
     const { templates, isLoadingTemplates } = useGetCreateChallengeTemplates();
-    const [isModalToSelectTemplateOpen, { close: closeModalToSelectTemplate, open: openModalToSelectTemplate }] = useDisclosure()
-    const [isModalToAddPrizeOpen, { close: closeAddPrizeModal, open: openAddPrizeModal }] = useDisclosure();
+    const [
+        isModalToSelectTemplateOpen,
+        { close: closeModalToSelectTemplate, open: openModalToSelectTemplate },
+    ] = useDisclosure();
+    const [
+        isModalToAddPrizeOpen,
+        { close: closeAddPrizeModal, open: openAddPrizeModal },
+    ] = useDisclosure();
     const [isUpdatingDraft, setIsUpdatingDraft] = useState(false);
 
-    const [selectedTemplate, setSelectedTemplate] = useState<CreateChallengeTemplate | null>(null);
+    const [selectedTemplate, setSelectedTemplate] =
+        useState<CreateChallengeTemplate | null>(null);
 
-    async function onUpdateDraft(challengeId: string, draft: CreateChallengeDTO, onDraftUpdated: () => void) {
-        try {
-            await clientCustomFetch(API_ROUTES.CHALLENGES.EDIT_DRAFT(challengeId), {
-                method: 'PUT',
-                body: {
-                    challenge: draft,
-                },
-            })
-            onDraftUpdated();
-        } catch (error) {
-            console.error('Error while saving the draft challenge', { error })
-        } finally {
+    const debouncedOnUpdateDraft = useDebouncedCallback(
+        async (...params: Parameters<typeof onUpdateDraft>) => {
+            await onUpdateDraft(...params);
             setIsUpdatingDraft(false);
-        }
-    }
-
-    const debouncedOnUpdateDraft = debounce(onUpdateDraft, 2000);
+        },
+        2000
+    );
 
     const form = useForm<CreateChallengeDTO>({
-        mode: 'uncontrolled',
+        mode: "uncontrolled",
         initialValues: {
             title: challenge?.title ?? initialChallenge.title,
-            description: challenge?.description ?? initialChallenge.description,
+            summary: challenge?.summary ?? initialChallenge.summary,
             configuration: {
-                ...challenge?.configuration ?? initialChallenge.configuration,
-                budget: challenge?.configuration.budget ? { unit: 'USD', value: getPriceInUSD(challenge.configuration.budget) } : initialChallenge.configuration.budget
+                ...(challenge?.configuration ?? initialChallenge.configuration),
+                budget: challenge?.configuration.budget
+                    ? {
+                        unit: "USD",
+                        value: getPriceInUSD(challenge.configuration.budget),
+                    }
+                    : initialChallenge.configuration.budget,
             },
         },
         onValuesChange: (values) => {
             setIsUpdatingDraft(true);
-            debouncedOnUpdateDraft(initialChallenge.id, values, reloadChallenge)
-        }
+            debouncedOnUpdateDraft(
+                initialChallenge.id,
+                values,
+                reloadChallenge
+            );
+        },
     });
 
     function onChangeTemplate(value: string | null) {
-        const template = templates.find(template => template.label === value);
+        const template = templates.find((template) => template.label === value);
 
-        setSelectedTemplate(template ?? null)
+        setSelectedTemplate(template ?? null);
     }
 
     function applyTemplate() {
@@ -84,54 +134,66 @@ export const DraftChallengeCreatorData: FC<DraftChallengeCreatorDataProps> = ({ 
 
     function onNewPrize(newPrize: ChallengePrizePrimitive) {
         const newPrizes = [...form.getValues().configuration.prizes, newPrize];
-        form.setFieldValue('configuration.prizes', sortPrizes(newPrizes))
+        form.setFieldValue("configuration.prizes", sortPrizes(newPrizes));
     }
 
     function onRemovePrize(indexPrizeToRemove: number) {
-        const newPrizes = form.getValues().configuration.prizes.filter((_, i) => i !== indexPrizeToRemove);
-        form.setFieldValue('configuration.prizes', sortPrizes(newPrizes))
+        const newPrizes = form
+            .getValues()
+            .configuration.prizes.filter((_, i) => i !== indexPrizeToRemove);
+        form.setFieldValue("configuration.prizes", sortPrizes(newPrizes));
     }
 
-    const prizes = useMemo(() => sortPrizes(form.getValues().configuration.prizes), [form.getValues()]);
+    const prizes = useMemo(
+        () => sortPrizes(form.getValues().configuration.prizes),
+        [form.getValues()]
+    );
 
     useEffect(() => {
         if (challenge) {
             form.setInitialValues({
                 title: challenge.title,
-                description: challenge.description,
+                summary: challenge.summary,
                 configuration: challenge.configuration,
-            })
+            });
         }
-    }, [challenge])
+    }, [challenge]);
 
     return (
         <>
-            <section style={{ height: 'auto' }}>
-                <Center style={{ alignItems: 'baseline' }}>
+            <section style={{ height: "auto" }}>
+                <Center style={{ alignItems: "baseline" }}>
                     <Text
-                        style={{ textAlign: 'center', fontSize: "2rem", fontWeight: "bold", marginRight: '1rem' }}
+                        style={{
+                            textAlign: "center",
+                            fontSize: "2rem",
+                            fontWeight: "bold",
+                            marginRight: "1rem",
+                        }}
                     >
                         Configure your challenge
                     </Text>
 
-                    {
-                        isUpdatingDraft
-                        &&
+                    {isUpdatingDraft && (
                         <Tooltip label="Saving changes...">
                             <Loader size={18} />
                         </Tooltip>
-                    }
-                    {
-                        !isUpdatingDraft
-                        &&
-                        <Tooltip label={`Updated at ${formatDateTime(challenge ? new Date(challenge.updatedAt) : new Date())}`}>
+                    )}
+                    {!isUpdatingDraft && (
+                        <Tooltip
+                            label={`Updated at ${formatDateTime(
+                                challenge
+                                    ? new Date(challenge.updatedAt)
+                                    : new Date()
+                            )}`}
+                        >
                             <IconCircleCheckFilled size={18} />
                         </Tooltip>
-                    }
+                    )}
                 </Center>
 
-                <Box style={{ padding: '0 2rem' }}>
-                    <div style={{ display: 'flex', justifyContent: 'end' }}>
+                <Box style={{ padding: "0 2rem" }}>
+                    <div style={{ display: "flex", justifyContent: "end" }}>
                         <Button
                             onClick={openModalToSelectTemplate}
                             loading={isLoadingTemplates}
@@ -143,16 +205,16 @@ export const DraftChallengeCreatorData: FC<DraftChallengeCreatorDataProps> = ({ 
                         </Button>
                     </div>
 
-                    <Space h={'1rem'} />
+                    <Space h={"1rem"} />
 
                     <form>
-                        <Grid h={'100%'} gutter={'2rem'}>
+                        <Grid h={"100%"} gutter={"2rem"}>
                             <Grid.Col span={{ base: 12 }}>
                                 <TextInput
                                     label="Title"
                                     placeholder="Descriptive title of the challenge"
-                                    key={form.key('title')}
-                                    {...form.getInputProps('title')}
+                                    key={form.key("title")}
+                                    {...form.getInputProps("title")}
                                 />
                             </Grid.Col>
 
@@ -161,9 +223,21 @@ export const DraftChallengeCreatorData: FC<DraftChallengeCreatorDataProps> = ({ 
                                     label="Deadline"
                                     placeholder="The challenge will be automatically closed on this date"
                                     clearable={true}
-                                    key={form.key('configuration.deadline')}
-                                    value={form.getValues().configuration.deadline ? new Date(form.getValues().configuration.deadline as number) : null}
-                                    onChange={(value) => form.setFieldValue('configuration.deadline', value ? value.getTime() : null)}
+                                    key={form.key("configuration.deadline")}
+                                    value={
+                                        form.getValues().configuration.deadline
+                                            ? new Date(
+                                                form.getValues().configuration
+                                                    .deadline as number
+                                            )
+                                            : null
+                                    }
+                                    onChange={(value) =>
+                                        form.setFieldValue(
+                                            "configuration.deadline",
+                                            value ? value.getTime() : null
+                                        )
+                                    }
                                 />
                             </Grid.Col>
 
@@ -172,9 +246,18 @@ export const DraftChallengeCreatorData: FC<DraftChallengeCreatorDataProps> = ({ 
                                     label="Max. budget (USD)"
                                     placeholder="Enter the max amount of money you want to spend in prizes (USD)"
                                     prefix="$"
-                                    key={form.key('configuration.budget.value')}
-                                    {...form.getInputProps('configuration.budget.value')}
-                                    onChange={(value) => form.setFieldValue('configuration.budget', value ? { unit: 'USD', value: +value } : null)}
+                                    key={form.key("configuration.budget.value")}
+                                    {...form.getInputProps(
+                                        "configuration.budget.value"
+                                    )}
+                                    onChange={(value) =>
+                                        form.setFieldValue(
+                                            "configuration.budget",
+                                            value
+                                                ? { unit: "USD", value: +value }
+                                                : null
+                                        )
+                                    }
                                 />
                             </Grid.Col>
 
@@ -182,8 +265,12 @@ export const DraftChallengeCreatorData: FC<DraftChallengeCreatorDataProps> = ({ 
                                 <NumberInput
                                     label="Limit of participations"
                                     placeholder="Enter the max amount of participations you want to allow"
-                                    key={form.key('configuration.limitOfParticipations')}
-                                    {...form.getInputProps('configuration.limitOfParticipations')}
+                                    key={form.key(
+                                        "configuration.limitOfParticipations"
+                                    )}
+                                    {...form.getInputProps(
+                                        "configuration.limitOfParticipations"
+                                    )}
                                 />
                             </Grid.Col>
 
@@ -191,27 +278,39 @@ export const DraftChallengeCreatorData: FC<DraftChallengeCreatorDataProps> = ({ 
                                 <Checkbox
                                     mt="xl"
                                     label="Allow multiple participations per user"
-                                    checked={form.getValues().configuration.allowMultipleParticipationsPerUser}
-                                    onChange={(event) => form.setFieldValue('configuration.allowMultipleParticipationsPerUser', event.target.checked)}
+                                    checked={
+                                        form.getValues().configuration
+                                            .allowMultipleParticipationsPerUser
+                                    }
+                                    onChange={(event) =>
+                                        form.setFieldValue(
+                                            "configuration.allowMultipleParticipationsPerUser",
+                                            event.target.checked
+                                        )
+                                    }
                                 />
                             </Grid.Col>
 
-                            <Grid.Col span={{ base: 12 }} mt='1rem'>
-                                <Card withBorder shadow="md" >
+                            <Grid.Col span={{ base: 12 }} mt="1rem">
+                                <Card withBorder shadow="md">
                                     <Center>
                                         <Text
-                                            style={{ textAlign: 'center', fontSize: "1.4rem", fontWeight: "bold" }}
+                                            style={{
+                                                textAlign: "center",
+                                                fontSize: "1.4rem",
+                                                fontWeight: "bold",
+                                            }}
                                         >
                                             Prizes
                                         </Text>
                                     </Center>
 
-                                    <Space h={'1rem'} />
+                                    <Space h={"1rem"} />
 
                                     <Center>
                                         <Button
                                             leftSection={<IconPlus size={18} />}
-                                            variant='light'
+                                            variant="light"
                                             onClick={openAddPrizeModal}
                                         >
                                             Add prize
@@ -225,24 +324,46 @@ export const DraftChallengeCreatorData: FC<DraftChallengeCreatorDataProps> = ({ 
                                         />
                                     </Center>
 
-                                    <Space h={'1rem'} />
+                                    <Space h={"1rem"} />
 
                                     <Center>
                                         <Table.ScrollContainer minWidth={400}>
                                             <Table verticalSpacing="md">
                                                 <Table.Thead>
                                                     <Table.Tr>
-                                                        <Table.Th ta={'center'}>Position</Table.Th>
-                                                        <Table.Th ta={'center'}>Amount</Table.Th>
+                                                        <Table.Th ta={"center"}>
+                                                            Position
+                                                        </Table.Th>
+                                                        <Table.Th ta={"center"}>
+                                                            Amount
+                                                        </Table.Th>
                                                     </Table.Tr>
                                                 </Table.Thead>
 
-                                                <Table.Tbody ta={'center'}>
-                                                    {prizes.map((prize, index) => (
-                                                        <Table.Tr key={index}>
-                                                            <PrizeRow prize={prize} onRemovePrize={() => onRemovePrize(index)} isLastRow={(index + 1) === prizes.length} />
-                                                        </Table.Tr>
-                                                    ))}
+                                                <Table.Tbody ta={"center"}>
+                                                    {prizes.map(
+                                                        (prize, index) => (
+                                                            <Table.Tr
+                                                                key={index}
+                                                            >
+                                                                <PrizeRow
+                                                                    prize={
+                                                                        prize
+                                                                    }
+                                                                    onRemovePrize={() =>
+                                                                        onRemovePrize(
+                                                                            index
+                                                                        )
+                                                                    }
+                                                                    isLastRow={
+                                                                        index +
+                                                                        1 ===
+                                                                        prizes.length
+                                                                    }
+                                                                />
+                                                            </Table.Tr>
+                                                        )
+                                                    )}
                                                 </Table.Tbody>
                                             </Table>
                                         </Table.ScrollContainer>
@@ -250,33 +371,126 @@ export const DraftChallengeCreatorData: FC<DraftChallengeCreatorDataProps> = ({ 
                                 </Card>
                             </Grid.Col>
 
+
+
                             <Grid.Col span={{ base: 12 }}>
+                                <Fieldset legend="Challenge description">
+                                    <Grid h={"100%"} gutter={"2rem"}>
 
+                                        <Grid.Col span={{ base: 12 }}>
+                                            <Alert
+                                                variant="light"
+                                                color="blue"
+                                                title="Public content"
+                                                icon={<IconInfoCircle />}
+                                            >
+                                                <span>
+                                                    The content you enter in the following inputs <strong>will be visible for everyone</strong> once the challenge is published.
+                                                </span>
 
-                                <Tooltip label="This will be published and used as the details/instructions of the challenge. Provide usefull and well structured information" position="right" withArrow>
-                                    <span style={{ display: 'inline-flex', alignItems: 'center', gap: '4px', marginBottom: '4px' }}>
-                                        <InputLabel>Description</InputLabel>
-                                        <IconInfoCircle size={18} />
-                                    </span>
-                                </Tooltip>
+                                                <p>
+                                                    Make sure you follow our <a href="https://github.com/opire/.github/blob/main/CODE_OF_CONDUCT.md" target="_blank">code of conduct</a>, while ensuring you provide clear and detailed information in each of the sections.
+                                                </p>
+                                            </Alert>
+                                        </Grid.Col>
 
-                                <ChallengeDescriptionEditor
-                                    value={form.getValues().description}
-                                    onChange={(description) => form.setFieldValue('description', description)}
-                                />
+                                        <Grid.Col span={{ base: 12 }}>
+                                            <Textarea
+                                                label="Introduction / brief summary"
+                                                description="Explain to the potential participants what this challenge is about"
+                                                withAsterisk
+                                                autosize
+                                                minRows={4}
+                                                key={form.key("summary")}
+                                                {...form.getInputProps("summary")}
+                                            />
+                                        </Grid.Col>
+
+                                        <Grid.Col span={{ base: 12, md: 6 }}>
+                                            <Textarea
+                                                label="Main objetive"
+                                                description="One-liner. What's the really important thing to do in this challenge?"
+                                                withAsterisk
+                                                autosize
+                                                minRows={1}
+                                                key={form.key("summary")}
+                                                {...form.getInputProps("summary")}
+                                            />
+
+                                        </Grid.Col>
+
+                                        <Grid.Col span={{ base: 12, md: 6 }}>
+                                            <Textarea
+                                                label="Other objetives"
+                                                description="Nice-to-have, or things to consider, but not the essence of the challenge"
+                                                autosize
+                                                minRows={1}
+                                                key={form.key("summary")}
+                                                {...form.getInputProps("summary")}
+                                            />
+                                        </Grid.Col>
+
+                                        <Grid.Col span={{ base: 12, md: 6 }}>
+                                            <Textarea
+                                                label="Requeriments"
+                                                description="What the participants need to do in order to have their solution considered as a potential winner"
+                                                withAsterisk
+                                                autosize
+                                                minRows={4}
+                                                key={form.key("summary")}
+                                                {...form.getInputProps("summary")}
+                                            />
+                                        </Grid.Col>
+
+                                        <Grid.Col span={{ base: 12, md: 6 }}>
+                                            <Textarea
+                                                label="Evaluation criteria"
+                                                description="What will be taken into account to decide if a solution is approved and which prize does it deserve"
+                                                withAsterisk
+                                                autosize
+                                                minRows={4}
+                                                key={form.key("summary")}
+                                                {...form.getInputProps("summary")}
+                                            />
+                                        </Grid.Col>
+
+                                        <Grid.Col span={{ base: 12, md: 6 }}>
+                                            <Textarea
+                                                label="Contact information"
+                                                description={`Communication channels for participants to contact you in case of doubts, questions, feedback...`}
+                                                placeholder={`e.g. ${creator.email}`}
+                                                withAsterisk
+                                                autosize
+                                                minRows={2}
+                                                key={form.key("summary")}
+                                                {...form.getInputProps("summary")}
+                                            />
+                                        </Grid.Col>
+
+                                        <Grid.Col span={{ base: 12, md: 6 }}>
+                                            <Textarea
+                                                label="Additional comments"
+                                                description="Anything you want to add in order to clarify any aspect of the challenge"
+                                                autosize
+                                                minRows={2}
+                                                key={form.key("summary")}
+                                                {...form.getInputProps("summary")}
+                                            />
+                                        </Grid.Col>
+                                    </Grid>
+
+                                </Fieldset>
                             </Grid.Col>
+
                         </Grid>
 
-
-                        <Space h={'2rem'} />
+                        <Space h={"2rem"} />
                     </form>
-
-
                 </Box>
 
-                <Space h={'1rem'} />
+                <Space h={"1rem"} />
 
-                <div style={{ display: 'flex', justifyContent: 'end' }}>
+                <div style={{ display: "flex", justifyContent: "end" }}>
                     <Button
                         onClick={() => { }}
                         variant="gradient"
@@ -285,7 +499,7 @@ export const DraftChallengeCreatorData: FC<DraftChallengeCreatorDataProps> = ({ 
                         Publish challenge
                     </Button>
                 </div>
-            </section >
+            </section>
 
             <Modal
                 opened={isModalToSelectTemplateOpen}
@@ -293,19 +507,22 @@ export const DraftChallengeCreatorData: FC<DraftChallengeCreatorDataProps> = ({ 
                 title="Choose a template to apply to your challenge"
                 centered
             >
-                <Space h={'1rem'} />
+                <Space h={"1rem"} />
 
                 <Select
                     label="Available templates"
                     placeholder="Select a template"
-                    data={templates.map(template => ({ label: template.label, value: template.label }))}
+                    data={templates.map((template) => ({
+                        label: template.label,
+                        value: template.label,
+                    }))}
                     value={selectedTemplate?.label}
                     onChange={onChangeTemplate}
                 />
 
-                <Space h={'1rem'} />
+                <Space h={"1rem"} />
 
-                <div style={{ display: 'flex', justifyContent: 'end' }}>
+                <div style={{ display: "flex", justifyContent: "end" }}>
                     <Button
                         onClick={applyTemplate}
                         color="indigo"
@@ -319,36 +536,63 @@ export const DraftChallengeCreatorData: FC<DraftChallengeCreatorDataProps> = ({ 
     );
 };
 
-const PrizeRow: FC<{ prize: ChallengePrizePrimitive, onRemovePrize: () => void; isLastRow: boolean }> = ({ prize, onRemovePrize, isLastRow }) => {
-    const isSpecificPositionPrize = isPrimitiveSpecificPositionPrize(prize)
-    const isThresholdPrize = isPrimitiveThresholdPrize(prize)
-    const isThresholdWithoutLimitPrize = isPrimitiveThresholdWithoutLimitPrize(prize)
+const PrizeRow: FC<{
+    prize: ChallengePrizePrimitive;
+    onRemovePrize: () => void;
+    isLastRow: boolean;
+}> = ({ prize, onRemovePrize, isLastRow }) => {
+    const isSpecificPositionPrize = isPrimitiveSpecificPositionPrize(prize);
+    const isThresholdPrize = isPrimitiveThresholdPrize(prize);
+    const isThresholdWithoutLimitPrize =
+        isPrimitiveThresholdWithoutLimitPrize(prize);
 
     return (
         <>
             <Table.Td>
-                {isSpecificPositionPrize && `${getChallengePrizeMinPosition(prize)}`}
-                {isThresholdPrize && `From ${getChallengePrizeMinPosition(prize)} to ${getChallengePrizeMaxPosition(prize)}`}
-                {isThresholdWithoutLimitPrize && `From ${getChallengePrizeMinPosition(prize)} onwards`}
+                {isSpecificPositionPrize &&
+                    `${getChallengePrizeMinPosition(prize)}`}
+                {isThresholdPrize &&
+                    `From ${getChallengePrizeMinPosition(
+                        prize
+                    )} to ${getChallengePrizeMaxPosition(prize)}`}
+                {isThresholdWithoutLimitPrize &&
+                    `From ${getChallengePrizeMinPosition(prize)} onwards`}
             </Table.Td>
 
-            <Table.Td>
-                {formatPrice(prize.amount)}
-            </Table.Td>
+            <Table.Td>{formatPrice(prize.amount)}</Table.Td>
 
             <Table.Td>
-
-                {
-                    isLastRow &&
+                {isLastRow && (
                     <Tooltip label="Remove prize">
-                        <ActionIcon variant="light" aria-label="Remove prize" color="red" onClick={onRemovePrize}>
+                        <ActionIcon
+                            variant="light"
+                            aria-label="Remove prize"
+                            color="red"
+                            onClick={onRemovePrize}
+                        >
                             <IconTrash size={18} />
                         </ActionIcon>
                     </Tooltip>
-                }
+                )}
             </Table.Td>
-
         </>
-    )
-}
+    );
+};
 
+async function onUpdateDraft(
+    challengeId: string,
+    draft: CreateChallengeDTO,
+    onDraftUpdated: () => void
+) {
+    try {
+        await clientCustomFetch(API_ROUTES.CHALLENGES.EDIT_DRAFT(challengeId), {
+            method: "PUT",
+            body: {
+                challenge: draft,
+            },
+        });
+        onDraftUpdated();
+    } catch (error) {
+        console.error("Error while saving the draft challenge", { error });
+    }
+}
