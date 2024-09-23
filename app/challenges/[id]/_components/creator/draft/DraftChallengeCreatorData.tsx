@@ -98,6 +98,12 @@ export const DraftChallengeCreatorData: FC<DraftChallengeCreatorDataProps> = ({
         initialValues: {
             title: challenge?.title ?? initialChallenge.title,
             summary: challenge?.summary ?? initialChallenge.summary,
+            mainObjetive: challenge?.mainObjetive ?? initialChallenge.mainObjetive,
+            otherObjetives: challenge?.otherObjetives ?? initialChallenge.otherObjetives,
+            requirements: challenge?.requirements ?? initialChallenge.requirements,
+            evaluationCriteria: challenge?.evaluationCriteria ?? initialChallenge.evaluationCriteria,
+            contactInformation: challenge?.contactInformation ?? initialChallenge.contactInformation,
+            additionalComments: challenge?.additionalComments ?? initialChallenge.additionalComments,
             configuration: {
                 ...(challenge?.configuration ?? initialChallenge.configuration),
                 budget: challenge?.configuration.budget
@@ -154,6 +160,12 @@ export const DraftChallengeCreatorData: FC<DraftChallengeCreatorDataProps> = ({
             form.setInitialValues({
                 title: challenge.title,
                 summary: challenge.summary,
+                mainObjetive: challenge.mainObjetive,
+                otherObjetives: challenge.otherObjetives,
+                requirements: challenge.requirements,
+                evaluationCriteria: challenge.evaluationCriteria,
+                contactInformation: challenge.contactInformation,
+                additionalComments: challenge.additionalComments,
                 configuration: challenge.configuration,
             });
         }
@@ -212,7 +224,7 @@ export const DraftChallengeCreatorData: FC<DraftChallengeCreatorDataProps> = ({
                             <Grid.Col span={{ base: 12 }}>
                                 <TextInput
                                     label="Title"
-                                    placeholder="Descriptive title of the challenge"
+                                    description="Descriptive title of the challenge"
                                     key={form.key("title")}
                                     {...form.getInputProps("title")}
                                 />
@@ -221,7 +233,7 @@ export const DraftChallengeCreatorData: FC<DraftChallengeCreatorDataProps> = ({
                             <Grid.Col span={{ base: 12, md: 6 }}>
                                 <DatePickerInput
                                     label="Deadline"
-                                    placeholder="The challenge will be automatically closed on this date"
+                                    description="If defined, the challenge will be automatically closed on this date"
                                     clearable={true}
                                     key={form.key("configuration.deadline")}
                                     value={
@@ -243,8 +255,8 @@ export const DraftChallengeCreatorData: FC<DraftChallengeCreatorDataProps> = ({
 
                             <Grid.Col span={{ base: 12, md: 6 }}>
                                 <NumberInput
-                                    label="Max. budget (USD)"
-                                    placeholder="Enter the max amount of money you want to spend in prizes (USD)"
+                                    label="Max. budget"
+                                    description="Max amount of money you want to spend in prizes (USD)"
                                     prefix="$"
                                     key={form.key("configuration.budget.value")}
                                     {...form.getInputProps(
@@ -264,7 +276,7 @@ export const DraftChallengeCreatorData: FC<DraftChallengeCreatorDataProps> = ({
                             <Grid.Col span={{ base: 12, md: 6 }}>
                                 <NumberInput
                                     label="Limit of participations"
-                                    placeholder="Enter the max amount of participations you want to allow"
+                                    description="Max amount of participations you want to allow. This will take into account both approved and pending of approval"
                                     key={form.key(
                                         "configuration.limitOfParticipations"
                                     )}
@@ -274,10 +286,10 @@ export const DraftChallengeCreatorData: FC<DraftChallengeCreatorDataProps> = ({
                                 />
                             </Grid.Col>
 
-                            <Grid.Col span={{ base: 12, md: 6 }}>
+                            <Grid.Col span={{ base: 12, md: 4 }} style={{ display: 'flex', alignItems: 'center' }}>
                                 <Checkbox
-                                    mt="xl"
                                     label="Allow multiple participations per user"
+                                    description="If allowed, you may want to limit the number of participations to avoid facing an unmanageable amount of them"
                                     checked={
                                         form.getValues().configuration
                                             .allowMultipleParticipationsPerUser

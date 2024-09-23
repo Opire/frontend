@@ -6,6 +6,12 @@ export interface ChallengePrimitive {
     creatorId: string;
     title: string;
     summary: string | null;
+    mainObjetive: string | null;
+    otherObjetives: string | null;
+    requirements: string | null;
+    evaluationCriteria: string | null;
+    contactInformation: string | null;
+    additionalComments: string | null;
     configuration: ChallengeConfigurationPrimitive;
     participations: ChallengeParticipationPrimitive[];
     isPublished: boolean;
