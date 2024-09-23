@@ -11,7 +11,7 @@ function formatPriceFromUsd(usd: number): string {
     return new Intl.NumberFormat("en-US", {
         style: "currency",
         currency: "USD",
-        maximumFractionDigits: 0,
+        maximumFractionDigits: 2,
     }).format(usd);
 }
 
@@ -22,4 +22,21 @@ function formatPriceFromCents(cents: number): string {
         currency: "USD",
         maximumFractionDigits: 2,
     }).format(usd);
+}
+
+export function getPriceInUSD(price: PricePrimitive): number {
+    if (price.unit === "USD_CENT") {
+        return price.value / 100;
+    }
+
+    return price.value
+}
+
+
+export function getPriceInUSD_CENT(price: PricePrimitive): number {
+    if (price.unit === "USD") {
+        return price.value * 100;
+    }
+
+    return price.value
 }

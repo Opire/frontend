@@ -55,7 +55,5 @@ export default async function Page({
 
     const userAuth = getUserAuth();
 
-    return (  <DetailedIssueView issue={issue} userAuth={userAuth} />);
-
-
+    return (<DetailedIssueView issue={issue} userAuth={userAuth} />);
 }

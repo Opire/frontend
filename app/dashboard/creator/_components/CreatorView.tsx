@@ -1,15 +1,16 @@
 'use client'
 
 import { Container, Divider, Space, Tabs } from "@mantine/core"
-import { IconCoin, IconMoneybag } from "@tabler/icons-react"
+import { IconCoin, IconMoneybag, IconTrophy } from "@tabler/icons-react"
 import { useRouter } from "next/navigation";
 import { CreatorRewardsPanel } from "./CreatorRewardsPanel/CreatorRewardsPanel";
 import { CreatorTipsPanel } from "./CreatorTipsPanel/CreatorTipsPanel";
+import { CreatorChallengesPanel } from "./CreatorChallengesPanel/CreatorChallengesPanel";
 
 export function CreatorView({
     view,
 }: {
-    view: 'rewards' | 'tips'
+    view: 'rewards' | 'tips' | 'challenges'
 }) {
     const router = useRouter();
 
@@ -32,6 +33,10 @@ export function CreatorView({
                     <Tabs.Tab value="tips" leftSection={<IconCoin size={18} />}>
                         Tips
                     </Tabs.Tab>
+
+                    <Tabs.Tab value="challenges" leftSection={<IconTrophy size={18} />}>
+                        Challenges
+                    </Tabs.Tab>
                 </Tabs.List>
 
                 <Divider mb='lg' />
@@ -45,6 +50,12 @@ export function CreatorView({
                 <Tabs.Panel value="tips">
                     <Container size='lg'>
                         <CreatorTipsPanel />
+                    </Container>
+                </Tabs.Panel>
+
+                <Tabs.Panel value="challenges">
+                    <Container size='lg'>
+                        <CreatorChallengesPanel />
                     </Container>
                 </Tabs.Panel>
 

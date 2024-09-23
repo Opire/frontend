@@ -2,6 +2,11 @@ import { TokenServiceLocalStorage } from "../../TokenServiceLocalStorage";
 import { NEXT_SERVER_ROUTES } from "../../constants";
 import { errorNotification } from "./errorNotification";
 
+interface BackendError {
+    error: string;
+    errorType: string;
+    data: Record<string, unknown>;
+}
 
 export async function clientCustomFetch(
     url: string,
@@ -9,11 +14,15 @@ export async function clientCustomFetch(
         method?: "GET" | "POST" | "PUT" | "DELETE" | "PATCH";
         body?: Object;
         headers?: HeadersInit;
+        showNotificationOnError?: boolean;
+        onError?: (error: BackendError) => void;
     } = {
             method: "GET",
             body: undefined,
             headers: {},
-        }
+            showNotificationOnError: true,
+            onError: () => {}
+        },
 ): Promise<Response> {
     const response = await fetch(url, {
         headers: {
@@ -36,9 +45,15 @@ export async function clientCustomFetch(
 
     if (!response.ok) {
         const body = await response.json();
-        const { errorType, error } = body;
+        const { errorType, error, data } = body;
 
-        errorNotification(mapErrorText(body));
+        if(options.showNotificationOnError) {
+            errorNotification(mapErrorText(body));
+        }
+
+        if(options.onError) {
+            options.onError({ error, errorType, data })
+        }
 
         throw new Error(`${errorType}: ${error}`);
     }
@@ -46,11 +61,7 @@ export async function clientCustomFetch(
     return response;
 }
 
-interface BackendError {
-    error: string;
-    errorType: string;
-    data: Record<string, unknown>;
-}
+
 
 function mapErrorText(error: BackendError): { title: string; message?: string } {
     switch (error.errorType) {

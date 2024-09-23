@@ -2,21 +2,7 @@ import { Button, Chip, Container, Group, NumberInput, Popover, RangeSlider, Spac
 import React, { FC, useState } from 'react';
 import { DEFAULT_REWARD_FILTERS } from './Filters';
 import { useMediaQuery } from '@mantine/hooks';
-
-type AnyFunction = (...args: any[]) => any;
-
-function debounce<F extends AnyFunction>(func: F, delay: number): (...args: Parameters<F>) => void {
-    let timeoutId: NodeJS.Timeout;
-
-    return function debounced(...args: Parameters<F>): void {
-        clearTimeout(timeoutId);
-
-        timeoutId = setTimeout(() => {
-            func(...args);
-        }, delay);
-    };
-}
-
+import { debounce } from '../../../_utils/debounce';
 
 interface PriceFilterProp {
     value: [number, number | null]
