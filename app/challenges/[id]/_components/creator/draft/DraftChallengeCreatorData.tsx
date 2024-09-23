@@ -413,8 +413,8 @@ export const DraftChallengeCreatorData: FC<DraftChallengeCreatorDataProps> = ({
                                                 withAsterisk
                                                 autosize
                                                 minRows={1}
-                                                key={form.key("summary")}
-                                                {...form.getInputProps("summary")}
+                                                key={form.key("mainObjetive")}
+                                                {...form.getInputProps("mainObjetive")}
                                             />
 
                                         </Grid.Col>
@@ -425,20 +425,20 @@ export const DraftChallengeCreatorData: FC<DraftChallengeCreatorDataProps> = ({
                                                 description="Nice-to-have, or things to consider, but not the essence of the challenge"
                                                 autosize
                                                 minRows={1}
-                                                key={form.key("summary")}
-                                                {...form.getInputProps("summary")}
+                                                key={form.key("otherObjetives")}
+                                                {...form.getInputProps("otherObjetives")}
                                             />
                                         </Grid.Col>
 
                                         <Grid.Col span={{ base: 12, md: 6 }}>
                                             <Textarea
-                                                label="Requeriments"
+                                                label="Requirements"
                                                 description="What the participants need to do in order to have their solution considered as a potential winner"
                                                 withAsterisk
                                                 autosize
                                                 minRows={4}
-                                                key={form.key("summary")}
-                                                {...form.getInputProps("summary")}
+                                                key={form.key("requirements")}
+                                                {...form.getInputProps("requirements")}
                                             />
                                         </Grid.Col>
 
@@ -449,8 +449,8 @@ export const DraftChallengeCreatorData: FC<DraftChallengeCreatorDataProps> = ({
                                                 withAsterisk
                                                 autosize
                                                 minRows={4}
-                                                key={form.key("summary")}
-                                                {...form.getInputProps("summary")}
+                                                key={form.key("evaluationCriteria")}
+                                                {...form.getInputProps("evaluationCriteria")}
                                             />
                                         </Grid.Col>
 
@@ -462,8 +462,8 @@ export const DraftChallengeCreatorData: FC<DraftChallengeCreatorDataProps> = ({
                                                 withAsterisk
                                                 autosize
                                                 minRows={2}
-                                                key={form.key("summary")}
-                                                {...form.getInputProps("summary")}
+                                                key={form.key("contactInformation")}
+                                                {...form.getInputProps("contactInformation")}
                                             />
                                         </Grid.Col>
 
@@ -473,8 +473,8 @@ export const DraftChallengeCreatorData: FC<DraftChallengeCreatorDataProps> = ({
                                                 description="Anything you want to add in order to clarify any aspect of the challenge"
                                                 autosize
                                                 minRows={2}
-                                                key={form.key("summary")}
-                                                {...form.getInputProps("summary")}
+                                                key={form.key("additionalComments")}
+                                                {...form.getInputProps("additionalComments")}
                                             />
                                         </Grid.Col>
                                     </Grid>
