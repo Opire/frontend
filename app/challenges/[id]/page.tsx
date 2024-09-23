@@ -3,7 +3,6 @@ import { ChallengeCreatorView } from "./creator-view";
 import { ChallengePublicView } from "./public-view";
 import { getUserAuth } from "../../_utils/getUserAuth";
 import { getChallengeById } from "../../_utils/getChallengeById";
-import { redirect } from "next/navigation";
 
 export async function generateMetadata({
     params,
@@ -23,14 +22,9 @@ export default async function Page({
     const userAuth = getUserAuth();
 
     const isUserChallengeCreator = !!userAuth && userAuth.userId === challenge.creatorId;
-    if(isUserChallengeCreator) {
+    if (isUserChallengeCreator) {
         return (<ChallengeCreatorView challenge={challenge} creator={userAuth} />);
     }
 
-    const isChallengeVisibleForOtherUsers = challenge.isPublished === true;
-    if(isChallengeVisibleForOtherUsers) {
-        return (<ChallengePublicView challenge={challenge} userAuth={userAuth} />);
-    }
-
-    redirect('/');
+    return (<ChallengePublicView challenge={challenge} userAuth={userAuth} />);
 }
