@@ -19,7 +19,6 @@ import {
     Checkbox,
     Fieldset,
     Grid,
-    InputLabel,
     Loader,
     Modal,
     NumberInput,

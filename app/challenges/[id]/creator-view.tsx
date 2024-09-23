@@ -13,7 +13,7 @@ export function ChallengeCreatorView({
     challenge: ChallengePrimitive;
     creator: UserAuthDTO;
 }) {
-    if(!challenge.isPublished) {
+    if (!challenge.isPublished) {
         return (
             <Grid h={'100%'}>
                 <Grid.Col span={{ base: 12 }}>
