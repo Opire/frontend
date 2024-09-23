@@ -44,16 +44,20 @@ import {
 import { ChallengePrizePrimitive } from "../../../../../_core/_primitives/ChallengePrizePrimitive";
 import { formatPrice, getPriceInUSD } from "../../../../../_utils/formatPrice";
 import {
+    IconCheck,
     IconCircleCheckFilled,
     IconInfoCircle,
     IconPlus,
     IconTrash,
+    IconX,
 } from "@tabler/icons-react";
 import { AddChallengePrizeModal } from "./AddChallengePrizeModal";
 import { clientCustomFetch } from "../../../../../_utils/clientCustomFetch";
 import { API_ROUTES } from "../../../../../../constants";
 import { useGetChallengeById } from "../../../../../../hooks/useGetChallengeById";
 import { formatDateTime } from "../../../../../_utils/formatDate";
+import { notifications } from "@mantine/notifications";
+import { useRouter } from "next/navigation";
 
 interface DraftChallengeCreatorDataProps {
     challenge: ChallengePrimitive;
@@ -64,6 +68,8 @@ export const DraftChallengeCreatorData: FC<DraftChallengeCreatorDataProps> = ({
     challenge: initialChallenge,
     creator,
 }) => {
+    const router = useRouter();
+
     const { challenge, reloadChallenge } = useGetChallengeById({
         challengeId: initialChallenge.id,
         initialChallenge,
@@ -71,15 +77,19 @@ export const DraftChallengeCreatorData: FC<DraftChallengeCreatorDataProps> = ({
     });
 
     const { templates, isLoadingTemplates } = useGetCreateChallengeTemplates();
+
     const [
         isModalToSelectTemplateOpen,
         { close: closeModalToSelectTemplate, open: openModalToSelectTemplate },
     ] = useDisclosure();
+
     const [
         isModalToAddPrizeOpen,
         { close: closeAddPrizeModal, open: openAddPrizeModal },
     ] = useDisclosure();
+
     const [isUpdatingDraft, setIsUpdatingDraft] = useState(false);
+    const [isPublishingChallenge, setIsPublishingChallenge] = useState(false);
 
     const [selectedTemplate, setSelectedTemplate] =
         useState<CreateChallengeTemplate | null>(null);
@@ -148,6 +158,43 @@ export const DraftChallengeCreatorData: FC<DraftChallengeCreatorDataProps> = ({
             .configuration.prizes.filter((_, i) => i !== indexPrizeToRemove);
         form.setFieldValue("configuration.prizes", sortPrizes(newPrizes));
     }
+
+
+    async function publishChallenge() {
+        try {
+            setIsPublishingChallenge(true);
+
+            await clientCustomFetch(API_ROUTES.CHALLENGES.PUBLISH_DRAFT(initialChallenge.id), {
+                method: 'POST',
+            });
+
+            notifications.show({
+                title: 'Challenge published sucesfully',
+                message: 'Now everyone is able to see the challenge! Attract more attention by sharing the URL in your social media',
+                withBorder: true,
+                withCloseButton: true,
+                autoClose: 10_000,
+                color: 'teal',
+                icon: <IconCheck />,
+            });
+
+            router.refresh();
+
+            setIsPublishingChallenge(false);
+        } catch (error) {
+            notifications.show({
+                title: 'Error while trying to publish the challenge',
+                message: "Please review that all the required fields are filled",
+                withBorder: true,
+                withCloseButton: true,
+                autoClose: 10_000,
+                color: 'red',
+                icon: <IconX />,
+            })
+            setIsPublishingChallenge(false);
+        }
+    }
+
 
     const prizes = useMemo(
         () => sortPrizes(form.getValues().configuration.prizes),
@@ -503,9 +550,10 @@ export const DraftChallengeCreatorData: FC<DraftChallengeCreatorDataProps> = ({
 
                 <div style={{ display: "flex", justifyContent: "end" }}>
                     <Button
-                        onClick={() => { }}
+                        onClick={publishChallenge}
                         variant="gradient"
-                        disabled={isUpdatingDraft}
+                        disabled={isUpdatingDraft || isPublishingChallenge}
+                        loading={isPublishingChallenge}
                     >
                         Publish challenge
                     </Button>
