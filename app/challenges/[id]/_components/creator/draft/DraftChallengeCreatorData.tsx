@@ -170,7 +170,7 @@ export const DraftChallengeCreatorData: FC<DraftChallengeCreatorDataProps> = ({
 
             notifications.show({
                 title: 'Challenge published sucesfully',
-                message: 'Now everyone is able to see the challenge! Attract more attention by sharing the URL in your social media',
+                message: 'Now everyone is able to see the challenge! Attract more attention by sharing it in your social media',
                 withBorder: true,
                 withCloseButton: true,
                 autoClose: 10_000,
