@@ -18,6 +18,7 @@ import {
     Center,
     Checkbox,
     Fieldset,
+    Flex,
     Grid,
     Loader,
     Modal,
@@ -46,6 +47,7 @@ import { formatPrice, getPriceInUSD } from "../../../../../_utils/formatPrice";
 import {
     IconCheck,
     IconCircleCheckFilled,
+    IconEdit,
     IconInfoCircle,
     IconPlus,
     IconTrash,
@@ -58,6 +60,7 @@ import { useGetChallengeById } from "../../../../../../hooks/useGetChallengeById
 import { formatDateTime } from "../../../../../_utils/formatDate";
 import { notifications } from "@mantine/notifications";
 import { useRouter } from "next/navigation";
+import { EditChallengePrizeModal } from "./EditChallengePrizeModal";
 
 interface DraftChallengeCreatorDataProps {
     challenge: ChallengePrimitive;
@@ -77,6 +80,8 @@ export const DraftChallengeCreatorData: FC<DraftChallengeCreatorDataProps> = ({
     });
 
     const { templates, isLoadingTemplates } = useGetCreateChallengeTemplates();
+    const [selectedTemplate, setSelectedTemplate] =
+        useState<CreateChallengeTemplate | null>(null);
 
     const [
         isModalToSelectTemplateOpen,
@@ -88,11 +93,16 @@ export const DraftChallengeCreatorData: FC<DraftChallengeCreatorDataProps> = ({
         { close: closeAddPrizeModal, open: openAddPrizeModal },
     ] = useDisclosure();
 
+    const [
+        isModalToEditPrizeOpen,
+        { close: closeEditPrizeModal, open: openEditPrizeModal },
+    ] = useDisclosure();
+
     const [isUpdatingDraft, setIsUpdatingDraft] = useState(false);
     const [isPublishingChallenge, setIsPublishingChallenge] = useState(false);
-
-    const [selectedTemplate, setSelectedTemplate] =
-        useState<CreateChallengeTemplate | null>(null);
+    const [indexPrizeToUpdate, setIndexPrizeToUpdate] = useState<number | null>(
+        null
+    );
 
     const debouncedOnUpdateDraft = useDebouncedCallback(
         async (...params: Parameters<typeof onUpdateDraft>) => {
@@ -107,12 +117,21 @@ export const DraftChallengeCreatorData: FC<DraftChallengeCreatorDataProps> = ({
         initialValues: {
             title: challenge?.title ?? initialChallenge.title,
             summary: challenge?.summary ?? initialChallenge.summary,
-            mainObjetive: challenge?.mainObjetive ?? initialChallenge.mainObjetive,
-            otherObjetives: challenge?.otherObjetives ?? initialChallenge.otherObjetives,
-            requirements: challenge?.requirements ?? initialChallenge.requirements,
-            evaluationCriteria: challenge?.evaluationCriteria ?? initialChallenge.evaluationCriteria,
-            contactInformation: challenge?.contactInformation ?? initialChallenge.contactInformation,
-            additionalComments: challenge?.additionalComments ?? initialChallenge.additionalComments,
+            mainObjetive:
+                challenge?.mainObjetive ?? initialChallenge.mainObjetive,
+            otherObjetives:
+                challenge?.otherObjetives ?? initialChallenge.otherObjetives,
+            requirements:
+                challenge?.requirements ?? initialChallenge.requirements,
+            evaluationCriteria:
+                challenge?.evaluationCriteria ??
+                initialChallenge.evaluationCriteria,
+            contactInformation:
+                challenge?.contactInformation ??
+                initialChallenge.contactInformation,
+            additionalComments:
+                challenge?.additionalComments ??
+                initialChallenge.additionalComments,
             configuration: {
                 ...(challenge?.configuration ?? initialChallenge.configuration),
                 budget: challenge?.configuration.budget
@@ -152,6 +171,21 @@ export const DraftChallengeCreatorData: FC<DraftChallengeCreatorDataProps> = ({
         form.setFieldValue("configuration.prizes", sortPrizes(newPrizes));
     }
 
+    function onPrizeUpdated(updatedPrize: ChallengePrizePrimitive) {
+        const newPrizes = [
+            ...form
+                .getValues()
+                .configuration.prizes.filter(
+                    (_, i) => i !== indexPrizeToUpdate
+                ),
+            updatedPrize,
+        ];
+
+        form.setFieldValue("configuration.prizes", sortPrizes(newPrizes));
+        setIndexPrizeToUpdate(null);
+        closeEditPrizeModal();
+    }
+
     function onRemovePrize(indexPrizeToRemove: number) {
         const newPrizes = form
             .getValues()
@@ -159,22 +193,30 @@ export const DraftChallengeCreatorData: FC<DraftChallengeCreatorDataProps> = ({
         form.setFieldValue("configuration.prizes", sortPrizes(newPrizes));
     }
 
+    function onEditPrize(indexPrizeToUpdate: number) {
+        setIndexPrizeToUpdate(indexPrizeToUpdate);
+        openEditPrizeModal();
+    }
 
     async function publishChallenge() {
         try {
             setIsPublishingChallenge(true);
 
-            await clientCustomFetch(API_ROUTES.CHALLENGES.PUBLISH_DRAFT(initialChallenge.id), {
-                method: 'POST',
-            });
+            await clientCustomFetch(
+                API_ROUTES.CHALLENGES.PUBLISH_DRAFT(initialChallenge.id),
+                {
+                    method: "POST",
+                }
+            );
 
             notifications.show({
-                title: 'Challenge published sucesfully',
-                message: 'Now everyone is able to see the challenge! Attract more attention by sharing it in your social media',
+                title: "Challenge published sucesfully",
+                message:
+                    "Now everyone is able to see the challenge! Attract more attention by sharing it in your social media",
                 withBorder: true,
                 withCloseButton: true,
                 autoClose: 10_000,
-                color: 'teal',
+                color: "teal",
                 icon: <IconCheck />,
             });
 
@@ -183,23 +225,34 @@ export const DraftChallengeCreatorData: FC<DraftChallengeCreatorDataProps> = ({
             setIsPublishingChallenge(false);
         } catch (error) {
             notifications.show({
-                title: 'Error while trying to publish the challenge',
-                message: "Please review that all the required fields are filled",
+                title: "Error while trying to publish the challenge",
+                message:
+                    "Please review that all the required fields are filled",
                 withBorder: true,
                 withCloseButton: true,
                 autoClose: 10_000,
-                color: 'red',
+                color: "red",
                 icon: <IconX />,
-            })
+            });
             setIsPublishingChallenge(false);
         }
     }
-
 
     const prizes = useMemo(
         () => sortPrizes(form.getValues().configuration.prizes),
         [form.getValues()]
     );
+
+    const { prizeToUpdate, otherPrizes } = useMemo(() => {
+        if (indexPrizeToUpdate === null) {
+            return { prizeToUpdate: null, otherPrizes: prizes };
+        }
+
+        const prizeToUpdate = prizes[indexPrizeToUpdate];
+        const otherPrizes = prizes.filter((_, i) => i !== indexPrizeToUpdate);
+
+        return { prizeToUpdate, otherPrizes };
+    }, [prizes, indexPrizeToUpdate]);
 
     useEffect(() => {
         if (challenge) {
@@ -265,7 +318,6 @@ export const DraftChallengeCreatorData: FC<DraftChallengeCreatorDataProps> = ({
 
                     <Space h={"1rem"} />
 
-
                     <Alert
                         variant="light"
                         color="blue"
@@ -273,16 +325,25 @@ export const DraftChallengeCreatorData: FC<DraftChallengeCreatorDataProps> = ({
                         icon={<IconInfoCircle />}
                     >
                         <span>
-                            The content you fill in the following form <strong>will be visible for everyone</strong> once the challenge is published.
+                            The content you fill in the following form{" "}
+                            <strong>will be visible for everyone</strong> once
+                            the challenge is published.
                         </span>
 
                         <p>
-                            Make sure you follow our <a href="https://github.com/opire/.github/blob/main/CODE_OF_CONDUCT.md" target="_blank">code of conduct</a>, while ensuring you provide clear and detailed information in each of the sections.
+                            Make sure you follow our{" "}
+                            <a
+                                href="https://github.com/opire/.github/blob/main/CODE_OF_CONDUCT.md"
+                                target="_blank"
+                            >
+                                code of conduct
+                            </a>
+                            , while ensuring you provide clear and detailed
+                            information in each of the sections.
                         </p>
                     </Alert>
 
                     <Space h={"1rem"} />
-
 
                     <form>
                         <Grid h={"100%"} gutter={"2rem"}>
@@ -351,7 +412,13 @@ export const DraftChallengeCreatorData: FC<DraftChallengeCreatorDataProps> = ({
                                 />
                             </Grid.Col>
 
-                            <Grid.Col span={{ base: 12, md: 4 }} style={{ display: 'flex', alignItems: 'center' }}>
+                            <Grid.Col
+                                span={{ base: 12, md: 4 }}
+                                style={{
+                                    display: "flex",
+                                    alignItems: "center",
+                                }}
+                            >
                                 <Checkbox
                                     label="Allow multiple participations per user"
                                     description="If allowed, you may want to limit the number of participations to avoid facing an unmanageable amount of them"
@@ -432,6 +499,11 @@ export const DraftChallengeCreatorData: FC<DraftChallengeCreatorDataProps> = ({
                                                                             index
                                                                         )
                                                                     }
+                                                                    onEditPrize={() =>
+                                                                        onEditPrize(
+                                                                            index
+                                                                        )
+                                                                    }
                                                                     isLastRow={
                                                                         index +
                                                                         1 ===
@@ -448,8 +520,6 @@ export const DraftChallengeCreatorData: FC<DraftChallengeCreatorDataProps> = ({
                                 </Card>
                             </Grid.Col>
 
-
-
                             <Grid.Col span={{ base: 12 }}>
                                 <Fieldset legend="Challenge description">
                                     <Grid h={"100%"} gutter={"2rem"}>
@@ -461,7 +531,9 @@ export const DraftChallengeCreatorData: FC<DraftChallengeCreatorDataProps> = ({
                                                 autosize
                                                 minRows={4}
                                                 key={form.key("summary")}
-                                                {...form.getInputProps("summary")}
+                                                {...form.getInputProps(
+                                                    "summary"
+                                                )}
                                             />
                                         </Grid.Col>
 
@@ -473,9 +545,10 @@ export const DraftChallengeCreatorData: FC<DraftChallengeCreatorDataProps> = ({
                                                 autosize
                                                 minRows={1}
                                                 key={form.key("mainObjetive")}
-                                                {...form.getInputProps("mainObjetive")}
+                                                {...form.getInputProps(
+                                                    "mainObjetive"
+                                                )}
                                             />
-
                                         </Grid.Col>
 
                                         <Grid.Col span={{ base: 12, md: 6 }}>
@@ -485,7 +558,9 @@ export const DraftChallengeCreatorData: FC<DraftChallengeCreatorDataProps> = ({
                                                 autosize
                                                 minRows={1}
                                                 key={form.key("otherObjetives")}
-                                                {...form.getInputProps("otherObjetives")}
+                                                {...form.getInputProps(
+                                                    "otherObjetives"
+                                                )}
                                             />
                                         </Grid.Col>
 
@@ -497,7 +572,9 @@ export const DraftChallengeCreatorData: FC<DraftChallengeCreatorDataProps> = ({
                                                 autosize
                                                 minRows={4}
                                                 key={form.key("requirements")}
-                                                {...form.getInputProps("requirements")}
+                                                {...form.getInputProps(
+                                                    "requirements"
+                                                )}
                                             />
                                         </Grid.Col>
 
@@ -508,8 +585,12 @@ export const DraftChallengeCreatorData: FC<DraftChallengeCreatorDataProps> = ({
                                                 withAsterisk
                                                 autosize
                                                 minRows={4}
-                                                key={form.key("evaluationCriteria")}
-                                                {...form.getInputProps("evaluationCriteria")}
+                                                key={form.key(
+                                                    "evaluationCriteria"
+                                                )}
+                                                {...form.getInputProps(
+                                                    "evaluationCriteria"
+                                                )}
                                             />
                                         </Grid.Col>
 
@@ -521,8 +602,12 @@ export const DraftChallengeCreatorData: FC<DraftChallengeCreatorDataProps> = ({
                                                 withAsterisk
                                                 autosize
                                                 minRows={2}
-                                                key={form.key("contactInformation")}
-                                                {...form.getInputProps("contactInformation")}
+                                                key={form.key(
+                                                    "contactInformation"
+                                                )}
+                                                {...form.getInputProps(
+                                                    "contactInformation"
+                                                )}
                                             />
                                         </Grid.Col>
 
@@ -532,15 +617,17 @@ export const DraftChallengeCreatorData: FC<DraftChallengeCreatorDataProps> = ({
                                                 description="Anything you want to add in order to clarify any aspect of the challenge"
                                                 autosize
                                                 minRows={2}
-                                                key={form.key("additionalComments")}
-                                                {...form.getInputProps("additionalComments")}
+                                                key={form.key(
+                                                    "additionalComments"
+                                                )}
+                                                {...form.getInputProps(
+                                                    "additionalComments"
+                                                )}
                                             />
                                         </Grid.Col>
                                     </Grid>
-
                                 </Fieldset>
                             </Grid.Col>
-
                         </Grid>
 
                         <Space h={"2rem"} />
@@ -592,6 +679,16 @@ export const DraftChallengeCreatorData: FC<DraftChallengeCreatorDataProps> = ({
                     </Button>
                 </div>
             </Modal>
+
+            {prizeToUpdate && (
+                <EditChallengePrizeModal
+                    prize={prizeToUpdate}
+                    otherPrizes={otherPrizes}
+                    isOpened={isModalToEditPrizeOpen}
+                    onClose={closeEditPrizeModal}
+                    onPrizeUpdated={onPrizeUpdated}
+                />
+            )}
         </>
     );
 };
@@ -599,8 +696,9 @@ export const DraftChallengeCreatorData: FC<DraftChallengeCreatorDataProps> = ({
 const PrizeRow: FC<{
     prize: ChallengePrizePrimitive;
     onRemovePrize: () => void;
+    onEditPrize: () => void;
     isLastRow: boolean;
-}> = ({ prize, onRemovePrize, isLastRow }) => {
+}> = ({ prize, onRemovePrize, onEditPrize, isLastRow }) => {
     const isSpecificPositionPrize = isPrimitiveSpecificPositionPrize(prize);
     const isThresholdPrize = isPrimitiveThresholdPrize(prize);
     const isThresholdWithoutLimitPrize =
@@ -622,18 +720,31 @@ const PrizeRow: FC<{
             <Table.Td>{formatPrice(prize.amount)}</Table.Td>
 
             <Table.Td>
-                {isLastRow && (
-                    <Tooltip label="Remove prize">
+                <Flex gap={'0.6rem'}>
+                    <Tooltip label="Edit prize">
                         <ActionIcon
                             variant="light"
-                            aria-label="Remove prize"
-                            color="red"
-                            onClick={onRemovePrize}
+                            aria-label="Edit prize"
+                            color="blue"
+                            onClick={onEditPrize}
                         >
-                            <IconTrash size={18} />
+                            <IconEdit size={18} />
                         </ActionIcon>
                     </Tooltip>
-                )}
+                    {isLastRow && (
+                        <Tooltip label="Remove prize">
+                            <ActionIcon
+                                variant="light"
+                                aria-label="Remove prize"
+                                color="red"
+                                onClick={onRemovePrize}
+                            >
+                                <IconTrash size={18} />
+                            </ActionIcon>
+                        </Tooltip>
+                    )}
+                </Flex>
+
             </Table.Td>
         </>
     );
