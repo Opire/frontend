@@ -265,6 +265,25 @@ export const DraftChallengeCreatorData: FC<DraftChallengeCreatorDataProps> = ({
 
                     <Space h={"1rem"} />
 
+
+                    <Alert
+                        variant="light"
+                        color="blue"
+                        title="Public content"
+                        icon={<IconInfoCircle />}
+                    >
+                        <span>
+                            The content you fill in the following form <strong>will be visible for everyone</strong> once the challenge is published.
+                        </span>
+
+                        <p>
+                            Make sure you follow our <a href="https://github.com/opire/.github/blob/main/CODE_OF_CONDUCT.md" target="_blank">code of conduct</a>, while ensuring you provide clear and detailed information in each of the sections.
+                        </p>
+                    </Alert>
+
+                    <Space h={"1rem"} />
+
+
                     <form>
                         <Grid h={"100%"} gutter={"2rem"}>
                             <Grid.Col span={{ base: 12 }}>
@@ -434,24 +453,6 @@ export const DraftChallengeCreatorData: FC<DraftChallengeCreatorDataProps> = ({
                             <Grid.Col span={{ base: 12 }}>
                                 <Fieldset legend="Challenge description">
                                     <Grid h={"100%"} gutter={"2rem"}>
-
-                                        <Grid.Col span={{ base: 12 }}>
-                                            <Alert
-                                                variant="light"
-                                                color="blue"
-                                                title="Public content"
-                                                icon={<IconInfoCircle />}
-                                            >
-                                                <span>
-                                                    The content you enter in the following inputs <strong>will be visible for everyone</strong> once the challenge is published.
-                                                </span>
-
-                                                <p>
-                                                    Make sure you follow our <a href="https://github.com/opire/.github/blob/main/CODE_OF_CONDUCT.md" target="_blank">code of conduct</a>, while ensuring you provide clear and detailed information in each of the sections.
-                                                </p>
-                                            </Alert>
-                                        </Grid.Col>
-
                                         <Grid.Col span={{ base: 12 }}>
                                             <Textarea
                                                 label="Introduction / brief summary"
