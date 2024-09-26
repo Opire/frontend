@@ -48,7 +48,7 @@ export const DraftChallengePublicData: FC<DraftChallengePublicDataProps> = ({
     return (
         <>
             <section style={{ height: "auto" }}>
-                <Center style={{ alignItems: "baseline" }}>
+                <Center>
                     <Text
                         style={{
                             textAlign: "center",
@@ -67,7 +67,7 @@ export const DraftChallengePublicData: FC<DraftChallengePublicDataProps> = ({
                                 : new Date()
                         )}`}
                     >
-                        <IconCircleCheckFilled size={18} />
+                        <IconCircleCheckFilled size={24} />
                     </Tooltip>
                 </Center>
 
