@@ -84,15 +84,6 @@ export const DraftChallengeCreatorData: FC<DraftChallengeCreatorDataProps> = ({
         revalidateOnFocus: true,
     });
 
-    const { templates, isLoadingTemplates } = useGetCreateChallengeTemplates();
-    const [selectedTemplate, setSelectedTemplate] =
-        useState<CreateChallengeTemplate | null>(null);
-
-    const [
-        isModalToSelectTemplateOpen,
-        { close: closeModalToSelectTemplate, open: openModalToSelectTemplate },
-    ] = useDisclosure();
-
     const [
         isModalToAddPrizeOpen,
         { close: closeAddPrizeModal, open: openAddPrizeModal },
@@ -157,18 +148,8 @@ export const DraftChallengeCreatorData: FC<DraftChallengeCreatorDataProps> = ({
         },
     });
 
-    function onChangeTemplate(value: string | null) {
-        const template = templates.find((template) => template.label === value);
-
-        setSelectedTemplate(template ?? null);
-    }
-
-    function applyTemplate() {
-        if (selectedTemplate) {
-            form.setValues(selectedTemplate.template);
-        }
-
-        closeModalToSelectTemplate();
+    function applyTemplate(selectedTemplate: CreateChallengeTemplate) {
+        form.setValues(selectedTemplate.template);
     }
 
     function onNewPrize(newPrize: ChallengePrizePrimitive) {
@@ -230,9 +211,9 @@ export const DraftChallengeCreatorData: FC<DraftChallengeCreatorDataProps> = ({
             setIsPublishingChallenge(false);
         } catch (error) {
             notifications.show({
-                title: "Error while trying to publish the challenge",
+                title: "Challenge cannot be published",
                 message:
-                    "Please review that all the required fields are filled",
+                    "Please, review that all the required fields are filled",
                 withBorder: true,
                 withCloseButton: true,
                 autoClose: 10_000,
@@ -322,17 +303,7 @@ export const DraftChallengeCreatorData: FC<DraftChallengeCreatorDataProps> = ({
                 </Center>
 
                 <Box style={{ padding: "1rem 2rem" }}>
-                    <div style={{ display: "flex", justifyContent: "end" }}>
-                        <Button
-                            onClick={openModalToSelectTemplate}
-                            loading={isLoadingTemplates}
-                            disabled={isLoadingTemplates}
-                            color="indigo"
-                            variant="outline"
-                        >
-                            Use template
-                        </Button>
-                    </div>
+                    <ApplyTemplateModal applyTemplate={applyTemplate} />
 
                     <Space h={"1rem"} />
 
@@ -666,38 +637,6 @@ export const DraftChallengeCreatorData: FC<DraftChallengeCreatorDataProps> = ({
                 </div>
             </section>
 
-            <Modal
-                opened={isModalToSelectTemplateOpen}
-                onClose={closeModalToSelectTemplate}
-                title="Choose a template to apply to your challenge"
-                centered
-            >
-                <Space h={"1rem"} />
-
-                <Select
-                    label="Available templates"
-                    placeholder="Select a template"
-                    data={templates.map((template) => ({
-                        label: template.label,
-                        value: template.label,
-                    }))}
-                    value={selectedTemplate?.label}
-                    onChange={onChangeTemplate}
-                />
-
-                <Space h={"1rem"} />
-
-                <div style={{ display: "flex", justifyContent: "end" }}>
-                    <Button
-                        onClick={applyTemplate}
-                        color="indigo"
-                        variant="filled"
-                    >
-                        Apply selected template
-                    </Button>
-                </div>
-            </Modal>
-
             {prizeToUpdate && (
                 <EditChallengePrizeModal
                     prize={prizeToUpdate}
@@ -762,11 +701,92 @@ const PrizeRow: FC<{
                         </Tooltip>
                     )}
                 </Flex>
-
             </Table.Td>
         </>
     );
 };
+
+function ApplyTemplateModal({ applyTemplate }: { applyTemplate: (template: CreateChallengeTemplate) => void }): React.ReactElement {
+    const { templates, isLoadingTemplates } = useGetCreateChallengeTemplates();
+    const [
+        isModalToSelectTemplateOpen,
+        { close: closeModalToSelectTemplate, open: openModalToSelectTemplate },
+    ] = useDisclosure();
+
+    const [selectedTemplate, setSelectedTemplate] =
+        useState<CreateChallengeTemplate | null>(null);
+
+    function onChangeTemplate(value: string | null) {
+        const template = templates.find((template) => template.label === value);
+
+        setSelectedTemplate(template ?? null);
+    }
+
+    function onApplyTemplate() {
+        if (selectedTemplate) {
+            applyTemplate(selectedTemplate);
+        }
+
+        closeModalToSelectTemplate();
+    }
+
+    return (
+        <>
+            <div style={{ display: "flex", justifyContent: "end" }}>
+                <Button
+                    onClick={openModalToSelectTemplate}
+                    loading={isLoadingTemplates}
+                    disabled={isLoadingTemplates}
+                    color="indigo"
+                    variant="outline"
+                >
+                    Use template
+                </Button>
+            </div>
+
+            <Modal
+                opened={isModalToSelectTemplateOpen}
+                onClose={closeModalToSelectTemplate}
+                title="Choose a template to apply to your challenge"
+                centered
+            >
+
+                <Select
+                    label="Available templates"
+                    placeholder="Select a template"
+                    data={templates.map((template) => ({
+                        label: template.label,
+                        value: template.label,
+                    }))}
+                    value={selectedTemplate?.label}
+                    onChange={onChangeTemplate} />
+
+                <Space h={"2rem"} />
+
+                <Alert
+                    variant="light"
+                    color="yellow"
+                    title="Be careful!"
+                    icon={<IconInfoCircle />}
+                >
+                    This will override the current configuration of your challenge
+                </Alert>
+
+                <Space h={"1rem"} />
+
+                <div style={{ display: "flex", justifyContent: "end" }}>
+                    <Button
+                        onClick={onApplyTemplate}
+                        color="indigo"
+                        variant="filled"
+                    >
+                        Apply selected template
+                    </Button>
+                </div>
+            </Modal>
+        </>
+    );
+}
 
 async function onUpdateDraft(
     challengeId: string,
