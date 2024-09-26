@@ -11,12 +11,14 @@ import {
 } from "../../../../../../hooks/useGetCreateChallengeTemplates";
 import {
     ActionIcon,
+    Affix,
     Alert,
     Box,
     Button,
     Card,
     Center,
     Checkbox,
+    em,
     Fieldset,
     Flex,
     Grid,
@@ -30,8 +32,9 @@ import {
     Textarea,
     TextInput,
     Tooltip,
+    Transition,
 } from "@mantine/core";
-import { useDebouncedCallback, useDisclosure } from "@mantine/hooks";
+import { useDebouncedCallback, useDisclosure, useMediaQuery, useWindowScroll } from "@mantine/hooks";
 import { useForm } from "@mantine/form";
 import { DatePickerInput } from "@mantine/dates";
 import {
@@ -72,6 +75,8 @@ export const DraftChallengeCreatorData: FC<DraftChallengeCreatorDataProps> = ({
     creator,
 }) => {
     const router = useRouter();
+    const [scroll] = useWindowScroll();
+    const isMobile = useMediaQuery(`(max-width: ${em(750)})`);
 
     const { challenge, reloadChallenge } = useGetChallengeById({
         challengeId: initialChallenge.id,
@@ -273,11 +278,11 @@ export const DraftChallengeCreatorData: FC<DraftChallengeCreatorDataProps> = ({
     return (
         <>
             <section style={{ height: "auto" }}>
-                <Center style={{ alignItems: "baseline" }}>
+                <Center>
                     <Text
                         style={{
                             textAlign: "center",
-                            fontSize: "2rem",
+                            fontSize: isMobile ? "1.4rem" : "2rem",
                             fontWeight: "bold",
                             marginRight: "1rem",
                         }}
@@ -285,11 +290,6 @@ export const DraftChallengeCreatorData: FC<DraftChallengeCreatorDataProps> = ({
                         Configure your challenge
                     </Text>
 
-                    {isUpdatingDraft && (
-                        <Tooltip label="Saving changes...">
-                            <Loader size={18} />
-                        </Tooltip>
-                    )}
                     {!isUpdatingDraft && (
                         <Tooltip
                             label={`Updated at ${formatDateTime(
@@ -298,12 +298,30 @@ export const DraftChallengeCreatorData: FC<DraftChallengeCreatorDataProps> = ({
                                     : new Date()
                             )}`}
                         >
-                            <IconCircleCheckFilled size={18} />
+                            <IconCircleCheckFilled size={24} />
                         </Tooltip>
                     )}
+
+                    {isUpdatingDraft && (
+                        <Tooltip label="Saving changes...">
+                            <Loader size={24} />
+                        </Tooltip>
+                    )}
+
+                    {isUpdatingDraft &&
+                        <Affix position={{ top: 16, right: 60 }}>
+                            <Transition transition="slide-up" mounted={scroll.y > 10}>
+                                {(transitionStyles) => (
+                                    <Tooltip label="Saving changes..." style={transitionStyles}>
+                                        <Loader size={24} />
+                                    </Tooltip>
+                                )}
+                            </Transition>
+                        </Affix>
+                    }
                 </Center>
 
-                <Box style={{ padding: "0 2rem" }}>
+                <Box style={{ padding: "1rem 2rem" }}>
                     <div style={{ display: "flex", justifyContent: "end" }}>
                         <Button
                             onClick={openModalToSelectTemplate}
