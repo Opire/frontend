@@ -1,5 +1,5 @@
 import { Container } from "@mantine/core";
-import { MainLayout } from "../../_components/Layouts/MainLayout";
+import { ChallengeLayout } from "../../_components/Layouts/ChallengeLayout/ChallengeLayout";
 
 export default function Layout({
     children,
@@ -7,10 +7,10 @@ export default function Layout({
     children: React.ReactNode
 }) {
     return (
-        <MainLayout>
+        <ChallengeLayout>
             <Container size='xxl' style={{ padding: '20px' }}>
                 {children}
             </Container>
-        </MainLayout>
+        </ChallengeLayout>
     )
 }
