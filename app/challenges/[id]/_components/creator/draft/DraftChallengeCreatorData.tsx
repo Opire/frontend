@@ -288,7 +288,7 @@ export const DraftChallengeCreatorData: FC<DraftChallengeCreatorDataProps> = ({
                     )}
 
                     {isUpdatingDraft &&
-                        <Affix position={{ top: 16, right: 60 }}>
+                        <Affix position={{ top: 16, right: isMobile ? '60px' : '80px' }}>
                             <Transition transition="slide-up" mounted={scroll.y > 10}>
                                 {(transitionStyles) => (
                                     <Tooltip label="Saving changes..." style={transitionStyles}>
