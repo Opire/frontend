@@ -39,9 +39,6 @@ export const PublishedChallengePublicData: FC<PublishedChallengePublicDataProps>
     );
 };
 
-
-
-
 const ParticipationsSection: FC<{
     challenge: ChallengePrimitive;
 }> = ({ challenge }) => {

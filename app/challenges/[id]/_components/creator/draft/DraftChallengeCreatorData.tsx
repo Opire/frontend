@@ -223,6 +223,10 @@ export const DraftChallengeCreatorData: FC<DraftChallengeCreatorDataProps> = ({
         }
     }
 
+    function previewPublishedChallenge() {
+        window.open(`/challenges/${initialChallenge.id}/preview`, '_blank')?.focus();
+    }
+
     const prizes = useMemo(
         () => sortPrizes(form.getValues().configuration.prizes),
         [form.getValues()]
@@ -624,7 +628,15 @@ export const DraftChallengeCreatorData: FC<DraftChallengeCreatorDataProps> = ({
 
                 <Space h={"1rem"} />
 
-                <div style={{ display: "flex", justifyContent: "end" }}>
+                <div style={{ display: "flex", justifyContent: "flex-end", gap: '1rem' }}>
+                    <Button
+                        onClick={previewPublishedChallenge}
+                        variant="light"
+                        disabled={isUpdatingDraft || isPublishingChallenge}
+                        loading={isPublishingChallenge}
+                    >
+                        Preview published version
+                    </Button>
                     <Button
                         onClick={publishChallenge}
                         variant="gradient"

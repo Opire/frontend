@@ -5,7 +5,11 @@ import { getPriceInUSD_CENT } from "./formatPrice";
 
 export function getChallengeHighestPrize(challenge: ChallengePrimitive): PricePrimitive {
     if (!challenge.configuration.allowMultipleParticipationsPerUser) {
-        const firstPrize = challenge.configuration.prizes[0];
+        const firstPrize = challenge.configuration.prizes[0] as ChallengePrizePrimitive | undefined;
+
+        if(!firstPrize) {
+            return { unit: 'USD_CENT', value: 0 }
+        }
 
         return firstPrize.amount;
     }
