@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import { getChallenges } from "../_utils/getChallenges";
+import { getChallenges } from "../../_utils/getChallenges";
 import { ChallengesView } from "./view";
 
 export const metadata: Metadata = {

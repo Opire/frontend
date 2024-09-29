@@ -1,12 +1,12 @@
 'use client'
 
 import { useState } from "react";
-import { API_ROUTES } from "../../constants";
-import { InfinityList } from "../_components/InfinityList";
-import { clientCustomFetch } from "../_utils/clientCustomFetch";
+import { API_ROUTES } from "../../../constants";
+import { InfinityList } from "../../_components/InfinityList";
+import { clientCustomFetch } from "../../_utils/clientCustomFetch";
 import { buildEndpointWithSearchAndPagination } from "./_utils/buildEndpointWithSearchAndPagination";
-import { useExternalStateOverride } from "../../hooks/useExternalStateOverride";
-import { ChallengePrimitive } from "../_core/_primitives/ChallengePrimitive";
+import { useExternalStateOverride } from "../../../hooks/useExternalStateOverride";
+import { ChallengePrimitive } from "../../_core/_primitives/ChallengePrimitive";
 import { ChallengeCard } from "./_components/ChallengeCard";
 
 const PAGE_SIZE = 30;

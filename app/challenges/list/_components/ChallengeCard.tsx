@@ -1,12 +1,12 @@
 import { Avatar, Badge, Card, CardSection, Center, Flex, Group, Skeleton, Text, Tooltip } from "@mantine/core";
 import { FC, Ref } from "react";
 import { useRouter } from "next/navigation";
-import { ChallengePrimitive } from "../../_core/_primitives/ChallengePrimitive";
+import { ChallengePrimitive } from "../../../_core/_primitives/ChallengePrimitive";
 import { useHover } from "@mantine/hooks";
-import { useGetUserPublicInfoFromAnyPlatform } from "../../../hooks/useGetUserPublicInfoFromAnyPlatform";
-import { getRelativeTime } from "../../_utils/getRelativeTime";
-import { getChallengeHighestPrize } from "../../_utils/getChallengeHighestPrize";
-import { formatPrice } from "../../_utils/formatPrice";
+import { useGetUserPublicInfoFromAnyPlatform } from "../../../../hooks/useGetUserPublicInfoFromAnyPlatform";
+import { getRelativeTime } from "../../../_utils/getRelativeTime";
+import { getChallengeHighestPrize } from "../../../_utils/getChallengeHighestPrize";
+import { formatPrice } from "../../../_utils/formatPrice";
 
 interface ChallengeCardProps {
     data: ChallengePrimitive;

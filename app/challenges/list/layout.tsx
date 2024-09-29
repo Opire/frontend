@@ -1,5 +1,5 @@
 import { Container, Text } from "@mantine/core";
-import { MainLayout } from "../_components/Layouts/MainLayout";
+import { MainLayout } from "../../_components/Layouts/MainLayout";
 import { SearchInput } from "./_components/SearchInput";
 
 export default function Layout({

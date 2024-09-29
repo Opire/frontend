@@ -3,8 +3,8 @@
 import { useDebouncedValue } from "@mantine/hooks";
 import React, { FC, useEffect, useState } from "react";
 import { IconSearch } from "@tabler/icons-react";
-import { usePopulateToURL } from "../../../hooks/usePopulateToURL";
-import { BaseInputText } from "../../_components/Form/BaseInputText";
+import { usePopulateToURL } from "../../../../hooks/usePopulateToURL";
+import { BaseInputText } from "../../../_components/Form/BaseInputText";
 
 const urlKey = "search";
 

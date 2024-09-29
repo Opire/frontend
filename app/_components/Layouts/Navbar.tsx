@@ -40,7 +40,7 @@ export const Navbar: FC<NavbarProps> = ({
             id: 'challenges',
             icon: <IconTrophy size={18} />,
             text: 'Challenges',
-            path: '/challenges',
+            path: '/challenges/list',
             isPublic: true,
         },
         {
