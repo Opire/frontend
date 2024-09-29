@@ -2,14 +2,13 @@ import { FC } from "react";
 import { ChallengePrimitive } from "../../../../_core/_primitives/ChallengePrimitive";
 import { Center, Title, Space, List, ListItem, Text } from "@mantine/core";
 import { formatDate } from "../../../../_utils/formatDate";
-import { formatPrice, getPriceInUSD_CENT } from "../../../../_utils/formatPrice";
-import { ChallengePrizePrimitive } from "../../../../_core/_primitives/ChallengePrizePrimitive";
-import { PricePrimitive } from "../../../../_core/_primitives/PricePrimitive";
+import { formatPrice } from "../../../../_utils/formatPrice";
+import { getChallengeHighestPrize } from "../../../../_utils/getChallengeHighestPrize";
 
 export const ChallengeMainData: FC<{
     challenge: ChallengePrimitive;
 }> = ({ challenge }) => {
-    const highestPrize = getHighestPrize(challenge);
+    const highestPrize = getChallengeHighestPrize(challenge);
 
     return (
         <>
@@ -87,24 +86,6 @@ export const ChallengeMainData: FC<{
         </>
     );
 };
-
-function getHighestPrize(challenge: ChallengePrimitive): PricePrimitive {
-    if (!challenge.configuration.allowMultipleParticipationsPerUser) {
-        const firstPrize = challenge.configuration.prizes[0];
-
-        return firstPrize.amount;
-    }
-
-    const prizesSum: PricePrimitive = challenge.configuration.prizes.reduce((accumulator: PricePrimitive, currentPrize: ChallengePrizePrimitive): PricePrimitive => {
-        return {
-            value: accumulator.value + getPriceInUSD_CENT(currentPrize.amount),
-            unit: accumulator.unit,
-        }
-    }, { unit: 'USD_CENT', value: 0 })
-
-    return prizesSum;
-}
-
 
 const ChallengeDetailsSection: FC<{
     title: string;

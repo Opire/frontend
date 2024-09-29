@@ -2,9 +2,9 @@ import { ChallengePrimitive } from "../../../../../_core/_primitives/ChallengePr
 import { FC } from "react";
 import { UserAuthDTO } from "../../../../../_core/_dtos/UserAuthDTO";
 import React from "react";
-import { Card, Title, Text, Divider, Box, Center, Table, Space, Flex, Button, Skeleton, Avatar, Badge, DefaultMantineColor, Alert } from "@mantine/core";
+import { Card, Title, Text, Divider, Box, Center, Table, Space, Flex, Skeleton, Avatar, Badge, DefaultMantineColor, Alert } from "@mantine/core";
 import { formatPrice } from "../../../../../_utils/formatPrice";
-import { IconInfoCircle, IconSend } from "@tabler/icons-react";
+import { IconInfoCircle } from "@tabler/icons-react";
 import { ChallengeParticipationPrimitive, ChallengeParticipationStatusType } from "../../../../../_core/_primitives/ChallengeParticipationPrimitive";
 import { useGetUserPublicInfoFromAnyPlatform } from "../../../../../../hooks/useGetUserPublicInfoFromAnyPlatform";
 import Link from "next/link";

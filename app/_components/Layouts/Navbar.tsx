@@ -37,6 +37,13 @@ export const Navbar: FC<NavbarProps> = ({
             isPublic: true,
         },
         {
+            id: 'challenges',
+            icon: <IconTrophy size={18} />,
+            text: 'Challenges',
+            path: '/challenges',
+            isPublic: true,
+        },
+        {
             id: 'projects',
             icon: <IconBrandGit size={18} />,
             text: 'Projects',
