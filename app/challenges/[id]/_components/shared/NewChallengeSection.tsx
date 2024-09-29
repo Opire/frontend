@@ -102,7 +102,7 @@ export const NewChallengeSection: FC<{
                         transition: 'transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out',
                         transform: hovered ? 'scale(1.01)' : undefined,
                         boxShadow: hovered ? '0 4px 30px rgba(16, 152, 173, 0.5)' : undefined,
-                        backgroundImage: 'linear-gradient(rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.85)), url("/images/newChallenge.webp")',
+                        backgroundImage: 'linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.75)), url("/images/newChallenge.webp")',
                         backgroundSize: 'cover',
                         backgroundPosition: 'center',
                     }}
