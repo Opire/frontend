@@ -204,6 +204,7 @@ export const DraftChallengeCreatorData: FC<DraftChallengeCreatorDataProps> = ({
                 icon: <IconCheck />,
             });
 
+            window.scrollTo(0, 0);
             router.refresh();
 
             setIsPublishingChallenge(false);
