@@ -46,7 +46,6 @@ const ParticipationsSection: FC<{
                         leftSection={<IconSend size={18} />}
                         variant='light'
                         onClick={() => { }}
-                        disabled={true}
                     >
                         Submit solution
                     </Button>
