@@ -1,10 +1,10 @@
 import { Center, Grid, Card, Flex, Text } from "@mantine/core";
 import { useHover } from "@mantine/hooks";
 import { FC } from "react";
-import { ChallengePrimitive } from "../../../../../_core/_primitives/ChallengePrimitive";
-import { ChallengePrizePrimitive } from "../../../../../_core/_primitives/ChallengePrizePrimitive";
-import { isPrimitiveSpecificPositionPrize, isPrimitiveThresholdPrize, isPrimitiveThresholdWithoutLimitPrize } from "../../../../../_utils/challengePrizes";
-import { formatPrice } from "../../../../../_utils/formatPrice";
+import { ChallengePrimitive } from "../../../../_core/_primitives/ChallengePrimitive";
+import { ChallengePrizePrimitive } from "../../../../_core/_primitives/ChallengePrizePrimitive";
+import { isPrimitiveSpecificPositionPrize, isPrimitiveThresholdPrize, isPrimitiveThresholdWithoutLimitPrize } from "../../../../_utils/challengePrizes";
+import { formatPrice } from "../../../../_utils/formatPrice";
 
 export const PrizesSection: FC<{
     challenge: ChallengePrimitive;

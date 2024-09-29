@@ -3,12 +3,12 @@ import { useHover, useDisclosure } from "@mantine/hooks";
 import { notifications } from "@mantine/notifications";
 import { IconX, IconTrophy, IconFile, IconRecycle } from "@tabler/icons-react";
 import { FC, useState } from "react";
-import { API_ROUTES } from "../../../../../../constants";
-import { useTriggerCallbackOnQueryParamFirstMatch } from "../../../../../../hooks/useTriggerCallbackOnQueryParamFirstMatch";
-import { UserAuthDTO } from "../../../../../_core/_dtos/UserAuthDTO";
-import { ChallengePrimitive, CreateChallengeDTO } from "../../../../../_core/_primitives/ChallengePrimitive";
-import { clientCustomFetch } from "../../../../../_utils/clientCustomFetch";
-import { redirectAfterLogin } from "../../../../../_utils/redirectAfterLogin";
+import { API_ROUTES } from "../../../../../constants";
+import { useTriggerCallbackOnQueryParamFirstMatch } from "../../../../../hooks/useTriggerCallbackOnQueryParamFirstMatch";
+import { UserAuthDTO } from "../../../../_core/_dtos/UserAuthDTO";
+import { ChallengePrimitive, CreateChallengeDTO } from "../../../../_core/_primitives/ChallengePrimitive";
+import { clientCustomFetch } from "../../../../_utils/clientCustomFetch";
+import { redirectAfterLogin } from "../../../../_utils/redirectAfterLogin";
 import { useRouter } from "next/navigation";
 
 export const NewChallengeSection: FC<{

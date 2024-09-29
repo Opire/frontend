@@ -10,9 +10,9 @@ import { useGetUserPublicInfoFromAnyPlatform } from "../../../../../../hooks/use
 import Link from "next/link";
 import { formatDateTime } from "../../../../../_utils/formatDate";
 
-import { NewChallengeSection } from "./NewChallengeSection";
-import { PrizesSection } from "./PrizesSection";
-import { ChallengeMainData } from "./ChallengeMainData";
+import { NewChallengeSection } from "../../shared/NewChallengeSection";
+import { PrizesSection } from "../../shared/PrizesSection";
+import { ChallengeMainData } from "../../shared/ChallengeMainData";
 
 interface PublishedChallengePublicDataProps {
     challenge: ChallengePrimitive;

@@ -1,10 +1,10 @@
 import { FC } from "react";
-import { ChallengePrimitive } from "../../../../../_core/_primitives/ChallengePrimitive";
+import { ChallengePrimitive } from "../../../../_core/_primitives/ChallengePrimitive";
 import { Center, Title, Space, List, ListItem, Text } from "@mantine/core";
-import { formatDate } from "../../../../../_utils/formatDate";
-import { formatPrice, getPriceInUSD_CENT } from "../../../../../_utils/formatPrice";
-import { ChallengePrizePrimitive } from "../../../../../_core/_primitives/ChallengePrizePrimitive";
-import { PricePrimitive } from "../../../../../_core/_primitives/PricePrimitive";
+import { formatDate } from "../../../../_utils/formatDate";
+import { formatPrice, getPriceInUSD_CENT } from "../../../../_utils/formatPrice";
+import { ChallengePrizePrimitive } from "../../../../_core/_primitives/ChallengePrizePrimitive";
+import { PricePrimitive } from "../../../../_core/_primitives/PricePrimitive";
 
 export const ChallengeMainData: FC<{
     challenge: ChallengePrimitive;
