@@ -107,19 +107,6 @@ const ParticipationsSection: FC<{
 
                 <Space h={'1rem'} />
 
-                <Center>
-                    <Button
-                        leftSection={<IconSend size={18} />}
-                        variant='light'
-                        onClick={() => { }}
-                    >
-                        Submit solution
-                    </Button>
-                    {/* TODO: Add modal to submit solution */}
-                </Center>
-
-                <Space h={'1rem'} />
-
                 {
                     sortedParticipations.length === 0
                         ?
@@ -131,9 +118,23 @@ const ParticipationsSection: FC<{
                                 icon={<IconInfoCircle />}
                             >
                                 <Text>
-                                    No one has send their solution yet. If you want to complete the challenge, start working in your solution and send it when it's ready!
+                                    No one has send their solution yet.
                                 </Text>
 
+                                <Text>
+                                    If you want to attract the attention of the participants, you can try to share the challenge in your social media.
+                                </Text>
+
+                                <br />
+
+
+                                <Text>
+                                    If some time passes without a single participant, maybe your challenge is too hard or the prizes are not high enough.
+                                </Text>
+
+                                <Text>
+                                    You may need to increase the prizes (you'll need to unpublish the challenge first) or contact some potential sponsors.
+                                </Text>
                             </Alert>
                         </Center>
                         :
