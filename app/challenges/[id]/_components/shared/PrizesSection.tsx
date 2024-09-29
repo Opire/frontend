@@ -13,7 +13,7 @@ export const PrizesSection: FC<{
         <Center>
             <Grid
                 style={{ justifyItems: 'center', alignItems: 'center' }}
-                gutter={50}
+                gutter={20}
             >
                 {challenge.configuration.prizes.map((prize, index) => (
                     <Grid.Col key={index} span={'auto'}>

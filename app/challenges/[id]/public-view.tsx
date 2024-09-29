@@ -18,7 +18,7 @@ export function ChallengePublicView({
         return (
             <Grid h={'100%'}>
                 <Grid.Col span={{ base: 12 }}>
-                    <DraftChallengePublicData challenge={challenge} userAuth={userAuth} />
+                    <DraftChallengePublicData challenge={challenge} />
                 </Grid.Col>
             </Grid>
         );

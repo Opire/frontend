@@ -8,7 +8,7 @@ export default function Layout({
 }) {
     return (
         <ChallengeLayout>
-            <Container size='xxl' style={{ padding: '20px' }}>
+            <Container size='xl' style={{ padding: '20px' }}>
                 {children}
             </Container>
         </ChallengeLayout>

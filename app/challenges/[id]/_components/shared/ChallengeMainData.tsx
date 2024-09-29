@@ -45,8 +45,7 @@ export const ChallengeMainData: FC<{
             <ChallengeDetailsSection title="Additional information" content={challenge.additionalComments} />
             <ChallengeDetailsSection title="Contact" content={challenge.contactInformation} />
 
-
-            <Space h={'1rem'} />
+            <Space h={'2rem'} />
             <Title order={3} size="h3" style={{ fontSize: '1.6rem', fontWeight: 900 }}>
                 Other specs
             </Title>
@@ -95,7 +94,7 @@ const ChallengeDetailsSection: FC<{
 
     return (
         <>
-            <Space h={'1rem'} />
+            <Space h={'2rem'} />
             <Title order={3} size="h3" style={{ fontSize: '1.6rem', fontWeight: 900 }}>
                 {title}
             </Title>

@@ -62,9 +62,12 @@ const ParticipationsSection: FC<{
                         icon={<IconInfoCircle />}
                     >
                         <Text>
-                            No one has send their solution yet. If you want to complete the challenge, start working in your solution and send it when it's ready!
+                            No one has send their solution yet.
                         </Text>
 
+                        <Text>
+                            If you want to complete the challenge, start working in your solution and send it when it's ready!
+                        </Text>
                     </Alert>
                 </Center>
             </Card>
