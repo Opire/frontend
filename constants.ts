@@ -20,9 +20,11 @@ export const API_ROUTES = {
         TEMPLATES: () => `${process.env.NEXT_PUBLIC_API_URL}/challenges/templates`,
         CREATE: () => `${process.env.NEXT_PUBLIC_API_URL}/challenges`,
         EDIT_DRAFT: (id: string) => `${process.env.NEXT_PUBLIC_API_URL}/challenges/${id}`,
+        PUBLISH_DRAFT: (id: string) => `${process.env.NEXT_PUBLIC_API_URL}/challenges/${id}/publish`,
         CREATED_BY_ME: () =>
             `${process.env.NEXT_PUBLIC_API_URL}/challenges/created`,
-        CHECK_DRAFT_PRIZES: () => `${process.env.NEXT_PUBLIC_API_URL}/challenges/draft/prizes/are-valid` 
+        CHECK_DRAFT_PRIZES: () => `${process.env.NEXT_PUBLIC_API_URL}/challenges/draft/prizes/are-valid`, 
+        ALL: () => `${process.env.NEXT_PUBLIC_API_URL}/challenges`, 
     },
     AUTH: {
         GITHUB: (code: string) =>

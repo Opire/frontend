@@ -1,6 +1,5 @@
 import { ChallengePrimitive } from "../../../../../_core/_primitives/ChallengePrimitive";
 import { FC, useMemo } from "react";
-import { UserAuthDTO } from "../../../../../_core/_dtos/UserAuthDTO";
 import React from "react";
 import { ChallengePrizePrimitive } from "../../../../../_core/_primitives/ChallengePrizePrimitive";
 import {
@@ -34,21 +33,26 @@ import { DatePickerInput } from "@mantine/dates";
 
 interface DraftChallengePublicDataProps {
     challenge: ChallengePrimitive;
-    userAuth: UserAuthDTO | null;
 }
 
 export const DraftChallengePublicData: FC<DraftChallengePublicDataProps> = ({
     challenge,
-    userAuth,
 }) => {
+
     const prizes = useMemo(
         () => sortPrizes(challenge.configuration.prizes),
         [challenge]
     );
+
+
+    function previewPublishedChallenge() {
+        window.open(`/challenges/${challenge.id}/preview`, '_blank')?.focus();
+    }
+
     return (
         <>
             <section style={{ height: "auto" }}>
-                <Center style={{ alignItems: "baseline" }}>
+                <Center>
                     <Text
                         style={{
                             textAlign: "center",
@@ -67,7 +71,7 @@ export const DraftChallengePublicData: FC<DraftChallengePublicDataProps> = ({
                                 : new Date()
                         )}`}
                     >
-                        <IconCircleCheckFilled size={18} />
+                        <IconCircleCheckFilled size={24} />
                     </Tooltip>
                 </Center>
 
@@ -306,7 +310,13 @@ export const DraftChallengePublicData: FC<DraftChallengePublicDataProps> = ({
 
                 <Space h={"1rem"} />
 
-                <div style={{ display: "flex", justifyContent: "end" }}>
+                <div style={{ display: "flex", justifyContent: "flex-end", gap: '1rem' }}>
+                    <Button
+                        onClick={previewPublishedChallenge}
+                        variant="light"
+                    >
+                        Preview published version
+                    </Button>
                     <Tooltip label="Only the creator of the challenge can publish it">
                         <Button
                             onClick={() => { }}

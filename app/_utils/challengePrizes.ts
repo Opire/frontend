@@ -48,5 +48,5 @@ export function isPrimitiveThresholdPrize(primitive: ChallengePrizePrimitive): p
 }
 
 export function isPrimitiveThresholdWithoutLimitPrize(primitive: ChallengePrizePrimitive): primitive is ThresholdWithoutLimitPrizePrimitive {
-    return 'fromPosition' in primitive && !Number.isNaN(+primitive.fromPosition) && primitive.toPosition === CHALLENGE_PRIZE_WITHOUT_LIMIT_VALUE;
+    return 'fromPosition' in primitive && !Number.isNaN(+primitive.fromPosition) && 'toPosition' in primitive && primitive.toPosition === CHALLENGE_PRIZE_WITHOUT_LIMIT_VALUE;
 }

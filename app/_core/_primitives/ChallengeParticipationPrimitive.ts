@@ -10,4 +10,7 @@ export interface ChallengeParticipationPrimitive {
     position: number | null;
     prize: ChallengePrizePrimitive | null;
     reasonForRejection: string | null;
+    createdAt: number;
+    updatedAt: number;
 }
+

@@ -17,11 +17,7 @@ import {
     IconTrophy,
 } from "@tabler/icons-react";
 import {
-    CHALLENGE_PRIZE_WITHOUT_LIMIT_VALUE,
     ChallengePrizePrimitive,
-    SpecificPositionPrizePrimitive,
-    ThresholdPrizePrimitive,
-    ThresholdWithoutLimitPrizePrimitive,
 } from "../../../../../_core/_primitives/ChallengePrizePrimitive";
 import {
     getChallengePrizeMaxPosition,
@@ -33,69 +29,37 @@ import {
 import { clientCustomFetch } from "../../../../../_utils/clientCustomFetch";
 import { API_ROUTES } from "../../../../../../constants";
 
-interface AddChallengePrizeModalProps {
-    currentPrizes: ChallengePrizePrimitive[];
+interface EditChallengePrizeModalProps {
+    prize: ChallengePrizePrimitive;
+    otherPrizes: ChallengePrizePrimitive[];
     isOpened: boolean;
     onClose: () => void;
-    onNewPrize: (newPrize: ChallengePrizePrimitive) => void;
+    onPrizeUpdated: (updatedPrize: ChallengePrizePrimitive) => void;
 }
 
-export const AddChallengePrizeModal: FC<AddChallengePrizeModalProps> = ({
-    currentPrizes,
+export const EditChallengePrizeModal: FC<EditChallengePrizeModalProps> = ({
+    prize,
+    otherPrizes,
     isOpened,
     onClose,
-    onNewPrize,
+    onPrizeUpdated,
 }) => {
     const [isCheckingPrize, setIsCheckingPrize] = useState(false);
     const [prizeInvalidReason, setPrizeInvalidReason] = useState<string | null>(
         null
     );
     const isPrizeValid = prizeInvalidReason === null;
-
-    const [isPrizeForSpecificPosition, setIsPrizeForSpecificPosition] =
-        useState(true);
-
-    const lastPrize = useMemo(() => currentPrizes.at(-1), [currentPrizes]);
-
-    const initialAvailablePosition = useMemo(() => {
-        if (!lastPrize) {
-            return 1;
-        }
-
-        if ((lastPrize as SpecificPositionPrizePrimitive).position) {
-            return (lastPrize as SpecificPositionPrizePrimitive).position + 1;
-        }
-
-        const lastPosition = (
-            lastPrize as
-            | ThresholdPrizePrimitive
-            | ThresholdWithoutLimitPrizePrimitive
-        ).toPosition;
-
-        if (!Number.isNaN(+lastPosition)) {
-            return (lastPosition as number) + 1;
-        }
-
-        return 1;
-    }, [lastPrize]);
+    const isPrizeForSpecificPosition = isPrimitiveSpecificPositionPrize(prize)
 
     const form = useForm<ChallengePrizePrimitive>({
-        initialValues: {
-            amount: {
-                unit: "USD",
-                value: lastPrize ? lastPrize.amount.value - 1 : 1000,
-            },
-            position: initialAvailablePosition,
-            fromPosition: undefined,
-            toPosition: undefined,
-        },
+        initialValues: prize,
         onValuesChange: (values) => {
             checkIsPrizeValid(values);
         },
     });
 
-    const newPrizeAffectedPositionsDescription = useMemo(() => {
-        const baseMessage = "This new prize will be paid";
+    const prizeAffectedPositionsDescription = useMemo(() => {
+        const baseMessage = "This prize will be paid";
         const prize = form.getValues();
 
         if (isPrimitiveSpecificPositionPrize(prize)) {
@@ -119,30 +83,8 @@ export const AddChallengePrizeModal: FC<AddChallengePrizeModalProps> = ({
         return null;
     }, [form.getValues()]);
 
-    function handleChangeIsPrizeForSpecificPosition(isChecked: boolean) {
-        const amount = form.getValues().amount;
-
-        if (isChecked) {
-            form.setValues({
-                amount,
-                position: initialAvailablePosition,
-                fromPosition: undefined,
-                toPosition: undefined,
-            } as SpecificPositionPrizePrimitive);
-        } else {
-            form.setValues({
-                amount,
-                position: undefined,
-                fromPosition: initialAvailablePosition,
-                toPosition: CHALLENGE_PRIZE_WITHOUT_LIMIT_VALUE,
-            } as ThresholdWithoutLimitPrizePrimitive);
-        }
-
-        setIsPrizeForSpecificPosition(isChecked);
-    }
-
-    async function addNewPrize(newPrize: ChallengePrizePrimitive) {
-        onNewPrize(newPrize);
+    async function updatePrize(newPrize: ChallengePrizePrimitive) {
+        onPrizeUpdated(newPrize);
         onClose();
     }
 
@@ -157,7 +99,7 @@ export const AddChallengePrizeModal: FC<AddChallengePrizeModalProps> = ({
                     body: {
                         challenge: {
                             configuration: {
-                                prizes: [...currentPrizes, newPrize],
+                                prizes: [...otherPrizes, newPrize],
                             },
                         },
                     },
@@ -179,17 +121,7 @@ export const AddChallengePrizeModal: FC<AddChallengePrizeModalProps> = ({
     // Reset initial values when modal open
     useEffect(() => {
         if (isOpened) {
-            form.setValues({
-                amount: {
-                    unit: "USD",
-                    value: lastPrize ? lastPrize.amount.value - 1 : 1000,
-                },
-                position: initialAvailablePosition,
-                fromPosition: undefined,
-                toPosition: undefined,
-            } as SpecificPositionPrizePrimitive);
-
-            setIsPrizeForSpecificPosition(true);
+            form.setValues(prize);
         }
     }, [isOpened]);
 
@@ -209,14 +141,14 @@ export const AddChallengePrizeModal: FC<AddChallengePrizeModalProps> = ({
                     }}
                 >
                     <IconTrophy size={16} color="teal" />
-                    <span>Add a new prize to the challenge</span>
+                    <span>Edit prize amount</span>
                 </div>
             }
             closeOnEscape={true}
             closeOnClickOutside={false}
             withCloseButton={true}
         >
-            <form onSubmit={form.onSubmit(addNewPrize)}>
+            <form onSubmit={form.onSubmit(updatePrize)}>
                 <Container size="xs">
                     <Grid h={"100%"} gutter={"1rem"}>
                         <Grid.Col span={{ base: 12, md: 6 }}>
@@ -230,7 +162,6 @@ export const AddChallengePrizeModal: FC<AddChallengePrizeModalProps> = ({
                                 prefix="$"
                                 key={form.key("amount.value")}
                                 min={0}
-                                max={lastPrize ? lastPrize.amount.value - 1 : undefined}
                                 {...form.getInputProps("amount.value")}
                                 onChange={(value) =>
                                     form.setFieldValue("amount", {
@@ -247,11 +178,7 @@ export const AddChallengePrizeModal: FC<AddChallengePrizeModalProps> = ({
                                 labelPosition="left"
                                 mt="xl"
                                 checked={isPrizeForSpecificPosition}
-                                onChange={(event) =>
-                                    handleChangeIsPrizeForSpecificPosition(
-                                        event.currentTarget.checked
-                                    )
-                                }
+                                disabled={true}
                             />
                         </Grid.Col>
 
@@ -260,8 +187,8 @@ export const AddChallengePrizeModal: FC<AddChallengePrizeModalProps> = ({
                                 <NumberInput
                                     label="Winner's position in the leaderboard after receiving this prize"
                                     key={form.key("position")}
-                                    min={1}
                                     {...form.getInputProps("position")}
+                                    disabled={true}
                                 />
                             </Grid.Col>
                         )}
@@ -273,7 +200,7 @@ export const AddChallengePrizeModal: FC<AddChallengePrizeModalProps> = ({
                                         label="Initial position in the leaderboard"
                                         key={form.key("fromPosition")}
                                         {...form.getInputProps("fromPosition")}
-                                        min={1}
+                                        disabled={true}
                                     />
                                 </Grid.Col>
 
@@ -282,39 +209,25 @@ export const AddChallengePrizeModal: FC<AddChallengePrizeModalProps> = ({
                                         label="Final position in the leaderboard"
                                         key={form.key("toPosition")}
                                         {...form.getInputProps("toPosition")}
-                                        onChange={(value) =>
-                                            form.setFieldValue(
-                                                "toPosition",
-                                                value && !Number.isNaN(+value)
-                                                    ? +value
-                                                    : CHALLENGE_PRIZE_WITHOUT_LIMIT_VALUE
-                                            )
-                                        }
-                                        min={
-                                            (form.getValues() as any)
-                                                .fromPosition
-                                                ? (form.getValues() as any)
-                                                    .fromPosition + 1
-                                                : 1
-                                        }
+                                        disabled={true}
                                     />
                                 </Grid.Col>
                             </>
                         )}
                     </Grid>
 
-                    {newPrizeAffectedPositionsDescription &&
+                    {prizeAffectedPositionsDescription &&
                         !prizeInvalidReason && (
                             <Blockquote
                                 color="blue"
                                 icon={<IconInfoCircle />}
                                 mt="xl"
                             >
-                                {newPrizeAffectedPositionsDescription}
+                                {prizeAffectedPositionsDescription}
                             </Blockquote>
                         )}
 
-                    {!newPrizeAffectedPositionsDescription && (
+                    {!prizeAffectedPositionsDescription && (
                         <Blockquote
                             color="yellow"
                             icon={<IconInfoHexagon />}
@@ -345,7 +258,7 @@ export const AddChallengePrizeModal: FC<AddChallengePrizeModalProps> = ({
                         loading={isCheckingPrize}
                         disabled={isCheckingPrize || !isPrizeValid}
                     >
-                        Add prize
+                        Edit prize
                     </Button>
                 </Group>
             </form>
