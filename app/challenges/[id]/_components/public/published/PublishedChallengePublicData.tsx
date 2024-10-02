@@ -13,6 +13,7 @@ import { formatDateTime } from "../../../../../_utils/formatDate";
 import { NewChallengeSection } from "../../shared/NewChallengeSection";
 import { PrizesSection } from "../../shared/PrizesSection";
 import { ChallengeMainData } from "../../shared/ChallengeMainData";
+import { SubmitChallengeSolutionForm } from "./SubmitChallengeSolutionForm";
 
 interface PublishedChallengePublicDataProps {
     challenge: ChallengePrimitive;
@@ -29,7 +30,7 @@ export const PublishedChallengePublicData: FC<PublishedChallengePublicDataProps>
             <PrizesSection challenge={challenge} />
 
             <Space h='4rem' />
-            <ParticipationsSection challenge={challenge} />
+            <ParticipationsSection challenge={challenge} userAuth={userAuth} />
 
             <Space h='4rem' />
             <NewChallengeSection challenge={challenge} userAuth={userAuth} />
@@ -41,7 +42,8 @@ export const PublishedChallengePublicData: FC<PublishedChallengePublicDataProps>
 
 const ParticipationsSection: FC<{
     challenge: ChallengePrimitive;
-}> = ({ challenge }) => {
+    userAuth: UserAuthDTO | null;
+}> = ({ challenge, userAuth }) => {
     const sortedParticipations = [...challenge.participations].sort((a, b) => b.createdAt - a.createdAt);
     // const sortedParticipations: ChallengeParticipationPrimitive[] = [
     //     {
@@ -108,14 +110,7 @@ const ParticipationsSection: FC<{
                 <Space h={'1rem'} />
 
                 <Center>
-                    <Button
-                        leftSection={<IconSend size={18} />}
-                        variant='light'
-                        onClick={() => { }}
-                    >
-                        Submit solution
-                    </Button>
-                    {/* TODO: Add modal to submit solution */}
+                    <SubmitChallengeSolutionForm challenge={challenge} userAuth={userAuth} />
                 </Center>
 
                 <Space h={'1rem'} />
