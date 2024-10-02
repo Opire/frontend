@@ -133,7 +133,12 @@ export const DraftChallengeCreatorData: FC<DraftChallengeCreatorDataProps> = ({
                         unit: "USD",
                         value: getPriceInUSD(challenge.configuration.budget),
                     }
-                    : initialChallenge.configuration.budget,
+                    : (
+                        initialChallenge.configuration.budget ? {
+                            unit: "USD",
+                            value: getPriceInUSD(initialChallenge.configuration.budget),
+                        } : null
+                    ),
             },
         },
         onValuesChange: (values) => {
@@ -395,6 +400,7 @@ export const DraftChallengeCreatorData: FC<DraftChallengeCreatorDataProps> = ({
                                 <NumberInput
                                     label="Limit of participations"
                                     description="Max amount of participations you want to allow. This will take into account both approved and pending of approval"
+                                    min={0}
                                     key={form.key(
                                         "configuration.limitOfParticipations"
                                     )}

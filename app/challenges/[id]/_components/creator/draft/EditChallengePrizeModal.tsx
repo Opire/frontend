@@ -28,6 +28,7 @@ import {
 } from "../../../../../_utils/challengePrizes";
 import { clientCustomFetch } from "../../../../../_utils/clientCustomFetch";
 import { API_ROUTES } from "../../../../../../constants";
+import { getPriceInUSD } from "../../../../../_utils/formatPrice";
 
 interface EditChallengePrizeModalProps {
     prize: ChallengePrizePrimitive;
@@ -52,7 +53,13 @@ export const EditChallengePrizeModal: FC<EditChallengePrizeModalProps> = ({
     const isPrizeForSpecificPosition = isPrimitiveSpecificPositionPrize(prize)
 
     const form = useForm<ChallengePrizePrimitive>({
-        initialValues: prize,
+        initialValues: {
+            ...prize,
+            amount: {
+                unit: "USD",
+                value: getPriceInUSD(prize.amount),
+            }
+        },
         onValuesChange: (values) => {
             checkIsPrizeValid(values);
         },
@@ -121,7 +128,13 @@ export const EditChallengePrizeModal: FC<EditChallengePrizeModalProps> = ({
     // Reset initial values when modal open
     useEffect(() => {
         if (isOpened) {
-            form.setValues(prize);
+            form.setValues({
+                ...prize,
+                amount: {
+                    unit: "USD",
+                    value: getPriceInUSD(prize.amount),
+                }
+            });
         }
     }, [isOpened]);
 
