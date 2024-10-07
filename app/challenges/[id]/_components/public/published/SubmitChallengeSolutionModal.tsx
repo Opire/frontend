@@ -92,7 +92,7 @@ export const SubmitChallengeSolutionModal: FC<SubmitChallengeSolutionModalProps>
             opened={isOpened}
             onClose={onClose}
             size={'xl'}
-            title={<div style={{ display: 'flex', gap: '8px', justifyContent: 'center', alignItems: 'center' }}><IconTrophy size={16} color="teal" /><span>Submit your solution for the challenge</span></div>}
+            title={<div style={{ display: 'flex', gap: '8px', justifyContent: 'center', alignItems: 'center' }}><IconTrophy size={16} color="teal" /><span>Submit a solution for the challenge</span></div>}
             closeOnEscape={true}
             closeOnClickOutside={false}
             withCloseButton={true}
