@@ -12,6 +12,7 @@ import { formatDateTime } from "../../../../../_utils/formatDate";
 import { ChallengeMainData } from "../../shared/ChallengeMainData";
 import { NewChallengeSection } from "../../shared/NewChallengeSection";
 import { PrizesSection } from "../../shared/PrizesSection";
+import { PublishedChallengeCreatorActions } from "./PublishedChallengeCreatorActions";
 
 interface PublishedChallengeCreatorDataProps {
     challenge: ChallengePrimitive;
@@ -107,36 +108,68 @@ const ParticipationsSection: FC<{
 
                 <Space h={'1rem'} />
 
-                {
-                    sortedParticipations.length === 0
-                        ?
+                <Center>
+                    <PublishedChallengeCreatorActions challenge={challenge} />
+                </Center >
+
+                <Space h={'1rem'} />
+
+
+                {!challenge.isAcceptingParticipations
+                    &&
+                    <>
                         <Center>
                             <Alert
                                 variant="light"
-                                color="blue"
-                                title="No participants yet"
+                                color="yellow"
+                                title="Not accepting new participations"
                                 icon={<IconInfoCircle />}
                             >
                                 <Text>
-                                    No one has send their solution yet.
+                                    You are not accepting new participations at the moment.
                                 </Text>
 
-                                <Text>
-                                    If you want to attract the attention of the participants, you can try to share the challenge in your social media.
-                                </Text>
-
-                                <br />
-
-
-                                <Text>
-                                    If some time passes without a single participant, maybe your challenge is too hard or the prizes are not high enough.
-                                </Text>
-
-                                <Text>
-                                    You may need to increase the prizes (you'll need to unpublish the challenge first) or contact some potential sponsors.
-                                </Text>
+                                <Space h={'1rem'} />
                             </Alert>
                         </Center>
+                        <Space h={'1rem'} />
+                    </>
+                }
+
+                {
+                    sortedParticipations.length === 0
+                        ?
+                        <>
+                            {challenge.isAcceptingParticipations &&
+                                <Center>
+                                    <Alert
+                                        variant="light"
+                                        color="blue"
+                                        title="No participants yet"
+                                        icon={<IconInfoCircle />}
+                                    >
+                                        <Text>
+                                            No one has send their solution yet.
+                                        </Text>
+
+                                        <Text>
+                                            If you want to attract the attention of the participants, you can try to share the challenge in your social media.
+                                        </Text>
+
+                                        <br />
+
+
+                                        <Text>
+                                            If some time passes without a single participant, maybe your challenge is too hard or the prizes are not high enough.
+                                        </Text>
+
+                                        <Text>
+                                            You may need to increase the prizes (you'll need to unpublish the challenge first) or contact some potential sponsors.
+                                        </Text>
+                                    </Alert>
+                                </Center>
+                            }
+                        </>
                         :
                         <Table.ScrollContainer minWidth={500}>
                             <Table verticalSpacing="md">

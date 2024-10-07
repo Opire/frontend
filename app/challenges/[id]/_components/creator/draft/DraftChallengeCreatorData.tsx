@@ -201,7 +201,7 @@ export const DraftChallengeCreatorData: FC<DraftChallengeCreatorDataProps> = ({
             notifications.show({
                 title: "Challenge published sucesfully",
                 message:
-                    "Now everyone is able to see the challenge! Attract more attention by sharing it in your social media",
+                    "Now everyone is able to see the challenge! Attract more attention by sharing it in your social media, and enable new participations so participants can submit their solutions!",
                 withBorder: true,
                 withCloseButton: true,
                 autoClose: 10_000,
@@ -211,6 +211,10 @@ export const DraftChallengeCreatorData: FC<DraftChallengeCreatorDataProps> = ({
 
             window.scrollTo(0, 0);
             router.refresh();
+
+            setTimeout(() => {
+                router.push('?start-accepting-participants=true');
+            }, 1000);
 
             setIsPublishingChallenge(false);
         } catch (error) {
