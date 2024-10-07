@@ -115,25 +115,48 @@ const ParticipationsSection: FC<{
 
                 <Space h={'1rem'} />
 
-                {
-                    sortedParticipations.length === 0
-                        ?
+                {!challenge.isAcceptingParticipations
+                    &&
+                    <>
                         <Center>
                             <Alert
                                 variant="light"
-                                color="blue"
-                                title="No participants yet"
+                                color="yellow"
+                                title="Not accepting new participations"
                                 icon={<IconInfoCircle />}
                             >
                                 <Text>
-                                    No one has send their solution yet.
-                                </Text>
-
-                                <Text>
-                                    If you want to complete the challenge, start working in your solution and send it when it's ready!
+                                    The creator of the challenge has decided not to accept participants at the moment.
                                 </Text>
                             </Alert>
                         </Center>
+                        <Space h={'1rem'} />
+                    </>
+                }
+
+                {
+                    sortedParticipations.length === 0
+                        ?
+                        <>
+                            {challenge.isAcceptingParticipations &&
+                                <Center>
+                                    <Alert
+                                        variant="light"
+                                        color="blue"
+                                        title="No participants yet"
+                                        icon={<IconInfoCircle />}
+                                    >
+                                        <Text>
+                                            No one has send their solution yet.
+                                        </Text>
+
+                                        <Text>
+                                            If you want to complete the challenge, start working in your solution and send it when it's ready!
+                                        </Text>
+                                    </Alert>
+                                </Center>
+                            }
+                        </>
                         :
                         <Table.ScrollContainer minWidth={500}>
                             <Table verticalSpacing="md">

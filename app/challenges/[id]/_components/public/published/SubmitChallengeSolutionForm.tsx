@@ -43,6 +43,7 @@ export const SubmitChallengeSolutionForm: FC<SubmitChallengeSolutionFormProps> =
                 leftSection={<IconSend size={18} />}
                 variant='light'
                 onClick={handleClickSubmitSolution}
+                disabled={!challenge.isAcceptingParticipations}
             >
                 Submit solution
             </Button>
