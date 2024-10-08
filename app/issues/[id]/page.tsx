@@ -12,11 +12,11 @@ export async function generateMetadata({
         const issue = await getIssueById({
             id: params.id,
         });
-    
+
         const totalPrice: PricePrimitive = issue.rewards.reduce((acc, el) => {
             acc.value += el.price.value
             return acc;
-    
+
         }, { unit: 'USD_CENT', value: 0 });
 
         return {
@@ -26,7 +26,7 @@ export async function generateMetadata({
                 url: `${process.env.NEXT_PUBLIC_URL}/issues/${issue.id}`,
                 title: `${formatPrice(totalPrice)} bounty: ${issue.title}`,
                 description: `Earn up to ${formatPrice(totalPrice)} with Opire by solving this issue in ${issue.project.organization.name}/${issue.project.name}`,
-                images: `${process.env.NEXT_PUBLIC_URL}/api/issues/${issue.id}/og`,
+                images: `${process.env.NEXT_PUBLIC_URL}/api/issues/${issue.id}/og?time=${Date.now()}`,
             },
             twitter: {
                 creator: '@opire_dev',
@@ -35,7 +35,7 @@ export async function generateMetadata({
                 siteId: '1745861018234814464',
                 title: `${formatPrice(totalPrice)} bounty: ${issue.title}`,
                 description: `Earn up to ${formatPrice(totalPrice)} with Opire by solving this issue in ${issue.project.organization.name}/${issue.project.name}`,
-                images: `${process.env.NEXT_PUBLIC_URL}/api/issues/${issue.id}/og`,
+                images: `${process.env.NEXT_PUBLIC_URL}/api/issues/${issue.id}/og?time=${Date.now()}`,
             },
         };
     } catch (error) {
@@ -55,7 +55,7 @@ export default async function Page({
 
     const userAuth = getUserAuth();
 
-    return (  <DetailedIssueView issue={issue} userAuth={userAuth} />);
+    return (<DetailedIssueView issue={issue} userAuth={userAuth} />);
 
 
 }
