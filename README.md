@@ -1,34 +1,60 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+<p align="center">
+  <img src="https://github.com/opire/.github/blob/main/assets/logo.png" alt="Opire" width="200"></a>
+</p>
 
-## Getting Started
+<h1 align="center">
+  Opire's Website
+</h1>
+<p align="center">
+  <a href="https://opire.dev">
+    <img src="https://img.shields.io/badge/Rewarded%20by%20Opire 💚-white?style=flat&color=009387" alt="X (formerly Twitter)">
+</a>
+</p>
+<h4 align="center">🌟 Star our repo to support us! ✨</h4>
 
-First, run the development server:
+_Make Open-Source better: Create Bounties, Incentivize Solutions, and Earn Rewards for Your Contributions._
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+<p align="center">
+  <a href="https://opire.dev">🌐 Website</a> •
+  <a href="https://docs.opire.dev">📚 Docs</a> •
+  <a href="https://github.com/marketplace/opirebot">🤖 OpireBot</a>
+</p>
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## ❔ Questions
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+The issue list of this repo is exclusively for **bug reports** and **feature requests**.
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.tsx`.
+For questions, discussions and support please use our [discord](https://discord.gg/jWwwsHRbnJ) or our [reddit](https://www.reddit.com/r/opire), we are here to help and we are sure our community can contribute as well.
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+## 👋 Stay In Touch
 
-## Learn More
+<p align="center">
+  <a href="https://twitter.com/opire_dev">
+    <img src="https://img.shields.io/badge/%40opire_dev-white?style=for-the-badge&logo=x&logoColor=black&color=white" alt="X (formerly Twitter)">
+  </a>
+  <a href="https://discord.gg/jWwwsHRbnJ">
+    <img src="https://img.shields.io/badge/discord-white?style=for-the-badge&logo=discord&logoColor=%237289da&color=white" alt="Discord">
+  </a>
+  <a href="https://www.reddit.com/r/opire">
+    <img src="https://img.shields.io/badge/r%2Fopire-white?style=for-the-badge&logo=reddit&logoColor=%23FF5700&color=white" alt="Subreddit">
+  </a>
+  <a href="https://www.linkedin.com/company/opire">
+    <img src="https://img.shields.io/badge/LinkedIn-white?style=for-the-badge&logo=linkedin&logoColor=%230077B5" alt="LinkedIn">
+  </a>
+  <a href="https://dev.to/opire">
+    <img src="https://img.shields.io/badge/dev.to-white?style=for-the-badge&logo=dev.to&logoColor=%230A0A0A" alt="Dev.to">
+  </a>
+  <a href="https://opire.dev/blog">
+    <img src="https://img.shields.io/badge/Blog-white?style=for-the-badge&logo=blogger&logoColor=%23121212" alt="Blog">
+  </a>
+</p>
 
-To learn more about Next.js, take a look at the following resources:
+## 🤝 Contribution
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Please make sure to read the [Contributing Guide](https://github.com/opire/.github/blob/main/CONTRIBUTING.md) before making a pull request.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+Thank you to all the people who already contributed to Opire!
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+<a href="https://github.com/opire/website/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=opire/frontend" alt="Contributors"/>
+</a>
