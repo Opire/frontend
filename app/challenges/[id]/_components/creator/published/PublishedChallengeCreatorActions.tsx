@@ -7,7 +7,6 @@ import { useDisclosure } from "@mantine/hooks";
 import { mutate } from "swr";
 import { API_ROUTES } from "../../../../../../constants";
 import { ToggleIsChallengeAcceptingNewParticipationsModal } from "./ToggleIsChallengeAcceptingNewParticipationsModal";
-import { useTriggerCallbackOnQueryParamFirstMatch } from "../../../../../../hooks/useTriggerCallbackOnQueryParamFirstMatch";
 
 interface PublishedChallengeCreatorActionsProps {
     challenge: ChallengePrimitive;
@@ -16,8 +15,6 @@ interface PublishedChallengeCreatorActionsProps {
 export const PublishedChallengeCreatorActions: FC<PublishedChallengeCreatorActionsProps> = ({ challenge }) => {
     const router = useRouter();
     const [isModalForToggleChallengeAcceptsParticipationsOpen, { close: closeModalForToggleChallengeAcceptsParticipations, open: openModalForToggleChallengeAcceptsParticipations }] = useDisclosure();
-
-    useTriggerCallbackOnQueryParamFirstMatch({ queryParamKey: 'start-accepting-participants', callback: openModalForToggleChallengeAcceptsParticipations });
 
     function onChallengeUpdated() {
         mutate(API_ROUTES.CHALLENGES.BY_ID(challenge.id));

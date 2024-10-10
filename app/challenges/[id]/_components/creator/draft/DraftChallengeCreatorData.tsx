@@ -45,23 +45,20 @@ import {
 import { ChallengePrizePrimitive } from "../../../../../_core/_primitives/ChallengePrizePrimitive";
 import { formatPrice, getPriceInUSD } from "../../../../../_utils/formatPrice";
 import {
-    IconCheck,
     IconCircleCheckFilled,
     IconEdit,
     IconInfoCircle,
     IconPlus,
     IconTrash,
-    IconX,
 } from "@tabler/icons-react";
 import { AddChallengePrizeModal } from "./AddChallengePrizeModal";
 import { clientCustomFetch } from "../../../../../_utils/clientCustomFetch";
 import { API_ROUTES } from "../../../../../../constants";
 import { useGetChallengeById } from "../../../../../../hooks/useGetChallengeById";
 import { formatDateTime } from "../../../../../_utils/formatDate";
-import { notifications } from "@mantine/notifications";
-import { useRouter } from "next/navigation";
 import { EditChallengePrizeModal } from "./EditChallengePrizeModal";
 import { ApplyTemplateModal } from "./ApplyTemplateModal";
+import { PublishChallengeForm } from "./PublishChallengeForm";
 
 interface DraftChallengeCreatorDataProps {
     challenge: ChallengePrimitive;
@@ -72,7 +69,6 @@ export const DraftChallengeCreatorData: FC<DraftChallengeCreatorDataProps> = ({
     challenge: initialChallenge,
     creator,
 }) => {
-    const router = useRouter();
     const [scroll] = useWindowScroll();
     const isMobile = useMediaQuery(`(max-width: ${em(750)})`);
 
@@ -92,8 +88,8 @@ export const DraftChallengeCreatorData: FC<DraftChallengeCreatorDataProps> = ({
         { close: closeEditPrizeModal, open: openEditPrizeModal },
     ] = useDisclosure();
 
+
     const [isUpdatingDraft, setIsUpdatingDraft] = useState(false);
-    const [isPublishingChallenge, setIsPublishingChallenge] = useState(false);
     const [indexPrizeToUpdate, setIndexPrizeToUpdate] = useState<number | null>(
         null
     );
@@ -185,51 +181,6 @@ export const DraftChallengeCreatorData: FC<DraftChallengeCreatorDataProps> = ({
     function onEditPrize(indexPrizeToUpdate: number) {
         setIndexPrizeToUpdate(indexPrizeToUpdate);
         openEditPrizeModal();
-    }
-
-    async function publishChallenge() {
-        try {
-            setIsPublishingChallenge(true);
-
-            await clientCustomFetch(
-                API_ROUTES.CHALLENGES.PUBLISH_DRAFT(initialChallenge.id),
-                {
-                    method: "POST",
-                }
-            );
-
-            notifications.show({
-                title: "Challenge published sucesfully",
-                message:
-                    "Now everyone is able to see the challenge! Attract more attention by sharing it in your social media, and enable new participations so participants can submit their solutions!",
-                withBorder: true,
-                withCloseButton: true,
-                autoClose: 10_000,
-                color: "teal",
-                icon: <IconCheck />,
-            });
-
-            window.scrollTo(0, 0);
-            router.refresh();
-
-            setTimeout(() => {
-                router.push('?start-accepting-participants=true');
-            }, 1000);
-
-            setIsPublishingChallenge(false);
-        } catch (error) {
-            notifications.show({
-                title: "Challenge cannot be published",
-                message:
-                    "Please, review that all the required fields are filled",
-                withBorder: true,
-                withCloseButton: true,
-                autoClose: 10_000,
-                color: "red",
-                icon: <IconX />,
-            });
-            setIsPublishingChallenge(false);
-        }
     }
 
     function previewPublishedChallenge() {
@@ -642,19 +593,12 @@ export const DraftChallengeCreatorData: FC<DraftChallengeCreatorDataProps> = ({
                     <Button
                         onClick={previewPublishedChallenge}
                         variant="light"
-                        disabled={isUpdatingDraft || isPublishingChallenge}
-                        loading={isPublishingChallenge}
+                        disabled={isUpdatingDraft}
                     >
                         Preview published version
                     </Button>
-                    <Button
-                        onClick={publishChallenge}
-                        variant="gradient"
-                        disabled={isUpdatingDraft || isPublishingChallenge}
-                        loading={isPublishingChallenge}
-                    >
-                        Publish challenge
-                    </Button>
+
+                    <PublishChallengeForm challengeId={initialChallenge.id} isDisabled={isUpdatingDraft} />
                 </div>
             </section>
 

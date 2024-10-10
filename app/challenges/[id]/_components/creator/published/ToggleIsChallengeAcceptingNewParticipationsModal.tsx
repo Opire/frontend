@@ -77,7 +77,7 @@ export const ToggleIsChallengeAcceptingNewParticipationsModal: FC<ToggleIsChalle
         >
             <Text >
                 {isGoingToStopNewParticipations
-                    ? 'If you continue, you will prevent new participants from submitting their solution to the challenge. This can be reverted at any time in the future, as long as the challenge is still published.'
+                    ? 'If you continue, you will prevent new participants from submitting their solution to the challenge. This can be reverted at any time.'
                     : 'If you continue, participants will be able to submit their solution to the challenge. Make sure you are prepared to start reviewing their participations. This can be reverted later if you change your mind.'
                 }
             </Text>
@@ -86,7 +86,7 @@ export const ToggleIsChallengeAcceptingNewParticipationsModal: FC<ToggleIsChalle
 
             <Group justify="space-between" mt="md">
                 <Button
-                    variant="light"
+                    variant="subtle"
                     size="md"
                     onClick={onClose}
                 >
