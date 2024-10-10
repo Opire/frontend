@@ -361,7 +361,7 @@ const DetailedIssueReward: FC<{ reward: RewardPrimitive, issue: IssuePrimitive }
                         ?
                         <Link href={reward.commentURL}>Go to comment</Link>
                         :
-                        <span>Created from dashboard</span>
+                        <span>OpireBot was not installed</span>
                     }
                 </Text>
             </Table.Td>
