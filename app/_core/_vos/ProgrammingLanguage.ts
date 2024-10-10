@@ -4,7 +4,6 @@ export class ProgrammingLanguage {
  
     protected static readonly OPTIONS = [
         'Astro',
-        'C-Sharp',
         'C',
         'C#',
         'C++',
