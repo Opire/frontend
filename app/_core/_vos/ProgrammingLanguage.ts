@@ -1,37 +1,46 @@
-import { ProgrammingLanguageType } from "../_types/ProgrammingLanguageType";
+import { Mutable } from "../../_utils/mutable";
 
 export class ProgrammingLanguage {
-
-    public static readonly ValidValues: ProgrammingLanguageType[] = [
-        'C',
-        'Cobol',
-        'C++',
+ 
+    protected static readonly OPTIONS = [
+        'Astro',
         'C-Sharp',
-        'Erlang',
+        'C',
+        'C#',
+        'C++',
+        'Cobol',
+        'CSS',
+        'Dart',
         'Elixir',
+        'Erlang',
         'Go',
         'Groovy',
         'Haskell',
-        'PHP',
+        'HTML',
         'Java',
         'JavaScript',
         'Kotlin',
         'Lua',
         'Matlab',
+        'MDX',
         'Objective-C',
         'Pascal',
         'Perl',
+        'PHP',
         'Python',
         'R',
         'Ruby',
-        'Scala',
-        'SQL',
         'Rust',
+        'Scala',
+        'SCSS',
+        'Shell',
+        'SQL',
         'Swift',
         'TypeScript',
-        'MDX',
-        'SCSS',
+        'Vue',
         'Others',
-    ];
+    ] as const;
+
+    public static readonly ValidValues = ProgrammingLanguage.OPTIONS as Mutable<typeof ProgrammingLanguage.OPTIONS>;
 
 }
