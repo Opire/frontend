@@ -124,17 +124,6 @@ export const DraftChallengeCreatorData: FC<DraftChallengeCreatorDataProps> = ({
                 initialChallenge.additionalComments,
             configuration: {
                 ...(challenge?.configuration ?? initialChallenge.configuration),
-                budget: challenge?.configuration.budget
-                    ? {
-                        unit: "USD",
-                        value: getPriceInUSD(challenge.configuration.budget),
-                    }
-                    : (
-                        initialChallenge.configuration.budget ? {
-                            unit: "USD",
-                            value: getPriceInUSD(initialChallenge.configuration.budget),
-                        } : null
-                    ),
             },
         },
         onValuesChange: (values) => {
@@ -308,10 +297,10 @@ export const DraftChallengeCreatorData: FC<DraftChallengeCreatorDataProps> = ({
                                 />
                             </Grid.Col>
 
-                            <Grid.Col span={{ base: 12, md: 6 }}>
+                            <Grid.Col span={{ base: 12, md: 4 }}>
                                 <DatePickerInput
                                     label="Deadline"
-                                    description="If defined, the challenge will be automatically closed on this date"
+                                    description="The challenge will be automatically closed on this date"
                                     clearable={true}
                                     key={form.key("configuration.deadline")}
                                     value={
@@ -331,30 +320,10 @@ export const DraftChallengeCreatorData: FC<DraftChallengeCreatorDataProps> = ({
                                 />
                             </Grid.Col>
 
-                            <Grid.Col span={{ base: 12, md: 6 }}>
-                                <NumberInput
-                                    label="Max. budget"
-                                    description="Max amount of money you want to spend in prizes (USD)"
-                                    prefix="$"
-                                    key={form.key("configuration.budget.value")}
-                                    {...form.getInputProps(
-                                        "configuration.budget.value"
-                                    )}
-                                    onChange={(value) =>
-                                        form.setFieldValue(
-                                            "configuration.budget",
-                                            value
-                                                ? { unit: "USD", value: +value }
-                                                : null
-                                        )
-                                    }
-                                />
-                            </Grid.Col>
-
-                            <Grid.Col span={{ base: 12, md: 6 }}>
+                            <Grid.Col span={{ base: 12, md: 4 }}>
                                 <NumberInput
                                     label="Limit of participations"
-                                    description="Max amount of participations you want to allow. This will take into account both approved and pending of approval"
+                                    description="Will take into account both approved and pending of approval"
                                     min={0}
                                     key={form.key(
                                         "configuration.limitOfParticipations"
@@ -365,13 +334,7 @@ export const DraftChallengeCreatorData: FC<DraftChallengeCreatorDataProps> = ({
                                 />
                             </Grid.Col>
 
-                            <Grid.Col
-                                span={{ base: 12, md: 4 }}
-                                style={{
-                                    display: "flex",
-                                    alignItems: "center",
-                                }}
-                            >
+                            <Grid.Col span={{ base: 12, md: 4 }}>
                                 <Checkbox
                                     label="Allow multiple participations per user"
                                     description="If allowed, you may want to limit the number of participations to avoid facing an unmanageable amount of them"
