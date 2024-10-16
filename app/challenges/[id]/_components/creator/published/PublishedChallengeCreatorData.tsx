@@ -250,6 +250,10 @@ const ParticipationRow: FC<{
                     participation.status === 'rejected'
                         ?
                         <Tooltip
+                            multiline
+                            withArrow
+                            transitionProps={{ duration: 300 }}
+                            events={{ hover: true, touch: true, focus: false, }}
                             label={
                                 <div>
                                     <strong>Reason for rejection:</strong>
