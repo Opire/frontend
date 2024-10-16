@@ -24,6 +24,7 @@ export const ChallengeCard: FC<ChallengeCardProps> = ({
             withBorder
             shadow="md"
             radius="md"
+            style={{ justifyContent: 'space-between' }}
         >
             <Group justify="center">
                 <Text
@@ -34,7 +35,7 @@ export const ChallengeCard: FC<ChallengeCardProps> = ({
             </Group>
 
             <Space h='20px' />
-            
+
             <Group justify="space-between">
                 <Button
                     component="a"
