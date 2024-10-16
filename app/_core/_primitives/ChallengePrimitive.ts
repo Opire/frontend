@@ -28,4 +28,5 @@ export interface EditDraftChallengeDTO extends Omit<ChallengePrimitive, Challeng
 
 export interface ChallengeDTO extends ChallengePrimitive {
     canBePublished: boolean;
+    canPrizesBePaid: boolean;
 }
