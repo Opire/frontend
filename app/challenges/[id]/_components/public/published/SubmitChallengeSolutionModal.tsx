@@ -9,6 +9,7 @@ import { API_ROUTES } from "../../../../../../constants";
 interface SubmitChallengeSolutionModalProps {
     challengeId: string;
     isOpened: boolean;
+    canCurrentUserParticipate: boolean;
     onClose: () => void;
     onSolutionSubmitted?: () => void;
 }
@@ -16,6 +17,7 @@ interface SubmitChallengeSolutionModalProps {
 export const SubmitChallengeSolutionModal: FC<SubmitChallengeSolutionModalProps> = ({
     challengeId,
     isOpened,
+    canCurrentUserParticipate,
     onClose,
     onSolutionSubmitted = () => { },
 }) => {
@@ -45,6 +47,10 @@ export const SubmitChallengeSolutionModal: FC<SubmitChallengeSolutionModalProps>
     });
 
     async function submitSolution({ proposedSolution }: { proposedSolution: string }) {
+        if (!canCurrentUserParticipate) {
+            return;
+        }
+
         try {
             setIsSubmittingSolution(true);
 
@@ -118,7 +124,7 @@ export const SubmitChallengeSolutionModal: FC<SubmitChallengeSolutionModalProps>
                         variant="gradient"
                         size="md"
                         loading={isSubmittingSolution}
-                        disabled={isSubmittingSolution}
+                        disabled={isSubmittingSolution || !canCurrentUserParticipate}
                     >
                         Submit
                     </Button>

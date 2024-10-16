@@ -26,6 +26,7 @@ export const API_ROUTES = {
         CHECK_DRAFT_PRIZES: () => `${process.env.NEXT_PUBLIC_API_URL}/challenges/draft/prizes/are-valid`, 
         ALL: () => `${process.env.NEXT_PUBLIC_API_URL}/challenges`, 
         PARTICIPATE: (id: string) => `${process.env.NEXT_PUBLIC_API_URL}/challenges/${id}/participate`,
+        CAN_CURRENT_USER_PARTICIPATE: (id: string) => `${process.env.NEXT_PUBLIC_API_URL}/challenges/${id}/participate/is-allowed`,
         ALLOW_NEW_PARTICIPATIONS: (id: string) => `${process.env.NEXT_PUBLIC_API_URL}/challenges/${id}/participations/allow`,
         DENY_NEW_PARTICIPATIONS: (id: string) => `${process.env.NEXT_PUBLIC_API_URL}/challenges/${id}/participations/deny`,
     },

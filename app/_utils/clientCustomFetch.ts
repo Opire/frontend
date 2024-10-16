@@ -24,10 +24,12 @@ export async function clientCustomFetch(
             onError: () => {}
         },
 ): Promise<Response> {
+    const token = TokenServiceLocalStorage.getToken();
+
     const response = await fetch(url, {
         headers: {
             "Content-Type": "application/json",
-            "Authorization": `Bearer ${TokenServiceLocalStorage.getToken()}`,
+            "Authorization": token ? `Bearer ${token}` : '',
             ...options.headers,
         },
         body: JSON.stringify(options.body),

@@ -220,7 +220,11 @@ const ParticipationRow: FC<{ participation: ChallengeParticipationPrimitive }> =
             </Table.Td>
 
             <Table.Td>
-                <Link href={participation.proposedSolution}>{participation.proposedSolution}</Link>
+                <Link href={participation.proposedSolution} target="_blank">
+                    <Text truncate={"end"} maw={300}>
+                        {participation.proposedSolution}
+                    </Text>
+                </Link>
             </Table.Td>
 
             <Table.Td miw={'180px'}>

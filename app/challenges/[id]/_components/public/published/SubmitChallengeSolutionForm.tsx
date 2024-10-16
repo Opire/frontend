@@ -10,6 +10,7 @@ import { mutate } from "swr";
 import { API_ROUTES } from "../../../../../../constants";
 import { SubmitChallengeSolutionModal } from "./SubmitChallengeSolutionModal";
 import { useTriggerCallbackOnQueryParamFirstMatch } from "../../../../../../hooks/useTriggerCallbackOnQueryParamFirstMatch";
+import { useGetCanCurrentUserParticipateInChallenge } from "../../../../../../hooks/useGetCanCurrentUserParticipateInChallenge";
 
 interface SubmitChallengeSolutionFormProps {
     challenge: ChallengePrimitive;
@@ -19,10 +20,15 @@ interface SubmitChallengeSolutionFormProps {
 export const SubmitChallengeSolutionForm: FC<SubmitChallengeSolutionFormProps> = ({ challenge, userAuth }) => {
     const router = useRouter();
     const [isModalOpen, { close, open }] = useDisclosure();
+    const { canCurrentUserParticipate, reloadCanCurrentUserParticipate } = useGetCanCurrentUserParticipateInChallenge({ challengeId: challenge.id });
 
     useTriggerCallbackOnQueryParamFirstMatch({ queryParamKey: 'submit-solution', callback: open });
 
     function handleClickSubmitSolution() {
+        if (!canCurrentUserParticipate) {
+            return;
+        }
+
         if (userAuth) {
             open();
             return;
@@ -34,6 +40,7 @@ export const SubmitChallengeSolutionForm: FC<SubmitChallengeSolutionFormProps> =
 
     function onSolutionSubmitted() {
         mutate(API_ROUTES.CHALLENGES.BY_ID(challenge.id));
+        reloadCanCurrentUserParticipate();
         router.refresh();
     }
 
@@ -43,7 +50,7 @@ export const SubmitChallengeSolutionForm: FC<SubmitChallengeSolutionFormProps> =
                 leftSection={<IconSend size={18} />}
                 variant='light'
                 onClick={handleClickSubmitSolution}
-                disabled={!challenge.isAcceptingParticipations}
+                disabled={!canCurrentUserParticipate}
             >
                 Submit solution
             </Button>
@@ -51,6 +58,7 @@ export const SubmitChallengeSolutionForm: FC<SubmitChallengeSolutionFormProps> =
             <SubmitChallengeSolutionModal
                 challengeId={challenge.id}
                 isOpened={isModalOpen}
+                canCurrentUserParticipate={canCurrentUserParticipate}
                 onClose={close}
                 onSolutionSubmitted={onSolutionSubmitted}
             />
