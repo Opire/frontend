@@ -6,8 +6,8 @@ import { useRouter } from "next/navigation";
 import { useDisclosure } from "@mantine/hooks";
 import { mutate } from "swr";
 import { API_ROUTES } from "../../../../../../constants";
-import { ToggleIsChallengeAcceptingNewParticipationsModal } from "./ToggleIsChallengeAcceptingNewParticipationsModal";
 import { ChallengeParticipationPrimitive } from "../../../../../_core/_primitives/ChallengeParticipationPrimitive";
+import { ApproveChallengeParticipationModal } from "./ApproveChallengeParticipationModal";
 
 interface CreatorActionsOnParticipationProps {
     challenge: ChallengeDTO;
@@ -16,12 +16,23 @@ interface CreatorActionsOnParticipationProps {
 
 export const CreatorActionsOnParticipation: FC<CreatorActionsOnParticipationProps> = ({ challenge, participation }) => {
     const router = useRouter();
-    const [isModalForToggleChallengeAcceptsParticipationsOpen, { close: closeModalForToggleChallengeAcceptsParticipations, open: openModalForToggleChallengeAcceptsParticipations }] = useDisclosure();
+    const [isModalForApproveOpen, { close: closeModalForApprove, open: openModalForApprove }] = useDisclosure();
+    const [isModalForPayOpen, { close: closeModalForPay, open: openModalForPay }] = useDisclosure();
+    const [isModalForRejectOpen, { close: closeModalForReject, open: openModalForReject }] = useDisclosure();
 
     function onChallengeUpdated() {
         mutate(API_ROUTES.CHALLENGES.BY_ID(challenge.id));
         router.refresh();
     }
+
+    function onParticipationApproved() {
+        onChallengeUpdated();
+
+        if (challenge.canPrizesBePaid) {
+            openModalForPay();
+        }
+    }
+
 
     const { canApprove, canReject, canPay } = useMemo(() => {
         const canApprove = participation.status === 'waiting_for_approval';
@@ -39,7 +50,7 @@ export const CreatorActionsOnParticipation: FC<CreatorActionsOnParticipationProp
                     canApprove
                     &&
                     <Tooltip label="Approve solution">
-                        <ActionIcon size="md" variant="light" color="cyan">
+                        <ActionIcon size="md" variant="light" color="cyan" onClick={openModalForApprove}>
                             <IconCheck />
                         </ActionIcon>
                     </Tooltip>
@@ -48,8 +59,8 @@ export const CreatorActionsOnParticipation: FC<CreatorActionsOnParticipationProp
                 {
                     canPay
                     &&
-                    <Tooltip label={challenge.canPrizesBePaid ? 'Pay prize' : 'The challenge needs to be completed before you can pay the participants'}>
-                        <ActionIcon size="md" variant="light" color="green" disabled={!challenge.canPrizesBePaid} >
+                    <Tooltip label={challenge.canPrizesBePaid ? 'Pay prize' : 'The challenge needs to be completed before you can pay the participant'}>
+                        <ActionIcon size="md" variant="light" color="green" disabled={!challenge.canPrizesBePaid} onClick={openModalForPay}>
                             <IconTrophyFilled />
                         </ActionIcon>
                     </Tooltip>
@@ -59,18 +70,19 @@ export const CreatorActionsOnParticipation: FC<CreatorActionsOnParticipationProp
                     canReject
                     &&
                     <Tooltip label="Reject solution">
-                        <ActionIcon size="md" variant="light" color="red" >
+                        <ActionIcon size="md" variant="light" color="red" onClick={openModalForReject}>
                             <IconTrash />
                         </ActionIcon>
                     </Tooltip>
                 }
             </Flex>
 
-            <ToggleIsChallengeAcceptingNewParticipationsModal
+            <ApproveChallengeParticipationModal
                 challenge={challenge}
-                isOpened={isModalForToggleChallengeAcceptsParticipationsOpen}
-                onClose={closeModalForToggleChallengeAcceptsParticipations}
-                onChallengeUpdated={onChallengeUpdated}
+                participation={participation}
+                isOpened={isModalForApproveOpen}
+                onClose={closeModalForApprove}
+                onParticipationApproved={onParticipationApproved}
             />
         </>
     );

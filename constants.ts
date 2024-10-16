@@ -29,6 +29,9 @@ export const API_ROUTES = {
         CAN_CURRENT_USER_PARTICIPATE: (id: string) => `${process.env.NEXT_PUBLIC_API_URL}/challenges/${id}/participate/is-allowed`,
         ALLOW_NEW_PARTICIPATIONS: (id: string) => `${process.env.NEXT_PUBLIC_API_URL}/challenges/${id}/participations/allow`,
         DENY_NEW_PARTICIPATIONS: (id: string) => `${process.env.NEXT_PUBLIC_API_URL}/challenges/${id}/participations/deny`,
+        APPROVE_PARTICIPATION: ({ challengeId, participationId }: { challengeId: string; participationId: string }) => `${process.env.NEXT_PUBLIC_API_URL}/challenges/${challengeId}/participations/${participationId}/approve`,
+        REJECT_PARTICIPATION: ({ challengeId, participationId }: { challengeId: string; participationId: string }) => `${process.env.NEXT_PUBLIC_API_URL}/challenges/${challengeId}/participations/${participationId}/reject`,
+        PAY_PARTICIPATION: ({ challengeId, participationId }: { challengeId: string; participationId: string }) => `${process.env.NEXT_PUBLIC_API_URL}/challenges/${challengeId}/participations/${participationId}/pay`,
     },
     AUTH: {
         GITHUB: (code: string) =>
