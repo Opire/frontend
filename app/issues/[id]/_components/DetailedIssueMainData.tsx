@@ -30,28 +30,28 @@ export const DetailedIssueMainData: FC<DetailedIssueMainDataProps> = ({ issue, u
 
     const [isAddRewardModalOpen, { close: closeAddRewardModal, open: openAddRewardModal }] = useDisclosure();
     const [isClaimRewardsModalOpen, { close: closeClaimRewardsModal, open: openClaimRewardsModal }] = useDisclosure();
-    
+
     useTriggerCallbackOnQueryParamFirstMatch({ queryParamKey: 'add-reward', callback: openAddRewardModal });
     useTriggerCallbackOnQueryParamFirstMatch({ queryParamKey: 'claim-rewards', callback: openClaimRewardsModal });
 
     function handleClickAddReward() {
-        if(userAuth) {
+        if (userAuth) {
             openAddRewardModal();
             return;
         }
-        
+
         redirectAfterLogin.prepareNextRedirection(`/issues/${issue.id}?add-reward=true`);
-        router.push('?login=true');      
+        router.push('?login=true');
     }
 
     function handleClickClaimRewards() {
-        if(userAuth) {
+        if (userAuth) {
             openClaimRewardsModal();
             return;
         }
-        
+
         redirectAfterLogin.prepareNextRedirection(`/issues/${issue.id}?claim-rewards=true`);
-        router.push('?login=true');      
+        router.push('?login=true');
     }
 
     function onNewRewardCreated() {
@@ -150,12 +150,12 @@ export const DetailedIssueMainData: FC<DetailedIssueMainDataProps> = ({ issue, u
 
 
                             {
-                                somethingHasBeenAlreadyPaid 
-                                && 
+                                somethingHasBeenAlreadyPaid
+                                &&
                                 <Flex
-                                align={"center"}
-                                columnGap={'0.4rem'}
-                                wrap={'wrap'}
+                                    align={"center"}
+                                    columnGap={'0.4rem'}
+                                    wrap={'wrap'}
                                 >
                                     <Text >
                                         Available:
@@ -164,7 +164,7 @@ export const DetailedIssueMainData: FC<DetailedIssueMainDataProps> = ({ issue, u
                                     <Text
                                         style={{ fontSize: "1.4rem", fontWeight: "bold" }}
                                         variant='gradient'
-                                        >
+                                    >
                                         {formatPrice(availablePrice)}
                                     </Text>
                                 </Flex>
@@ -183,11 +183,11 @@ export const DetailedIssueMainData: FC<DetailedIssueMainDataProps> = ({ issue, u
                             Add reward
                         </Button>
 
-                        <CreateNewRewardModal 
-                            isOpened={isAddRewardModalOpen} 
+                        <CreateNewRewardModal
+                            isOpened={isAddRewardModalOpen}
                             onClose={closeAddRewardModal}
                             prefilledIssueURL={issue.issueURL}
-                            onNewRewardCreated={onNewRewardCreated} 
+                            onNewRewardCreated={onNewRewardCreated}
                         />
 
                         <ShareModal issue={issue} />
@@ -235,18 +235,18 @@ export const DetailedIssueMainData: FC<DetailedIssueMainDataProps> = ({ issue, u
                         Claim available rewards
                     </Button>
 
-                    <ClaimRewardsModal 
-                        isOpened={isClaimRewardsModalOpen} 
+                    <ClaimRewardsModal
+                        isOpened={isClaimRewardsModalOpen}
                         onClose={closeClaimRewardsModal}
                         prefilledIssueURL={issue.issueURL}
-                        onRewardsClaimed={onRewardsClaimed} 
+                        onRewardsClaimed={onRewardsClaimed}
                     />
                 </Center>
 
                 <Space h={'1rem'} />
 
                 <Table.ScrollContainer minWidth={500}>
-                    <Table verticalSpacing="md">
+                    <Table verticalSpacing="md" highlightOnHover>
                         <Table.Thead>
                             <Table.Tr>
                                 <Table.Th>Date</Table.Th>
@@ -358,10 +358,10 @@ const DetailedIssueReward: FC<{ reward: RewardPrimitive, issue: IssuePrimitive }
                 <Text c="dimmed" size="sm">
                     {
                         wasRewardCreatedFromComment
-                        ?
-                        <Link href={reward.commentURL}>Go to comment</Link>
-                        :
-                        <span>OpireBot was not installed</span>
+                            ?
+                            <Link href={reward.commentURL}>Go to comment</Link>
+                            :
+                            <span>OpireBot was not installed</span>
                     }
                 </Text>
             </Table.Td>

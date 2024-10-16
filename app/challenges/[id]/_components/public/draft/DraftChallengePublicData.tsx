@@ -145,7 +145,7 @@ export const DraftChallengePublicData: FC<DraftChallengePublicDataProps> = ({
 
                                     <Center>
                                         <Table.ScrollContainer minWidth={400}>
-                                            <Table verticalSpacing="md">
+                                            <Table verticalSpacing="md" highlightOnHover>
                                                 <Table.Thead>
                                                     <Table.Tr>
                                                         <Table.Th ta={"center"}>

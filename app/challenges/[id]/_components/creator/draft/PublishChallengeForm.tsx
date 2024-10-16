@@ -11,9 +11,10 @@ import { useRouter } from "next/navigation";
 interface PublishChallengeFormProps {
     challengeId: string;
     isDisabled: boolean;
+    isLoading: boolean;
 }
 
-export function PublishChallengeForm({ challengeId, isDisabled }: PublishChallengeFormProps): React.ReactElement {
+export function PublishChallengeForm({ challengeId, isDisabled, isLoading }: PublishChallengeFormProps): React.ReactElement {
     const router = useRouter();
 
     const [isPublishingChallenge, setIsPublishingChallenge] = useState(false);
@@ -81,8 +82,8 @@ export function PublishChallengeForm({ challengeId, isDisabled }: PublishChallen
             <Button
                 onClick={openPublishChallengeModal}
                 variant="gradient"
-                disabled={isDisabled || isPublishingChallenge}
-                loading={isPublishingChallenge}
+                disabled={isDisabled || isPublishingChallenge || isLoading}
+                loading={isPublishingChallenge || isLoading}
             >
                 Publish challenge
             </Button>

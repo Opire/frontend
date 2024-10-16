@@ -1,5 +1,5 @@
 import {
-    ChallengePrimitive,
+    ChallengeDTO,
     CreateChallengeDTO,
 } from "../../../../../_core/_primitives/ChallengePrimitive";
 import { FC, useEffect, useMemo, useState } from "react";
@@ -61,7 +61,7 @@ import { ApplyTemplateModal } from "./ApplyTemplateModal";
 import { PublishChallengeForm } from "./PublishChallengeForm";
 
 interface DraftChallengeCreatorDataProps {
-    challenge: ChallengePrimitive;
+    challenge: ChallengeDTO;
     creator: UserAuthDTO;
 }
 
@@ -388,7 +388,7 @@ export const DraftChallengeCreatorData: FC<DraftChallengeCreatorDataProps> = ({
 
                                     <Center>
                                         <Table.ScrollContainer minWidth={400}>
-                                            <Table verticalSpacing="md">
+                                            <Table verticalSpacing="md" highlightOnHover>
                                                 <Table.Thead>
                                                     <Table.Tr>
                                                         <Table.Th ta={"center"}>
@@ -557,11 +557,16 @@ export const DraftChallengeCreatorData: FC<DraftChallengeCreatorDataProps> = ({
                         onClick={previewPublishedChallenge}
                         variant="light"
                         disabled={isUpdatingDraft}
+                        loading={isUpdatingDraft}
                     >
                         Preview published version
                     </Button>
 
-                    <PublishChallengeForm challengeId={initialChallenge.id} isDisabled={isUpdatingDraft} />
+                    <PublishChallengeForm
+                        challengeId={initialChallenge.id}
+                        isDisabled={isUpdatingDraft || !challenge?.canBePublished}
+                        isLoading={isUpdatingDraft}
+                    />
                 </div>
             </section>
 

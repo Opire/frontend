@@ -4,7 +4,7 @@ import { UserAuthDTO } from "../../../../../_core/_dtos/UserAuthDTO";
 import React from "react";
 import { Card, Title, Text, Divider, Box, Center, Table, Space, Flex, Button, Skeleton, Avatar, Badge, DefaultMantineColor, Alert } from "@mantine/core";
 import { formatPrice } from "../../../../../_utils/formatPrice";
-import { IconInfoCircle, IconSend } from "@tabler/icons-react";
+import { IconInfoCircle, IconX } from "@tabler/icons-react";
 import { ChallengeParticipationPrimitive, ChallengeParticipationStatusType } from "../../../../../_core/_primitives/ChallengeParticipationPrimitive";
 import { useGetUserPublicInfoFromAnyPlatform } from "../../../../../../hooks/useGetUserPublicInfoFromAnyPlatform";
 import Link from "next/link";
@@ -159,7 +159,7 @@ const ParticipationsSection: FC<{
                         </>
                         :
                         <Table.ScrollContainer minWidth={500}>
-                            <Table verticalSpacing="md">
+                            <Table verticalSpacing="md" highlightOnHover>
                                 <Table.Thead>
                                     <Table.Tr>
                                         <Table.Th>Participant</Table.Th>
@@ -235,11 +235,12 @@ const ParticipationRow: FC<{ participation: ChallengeParticipationPrimitive }> =
             <Table.Td>
                 {
                     participation.prize
-                    &&
-                    <Text variant="gradient" style={{ fontWeight: "bold", fontSize: '1.2rem' }}>
-                        {formatPrice(participation.prize.amount)}
-                    </Text>
-
+                        ?
+                        <Text variant="gradient" style={{ fontWeight: "bold", fontSize: '1.2rem' }}>
+                            {formatPrice(participation.prize.amount)}
+                        </Text>
+                        :
+                        <IconX color="red" />
                 }
             </Table.Td>
 
