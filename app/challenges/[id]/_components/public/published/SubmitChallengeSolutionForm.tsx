@@ -20,7 +20,7 @@ interface SubmitChallengeSolutionFormProps {
 export const SubmitChallengeSolutionForm: FC<SubmitChallengeSolutionFormProps> = ({ challenge, userAuth }) => {
     const router = useRouter();
     const [isModalOpen, { close, open }] = useDisclosure();
-    const { canCurrentUserParticipate, reloadCanCurrentUserParticipate } = useGetCanCurrentUserParticipateInChallenge({ challengeId: challenge.id });
+    const { canCurrentUserParticipate, reloadCanCurrentUserParticipate } = useGetCanCurrentUserParticipateInChallenge({ challengeId: challenge.id, revalidateOnFocus: true });
 
     useTriggerCallbackOnQueryParamFirstMatch({ queryParamKey: 'submit-solution', callback: open });
 
