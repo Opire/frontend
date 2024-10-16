@@ -1,4 +1,4 @@
-import { Button, Modal, Select, Space, Alert } from "@mantine/core";
+import { Button, Modal, Select, Space, Alert, Container } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { IconInfoCircle } from "@tabler/icons-react";
 import { useState } from "react";
@@ -48,39 +48,40 @@ export function ApplyTemplateModal({ applyTemplate }: { applyTemplate: (template
                 title="Choose a template to apply to your challenge"
                 centered
             >
+                <Container size={'lg'}>
+                    <Select
+                        label="Available templates"
+                        placeholder="Select a template"
+                        data={templates.map((template) => ({
+                            label: template.label,
+                            value: template.label,
+                        }))}
+                        value={selectedTemplate?.label}
+                        onChange={onChangeTemplate} />
 
-                <Select
-                    label="Available templates"
-                    placeholder="Select a template"
-                    data={templates.map((template) => ({
-                        label: template.label,
-                        value: template.label,
-                    }))}
-                    value={selectedTemplate?.label}
-                    onChange={onChangeTemplate} />
+                    <Space h={"2rem"} />
 
-                <Space h={"2rem"} />
-
-                <Alert
-                    variant="light"
-                    color="yellow"
-                    title="Be careful!"
-                    icon={<IconInfoCircle />}
-                >
-                    This will override the current configuration of your challenge
-                </Alert>
-
-                <Space h={"1rem"} />
-
-                <div style={{ display: "flex", justifyContent: "end" }}>
-                    <Button
-                        onClick={onApplyTemplate}
-                        color="indigo"
-                        variant="filled"
+                    <Alert
+                        variant="light"
+                        color="yellow"
+                        title="Be careful!"
+                        icon={<IconInfoCircle />}
                     >
-                        Apply selected template
-                    </Button>
-                </div>
+                        This will override the current configuration of your challenge
+                    </Alert>
+
+                    <Space h={"1rem"} />
+
+                    <div style={{ display: "flex", justifyContent: "end" }}>
+                        <Button
+                            onClick={onApplyTemplate}
+                            color="indigo"
+                            variant="filled"
+                        >
+                            Apply selected template
+                        </Button>
+                    </div>
+                </Container>
             </Modal>
         </>
     );

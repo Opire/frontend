@@ -1,4 +1,4 @@
-import { Button, Group, Modal, Space, Text, Title } from "@mantine/core";
+import { Button, Container, Group, Modal, Space, Text, Title } from "@mantine/core";
 import { FC, useState } from "react";
 import { IconCheck, IconHandStop, IconX } from "@tabler/icons-react";
 import { notifications } from "@mantine/notifications";
@@ -75,34 +75,36 @@ export const ToggleIsChallengeAcceptingNewParticipationsModal: FC<ToggleIsChalle
             closeOnClickOutside={false}
             withCloseButton={true}
         >
-            <Text >
-                {isGoingToStopNewParticipations
-                    ? 'If you continue, you will prevent new participants from submitting their solution to the challenge. This can be reverted at any time.'
-                    : 'If you continue, participants will be able to submit their solution to the challenge. Make sure you are prepared to start reviewing their participations. This can be reverted later if you change your mind.'
-                }
-            </Text>
+            <Container size={'lg'}>
+                <Text>
+                    {isGoingToStopNewParticipations
+                        ? 'If you continue, you will prevent new participants from submitting their solution to the challenge. This can be reverted at any time.'
+                        : 'If you continue, participants will be able to submit their solution to the challenge. Make sure you are prepared to start reviewing their participations. This can be reverted later if you change your mind.'
+                    }
+                </Text>
 
-            <Space h='2rem' />
+                <Space h='2rem' />
 
-            <Group justify="space-between" mt="md">
-                <Button
-                    variant="subtle"
-                    size="md"
-                    onClick={onClose}
-                >
-                    Go back
-                </Button>
+                <Group justify="space-between" mt="md">
+                    <Button
+                        variant="subtle"
+                        size="md"
+                        onClick={onClose}
+                    >
+                        Go back
+                    </Button>
 
-                <Button
-                    variant="filled"
-                    size="md"
-                    loading={isUpdatingChallenge}
-                    disabled={isUpdatingChallenge}
-                    onClick={updateChallenge}
-                >
-                    {isGoingToStopNewParticipations ? 'Stop receiving participations' : 'Start receiving participations'}
-                </Button>
-            </Group>
+                    <Button
+                        variant="filled"
+                        size="md"
+                        loading={isUpdatingChallenge}
+                        disabled={isUpdatingChallenge}
+                        onClick={updateChallenge}
+                    >
+                        {isGoingToStopNewParticipations ? 'Stop receiving participations' : 'Start receiving participations'}
+                    </Button>
+                </Group>
+            </Container>
         </Modal>
     )
 }

@@ -8,6 +8,7 @@ import { mutate } from "swr";
 import { API_ROUTES } from "../../../../../../constants";
 import { ChallengeParticipationPrimitive } from "../../../../../_core/_primitives/ChallengeParticipationPrimitive";
 import { ApproveChallengeParticipationModal } from "./ApproveChallengeParticipationModal";
+import { RejectChallengeParticipationModal } from "./RejectChallengeParticipationModal";
 
 interface CreatorActionsOnParticipationProps {
     challenge: ChallengeDTO;
@@ -83,6 +84,14 @@ export const CreatorActionsOnParticipation: FC<CreatorActionsOnParticipationProp
                 isOpened={isModalForApproveOpen}
                 onClose={closeModalForApprove}
                 onParticipationApproved={onParticipationApproved}
+            />
+
+            <RejectChallengeParticipationModal
+                challenge={challenge}
+                participation={participation}
+                isOpened={isModalForRejectOpen}
+                onClose={closeModalForReject}
+                onParticipationRejected={onChallengeUpdated}
             />
         </>
     );

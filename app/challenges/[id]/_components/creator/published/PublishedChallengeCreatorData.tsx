@@ -2,7 +2,7 @@ import { ChallengeDTO } from "../../../../../_core/_primitives/ChallengePrimitiv
 import { FC } from "react";
 import { UserAuthDTO } from "../../../../../_core/_dtos/UserAuthDTO";
 import React from "react";
-import { Card, Title, Text, Divider, Box, Center, Table, Space, Flex, Skeleton, Avatar, Badge, DefaultMantineColor, Alert } from "@mantine/core";
+import { Card, Title, Text, Divider, Box, Center, Table, Space, Flex, Skeleton, Avatar, Badge, DefaultMantineColor, Alert, Tooltip } from "@mantine/core";
 import { formatPrice } from "../../../../../_utils/formatPrice";
 import { IconInfoCircle, IconX } from "@tabler/icons-react";
 import { ChallengeParticipationPrimitive, ChallengeParticipationStatusType } from "../../../../../_core/_primitives/ChallengeParticipationPrimitive";
@@ -246,12 +246,37 @@ const ParticipationRow: FC<{
             </Table.Td>
 
             <Table.Td miw={'180px'}>
-                <Badge
-                    variant="light"
-                    color={PARTICIPATION_STATUS_COLOR[participation.status]}
-                >
-                    {PARTICIPATION_STATUS_LABEL[participation.status]}
-                </Badge>
+                {
+                    participation.status === 'rejected'
+                        ?
+                        <Tooltip
+                            label={
+                                <div>
+                                    <strong>Reason for rejection:</strong>
+                                    <Space h={'0.5rem'} />
+                                    <q style={{ whiteSpace: 'pre-wrap' }}>
+                                        {participation.reasonForRejection ?? ''}
+                                    </q>
+                                </div>
+                            }
+                        >
+                            <Badge
+                                leftSection={<IconInfoCircle size={14} />}
+                                style={{ cursor: 'help' }}
+                                variant="light"
+                                color={PARTICIPATION_STATUS_COLOR['rejected']}
+                            >
+                                {PARTICIPATION_STATUS_LABEL['rejected']}
+                            </Badge>
+                        </Tooltip>
+                        :
+                        <Badge
+                            variant="light"
+                            color={PARTICIPATION_STATUS_COLOR[participation.status]}
+                        >
+                            {PARTICIPATION_STATUS_LABEL[participation.status]}
+                        </Badge>
+                }
             </Table.Td>
 
             <Table.Td>

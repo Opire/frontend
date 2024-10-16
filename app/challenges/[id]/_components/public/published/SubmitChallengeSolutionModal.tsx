@@ -118,7 +118,11 @@ export const SubmitChallengeSolutionModal: FC<SubmitChallengeSolutionModalProps>
 
                 <Space h='1rem' />
 
-                <Group justify="flex-end" mt="md">
+                <Group justify="space-between" mt="md">
+                    <Button variant="subtle" size="md" onClick={onClose}>
+                        Go back
+                    </Button>
+
                     <Button
                         type="submit"
                         variant="gradient"

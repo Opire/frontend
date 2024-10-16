@@ -1,4 +1,4 @@
-import { Button, Modal, Text, Space, Title, Alert, Divider } from "@mantine/core";
+import { Button, Modal, Text, Space, Title, Alert, Divider, Container } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { IconCheck, IconInfoCircle, IconLock, IconLockOpen, IconX } from "@tabler/icons-react";
 import { useState } from "react";
@@ -98,98 +98,100 @@ export function PublishChallengeForm({ challengeId, isDisabled, isLoading }: Pub
                 closeOnClickOutside={false}
                 withCloseButton={true}
             >
-                <Alert
-                    variant="light"
-                    color="blue"
-                    title="Non-reversible action"
-                    icon={<IconInfoCircle />}
-                >
-                    <Text>
-                        Publishing your challenge means that it will be <u>visible for everyone</u>.
-                    </Text>
-
-                    <Space h='1rem' />
-
-                    <Text>
-                        <strong>This can't be undone</strong>, so make sure that you are happy with the challenge configuration before continue. Once published, <strong>you won't be able to edit your challenge</strong>.
-                    </Text>
-
-                    <Space h='1rem' />
-
-                    <Text>
-                        You only will be able to <strong>increase the prizes, increase the limit of participations, and extend the deadline</strong>. The rest of the content won't be editable anymore.
-                    </Text>
-
-                </Alert>
-
-                <Space h='1rem' />
-                <Text>
-                    You can publish your challenge in two ways:
-                </Text>
-                <Space h='1rem' />
-
-                <Title size={'h4'}>With open participations</Title>
-                <Text>
-                    The challenge will be published, and the participants will be able to submit their solutions right away.
-                </Text>
-                <Space h='1rem' />
-                <Text>
-                    This is ideal if you're ready to start receiving the solutions, and don't need to wait before the participants start to work in their solutions.
-                </Text>
-
-                <Space h='2rem' />
-
-                <Title size={'h4'}>With closed participations</Title>
-                <Text>
-                    The challenge will be published, but nobody will be able to submit a solution.
-                </Text>
-                <Space h='1rem' />
-                <Text>
-                    This can give you some time to promote the challenge, share it in social media, or arrange any setup before start receiving solutions.
-                </Text>
-
-                <Space h='1rem' />
-
-                <Divider />
-                <Space h='1rem' />
-
-                <Text>
-                    Once the challenge is published, you will be able to close/open the participations at will as many times as you need, so don't worry if you're not sure which option to pick right now.
-                </Text>
-
-                <Space h='2rem' />
-
-                <div style={{ display: "flex", justifyContent: "flex-end", gap: '1rem', flexWrap: 'wrap' }}>
-                    <Button
-                        onClick={closePublishChallengeModal}
-                        variant="subtle"
-                        size="md"
-                    >
-                        Go back
-                    </Button>
-
-                    <Button
+                <Container size={'lg'}>
+                    <Alert
                         variant="light"
-                        size="md"
-                        loading={isPublishingChallenge}
-                        disabled={isPublishingChallenge}
-                        onClick={() => publishChallenge(false)}
-                        leftSection={<IconLock />}
+                        color="blue"
+                        title="Non-reversible action"
+                        icon={<IconInfoCircle />}
                     >
-                        With closed participations
-                    </Button>
+                        <Text>
+                            Publishing your challenge means that it will be <u>visible for everyone</u>.
+                        </Text>
 
-                    <Button
-                        variant="filled"
-                        size="md"
-                        loading={isPublishingChallenge}
-                        disabled={isPublishingChallenge}
-                        onClick={() => publishChallenge(true)}
-                        leftSection={<IconLockOpen />}
-                    >
-                        With open participations
-                    </Button>
-                </div>
+                        <Space h='1rem' />
+
+                        <Text>
+                            <strong>This can't be undone</strong>, so make sure that you are happy with the challenge configuration before continue. Once published, <strong>you won't be able to edit your challenge</strong>.
+                        </Text>
+
+                        <Space h='1rem' />
+
+                        <Text>
+                            You only will be able to <strong>increase the prizes, increase the limit of participations, and extend the deadline</strong>. The rest of the content won't be editable anymore.
+                        </Text>
+
+                    </Alert>
+
+                    <Space h='1rem' />
+                    <Text>
+                        You can publish your challenge in two ways:
+                    </Text>
+                    <Space h='1rem' />
+
+                    <Title size={'h4'}>With open participations</Title>
+                    <Text>
+                        The challenge will be published, and the participants will be able to submit their solutions right away.
+                    </Text>
+                    <Space h='1rem' />
+                    <Text>
+                        This is ideal if you're ready to start receiving the solutions, and don't need to wait before the participants start to work in their solutions.
+                    </Text>
+
+                    <Space h='2rem' />
+
+                    <Title size={'h4'}>With closed participations</Title>
+                    <Text>
+                        The challenge will be published, but nobody will be able to submit a solution.
+                    </Text>
+                    <Space h='1rem' />
+                    <Text>
+                        This can give you some time to promote the challenge, share it in social media, or arrange any setup before start receiving solutions.
+                    </Text>
+
+                    <Space h='1rem' />
+
+                    <Divider />
+                    <Space h='1rem' />
+
+                    <Text>
+                        Once the challenge is published, you will be able to close/open the participations at will as many times as you need, so don't worry if you're not sure which option to pick right now.
+                    </Text>
+
+                    <Space h='2rem' />
+
+                    <div style={{ display: "flex", justifyContent: "flex-end", gap: '1rem', flexWrap: 'wrap' }}>
+                        <Button
+                            onClick={closePublishChallengeModal}
+                            variant="subtle"
+                            size="md"
+                        >
+                            Go back
+                        </Button>
+
+                        <Button
+                            variant="light"
+                            size="md"
+                            loading={isPublishingChallenge}
+                            disabled={isPublishingChallenge}
+                            onClick={() => publishChallenge(false)}
+                            leftSection={<IconLock />}
+                        >
+                            With closed participations
+                        </Button>
+
+                        <Button
+                            variant="filled"
+                            size="md"
+                            loading={isPublishingChallenge}
+                            disabled={isPublishingChallenge}
+                            onClick={() => publishChallenge(true)}
+                            leftSection={<IconLockOpen />}
+                        >
+                            With open participations
+                        </Button>
+                    </div>
+                </Container>
             </Modal>
         </>
     );

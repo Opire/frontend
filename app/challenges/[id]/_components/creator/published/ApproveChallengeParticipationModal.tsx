@@ -1,4 +1,4 @@
-import { Button, Group, Modal, Space, Text, Title } from "@mantine/core";
+import { Button, Container, Group, Modal, Space, Text, Title } from "@mantine/core";
 import { FC, useState } from "react";
 import { IconCheck, IconX } from "@tabler/icons-react";
 import { notifications } from "@mantine/notifications";
@@ -22,7 +22,7 @@ export const ApproveChallengeParticipationModal: FC<
     participation,
     isOpened,
     onClose,
-    onParticipationApproved = () => { },
+    onParticipationApproved,
 }) => {
         const canPrizesBePaid = challenge.canPrizesBePaid;
 
@@ -79,7 +79,7 @@ export const ApproveChallengeParticipationModal: FC<
                 onClose={onClose}
                 title={
                     <Title size={"h3"}>
-                        Approve the participation
+                        Approve solution
                     </Title>
                 }
                 size={"xl"}
@@ -87,37 +87,39 @@ export const ApproveChallengeParticipationModal: FC<
                 closeOnClickOutside={false}
                 withCloseButton={true}
             >
-                <Text>
-                    If you continue, the solution will be approved. This mean that the solution has been considered successful following the evaluation criteria of the challenge.
-                </Text>
+                <Container size={'lg'}>
+                    <Text>
+                        If you continue, the solution will be approved. This mean that the solution has been considered successful based on the evaluation criteria of the challenge.
+                    </Text>
 
-                <Space h="1rem" />
+                    <Space h="1rem" />
 
-                <Text>
-                    {
-                        canPrizesBePaid
-                            ? "After approving the solution, you can pay the participant immediately or choose to do it later."
-                            : "Once the solution is approved, it will remain in that state. You can pay the participants with approved solutions once the challenge is marked as completed."
-                    }
-                </Text>
+                    <Text>
+                        {
+                            canPrizesBePaid
+                                ? "After approving the solution, you can pay the participant immediately or choose to do it later."
+                                : "Once the solution is approved, it will remain in that state. You can pay the participants with approved solutions once the challenge is marked as completed."
+                        }
+                    </Text>
 
-                <Space h="2rem" />
+                    <Space h="2rem" />
 
-                <Group justify="space-between" mt="md">
-                    <Button variant="subtle" size="md" onClick={onClose}>
-                        Go back
-                    </Button>
+                    <Group justify="space-between" mt="md">
+                        <Button variant="subtle" size="md" onClick={onClose}>
+                            Go back
+                        </Button>
 
-                    <Button
-                        variant="filled"
-                        size="md"
-                        loading={isApprovingParticipation}
-                        disabled={isApprovingParticipation}
-                        onClick={approve}
-                    >
-                        Approve
-                    </Button>
-                </Group>
+                        <Button
+                            variant="filled"
+                            size="md"
+                            loading={isApprovingParticipation}
+                            disabled={isApprovingParticipation}
+                            onClick={approve}
+                        >
+                            Approve
+                        </Button>
+                    </Group>
+                </Container>
             </Modal>
         );
     };
