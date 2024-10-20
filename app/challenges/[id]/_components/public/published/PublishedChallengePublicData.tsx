@@ -2,7 +2,7 @@ import { ChallengeDTO, ChallengePrimitive } from "../../../../../_core/_primitiv
 import { FC } from "react";
 import { UserAuthDTO } from "../../../../../_core/_dtos/UserAuthDTO";
 import React from "react";
-import { Card, Title, Text, Divider, Box, Center, Table, Space, Flex, Skeleton, Avatar, Badge, DefaultMantineColor, Alert } from "@mantine/core";
+import { Card, Title, Text, Divider, Box, Center, Table, Space, Flex, Skeleton, Avatar, Badge, DefaultMantineColor, Alert, Tooltip } from "@mantine/core";
 import { formatPrice } from "../../../../../_utils/formatPrice";
 import { IconInfoCircle, IconX } from "@tabler/icons-react";
 import { ChallengeParticipationPrimitive, ChallengeParticipationStatusType } from "../../../../../_core/_primitives/ChallengeParticipationPrimitive";
@@ -126,7 +126,7 @@ const ParticipationsSection: FC<{
                                 <Table.Tbody>
                                     {sortedParticipations.map(participation => (
                                         <Table.Tr key={participation.id}>
-                                            <ParticipationRow participation={participation} />
+                                            <ParticipationRow participation={participation} userAuth={userAuth} />
                                         </Table.Tr>
                                     ))}
                                 </Table.Tbody>
@@ -139,7 +139,10 @@ const ParticipationsSection: FC<{
     );
 };
 
-const ParticipationRow: FC<{ participation: ChallengeParticipationPrimitive }> = ({ participation }) => {
+const ParticipationRow: FC<{
+    participation: ChallengeParticipationPrimitive;
+    userAuth: UserAuthDTO | null;
+}> = ({ participation, userAuth }) => {
     const {
         isLoading,
         username,
@@ -154,6 +157,8 @@ const ParticipationRow: FC<{ participation: ChallengeParticipationPrimitive }> =
             </Table.Td>
         )
     }
+
+    const isUserAuthTheParticipant = userAuth?.userId === participation.userId;
 
     return (
         <>
@@ -181,12 +186,41 @@ const ParticipationRow: FC<{ participation: ChallengeParticipationPrimitive }> =
             </Table.Td>
 
             <Table.Td miw={'180px'}>
-                <Badge
-                    variant="light"
-                    color={PARTICIPATION_STATUS_COLOR[participation.status]}
-                >
-                    {PARTICIPATION_STATUS_LABEL[participation.status]}
-                </Badge>
+                {
+                    participation.status === 'rejected' && isUserAuthTheParticipant
+                        ?
+                        <Tooltip
+                            multiline
+                            withArrow
+                            transitionProps={{ duration: 300 }}
+                            events={{ hover: true, touch: true, focus: false, }}
+                            label={
+                                <div>
+                                    <strong>Reason for rejection:</strong>
+                                    <Space h={'0.5rem'} />
+                                    <q style={{ whiteSpace: 'pre-wrap' }}>
+                                        {participation.reasonForRejection ?? ''}
+                                    </q>
+                                </div>
+                            }
+                        >
+                            <Badge
+                                leftSection={<IconInfoCircle size={14} />}
+                                style={{ cursor: 'help' }}
+                                variant="light"
+                                color={PARTICIPATION_STATUS_COLOR['rejected']}
+                            >
+                                {PARTICIPATION_STATUS_LABEL['rejected']}
+                            </Badge>
+                        </Tooltip>
+                        :
+                        <Badge
+                            variant="light"
+                            color={PARTICIPATION_STATUS_COLOR[participation.status]}
+                        >
+                            {PARTICIPATION_STATUS_LABEL[participation.status]}
+                        </Badge>
+                }
             </Table.Td>
 
             <Table.Td>
