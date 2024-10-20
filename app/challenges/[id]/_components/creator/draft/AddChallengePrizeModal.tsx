@@ -161,7 +161,7 @@ export const AddChallengePrizeModal: FC<AddChallengePrizeModalProps> = ({
                             },
                         },
                     },
-                    showNotificationOnError: false,
+                    avoidNotificationOnError: true,
                     onError: (error) => {
                         setPrizeInvalidReason(error.error);
                     },

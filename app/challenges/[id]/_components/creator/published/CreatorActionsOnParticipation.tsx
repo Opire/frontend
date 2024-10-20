@@ -9,6 +9,7 @@ import { API_ROUTES } from "../../../../../../constants";
 import { ChallengeParticipationPrimitive } from "../../../../../_core/_primitives/ChallengeParticipationPrimitive";
 import { ApproveChallengeParticipationModal } from "./ApproveChallengeParticipationModal";
 import { RejectChallengeParticipationModal } from "./RejectChallengeParticipationModal";
+import { PayChallengeParticipationModal } from "./PayChallengeParticipationModal";
 
 interface CreatorActionsOnParticipationProps {
     challenge: ChallengeDTO;
@@ -26,6 +27,11 @@ export const CreatorActionsOnParticipation: FC<CreatorActionsOnParticipationProp
         router.refresh();
     }
 
+    function onParticipationPaid() {
+        mutate(API_ROUTES.CHALLENGES.GET_AVAILABLE_PRIZES(challenge.id));
+        onChallengeUpdated();
+    }
+
     function onParticipationApproved() {
         onChallengeUpdated();
 
@@ -33,7 +39,6 @@ export const CreatorActionsOnParticipation: FC<CreatorActionsOnParticipationProp
             openModalForPay();
         }
     }
-
 
     const { canApprove, canReject, canPay } = useMemo(() => {
         const canApprove = participation.status === 'waiting_for_approval';
@@ -84,6 +89,14 @@ export const CreatorActionsOnParticipation: FC<CreatorActionsOnParticipationProp
                 isOpened={isModalForApproveOpen}
                 onClose={closeModalForApprove}
                 onParticipationApproved={onParticipationApproved}
+            />
+
+            <PayChallengeParticipationModal
+                challenge={challenge}
+                participation={participation}
+                isOpened={isModalForPayOpen}
+                onClose={closeModalForPay}
+                onParticipationPaid={onParticipationPaid}
             />
 
             <RejectChallengeParticipationModal

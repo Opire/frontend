@@ -110,7 +110,7 @@ export const EditChallengePrizeModal: FC<EditChallengePrizeModalProps> = ({
                             },
                         },
                     },
-                    showNotificationOnError: false,
+                    avoidNotificationOnError: true,
                     onError: (error) => {
                         setPrizeInvalidReason(error.error);
                     },

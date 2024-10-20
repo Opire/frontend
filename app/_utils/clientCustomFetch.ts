@@ -14,13 +14,13 @@ export async function clientCustomFetch(
         method?: "GET" | "POST" | "PUT" | "DELETE" | "PATCH";
         body?: Object;
         headers?: HeadersInit;
-        showNotificationOnError?: boolean;
+        avoidNotificationOnError?: boolean;
         onError?: (error: BackendError) => void;
     } = {
             method: "GET",
             body: undefined,
             headers: {},
-            showNotificationOnError: true,
+            avoidNotificationOnError: false,
             onError: () => {}
         },
 ): Promise<Response> {
@@ -49,7 +49,7 @@ export async function clientCustomFetch(
         const body = await response.json();
         const { errorType, error, data } = body;
 
-        if(options.showNotificationOnError) {
+        if(!options.avoidNotificationOnError) {
             errorNotification(mapErrorText(body));
         }
 

@@ -159,7 +159,6 @@ const ParticipationsSection: FC<{
 
                                         <br />
 
-
                                         <Text>
                                             If some time passes without a single participant, maybe your challenge is too hard or the prizes are not high enough.
                                         </Text>
