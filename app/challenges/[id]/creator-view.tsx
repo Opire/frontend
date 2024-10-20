@@ -4,13 +4,13 @@ import { Grid } from "@mantine/core";
 import { DraftChallengeCreatorData } from "./_components/creator/draft/DraftChallengeCreatorData";
 import { PublishedChallengeCreatorData } from "./_components/creator/published/PublishedChallengeCreatorData";
 import { UserAuthDTO } from "../../_core/_dtos/UserAuthDTO";
-import { ChallengePrimitive } from "../../_core/_primitives/ChallengePrimitive";
+import { ChallengeDTO } from "../../_core/_primitives/ChallengePrimitive";
 
 export function ChallengeCreatorView({
     challenge,
     creator,
 }: {
-    challenge: ChallengePrimitive;
+    challenge: ChallengeDTO;
     creator: UserAuthDTO;
 }) {
     if (!challenge.isPublished) {

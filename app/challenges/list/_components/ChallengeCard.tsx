@@ -72,9 +72,9 @@ export const ChallengeCard: FC<ChallengeCardProps> = ({
                     {
                         challenge.isCompleted
                             ?
-                            <Badge variant="outline" color="green">Completed</Badge>
+                            <Badge variant="outline" color="cyan">Completed</Badge>
                             :
-                            <Badge variant="outline" color="blue">Active</Badge>
+                            <Badge variant="outline" color="green">Active</Badge>
                     }
 
                     {

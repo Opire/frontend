@@ -7,8 +7,12 @@ import { getChallengeById } from "../../_utils/getChallengeById";
 export async function generateMetadata({
     params,
 }: { params: { id: string } }): Promise<Metadata> {
+    const challenge = await getChallengeById({
+        id: params.id,
+    });
+
     return {
-        title: "Opire - Challenge",
+        title: `${challenge.title} (Challenge) - Opire`,
     };
 }
 

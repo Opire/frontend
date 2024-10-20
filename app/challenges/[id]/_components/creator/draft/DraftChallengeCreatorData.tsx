@@ -1,5 +1,5 @@
 import {
-    ChallengePrimitive,
+    ChallengeDTO,
     CreateChallengeDTO,
 } from "../../../../../_core/_primitives/ChallengePrimitive";
 import { FC, useEffect, useMemo, useState } from "react";
@@ -43,28 +43,25 @@ import {
     sortPrizes,
 } from "../../../../../_utils/challengePrizes";
 import { ChallengePrizePrimitive } from "../../../../../_core/_primitives/ChallengePrizePrimitive";
-import { formatPrice, getPriceInUSD } from "../../../../../_utils/formatPrice";
+import { formatPrice } from "../../../../../_utils/formatPrice";
 import {
-    IconCheck,
     IconCircleCheckFilled,
     IconEdit,
     IconInfoCircle,
     IconPlus,
     IconTrash,
-    IconX,
 } from "@tabler/icons-react";
 import { AddChallengePrizeModal } from "./AddChallengePrizeModal";
 import { clientCustomFetch } from "../../../../../_utils/clientCustomFetch";
 import { API_ROUTES } from "../../../../../../constants";
-import { useGetChallengeById } from "../../../../../../hooks/useGetChallengeById";
 import { formatDateTime } from "../../../../../_utils/formatDate";
-import { notifications } from "@mantine/notifications";
-import { useRouter } from "next/navigation";
 import { EditChallengePrizeModal } from "./EditChallengePrizeModal";
 import { ApplyTemplateModal } from "./ApplyTemplateModal";
+import { PublishChallengeForm } from "./PublishChallengeForm";
+import { useGetChallenge } from "../../../../../../hooks/useGetChallenge";
 
 interface DraftChallengeCreatorDataProps {
-    challenge: ChallengePrimitive;
+    challenge: ChallengeDTO;
     creator: UserAuthDTO;
 }
 
@@ -72,12 +69,10 @@ export const DraftChallengeCreatorData: FC<DraftChallengeCreatorDataProps> = ({
     challenge: initialChallenge,
     creator,
 }) => {
-    const router = useRouter();
     const [scroll] = useWindowScroll();
     const isMobile = useMediaQuery(`(max-width: ${em(750)})`);
 
-    const { challenge, reloadChallenge } = useGetChallengeById({
-        challengeId: initialChallenge.id,
+    const { challenge, reloadChallenge } = useGetChallenge({
         initialChallenge,
         revalidateOnFocus: true,
     });
@@ -92,8 +87,8 @@ export const DraftChallengeCreatorData: FC<DraftChallengeCreatorDataProps> = ({
         { close: closeEditPrizeModal, open: openEditPrizeModal },
     ] = useDisclosure();
 
+
     const [isUpdatingDraft, setIsUpdatingDraft] = useState(false);
-    const [isPublishingChallenge, setIsPublishingChallenge] = useState(false);
     const [indexPrizeToUpdate, setIndexPrizeToUpdate] = useState<number | null>(
         null
     );
@@ -109,37 +104,26 @@ export const DraftChallengeCreatorData: FC<DraftChallengeCreatorDataProps> = ({
     const form = useForm<CreateChallengeDTO>({
         mode: "uncontrolled",
         initialValues: {
-            title: challenge?.title ?? initialChallenge.title,
-            summary: challenge?.summary ?? initialChallenge.summary,
+            title: challenge.title,
+            summary: challenge.summary,
             mainObjetive:
-                challenge?.mainObjetive ?? initialChallenge.mainObjetive,
+                challenge.mainObjetive,
             otherObjetives:
-                challenge?.otherObjetives ?? initialChallenge.otherObjetives,
+                challenge.otherObjetives,
             requirements:
-                challenge?.requirements ?? initialChallenge.requirements,
+                challenge.requirements,
             evaluationCriteria:
-                challenge?.evaluationCriteria ??
-                initialChallenge.evaluationCriteria,
+                challenge.evaluationCriteria,
             contactInformation:
-                challenge?.contactInformation ??
-                initialChallenge.contactInformation,
+                challenge.contactInformation,
             additionalComments:
-                challenge?.additionalComments ??
-                initialChallenge.additionalComments,
-            configuration: {
-                ...(challenge?.configuration ?? initialChallenge.configuration),
-                budget: challenge?.configuration.budget
-                    ? {
-                        unit: "USD",
-                        value: getPriceInUSD(challenge.configuration.budget),
-                    }
-                    : initialChallenge.configuration.budget,
-            },
+                challenge.additionalComments,
+            configuration: challenge.configuration,
         },
         onValuesChange: (values) => {
             setIsUpdatingDraft(true);
             debouncedOnUpdateDraft(
-                initialChallenge.id,
+                challenge.id,
                 values,
                 reloadChallenge
             );
@@ -182,49 +166,8 @@ export const DraftChallengeCreatorData: FC<DraftChallengeCreatorDataProps> = ({
         openEditPrizeModal();
     }
 
-    async function publishChallenge() {
-        try {
-            setIsPublishingChallenge(true);
-
-            await clientCustomFetch(
-                API_ROUTES.CHALLENGES.PUBLISH_DRAFT(initialChallenge.id),
-                {
-                    method: "POST",
-                }
-            );
-
-            notifications.show({
-                title: "Challenge published sucesfully",
-                message:
-                    "Now everyone is able to see the challenge! Attract more attention by sharing it in your social media",
-                withBorder: true,
-                withCloseButton: true,
-                autoClose: 10_000,
-                color: "teal",
-                icon: <IconCheck />,
-            });
-
-            window.scrollTo(0, 0);
-            router.refresh();
-
-            setIsPublishingChallenge(false);
-        } catch (error) {
-            notifications.show({
-                title: "Challenge cannot be published",
-                message:
-                    "Please, review that all the required fields are filled",
-                withBorder: true,
-                withCloseButton: true,
-                autoClose: 10_000,
-                color: "red",
-                icon: <IconX />,
-            });
-            setIsPublishingChallenge(false);
-        }
-    }
-
     function previewPublishedChallenge() {
-        window.open(`/challenges/${initialChallenge.id}/preview`, '_blank')?.focus();
+        window.open(`/challenges/${challenge.id}/preview`, '_blank')?.focus();
     }
 
     const prizes = useMemo(
@@ -348,10 +291,10 @@ export const DraftChallengeCreatorData: FC<DraftChallengeCreatorDataProps> = ({
                                 />
                             </Grid.Col>
 
-                            <Grid.Col span={{ base: 12, md: 6 }}>
+                            <Grid.Col span={{ base: 12, md: 4 }}>
                                 <DatePickerInput
                                     label="Deadline"
-                                    description="If defined, the challenge will be automatically closed on this date"
+                                    description="The challenge will be automatically closed on this date"
                                     clearable={true}
                                     key={form.key("configuration.deadline")}
                                     value={
@@ -371,30 +314,11 @@ export const DraftChallengeCreatorData: FC<DraftChallengeCreatorDataProps> = ({
                                 />
                             </Grid.Col>
 
-                            <Grid.Col span={{ base: 12, md: 6 }}>
-                                <NumberInput
-                                    label="Max. budget"
-                                    description="Max amount of money you want to spend in prizes (USD)"
-                                    prefix="$"
-                                    key={form.key("configuration.budget.value")}
-                                    {...form.getInputProps(
-                                        "configuration.budget.value"
-                                    )}
-                                    onChange={(value) =>
-                                        form.setFieldValue(
-                                            "configuration.budget",
-                                            value
-                                                ? { unit: "USD", value: +value }
-                                                : null
-                                        )
-                                    }
-                                />
-                            </Grid.Col>
-
-                            <Grid.Col span={{ base: 12, md: 6 }}>
+                            <Grid.Col span={{ base: 12, md: 4 }}>
                                 <NumberInput
                                     label="Limit of participations"
-                                    description="Max amount of participations you want to allow. This will take into account both approved and pending of approval"
+                                    description="Will take into account both approved and pending of approval"
+                                    min={0}
                                     key={form.key(
                                         "configuration.limitOfParticipations"
                                     )}
@@ -404,13 +328,7 @@ export const DraftChallengeCreatorData: FC<DraftChallengeCreatorDataProps> = ({
                                 />
                             </Grid.Col>
 
-                            <Grid.Col
-                                span={{ base: 12, md: 4 }}
-                                style={{
-                                    display: "flex",
-                                    alignItems: "center",
-                                }}
-                            >
+                            <Grid.Col span={{ base: 12, md: 4 }}>
                                 <Checkbox
                                     label="Allow multiple participations per user"
                                     description="If allowed, you may want to limit the number of participations to avoid facing an unmanageable amount of them"
@@ -464,7 +382,7 @@ export const DraftChallengeCreatorData: FC<DraftChallengeCreatorDataProps> = ({
 
                                     <Center>
                                         <Table.ScrollContainer minWidth={400}>
-                                            <Table verticalSpacing="md">
+                                            <Table verticalSpacing="md" highlightOnHover>
                                                 <Table.Thead>
                                                     <Table.Tr>
                                                         <Table.Th ta={"center"}>
@@ -632,19 +550,17 @@ export const DraftChallengeCreatorData: FC<DraftChallengeCreatorDataProps> = ({
                     <Button
                         onClick={previewPublishedChallenge}
                         variant="light"
-                        disabled={isUpdatingDraft || isPublishingChallenge}
-                        loading={isPublishingChallenge}
+                        disabled={isUpdatingDraft}
+                        loading={isUpdatingDraft}
                     >
                         Preview published version
                     </Button>
-                    <Button
-                        onClick={publishChallenge}
-                        variant="gradient"
-                        disabled={isUpdatingDraft || isPublishingChallenge}
-                        loading={isPublishingChallenge}
-                    >
-                        Publish challenge
-                    </Button>
+
+                    <PublishChallengeForm
+                        challengeId={challenge.id}
+                        isDisabled={isUpdatingDraft || !challenge?.canBePublished}
+                        isLoading={isUpdatingDraft}
+                    />
                 </div>
             </section>
 

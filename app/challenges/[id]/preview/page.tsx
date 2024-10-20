@@ -6,8 +6,12 @@ import { PreviewPublishedChallengeView } from "./view";
 export async function generateMetadata({
     params,
 }: { params: { id: string } }): Promise<Metadata> {
+    const challenge = await getChallengeById({
+        id: params.id,
+    });
+
     return {
-        title: "Opire - Challenge (preview)",
+        title: `[PREVIEW] ${challenge.title} (Challenge) - Opire`,
     };
 }
 

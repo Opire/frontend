@@ -25,3 +25,8 @@ type ChallengePrimitivePropsToOmit = 'id' | 'creatorId' | 'participations' | 'is
 
 export interface CreateChallengeDTO extends Omit<ChallengePrimitive, ChallengePrimitivePropsToOmit> {}
 export interface EditDraftChallengeDTO extends Omit<ChallengePrimitive, ChallengePrimitivePropsToOmit> {}
+
+export interface ChallengeDTO extends ChallengePrimitive {
+    canBePublished: boolean;
+    canPrizesBePaid: boolean;
+}

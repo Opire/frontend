@@ -26,7 +26,7 @@ import {
     TextInput,
     Tooltip,
 } from "@mantine/core";
-import { formatPrice, getPriceInUSD } from "../../../../../_utils/formatPrice";
+import { formatPrice } from "../../../../../_utils/formatPrice";
 import { formatDateTime } from "../../../../../_utils/formatDate";
 import { IconCircleCheckFilled } from "@tabler/icons-react";
 import { DatePickerInput } from "@mantine/dates";
@@ -87,10 +87,10 @@ export const DraftChallengePublicData: FC<DraftChallengePublicDataProps> = ({
                                 />
                             </Grid.Col>
 
-                            <Grid.Col span={{ base: 12, md: 6 }}>
+                            <Grid.Col span={{ base: 12, md: 4 }}>
                                 <DatePickerInput
                                     label="Deadline"
-                                    description="If defined, the challenge will be automatically closed on this date"
+                                    description="The challenge will be automatically closed on this date"
                                     value={
                                         challenge.configuration.deadline
                                             ? new Date(
@@ -102,26 +102,10 @@ export const DraftChallengePublicData: FC<DraftChallengePublicDataProps> = ({
                                 />
                             </Grid.Col>
 
-                            <Grid.Col span={{ base: 12, md: 6 }}>
-                                <NumberInput
-                                    label="Max. budget"
-                                    description="Max amount of money you want to spend in prizes (USD)"
-                                    prefix="$"
-                                    value={
-                                        challenge.configuration.budget
-                                            ? getPriceInUSD(
-                                                challenge.configuration.budget
-                                            )
-                                            : undefined
-                                    }
-                                    disabled={true}
-                                />
-                            </Grid.Col>
-
-                            <Grid.Col span={{ base: 12, md: 6 }}>
+                            <Grid.Col span={{ base: 12, md: 4 }}>
                                 <NumberInput
                                     label="Limit of participations"
-                                    description="Max amount of participations you want to allow. This will take into account both approved and pending of approval"
+                                    description="Will take into account both approved and pending of approval"
                                     value={
                                         challenge.configuration
                                             .limitOfParticipations ?? undefined
@@ -130,7 +114,7 @@ export const DraftChallengePublicData: FC<DraftChallengePublicDataProps> = ({
                                 />
                             </Grid.Col>
 
-                            <Grid.Col span={{ base: 12, md: 4 }} style={{ display: 'flex', alignItems: 'center' }}>
+                            <Grid.Col span={{ base: 12, md: 4 }}>
                                 <Checkbox
                                     label="Allow multiple participations per user"
                                     description="If allowed, you may want to limit the number of participations to avoid facing an unmanageable amount of them"
@@ -161,7 +145,7 @@ export const DraftChallengePublicData: FC<DraftChallengePublicDataProps> = ({
 
                                     <Center>
                                         <Table.ScrollContainer minWidth={400}>
-                                            <Table verticalSpacing="md">
+                                            <Table verticalSpacing="md" highlightOnHover>
                                                 <Table.Thead>
                                                     <Table.Tr>
                                                         <Table.Th ta={"center"}>

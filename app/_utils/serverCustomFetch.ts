@@ -14,11 +14,12 @@ export async function serverCustomFetch(
         }
 ): Promise<Response> {
     const cookieStore = cookies();
+    const token = cookieStore.get('token')?.value;
 
     const response = await fetch(url, {
         headers: {
             "Content-Type": "application/json",
-            "Authorization": `Bearer ${cookieStore.get('token')?.value}`,
+            "Authorization": token ? `Bearer ${token}` : '',
             "x-opire-handshake": process.env.OPIRE_HANDSHAKE || '',
             ...options.headers,
         },

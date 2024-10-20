@@ -1,12 +1,17 @@
 import useSWR from "swr";
 import { API_ROUTES } from "../constants";
 import { fetcher } from "../app/_utils/fetcher";
-import { ChallengePrimitive } from "../app/_core/_primitives/ChallengePrimitive";
+import { ChallengeDTO } from "../app/_core/_primitives/ChallengePrimitive";
 
-export const useGetChallengeById = ({ challengeId, initialChallenge, revalidateOnFocus }: { challengeId: string, initialChallenge?: ChallengePrimitive, revalidateOnFocus?: boolean }) => {
+interface UseGetChallengeByIdProps {
+    initialChallenge: ChallengeDTO;
+    revalidateOnFocus?: boolean;
+}
+
+export const useGetChallenge = ({ initialChallenge, revalidateOnFocus }: UseGetChallengeByIdProps) => {
     const { data, error, isValidating, mutate } = useSWR(
-        API_ROUTES.CHALLENGES.BY_ID(challengeId),
-        (url: string) => fetcher<ChallengePrimitive>(url),
+        API_ROUTES.CHALLENGES.BY_ID(initialChallenge.id),
+        (url: string) => fetcher<ChallengeDTO>(url),
         { revalidateOnFocus }
     );
     const challenge = data ?? initialChallenge;
