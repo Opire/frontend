@@ -43,7 +43,7 @@ import {
     sortPrizes,
 } from "../../../../../_utils/challengePrizes";
 import { ChallengePrizePrimitive } from "../../../../../_core/_primitives/ChallengePrizePrimitive";
-import { formatPrice, getPriceInUSD } from "../../../../../_utils/formatPrice";
+import { formatPrice } from "../../../../../_utils/formatPrice";
 import {
     IconCircleCheckFilled,
     IconEdit,
@@ -54,11 +54,11 @@ import {
 import { AddChallengePrizeModal } from "./AddChallengePrizeModal";
 import { clientCustomFetch } from "../../../../../_utils/clientCustomFetch";
 import { API_ROUTES } from "../../../../../../constants";
-import { useGetChallengeById } from "../../../../../../hooks/useGetChallengeById";
 import { formatDateTime } from "../../../../../_utils/formatDate";
 import { EditChallengePrizeModal } from "./EditChallengePrizeModal";
 import { ApplyTemplateModal } from "./ApplyTemplateModal";
 import { PublishChallengeForm } from "./PublishChallengeForm";
+import { useGetChallenge } from "../../../../../../hooks/useGetChallenge";
 
 interface DraftChallengeCreatorDataProps {
     challenge: ChallengeDTO;
@@ -72,8 +72,7 @@ export const DraftChallengeCreatorData: FC<DraftChallengeCreatorDataProps> = ({
     const [scroll] = useWindowScroll();
     const isMobile = useMediaQuery(`(max-width: ${em(750)})`);
 
-    const { challenge, reloadChallenge } = useGetChallengeById({
-        challengeId: initialChallenge.id,
+    const { challenge, reloadChallenge } = useGetChallenge({
         initialChallenge,
         revalidateOnFocus: true,
     });
@@ -105,31 +104,26 @@ export const DraftChallengeCreatorData: FC<DraftChallengeCreatorDataProps> = ({
     const form = useForm<CreateChallengeDTO>({
         mode: "uncontrolled",
         initialValues: {
-            title: challenge?.title ?? initialChallenge.title,
-            summary: challenge?.summary ?? initialChallenge.summary,
+            title: challenge.title,
+            summary: challenge.summary,
             mainObjetive:
-                challenge?.mainObjetive ?? initialChallenge.mainObjetive,
+                challenge.mainObjetive,
             otherObjetives:
-                challenge?.otherObjetives ?? initialChallenge.otherObjetives,
+                challenge.otherObjetives,
             requirements:
-                challenge?.requirements ?? initialChallenge.requirements,
+                challenge.requirements,
             evaluationCriteria:
-                challenge?.evaluationCriteria ??
-                initialChallenge.evaluationCriteria,
+                challenge.evaluationCriteria,
             contactInformation:
-                challenge?.contactInformation ??
-                initialChallenge.contactInformation,
+                challenge.contactInformation,
             additionalComments:
-                challenge?.additionalComments ??
-                initialChallenge.additionalComments,
-            configuration: {
-                ...(challenge?.configuration ?? initialChallenge.configuration),
-            },
+                challenge.additionalComments,
+            configuration: challenge.configuration,
         },
         onValuesChange: (values) => {
             setIsUpdatingDraft(true);
             debouncedOnUpdateDraft(
-                initialChallenge.id,
+                challenge.id,
                 values,
                 reloadChallenge
             );
@@ -173,7 +167,7 @@ export const DraftChallengeCreatorData: FC<DraftChallengeCreatorDataProps> = ({
     }
 
     function previewPublishedChallenge() {
-        window.open(`/challenges/${initialChallenge.id}/preview`, '_blank')?.focus();
+        window.open(`/challenges/${challenge.id}/preview`, '_blank')?.focus();
     }
 
     const prizes = useMemo(
@@ -563,7 +557,7 @@ export const DraftChallengeCreatorData: FC<DraftChallengeCreatorDataProps> = ({
                     </Button>
 
                     <PublishChallengeForm
-                        challengeId={initialChallenge.id}
+                        challengeId={challenge.id}
                         isDisabled={isUpdatingDraft || !challenge?.canBePublished}
                         isLoading={isUpdatingDraft}
                     />

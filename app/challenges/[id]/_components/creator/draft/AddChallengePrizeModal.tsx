@@ -32,6 +32,7 @@ import {
 } from "../../../../../_utils/challengePrizes";
 import { clientCustomFetch } from "../../../../../_utils/clientCustomFetch";
 import { API_ROUTES } from "../../../../../../constants";
+import { getPriceInUSD } from "../../../../../_utils/formatPrice";
 
 interface AddChallengePrizeModalProps {
     currentPrizes: ChallengePrizePrimitive[];
@@ -83,7 +84,7 @@ export const AddChallengePrizeModal: FC<AddChallengePrizeModalProps> = ({
         initialValues: {
             amount: {
                 unit: "USD",
-                value: lastPrize ? lastPrize.amount.value - 1 : 1000,
+                value: lastPrize ? getPriceInUSD(lastPrize.amount) - 1 : 1000,
             },
             position: initialAvailablePosition,
             fromPosition: undefined,
@@ -182,7 +183,7 @@ export const AddChallengePrizeModal: FC<AddChallengePrizeModalProps> = ({
             form.setValues({
                 amount: {
                     unit: "USD",
-                    value: lastPrize ? lastPrize.amount.value - 1 : 1000,
+                    value: lastPrize ? getPriceInUSD(lastPrize.amount) - 1 : 1000,
                 },
                 position: initialAvailablePosition,
                 fromPosition: undefined,

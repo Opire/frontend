@@ -26,7 +26,7 @@ import {
     TextInput,
     Tooltip,
 } from "@mantine/core";
-import { formatPrice, getPriceInUSD } from "../../../../../_utils/formatPrice";
+import { formatPrice } from "../../../../../_utils/formatPrice";
 import { formatDateTime } from "../../../../../_utils/formatDate";
 import { IconCircleCheckFilled } from "@tabler/icons-react";
 import { DatePickerInput } from "@mantine/dates";

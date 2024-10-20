@@ -56,8 +56,6 @@ export const RejectChallengeParticipationModal: FC<
                     withBorder: true,
                     withCloseButton: true,
                     autoClose: 10_000,
-                    color: "red.6",
-                    icon: <IconUserOff />,
                 });
                 setTimeout(() => {
                     onParticipationRejected();

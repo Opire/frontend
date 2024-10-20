@@ -1,8 +1,8 @@
-import { ChallengePrimitive } from "../../../../../_core/_primitives/ChallengePrimitive";
+import { ChallengeDTO, ChallengePrimitive } from "../../../../../_core/_primitives/ChallengePrimitive";
 import { FC } from "react";
 import { UserAuthDTO } from "../../../../../_core/_dtos/UserAuthDTO";
 import React from "react";
-import { Card, Title, Text, Divider, Box, Center, Table, Space, Flex, Button, Skeleton, Avatar, Badge, DefaultMantineColor, Alert } from "@mantine/core";
+import { Card, Title, Text, Divider, Box, Center, Table, Space, Flex, Skeleton, Avatar, Badge, DefaultMantineColor, Alert } from "@mantine/core";
 import { formatPrice } from "../../../../../_utils/formatPrice";
 import { IconInfoCircle, IconX } from "@tabler/icons-react";
 import { ChallengeParticipationPrimitive, ChallengeParticipationStatusType } from "../../../../../_core/_primitives/ChallengeParticipationPrimitive";
@@ -14,13 +14,18 @@ import { NewChallengeSection } from "../../shared/NewChallengeSection";
 import { PrizesSection } from "../../shared/PrizesSection";
 import { ChallengeMainData } from "../../shared/ChallengeMainData";
 import { SubmitChallengeSolutionForm } from "./SubmitChallengeSolutionForm";
+import { useGetChallenge } from "../../../../../../hooks/useGetChallenge";
 
 interface PublishedChallengePublicDataProps {
-    challenge: ChallengePrimitive;
+    challenge: ChallengeDTO;
     userAuth: UserAuthDTO | null;
 }
 
-export const PublishedChallengePublicData: FC<PublishedChallengePublicDataProps> = ({ challenge, userAuth }) => {
+export const PublishedChallengePublicData: FC<PublishedChallengePublicDataProps> = ({ challenge: initialChallenge, userAuth }) => {
+    const { challenge } = useGetChallenge({
+        initialChallenge,
+        revalidateOnFocus: true,
+    });
 
     return (
         <Box>
@@ -45,58 +50,6 @@ const ParticipationsSection: FC<{
     userAuth: UserAuthDTO | null;
 }> = ({ challenge, userAuth }) => {
     const sortedParticipations = [...challenge.participations].sort((a, b) => b.createdAt - a.createdAt);
-    // const sortedParticipations: ChallengeParticipationPrimitive[] = [
-    //     {
-    //         id: '1',
-    //         status: 'waiting_for_approval',
-    //         proposedSolution: 'https://mantine.dev/theming/colors/',
-    //         userId: "01J4AHYA34HHW2DTD1RRBVEPW6",
-    //         position: null,
-    //         prize: null,
-    //         reasonForRejection: null,
-    //         createdAt: Date.now(),
-    //         updatedAt: Date.now(),
-    //     },
-    //     {
-    //         id: '2',
-    //         status: 'rejected',
-    //         proposedSolution: 'https://mantine.dev/theming/colors/',
-    //         userId: "01J4AHYA34HHW2DTD1RRBVEPW6",
-    //         position: null,
-    //         prize: null,
-    //         reasonForRejection: 'His designs are horrible',
-    //         createdAt: Date.now(),
-    //         updatedAt: Date.now(),
-    //     },
-    //     {
-    //         id: '3',
-    //         status: 'approved',
-    //         proposedSolution: 'https://mantine.dev/theming/colors/',
-    //         userId: "01J4AHYA34HHW2DTD1RRBVEPW6",
-    //         position: null,
-    //         prize: null,
-    //         reasonForRejection: null,
-    //         createdAt: Date.now(),
-    //         updatedAt: Date.now(),
-    //     },
-    //     {
-    //         id: '4',
-    //         status: 'paid',
-    //         proposedSolution: 'https://mantine.dev/theming/colors/',
-    //         userId: "01J4AHYA34HHW2DTD1RRBVEPW6",
-    //         position: 1,
-    //         prize: {
-    //             position: 1,
-    //             amount: {
-    //                 unit: 'USD',
-    //                 value: 1000
-    //             }
-    //         },
-    //         reasonForRejection: null,
-    //         createdAt: Date.now(),
-    //         updatedAt: Date.now(),
-    //     },
-    // ]
 
     return (
         <Center>

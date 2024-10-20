@@ -1,6 +1,6 @@
 'use client'
 
-import { ChallengePrimitive } from "../../_core/_primitives/ChallengePrimitive";
+import { ChallengeDTO } from "../../_core/_primitives/ChallengePrimitive";
 import { Grid } from "@mantine/core";
 import { UserAuthDTO } from "../../_core/_dtos/UserAuthDTO";
 import React from "react";
@@ -11,7 +11,7 @@ export function ChallengePublicView({
     challenge,
     userAuth,
 }: {
-    challenge: ChallengePrimitive;
+    challenge: ChallengeDTO;
     userAuth: UserAuthDTO | null;
 }) {
     if (!challenge.isPublished) {

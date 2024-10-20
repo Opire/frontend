@@ -14,13 +14,20 @@ import { NewChallengeSection } from "../../shared/NewChallengeSection";
 import { PrizesSection } from "../../shared/PrizesSection";
 import { PublishedChallengeCreatorActions } from "./PublishedChallengeCreatorActions";
 import { CreatorActionsOnParticipation } from "./CreatorActionsOnParticipation";
+import { useGetChallenge } from "../../../../../../hooks/useGetChallenge";
 
 interface PublishedChallengeCreatorDataProps {
     challenge: ChallengeDTO;
     creator: UserAuthDTO;
 }
 
-export const PublishedChallengeCreatorData: FC<PublishedChallengeCreatorDataProps> = ({ challenge, creator }) => {
+export const PublishedChallengeCreatorData: FC<PublishedChallengeCreatorDataProps> = ({
+    challenge: initialChallenge,
+    creator }) => {
+    const { challenge } = useGetChallenge({
+        initialChallenge,
+        revalidateOnFocus: true,
+    });
 
     return (
         <Box>
@@ -45,58 +52,6 @@ const ParticipationsSection: FC<{
     challenge: ChallengeDTO;
 }> = ({ challenge }) => {
     const sortedParticipations = [...challenge.participations].sort((a, b) => b.createdAt - a.createdAt);
-    // const sortedParticipations: ChallengeParticipationPrimitive[] = [
-    //     {
-    //         id: '1',
-    //         status: 'waiting_for_approval',
-    //         proposedSolution: 'https://mantine.dev/theming/colors/',
-    //         userId: "01J4AHYA34HHW2DTD1RRBVEPW6",
-    //         position: null,
-    //         prize: null,
-    //         reasonForRejection: null,
-    //         createdAt: Date.now(),
-    //         updatedAt: Date.now(),
-    //     },
-    //     {
-    //         id: '2',
-    //         status: 'rejected',
-    //         proposedSolution: 'https://mantine.dev/theming/colors/',
-    //         userId: "01J4AHYA34HHW2DTD1RRBVEPW6",
-    //         position: null,
-    //         prize: null,
-    //         reasonForRejection: 'His designs are horrible',
-    //         createdAt: Date.now(),
-    //         updatedAt: Date.now(),
-    //     },
-    //     {
-    //         id: '3',
-    //         status: 'approved',
-    //         proposedSolution: 'https://mantine.dev/theming/colors/',
-    //         userId: "01J4AHYA34HHW2DTD1RRBVEPW6",
-    //         position: null,
-    //         prize: null,
-    //         reasonForRejection: null,
-    //         createdAt: Date.now(),
-    //         updatedAt: Date.now(),
-    //     },
-    //     {
-    //         id: '4',
-    //         status: 'paid',
-    //         proposedSolution: 'https://mantine.dev/theming/colors/',
-    //         userId: "01J4AHYA34HHW2DTD1RRBVEPW6",
-    //         position: 1,
-    //         prize: {
-    //             position: 1,
-    //             amount: {
-    //                 unit: 'USD',
-    //                 value: 1000
-    //             }
-    //         },
-    //         reasonForRejection: null,
-    //         createdAt: Date.now(),
-    //         updatedAt: Date.now(),
-    //     },
-    // ]
 
     return (
         <Center>
