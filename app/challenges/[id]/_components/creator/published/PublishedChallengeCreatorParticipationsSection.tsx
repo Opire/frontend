@@ -10,7 +10,7 @@ import { formatPrice } from "../../../../../_utils/formatPrice";
 import { CreatorActionsOnParticipation } from "./CreatorActionsOnParticipation";
 import { PublishedChallengeCreatorActions } from "./PublishedChallengeCreatorActions";
 
-export const ParticipationsSection: FC<{
+export const PublishedChallengeCreatorParticipationsSection: FC<{
     challenge: ChallengeDTO;
 }> = ({ challenge }) => {
     const sortedParticipations = [...challenge.participations].sort((a, b) => b.createdAt - a.createdAt);

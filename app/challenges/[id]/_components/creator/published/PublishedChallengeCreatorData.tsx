@@ -8,7 +8,7 @@ import { NewChallengeSection } from "../../shared/NewChallengeSection";
 import { PrizesSection } from "../../shared/PrizesSection";
 import { useGetChallenge } from "../../../../../../hooks/useGetChallenge";
 import { CompleteChallengeForm } from "./CompleteChallengeForm";
-import { ParticipationsSection } from "./ParticipationsSection";
+import { PublishedChallengeCreatorParticipationsSection } from "./PublishedChallengeCreatorParticipationsSection";
 
 interface PublishedChallengeCreatorDataProps {
     challenge: ChallengeDTO;
@@ -31,7 +31,7 @@ export const PublishedChallengeCreatorData: FC<PublishedChallengeCreatorDataProp
             <PrizesSection challenge={challenge} />
 
             <Space h='4rem' />
-            <ParticipationsSection challenge={challenge} />
+            <PublishedChallengeCreatorParticipationsSection challenge={challenge} />
 
             <Space h='2rem' />
             <div style={{ display: "flex", justifyContent: "flex-end" }}>
