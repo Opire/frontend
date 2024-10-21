@@ -14,14 +14,15 @@ export const PublishedChallengePublicParticipationsData: FC<{
     challenge: ChallengePrimitive;
     userAuth: UserAuthDTO | null;
 }> = ({ challenge, userAuth }) => {
-    const sortedParticipations = [...challenge.participations].sort((a, b) => b.createdAt - a.createdAt);
+    const participationsToShow = challenge.isCompleted ? challenge.participations.filter(participation => participation.status !== 'paid') : challenge.participations;
+    const sortedParticipations = [...participationsToShow].sort((a, b) => b.createdAt - a.createdAt);
 
     return (
         <Center>
             <Card withBorder shadow="md" radius='md' w={'100%'}>
                 <Center>
                     <Title order={2} size="h2" style={{ fontSize: '2.6rem', fontWeight: 900 }}>
-                        Participations
+                        {challenge.isCompleted ? 'Other participations' : 'Participations'}
                     </Title>
                 </Center >
 
