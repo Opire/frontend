@@ -36,32 +36,37 @@ export function PublishChallengeForm({ challengeId, isDisabled, isLoading }: Pub
                 }
             );
 
-            const message = allowParticipationsAfterPublish
-                ? "Now everyone is able to see the challenge, and participants can start to submit their solutions! Attract more attention by sharing it in your social media!"
-                : "Now everyone is able to see the challenge! Attract more attention by sharing it in your social media, but rembember that you need to enable new participations before participants can submit their solutions"
-
-            notifications.show({
-                title: "Challenge published sucesfully",
-                message,
-                withBorder: true,
-                withCloseButton: true,
-                autoClose: 10_000,
-                color: "teal",
-                icon: <IconCheck />,
-            });
 
             if (allowParticipationsAfterPublish) {
                 await clientCustomFetch(
                     API_ROUTES.CHALLENGES.ALLOW_NEW_PARTICIPATIONS(challengeId),
                     {
                         method: 'POST',
-                    });
+                    }
+                );
             }
 
-            window.scrollTo(0, 0);
-            router.refresh();
+            const message = allowParticipationsAfterPublish
+                ? "Now everyone is able to see the challenge, and participants can start to submit their solutions! Attract more attention by sharing it in your social media!"
+                : "Now everyone is able to see the challenge! Attract more attention by sharing it in your social media, but rembember that you need to enable new participations before participants can submit their solutions"
 
-            setIsPublishingChallenge(false);
+            setTimeout(() => {
+                notifications.show({
+                    title: "Challenge published sucesfully",
+                    message,
+                    withBorder: true,
+                    withCloseButton: true,
+                    autoClose: 10_000,
+                    color: "teal",
+                    icon: <IconCheck />,
+                });
+
+                window.scrollTo(0, 0);
+                router.refresh();
+
+                setIsPublishingChallenge(false);
+            }, 1000);
+
         } catch (error) {
             notifications.show({
                 title: "Challenge cannot be published",

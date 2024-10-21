@@ -63,7 +63,7 @@ export function CompleteChallengeForm({ challenge }: CompleteChallengeFormProps)
                 onClick={openCompleteChallengeModal}
                 variant="gradient"
                 size="md"
-                disabled={isCompletingChallenge}
+                disabled={isCompletingChallenge || challenge.participations.length === 0}
                 loading={isCompletingChallenge}
                 leftSection={<IconLock />}
             >
