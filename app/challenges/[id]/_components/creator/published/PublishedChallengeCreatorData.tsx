@@ -15,6 +15,7 @@ import { PrizesSection } from "../../shared/PrizesSection";
 import { PublishedChallengeCreatorActions } from "./PublishedChallengeCreatorActions";
 import { CreatorActionsOnParticipation } from "./CreatorActionsOnParticipation";
 import { useGetChallenge } from "../../../../../../hooks/useGetChallenge";
+import { CompleteChallengeForm } from "./CompleteChallengeForm";
 
 interface PublishedChallengeCreatorDataProps {
     challenge: ChallengeDTO;
@@ -38,6 +39,11 @@ export const PublishedChallengeCreatorData: FC<PublishedChallengeCreatorDataProp
 
             <Space h='4rem' />
             <ParticipationsSection challenge={challenge} />
+
+            <Space h='2rem' />
+            <div style={{ display: "flex", justifyContent: "flex-end" }}>
+                <CompleteChallengeForm challenge={challenge} />
+            </div>
 
             <Space h='4rem' />
             <NewChallengeSection challenge={challenge} userAuth={creator} />

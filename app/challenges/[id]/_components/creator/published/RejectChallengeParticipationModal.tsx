@@ -1,6 +1,6 @@
 import { Button, Container, Group, Modal, Space, Text, Textarea, Title } from "@mantine/core";
 import { FC, useState } from "react";
-import { IconUserOff, IconX } from "@tabler/icons-react";
+import { IconX } from "@tabler/icons-react";
 import { notifications } from "@mantine/notifications";
 import { clientCustomFetch } from "../../../../../_utils/clientCustomFetch";
 import { API_ROUTES } from "../../../../../../constants";
