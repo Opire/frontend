@@ -83,7 +83,7 @@ export const ChallengeMainData: FC<{
                 </ListItem>
 
                 <ListItem>
-                    <Text size="xl" fw={400} >
+                    <Text size="xl" fw={400}>
                         {challenge.configuration.deadline
                             ?
                             `The challenge has a deadline. New participations will not be accepted after ${formatDate(new Date(challenge.configuration.deadline))}`
