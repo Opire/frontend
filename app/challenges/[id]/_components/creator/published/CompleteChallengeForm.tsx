@@ -37,21 +37,23 @@ export function CompleteChallengeForm({ challenge }: CompleteChallengeFormProps)
                 }
             );
 
-            notifications.show({
-                title: "Challenge completed sucesfully",
-                message: wasAbleToPayPrizes
-                    ? "Congratulations on your completed challenge! If you had some participations pending to pay, remember to proceed with the payment when you are ready"
-                    : "Congratulations on your completed challenge! You can now start paying the approved participants based on the prizes their solutions deserve",
-                withBorder: true,
-                withCloseButton: true,
-                autoClose: 10_000,
-                color: "teal",
-            });
+            setTimeout(() => {
+                notifications.show({
+                    title: "Challenge completed sucesfully",
+                    message: wasAbleToPayPrizes
+                        ? "Congratulations on your completed challenge! If you had some participations pending to pay, remember to proceed with the payment when you are ready"
+                        : "Congratulations on your completed challenge! You can now start paying the approved participants based on the prizes their solutions deserve",
+                    withBorder: true,
+                    withCloseButton: true,
+                    autoClose: 10_000,
+                    color: "teal",
+                });
 
-            router.refresh();
+                router.refresh();
 
-            closeCompleteChallengeModal();
-            setIsCompletingChallenge(false);
+                closeCompleteChallengeModal();
+                setIsCompletingChallenge(false);
+            }, 1000);
         } catch (error) {
             setIsCompletingChallenge(false);
         }
