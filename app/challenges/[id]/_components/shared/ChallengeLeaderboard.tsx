@@ -43,6 +43,16 @@ export const ChallengeLeaderboard: FC<{
                                     <LeaderboardRow participation={participation} />
                                 </Table.Tr>
                             ))}
+
+                            {sortedPaidParticipations.length === 0 && (
+                                <Table.Tr>
+                                    <Table.Td colSpan={5}>
+                                        <Text ta='center'>
+                                            No winners yet
+                                        </Text>
+                                    </Table.Td>
+                                </Table.Tr>
+                            )}
                         </Table.Tbody>
                     </Table>
                 </Table.ScrollContainer>

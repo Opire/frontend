@@ -17,6 +17,10 @@ export const PublishedChallengePublicParticipationsData: FC<{
     const participationsToShow = challenge.isCompleted ? challenge.participations.filter(participation => participation.status !== 'paid') : challenge.participations;
     const sortedParticipations = [...participationsToShow].sort((a, b) => b.createdAt - a.createdAt);
 
+    const isChallengeCompletelyReviewed = sortedParticipations.length === 0 && challenge.isCompleted;
+    if (isChallengeCompletelyReviewed) {
+        return <></>;
+    }
     return (
         <Center>
             <Card withBorder shadow="md" radius='md' w={'100%'}>
