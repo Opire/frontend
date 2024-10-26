@@ -5,6 +5,7 @@ import { ChallengePrimitive } from "../../../../_core/_primitives/ChallengePrimi
 import { ChallengePrizePrimitive } from "../../../../_core/_primitives/ChallengePrizePrimitive";
 import { isPrimitiveSpecificPositionPrize, isPrimitiveThresholdPrize, isPrimitiveThresholdWithoutLimitPrize } from "../../../../_utils/challengePrizes";
 import { formatPrice } from "../../../../_utils/formatPrice";
+import { getOrdinalPositionDescription } from "./utils";
 
 export const PrizesSection: FC<{
     challenge: ChallengePrimitive;
@@ -73,12 +74,3 @@ const PrizeCard: FC<{
     );
 };
 
-function getOrdinalPositionDescription(position: number): string {
-    const suffixes = ["th", "st", "nd", "rd"];
-    const v = position % 100;
-
-    const suffix =
-        suffixes[(v - 20) % 10] || suffixes[v] || suffixes[0];
-
-    return `${position}${suffix}`;
-}

@@ -7,15 +7,15 @@ import { ChallengeMainData } from "../../shared/ChallengeMainData";
 import { NewChallengeSection } from "../../shared/NewChallengeSection";
 import { PrizesSection } from "../../shared/PrizesSection";
 import { useGetChallenge } from "../../../../../../hooks/useGetChallenge";
-import { CompleteChallengeForm } from "./CompleteChallengeForm";
-import { PublishedChallengeCreatorParticipationsSection } from "./PublishedChallengeCreatorParticipationsSection";
+import { PublishedChallengeCreatorParticipationsSection } from "../published/PublishedChallengeCreatorParticipationsSection";
+import { ChallengeLeaderboard } from "../../shared/ChallengeLeaderboard";
 
-interface PublishedChallengeCreatorDataProps {
+interface CompletedChallengeCreatorDataProps {
     challenge: ChallengeDTO;
     creator: UserAuthDTO;
 }
 
-export const PublishedChallengeCreatorData: FC<PublishedChallengeCreatorDataProps> = ({
+export const CompletedChallengeCreatorData: FC<CompletedChallengeCreatorDataProps> = ({
     challenge: initialChallenge,
     creator }) => {
     const { challenge } = useGetChallenge({
@@ -31,12 +31,10 @@ export const PublishedChallengeCreatorData: FC<PublishedChallengeCreatorDataProp
             <PrizesSection challenge={challenge} />
 
             <Space h='4rem' />
-            <PublishedChallengeCreatorParticipationsSection challenge={challenge} />
+            <ChallengeLeaderboard challenge={challenge} />
 
-            <Space h='2rem' />
-            <div style={{ display: "flex", justifyContent: "flex-end" }}>
-                <CompleteChallengeForm challenge={challenge} />
-            </div>
+            <Space h='4rem' />
+            <PublishedChallengeCreatorParticipationsSection challenge={challenge} />
 
             <Space h='4rem' />
             <NewChallengeSection challenge={challenge} userAuth={creator} />

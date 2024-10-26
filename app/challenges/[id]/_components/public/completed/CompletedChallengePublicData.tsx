@@ -3,21 +3,20 @@ import { FC } from "react";
 import { UserAuthDTO } from "../../../../../_core/_dtos/UserAuthDTO";
 import React from "react";
 import { Divider, Box, Space } from "@mantine/core";
-import { ChallengeMainData } from "../../shared/ChallengeMainData";
+
 import { NewChallengeSection } from "../../shared/NewChallengeSection";
 import { PrizesSection } from "../../shared/PrizesSection";
+import { ChallengeMainData } from "../../shared/ChallengeMainData";
 import { useGetChallenge } from "../../../../../../hooks/useGetChallenge";
-import { CompleteChallengeForm } from "./CompleteChallengeForm";
-import { PublishedChallengeCreatorParticipationsSection } from "./PublishedChallengeCreatorParticipationsSection";
+import { PublishedChallengePublicParticipationsData } from "../published/PublishedChallengePublicParticipationsData";
+import { ChallengeLeaderboard } from "../../shared/ChallengeLeaderboard";
 
-interface PublishedChallengeCreatorDataProps {
+interface CompletedChallengePublicDataProps {
     challenge: ChallengeDTO;
-    creator: UserAuthDTO;
+    userAuth: UserAuthDTO | null;
 }
 
-export const PublishedChallengeCreatorData: FC<PublishedChallengeCreatorDataProps> = ({
-    challenge: initialChallenge,
-    creator }) => {
+export const CompletedChallengePublicData: FC<CompletedChallengePublicDataProps> = ({ challenge: initialChallenge, userAuth }) => {
     const { challenge } = useGetChallenge({
         initialChallenge,
         revalidateOnFocus: true,
@@ -31,18 +30,15 @@ export const PublishedChallengeCreatorData: FC<PublishedChallengeCreatorDataProp
             <PrizesSection challenge={challenge} />
 
             <Space h='4rem' />
-            <PublishedChallengeCreatorParticipationsSection challenge={challenge} />
-
-            <Space h='2rem' />
-            <div style={{ display: "flex", justifyContent: "flex-end" }}>
-                <CompleteChallengeForm challenge={challenge} />
-            </div>
+            <ChallengeLeaderboard challenge={challenge} />
 
             <Space h='4rem' />
-            <NewChallengeSection challenge={challenge} userAuth={creator} />
+            <PublishedChallengePublicParticipationsData challenge={challenge} userAuth={userAuth} />
+
+            <Space h='4rem' />
+            <NewChallengeSection challenge={challenge} userAuth={userAuth} />
 
             <Space h='2rem' />
         </Box>
     );
 };
-

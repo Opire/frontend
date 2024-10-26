@@ -1,7 +1,5 @@
 import { Button, Container, Flex, Group, Modal, Space, Text, Title } from "@mantine/core";
 import { FC, useState } from "react";
-import { IconCheck, IconX } from "@tabler/icons-react";
-import { notifications } from "@mantine/notifications";
 import { clientCustomFetch } from "../../../../../_utils/clientCustomFetch";
 import { API_ROUTES } from "../../../../../../constants";
 import { ChallengeDTO } from "../../../../../_core/_primitives/ChallengePrimitive";

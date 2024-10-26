@@ -5,6 +5,7 @@ import '@mantine/dates/styles.css';
 import { ColorSchemeScript, MantineProvider } from "@mantine/core";
 import { ModalsProvider } from "@mantine/modals";
 import { Notifications } from "@mantine/notifications";
+import { DatesProvider } from '@mantine/dates';
 
 export default function RootLayout({
     children,
@@ -61,9 +62,11 @@ export default function RootLayout({
                     }}
                 >
                     <Notifications limit={5} position='bottom-right' />
-                    <ModalsProvider>
-                        {children}
-                    </ModalsProvider>
+                    <DatesProvider settings={{ locale: 'en', timezone: 'UTC' }}>
+                        <ModalsProvider>
+                            {children}
+                        </ModalsProvider>
+                    </DatesProvider>
                 </MantineProvider>
             </body>
 

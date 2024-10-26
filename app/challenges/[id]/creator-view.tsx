@@ -5,6 +5,7 @@ import { DraftChallengeCreatorData } from "./_components/creator/draft/DraftChal
 import { PublishedChallengeCreatorData } from "./_components/creator/published/PublishedChallengeCreatorData";
 import { UserAuthDTO } from "../../_core/_dtos/UserAuthDTO";
 import { ChallengeDTO } from "../../_core/_primitives/ChallengePrimitive";
+import { CompletedChallengeCreatorData } from "./_components/creator/completed/CompletedChallengeCreatorData";
 
 export function ChallengeCreatorView({
     challenge,
@@ -23,10 +24,20 @@ export function ChallengeCreatorView({
         );
     }
 
+    if (!challenge.isCompleted) {
+        return (
+            <Grid h={'100%'}>
+                <Grid.Col span={{ base: 12 }}>
+                    <PublishedChallengeCreatorData challenge={challenge} creator={creator} />
+                </Grid.Col>
+            </Grid>
+        );
+    }
+
     return (
         <Grid h={'100%'}>
             <Grid.Col span={{ base: 12 }}>
-                <PublishedChallengeCreatorData challenge={challenge} creator={creator} />
+                <CompletedChallengeCreatorData challenge={challenge} creator={creator} />
             </Grid.Col>
         </Grid>
     );

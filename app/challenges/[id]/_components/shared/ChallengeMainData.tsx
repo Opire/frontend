@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { ChallengePrimitive } from "../../../../_core/_primitives/ChallengePrimitive";
-import { Center, Title, Space, List, ListItem, Text } from "@mantine/core";
+import { Center, Title, Space, List, ListItem, Text, Badge } from "@mantine/core";
 import { formatDate } from "../../../../_utils/formatDate";
 import { formatPrice } from "../../../../_utils/formatPrice";
 import { getChallengeHighestPrize } from "../../../../_utils/getChallengeHighestPrize";
@@ -29,6 +29,17 @@ export const ChallengeMainData: FC<{
                     Win {formatPrice(highestPrize)}
                 </Text>
             </Center>
+
+            {
+                challenge.isCompleted
+                &&
+                <>
+                    <Space h='0.5rem' />
+                    <Center>
+                        <Badge variant="gradient" size="xl" color="cyan">Completed</Badge>
+                    </Center>
+                </>
+            }
 
             <Space h='3rem' />
             <Title order={2} size="h2" style={{ fontSize: '2.6rem', fontWeight: 900 }}>
@@ -72,7 +83,7 @@ export const ChallengeMainData: FC<{
                 </ListItem>
 
                 <ListItem>
-                    <Text size="xl" fw={400} >
+                    <Text size="xl" fw={400}>
                         {challenge.configuration.deadline
                             ?
                             `The challenge has a deadline. New participations will not be accepted after ${formatDate(new Date(challenge.configuration.deadline))}`
