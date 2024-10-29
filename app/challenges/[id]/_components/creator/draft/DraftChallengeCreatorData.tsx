@@ -43,7 +43,6 @@ import {
     sortPrizes,
 } from "../../../../../_utils/challengePrizes";
 import { ChallengePrizePrimitive } from "../../../../../_core/_primitives/ChallengePrizePrimitive";
-import { formatPrice } from "../../../../../_utils/formatPrice";
 import {
     IconCircleCheckFilled,
     IconEdit,
@@ -59,6 +58,7 @@ import { EditChallengePrizeModal } from "./EditChallengePrizeModal";
 import { ApplyTemplateModal } from "./ApplyTemplateModal";
 import { PublishChallengeForm } from "./PublishChallengeForm";
 import { useGetChallenge } from "../../../../../../hooks/useGetChallenge";
+import { PrizeDisplay } from "../../shared/PrizeDisplay";
 
 interface DraftChallengeCreatorDataProps {
     challenge: ChallengeDTO;
@@ -601,7 +601,9 @@ const PrizeRow: FC<{
                     `From ${getChallengePrizeMinPosition(prize)} onwards`}
             </Table.Td>
 
-            <Table.Td>{formatPrice(prize.amount)}</Table.Td>
+            <Table.Td>
+                <PrizeDisplay prize={prize} />
+            </Table.Td>
 
             <Table.Td>
                 <Flex gap={'0.6rem'}>

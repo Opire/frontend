@@ -1,4 +1,4 @@
-import { Button, Container, Flex, Group, Modal, Space, Text, Title } from "@mantine/core";
+import { Badge, Button, Card, Center, Container, Flex, Grid, Group, Modal, Space, Text, Title } from "@mantine/core";
 import { FC, useState } from "react";
 import { clientCustomFetch } from "../../../../../_utils/clientCustomFetch";
 import { API_ROUTES } from "../../../../../../constants";
@@ -7,6 +7,9 @@ import { ChallengeParticipationPrimitive } from "../../../../../_core/_primitive
 import { useGetAvailableChallengePrizes } from "../../../../../../hooks/useGetAvailableChallengePrizes";
 import { ChallengePrizePrimitive } from "../../../../../_core/_primitives/ChallengePrizePrimitive";
 import { formatPrice } from "../../../../../_utils/formatPrice";
+import { useHover } from "@mantine/hooks";
+import { isPrimitiveSpecificPositionPrize, isPrimitiveThresholdPrize, isPrimitiveThresholdWithoutLimitPrize } from "../../../../../_utils/challengePrizes";
+import { getOrdinalPositionDescription } from "../../shared/utils";
 
 interface PayChallengeParticipationModalProps {
     challenge: ChallengeDTO;
@@ -62,7 +65,9 @@ export const PayChallengeParticipationModal: FC<
                     throw new Error("Error while getting link to pay the participation");
                 }
 
-                window.open(responseData.url, "_blank");
+                if (responseData.url) {
+                    window.open(responseData.url, "_blank");
+                }
 
                 onParticipationPaid();
                 setIsPayingParticipation(false);
@@ -94,18 +99,26 @@ export const PayChallengeParticipationModal: FC<
 
                     <Space h="1rem" />
 
-                    <Flex gap={'1rem'} wrap={'wrap'}>
-                        {availablePrizes.map((prize) => (
-                            <Button
-                                key={prize.amount.value}
-                                onClick={() => setSelectedPrize(prize)}
-                                variant={selectedPrize === prize ? "filled" : "outline"}
-                                color={selectedPrize === prize ? "teal" : "gray"}
-                            >
-                                {formatPrice(prize.amount)}
-                            </Button>
+                    <Text>
+                        If you select a prize without a monetary amount, the participant will be notified that they have won the prize, but you will have to manually deliver the prize to them.
+                    </Text>
+
+                    <Space h="1rem" />
+
+                    <Grid
+                        style={{ justifyItems: 'center', alignItems: 'center' }}
+                        gutter={20}
+                    >
+                        {availablePrizes.map((prize, index) => (
+                            <Grid.Col key={index} span={'auto'} flex={1}>
+                                <PrizeCard
+                                    prize={prize}
+                                    isSelected={selectedPrize === prize}
+                                    onSelect={() => setSelectedPrize(prize)}
+                                />
+                            </Grid.Col>
                         ))}
-                    </Flex>
+                    </Grid>
 
                     <Space h="2rem" />
 
@@ -128,3 +141,86 @@ export const PayChallengeParticipationModal: FC<
             </Modal>
         );
     };
+
+const PrizeCard: FC<{
+    prize: ChallengePrizePrimitive;
+    isSelected: boolean;
+    onSelect: () => void;
+}> = ({ prize, isSelected, onSelect }) => {
+    const { hovered, ref } = useHover();
+
+    const isSpecificPositionPrize = isPrimitiveSpecificPositionPrize(prize);
+    const isThresholdPrize = isPrimitiveThresholdPrize(prize);
+    const isThresholdWithoutLimitPrize = isPrimitiveThresholdWithoutLimitPrize(prize);
+
+    return (
+        <Card
+            ref={ref}
+            withBorder
+            radius={'lg'}
+            shadow="md"
+            p={'xl'}
+            h={'100%'}
+            w={'100%'}
+            style={{
+                transition: 'box-shadow 0.3s ease-in-out',
+                boxShadow: hovered ? '0 4px 30px rgba(16, 152, 173, 0.5)' : undefined,
+                cursor: 'pointer',
+                border: isSelected ? '2px solid #10ACAD' : undefined,
+                opacity: isSelected ? 1 : 0.75,
+            }}
+            onClick={onSelect}
+        >
+            <Center style={{ margin: 'auto 0', height: '100%' }}>
+                <Flex direction={'column'} align={'center'} justify={'center'} h={'100%'}>
+                    <Text style={{ fontWeight: 700, fontSize: '1.6rem' }}>
+                        {
+                            isSpecificPositionPrize
+                            &&
+                            `${getOrdinalPositionDescription(prize.position)} prize`
+                        }
+                        {
+                            isThresholdPrize
+                            &&
+                            `${getOrdinalPositionDescription(prize.fromPosition)} to ${getOrdinalPositionDescription(prize.toPosition)} prize`
+                        }
+                        {
+                            isThresholdWithoutLimitPrize
+                            &&
+                            `${getOrdinalPositionDescription(prize.fromPosition)} prize onwards`
+                        }
+                    </Text>
+
+                    {
+                        prize.amount
+                        &&
+                        <Text variant="gradient" style={{ fontWeight: 900, fontSize: '2.4rem' }}>
+                            {formatPrice(prize.amount)}
+                        </Text>
+                    }
+
+                    {
+                        prize.benefits.length > 0
+                        &&
+                        <>
+                            <Space h={'0.5rem'} />
+
+                            <Flex gap={'xs'} wrap={'wrap'}>
+                                {prize.benefits.map((benefit) => (
+                                    <Badge
+                                        key={benefit}
+                                        variant="gradient"
+                                    >
+                                        {benefit}
+                                    </Badge>
+                                )
+                                )}
+                            </Flex>
+                        </>
+                    }
+                </Flex>
+            </Center>
+        </Card>
+    );
+};
+

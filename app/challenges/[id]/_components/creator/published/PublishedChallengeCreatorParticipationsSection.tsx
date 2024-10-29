@@ -9,6 +9,7 @@ import { formatDateTime } from "../../../../../_utils/formatDate";
 import { formatPrice } from "../../../../../_utils/formatPrice";
 import { CreatorActionsOnParticipation } from "./CreatorActionsOnParticipation";
 import { PublishedChallengeCreatorActions } from "./PublishedChallengeCreatorActions";
+import { PrizeDisplay } from "../../shared/PrizeDisplay";
 
 export const PublishedChallengeCreatorParticipationsSection: FC<{
     challenge: ChallengeDTO;
@@ -213,7 +214,7 @@ const ParticipationRow: FC<{
                     participation.prize
                         ?
                         <Text variant="gradient" style={{ fontWeight: "bold", fontSize: '1.2rem' }}>
-                            {formatPrice(participation.prize.amount)}
+                            <PrizeDisplay prize={participation.prize} />
                         </Text>
                         :
                         <IconX color="red" />

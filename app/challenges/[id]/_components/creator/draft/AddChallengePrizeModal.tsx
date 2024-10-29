@@ -8,6 +8,7 @@ import {
     NumberInput,
     Space,
     Switch,
+    TagsInput,
 } from "@mantine/core";
 import { FC, useEffect, useMemo, useState } from "react";
 import { useForm } from "@mantine/form";
@@ -57,14 +58,15 @@ export const AddChallengePrizeModal: FC<AddChallengePrizeModalProps> = ({
         useState(true);
 
     const lastPrize = useMemo(() => currentPrizes.at(-1), [currentPrizes]);
+    const lastPrizeAmount = useMemo(() => currentPrizes.slice().reverse().find((prize) => prize.amount)?.amount ?? null, [currentPrizes]);
 
     const initialAvailablePosition = useMemo(() => {
         if (!lastPrize) {
             return 1;
         }
 
-        if ((lastPrize as SpecificPositionPrizePrimitive).position) {
-            return (lastPrize as SpecificPositionPrizePrimitive).position + 1;
+        if (isPrimitiveSpecificPositionPrize(lastPrize)) {
+            return lastPrize.position + 1;
         }
 
         const lastPosition = (
@@ -84,8 +86,9 @@ export const AddChallengePrizeModal: FC<AddChallengePrizeModalProps> = ({
         initialValues: {
             amount: {
                 unit: "USD",
-                value: lastPrize ? getPriceInUSD(lastPrize.amount) - 1 : 1000,
+                value: lastPrizeAmount ? getPriceInUSD(lastPrizeAmount) - 1 : 1000,
             },
+            benefits: [],
             position: initialAvailablePosition,
             fromPosition: undefined,
             toPosition: undefined,
@@ -96,7 +99,7 @@ export const AddChallengePrizeModal: FC<AddChallengePrizeModalProps> = ({
     });
 
     const newPrizeAffectedPositionsDescription = useMemo(() => {
-        const baseMessage = "This new prize will be paid";
+        const baseMessage = "This new prize will be given";
         const prize = form.getValues();
 
         if (isPrimitiveSpecificPositionPrize(prize)) {
@@ -121,11 +124,14 @@ export const AddChallengePrizeModal: FC<AddChallengePrizeModalProps> = ({
     }, [form.getValues()]);
 
     function handleChangeIsPrizeForSpecificPosition(isChecked: boolean) {
-        const amount = form.getValues().amount;
+        const values = form.getValues();
+        const amount = values.amount;
+        const benefits = values.benefits;
 
         if (isChecked) {
             form.setValues({
                 amount,
+                benefits,
                 position: initialAvailablePosition,
                 fromPosition: undefined,
                 toPosition: undefined,
@@ -133,6 +139,7 @@ export const AddChallengePrizeModal: FC<AddChallengePrizeModalProps> = ({
         } else {
             form.setValues({
                 amount,
+                benefits,
                 position: undefined,
                 fromPosition: initialAvailablePosition,
                 toPosition: CHALLENGE_PRIZE_WITHOUT_LIMIT_VALUE,
@@ -183,8 +190,9 @@ export const AddChallengePrizeModal: FC<AddChallengePrizeModalProps> = ({
             form.setValues({
                 amount: {
                     unit: "USD",
-                    value: lastPrize ? getPriceInUSD(lastPrize.amount) - 1 : 1000,
+                    value: lastPrizeAmount ? getPriceInUSD(lastPrizeAmount) - 1 : 1000,
                 },
+                benefits: [],
                 position: initialAvailablePosition,
                 fromPosition: undefined,
                 toPosition: undefined,
@@ -231,13 +239,13 @@ export const AddChallengePrizeModal: FC<AddChallengePrizeModalProps> = ({
                                 prefix="$"
                                 key={form.key("amount.value")}
                                 min={0}
-                                max={lastPrize ? lastPrize.amount.value - 1 : undefined}
+                                max={lastPrizeAmount ? getPriceInUSD(lastPrizeAmount) - 1 : undefined}
                                 {...form.getInputProps("amount.value")}
                                 onChange={(value) =>
-                                    form.setFieldValue("amount", {
+                                    form.setFieldValue("amount", value ? {
                                         unit: "USD",
-                                        value: value ? +value : 0,
-                                    })
+                                        value: +value,
+                                    } : null)
                                 }
                             />
                         </Grid.Col>
@@ -253,6 +261,17 @@ export const AddChallengePrizeModal: FC<AddChallengePrizeModalProps> = ({
                                         event.currentTarget.checked
                                     )
                                 }
+                            />
+                        </Grid.Col>
+
+                        <Grid.Col span={{ base: 12 }}>
+                            <TagsInput
+                                label="Benefits (non-monetary prizes)"
+                                placeholder={'Press Enter to add a benefit'}
+                                description="Add up to 10"
+                                maxTags={10}
+                                key={form.key("benefits")}
+                                {...form.getInputProps("benefits")}
                             />
                         </Grid.Col>
 

@@ -7,8 +7,8 @@ import { UserAuthDTO } from "../../../../../_core/_dtos/UserAuthDTO";
 import { ChallengeParticipationPrimitive, ChallengeParticipationStatusType } from "../../../../../_core/_primitives/ChallengeParticipationPrimitive";
 import { ChallengePrimitive } from "../../../../../_core/_primitives/ChallengePrimitive";
 import { formatDateTime } from "../../../../../_utils/formatDate";
-import { formatPrice } from "../../../../../_utils/formatPrice";
 import { SubmitChallengeSolutionForm } from "./SubmitChallengeSolutionForm";
+import { PrizeDisplay } from "../../shared/PrizeDisplay";
 
 export const PublishedChallengePublicParticipationsData: FC<{
     challenge: ChallengePrimitive;
@@ -202,7 +202,7 @@ const ParticipationRow: FC<{
                     participation.prize
                         ?
                         <Text variant="gradient" style={{ fontWeight: "bold", fontSize: '1.2rem' }}>
-                            {formatPrice(participation.prize.amount)}
+                            <PrizeDisplay prize={participation.prize} />
                         </Text>
                         :
                         <IconX color="red" />

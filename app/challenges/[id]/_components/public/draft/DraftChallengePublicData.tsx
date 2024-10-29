@@ -30,6 +30,7 @@ import { formatPrice } from "../../../../../_utils/formatPrice";
 import { formatDateTime } from "../../../../../_utils/formatDate";
 import { IconCircleCheckFilled } from "@tabler/icons-react";
 import { DatePickerInput } from "@mantine/dates";
+import { PrizeDisplay } from "../../shared/PrizeDisplay";
 
 interface DraftChallengePublicDataProps {
     challenge: ChallengePrimitive;
@@ -337,7 +338,9 @@ const PrizeRow: FC<{
                     `From ${getChallengePrizeMinPosition(prize)} onwards`}
             </Table.Td>
 
-            <Table.Td>{formatPrice(prize.amount)}</Table.Td>
+            <Table.Td>
+                <PrizeDisplay prize={prize} />
+            </Table.Td>
         </>
     );
 };
