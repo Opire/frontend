@@ -52,7 +52,7 @@ export function PublishChallengeForm({ challengeId, isDisabled, isLoading }: Pub
 
             setTimeout(() => {
                 notifications.show({
-                    title: "Challenge published sucesfully",
+                    title: "Challenge published successfully",
                     message,
                     withBorder: true,
                     withCloseButton: true,

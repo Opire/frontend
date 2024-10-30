@@ -17,7 +17,7 @@ export const ClaimRewardsModal: FC<ClaimRewardsModalProps> = ({
     isOpened,
     onClose,
     prefilledIssueURL,
-    onRewardsClaimed = () => {},
+    onRewardsClaimed = () => { },
 }) => {
     const [isClaimingRewards, setIsClaimingRewards] = useState(false);
 
@@ -77,7 +77,7 @@ export const ClaimRewardsModal: FC<ClaimRewardsModalProps> = ({
             });
 
             notifications.show({
-                title: 'Rewards claimed sucesfully',
+                title: 'Rewards claimed successfully',
                 message: "",
                 withBorder: true,
                 withCloseButton: true,
