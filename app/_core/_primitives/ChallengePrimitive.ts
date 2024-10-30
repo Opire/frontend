@@ -21,10 +21,15 @@ export interface ChallengePrimitive {
     updatedAt: number;
 }
 
-type ChallengePrimitivePropsToOmit = 'id' | 'creatorId' | 'participations' | 'isPublished' | 'isAcceptingParticipations' | 'isCompleted' | 'createdAt' | 'updatedAt';
+type ChallengePrimitivePropsToOmitForCreateChallengeDTO = 'id' | 'creatorId' | 'participations' | 'isPublished' | 'isAcceptingParticipations' | 'isCompleted' | 'createdAt' | 'updatedAt';
+export interface CreateChallengeDTO extends Omit<ChallengePrimitive, ChallengePrimitivePropsToOmitForCreateChallengeDTO> {}
 
-export interface CreateChallengeDTO extends Omit<ChallengePrimitive, ChallengePrimitivePropsToOmit> {}
-export interface EditDraftChallengeDTO extends Omit<ChallengePrimitive, ChallengePrimitivePropsToOmit> {}
+
+type ChallengePrimitivePropsToOmitForEditDraftChallengeDTO = ChallengePrimitivePropsToOmitForCreateChallengeDTO;
+export interface EditDraftChallengeDTO extends Omit<ChallengePrimitive, ChallengePrimitivePropsToOmitForEditDraftChallengeDTO> {}
+
+type ChallengePrimitivePropsToOmitForEditPublishedChallengeDTO = ChallengePrimitivePropsToOmitForCreateChallengeDTO | 'title' | 'summary' | 'mainObjetive' | 'otherObjetives' | 'requirements' | 'evaluationCriteria' | 'contactInformation' | 'additionalComments';
+export interface EditPublishedChallengeDTO extends Omit<ChallengePrimitive, ChallengePrimitivePropsToOmitForEditPublishedChallengeDTO> {}
 
 export interface ChallengeDTO extends ChallengePrimitive {
     canBePublished: boolean;
