@@ -12,6 +12,7 @@ import {
     ActionIcon,
     Affix,
     Alert,
+    Badge,
     Box,
     Button,
     Card,
@@ -43,11 +44,11 @@ import {
     sortPrizes,
 } from "../../../../../_utils/challengePrizes";
 import { ChallengePrizePrimitive } from "../../../../../_core/_primitives/ChallengePrizePrimitive";
-import { formatPrice } from "../../../../../_utils/formatPrice";
 import {
     IconCircleCheckFilled,
     IconEdit,
     IconInfoCircle,
+    IconLineDashed,
     IconPlus,
     IconTrash,
 } from "@tabler/icons-react";
@@ -59,6 +60,7 @@ import { EditChallengePrizeModal } from "./EditChallengePrizeModal";
 import { ApplyTemplateModal } from "./ApplyTemplateModal";
 import { PublishChallengeForm } from "./PublishChallengeForm";
 import { useGetChallenge } from "../../../../../../hooks/useGetChallenge";
+import { formatPrice } from "../../../../../_utils/formatPrice";
 
 interface DraftChallengeCreatorDataProps {
     challenge: ChallengeDTO;
@@ -391,6 +393,9 @@ export const DraftChallengeCreatorData: FC<DraftChallengeCreatorDataProps> = ({
                                                         <Table.Th ta={"center"}>
                                                             Amount
                                                         </Table.Th>
+                                                        <Table.Th ta={"center"}>
+                                                            Benefits
+                                                        </Table.Th>
                                                     </Table.Tr>
                                                 </Table.Thead>
 
@@ -601,7 +606,36 @@ const PrizeRow: FC<{
                     `From ${getChallengePrizeMinPosition(prize)} onwards`}
             </Table.Td>
 
-            <Table.Td>{formatPrice(prize.amount)}</Table.Td>
+            <Table.Td>
+                {
+                    prize.amount
+                        ?
+                        formatPrice(prize.amount)
+                        :
+                        <IconLineDashed />
+                }
+            </Table.Td>
+
+            <Table.Td>
+                <Flex gap={'xs'} display={'inline-flex'} mx={'1rem'}>
+                    {
+                        prize.benefits.length > 0 ?
+                            prize.benefits.map((benefit) => (
+                                <Badge
+                                    key={benefit}
+                                    variant="outline"
+                                    color='gray'
+                                    size='sm'
+                                >
+                                    {benefit}
+                                </Badge>
+                            )
+                            )
+                            :
+                            <IconLineDashed />
+                    }
+                </Flex>
+            </Table.Td>
 
             <Table.Td>
                 <Flex gap={'0.6rem'}>

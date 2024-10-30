@@ -11,12 +11,14 @@ import {
     sortPrizes,
 } from "../../../../../_utils/challengePrizes";
 import {
+    Badge,
     Box,
     Button,
     Card,
     Center,
     Checkbox,
     Fieldset,
+    Flex,
     Grid,
     NumberInput,
     Space,
@@ -28,7 +30,7 @@ import {
 } from "@mantine/core";
 import { formatPrice } from "../../../../../_utils/formatPrice";
 import { formatDateTime } from "../../../../../_utils/formatDate";
-import { IconCircleCheckFilled } from "@tabler/icons-react";
+import { IconCircleCheckFilled, IconLineDashed } from "@tabler/icons-react";
 import { DatePickerInput } from "@mantine/dates";
 
 interface DraftChallengePublicDataProps {
@@ -153,6 +155,9 @@ export const DraftChallengePublicData: FC<DraftChallengePublicDataProps> = ({
                                                         </Table.Th>
                                                         <Table.Th ta={"center"}>
                                                             Amount
+                                                        </Table.Th>
+                                                        <Table.Th ta={"center"}>
+                                                            Benefits
                                                         </Table.Th>
                                                     </Table.Tr>
                                                 </Table.Thead>
@@ -337,7 +342,36 @@ const PrizeRow: FC<{
                     `From ${getChallengePrizeMinPosition(prize)} onwards`}
             </Table.Td>
 
-            <Table.Td>{formatPrice(prize.amount)}</Table.Td>
+            <Table.Td>
+                {
+                    prize.amount
+                        ?
+                        formatPrice(prize.amount)
+                        :
+                        <IconLineDashed />
+                }
+            </Table.Td>
+
+            <Table.Td>
+                <Flex gap={'xs'} display={'inline-flex'} mx={'1rem'}>
+                    {
+                        prize.benefits.length > 0 ?
+                            prize.benefits.map((benefit) => (
+                                <Badge
+                                    key={benefit}
+                                    variant="outline"
+                                    color='gray'
+                                    size='sm'
+                                >
+                                    {benefit}
+                                </Badge>
+                            )
+                            )
+                            :
+                            <IconLineDashed />
+                    }
+                </Flex>
+            </Table.Td>
         </>
     );
 };

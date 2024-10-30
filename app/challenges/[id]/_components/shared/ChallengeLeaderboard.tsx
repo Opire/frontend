@@ -4,15 +4,15 @@ import { Avatar, Card, Center, Flex, Skeleton, Space, Table, Title, Text } from 
 import { ChallengeParticipationPrimitive } from "../../../../_core/_primitives/ChallengeParticipationPrimitive";
 import { useGetUserPublicInfoFromAnyPlatform } from "../../../../../hooks/useGetUserPublicInfoFromAnyPlatform";
 import Link from "next/link";
-import { formatPrice } from "../../../../_utils/formatPrice";
 import { formatDateTime } from "../../../../_utils/formatDate";
 import { getOrdinalPositionDescription } from "./utils";
+import { PrizeDisplay } from "./PrizeDisplay";
 
 export const ChallengeLeaderboard: FC<{
     challenge: ChallengePrimitive;
 }> = ({ challenge }) => {
     const paidParticipations = challenge.participations.filter(participation => participation.status === 'paid');
-    const sortedPaidParticipations = [...paidParticipations].sort((a, b) => b.createdAt - a.createdAt);
+    const sortedPaidParticipations = [...paidParticipations].sort((a, b) => (a.position ?? 0) - (b.position ?? 0));
 
     return (
         <Center>
@@ -112,7 +112,11 @@ const LeaderboardRow: FC<{
 
             <Table.Td>
                 <Text variant="gradient" style={{ fontWeight: "bold", fontSize: '1.2rem' }}>
-                    {formatPrice(participation.prize?.amount ?? { value: 0, unit: 'USD' })}
+                    {
+                        participation.prize
+                        &&
+                        <PrizeDisplay prize={participation.prize} />
+                    }
                 </Text>
             </Table.Td>
 

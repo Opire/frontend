@@ -8,6 +8,7 @@ import {
     NumberInput,
     Space,
     Switch,
+    TagsInput,
 } from "@mantine/core";
 import { FC, useEffect, useMemo, useState } from "react";
 import { useForm } from "@mantine/form";
@@ -18,6 +19,7 @@ import {
 } from "@tabler/icons-react";
 import {
     ChallengePrizePrimitive,
+    EMPTY_CHALLENGE_PRIZE_AMOUNT,
 } from "../../../../../_core/_primitives/ChallengePrizePrimitive";
 import {
     getChallengePrizeMaxPosition,
@@ -49,16 +51,17 @@ export const EditChallengePrizeModal: FC<EditChallengePrizeModalProps> = ({
     const [prizeInvalidReason, setPrizeInvalidReason] = useState<string | null>(
         null
     );
-    const isPrizeValid = prizeInvalidReason === null;
+    const isPrizeFilled = Boolean(prize.amount) || prize.benefits.length > 0;
+    const isPrizeValid = prizeInvalidReason === null && isPrizeFilled;
     const isPrizeForSpecificPosition = isPrimitiveSpecificPositionPrize(prize)
 
     const form = useForm<ChallengePrizePrimitive>({
         initialValues: {
             ...prize,
-            amount: {
+            amount: prize.amount ? {
                 unit: "USD",
                 value: getPriceInUSD(prize.amount),
-            }
+            } : null
         },
         onValuesChange: (values) => {
             checkIsPrizeValid(values);
@@ -66,7 +69,7 @@ export const EditChallengePrizeModal: FC<EditChallengePrizeModalProps> = ({
     });
 
     const prizeAffectedPositionsDescription = useMemo(() => {
-        const baseMessage = "This prize will be paid";
+        const baseMessage = "This prize will be given";
         const prize = form.getValues();
 
         if (isPrimitiveSpecificPositionPrize(prize)) {
@@ -130,10 +133,10 @@ export const EditChallengePrizeModal: FC<EditChallengePrizeModalProps> = ({
         if (isOpened) {
             form.setValues({
                 ...prize,
-                amount: {
+                amount: prize.amount ? {
                     unit: "USD",
                     value: getPriceInUSD(prize.amount),
-                }
+                } : null
             });
         }
     }, [isOpened]);
@@ -154,7 +157,7 @@ export const EditChallengePrizeModal: FC<EditChallengePrizeModalProps> = ({
                     }}
                 >
                     <IconTrophy size={16} color="teal" />
-                    <span>Edit prize amount</span>
+                    <span>Edit prize amount and benefits</span>
                 </div>
             }
             closeOnEscape={true}
@@ -177,10 +180,10 @@ export const EditChallengePrizeModal: FC<EditChallengePrizeModalProps> = ({
                                 min={0}
                                 {...form.getInputProps("amount.value")}
                                 onChange={(value) =>
-                                    form.setFieldValue("amount", {
+                                    form.setFieldValue("amount", value ? {
                                         unit: "USD",
-                                        value: value ? +value : 0,
-                                    })
+                                        value: +value,
+                                    } : null)
                                 }
                             />
                         </Grid.Col>
@@ -192,6 +195,17 @@ export const EditChallengePrizeModal: FC<EditChallengePrizeModalProps> = ({
                                 mt="xl"
                                 checked={isPrizeForSpecificPosition}
                                 disabled={true}
+                            />
+                        </Grid.Col>
+
+                        <Grid.Col span={{ base: 12 }}>
+                            <TagsInput
+                                label="Benefits (non-monetary prizes)"
+                                placeholder={'Press Enter to add a benefit'}
+                                description="Add up to 10"
+                                maxTags={10}
+                                key={form.key("benefits")}
+                                {...form.getInputProps("benefits")}
                             />
                         </Grid.Col>
 
