@@ -1,5 +1,5 @@
 import { Center, Card, Title, Space, Alert, Table, Skeleton, Flex, Avatar, Tooltip, Badge, DefaultMantineColor, Text } from "@mantine/core";
-import { IconInfoCircle, IconX } from "@tabler/icons-react";
+import { IconInfoCircle, IconLineDashed } from "@tabler/icons-react";
 import Link from "next/link";
 import { FC } from "react";
 import { useGetUserPublicInfoFromAnyPlatform } from "../../../../../../hooks/useGetUserPublicInfoFromAnyPlatform";
@@ -205,7 +205,7 @@ const ParticipationRow: FC<{
                             <PrizeDisplay prize={participation.prize} />
                         </Text>
                         :
-                        <IconX color="red" />
+                        <IconLineDashed />
                 }
             </Table.Td>
 

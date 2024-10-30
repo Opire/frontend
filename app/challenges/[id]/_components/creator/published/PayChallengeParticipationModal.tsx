@@ -69,9 +69,12 @@ export const PayChallengeParticipationModal: FC<
                     window.open(responseData.url, "_blank");
                 }
 
-                onParticipationPaid();
-                setIsPayingParticipation(false);
-                handleClose();
+                setTimeout(() => {
+                    onParticipationPaid();
+                    setIsPayingParticipation(false);
+                    handleClose();
+                }, 1000);
+
             } catch (error) {
                 setIsPayingParticipation(false);
             }
@@ -94,16 +97,22 @@ export const PayChallengeParticipationModal: FC<
             >
                 <Container size={'lg'}>
                     <Text>
-                        After selecting the prize to pay, you will be redirected to a Stripe Checkout session where you can securely pay the participant. Your payment method won't be visible by the participant or even Opire.
+                        Select the prize you want to pay to the participant.
                     </Text>
 
                     <Space h="1rem" />
 
                     <Text>
-                        If you select a prize without a monetary amount, the participant will be notified that they have won the prize, but you will have to manually deliver the prize to them.
+                        If the prize contains a monetary amount, you will be redirected to a Stripe Checkout session where you can securely pay the participant. Your payment method won't be visible by the participant or even Opire.
                     </Text>
 
                     <Space h="1rem" />
+
+                    <Text>
+                        If the prize contains benefits, the participant will be notified that they have won the prize but you will have to manually deliver it to them.
+                    </Text>
+
+                    <Space h="2rem" />
 
                     <Grid
                         style={{ justifyItems: 'center', alignItems: 'center' }}

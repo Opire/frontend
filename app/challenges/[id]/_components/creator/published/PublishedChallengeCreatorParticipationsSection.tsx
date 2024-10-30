@@ -1,12 +1,11 @@
 import { Center, Card, Title, Space, Alert, Table, Skeleton, Flex, Avatar, Tooltip, Badge, DefaultMantineColor, Text } from "@mantine/core";
-import { IconInfoCircle, IconX } from "@tabler/icons-react";
+import { IconInfoCircle, IconLineDashed } from "@tabler/icons-react";
 import Link from "next/link";
 import { FC } from "react";
 import { useGetUserPublicInfoFromAnyPlatform } from "../../../../../../hooks/useGetUserPublicInfoFromAnyPlatform";
 import { ChallengeParticipationPrimitive, ChallengeParticipationStatusType } from "../../../../../_core/_primitives/ChallengeParticipationPrimitive";
 import { ChallengeDTO } from "../../../../../_core/_primitives/ChallengePrimitive";
 import { formatDateTime } from "../../../../../_utils/formatDate";
-import { formatPrice } from "../../../../../_utils/formatPrice";
 import { CreatorActionsOnParticipation } from "./CreatorActionsOnParticipation";
 import { PublishedChallengeCreatorActions } from "./PublishedChallengeCreatorActions";
 import { PrizeDisplay } from "../../shared/PrizeDisplay";
@@ -217,7 +216,7 @@ const ParticipationRow: FC<{
                             <PrizeDisplay prize={participation.prize} />
                         </Text>
                         :
-                        <IconX color="red" />
+                        <IconLineDashed />
                 }
             </Table.Td>
 
