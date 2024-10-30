@@ -12,7 +12,7 @@ export const ChallengeLeaderboard: FC<{
     challenge: ChallengePrimitive;
 }> = ({ challenge }) => {
     const paidParticipations = challenge.participations.filter(participation => participation.status === 'paid');
-    const sortedPaidParticipations = [...paidParticipations].sort((a, b) => b.createdAt - a.createdAt);
+    const sortedPaidParticipations = [...paidParticipations].sort((a, b) => (a.position ?? 0) - (b.position ?? 0));
 
     return (
         <Center>
