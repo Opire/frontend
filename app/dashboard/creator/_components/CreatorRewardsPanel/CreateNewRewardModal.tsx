@@ -17,7 +17,7 @@ export const CreateNewRewardModal: FC<CreateNewRewardModalProps> = ({
     isOpened,
     onClose,
     prefilledIssueURL,
-    onNewRewardCreated = () => {},
+    onNewRewardCreated = () => { },
 }) => {
     const [isCreatingReward, setIsCreatingReward] = useState(false);
 
@@ -71,7 +71,7 @@ export const CreateNewRewardModal: FC<CreateNewRewardModalProps> = ({
             });
 
             notifications.show({
-                title: 'Reward created sucesfully',
+                title: 'Reward created successfully',
                 message: "",
                 withBorder: true,
                 withCloseButton: true,

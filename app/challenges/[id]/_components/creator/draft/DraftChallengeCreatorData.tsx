@@ -61,6 +61,7 @@ import { ApplyTemplateModal } from "./ApplyTemplateModal";
 import { PublishChallengeForm } from "./PublishChallengeForm";
 import { useGetChallenge } from "../../../../../../hooks/useGetChallenge";
 import { formatPrice } from "../../../../../_utils/formatPrice";
+import { DeleteChallengeForm } from "./DeleteChallengeForm";
 
 interface DraftChallengeCreatorDataProps {
     challenge: ChallengeDTO;
@@ -552,6 +553,14 @@ export const DraftChallengeCreatorData: FC<DraftChallengeCreatorDataProps> = ({
                 <Space h={"1rem"} />
 
                 <div style={{ display: "flex", justifyContent: "flex-end", gap: '1rem' }}>
+                    <div style={{ marginRight: 'auto' }}>
+                        <DeleteChallengeForm
+                            challengeId={challenge.id}
+                            isDisabled={isUpdatingDraft}
+                            isLoading={isUpdatingDraft}
+                        />
+                    </div>
+
                     <Button
                         onClick={previewPublishedChallenge}
                         variant="light"
@@ -674,7 +683,7 @@ async function onUpdateDraft(
     onDraftUpdated: () => void
 ) {
     try {
-        await clientCustomFetch(API_ROUTES.CHALLENGES.EDIT_DRAFT(challengeId), {
+        await clientCustomFetch(API_ROUTES.CHALLENGES.BY_ID(challengeId), {
             method: "PUT",
             body: {
                 challenge: draft,

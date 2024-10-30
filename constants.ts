@@ -19,7 +19,6 @@ export const API_ROUTES = {
         BY_ID: (id: string) => `${process.env.NEXT_PUBLIC_API_URL}/challenges/${id}`,
         TEMPLATES: () => `${process.env.NEXT_PUBLIC_API_URL}/challenges/templates`,
         CREATE: () => `${process.env.NEXT_PUBLIC_API_URL}/challenges`,
-        EDIT_DRAFT: (id: string) => `${process.env.NEXT_PUBLIC_API_URL}/challenges/${id}`,
         PUBLISH_DRAFT: (id: string) => `${process.env.NEXT_PUBLIC_API_URL}/challenges/${id}/publish`,
         COMPLETE: (id: string) => `${process.env.NEXT_PUBLIC_API_URL}/challenges/${id}/complete`,
         CREATED_BY_ME: () =>

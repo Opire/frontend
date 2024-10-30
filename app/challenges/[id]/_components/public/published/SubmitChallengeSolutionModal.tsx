@@ -64,7 +64,7 @@ export const SubmitChallengeSolutionModal: FC<SubmitChallengeSolutionModalProps>
             });
 
             notifications.show({
-                title: 'Solution submitted sucesfully',
+                title: 'Solution submitted successfully',
                 message: "The creator of the challenge has been notified. We'll let you know once your solution has been approved or rejected. Good luck! 🎉",
                 withBorder: true,
                 withCloseButton: true,

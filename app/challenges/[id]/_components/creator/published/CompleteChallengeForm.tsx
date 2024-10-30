@@ -39,7 +39,7 @@ export function CompleteChallengeForm({ challenge }: CompleteChallengeFormProps)
 
             setTimeout(() => {
                 notifications.show({
-                    title: "Challenge completed sucesfully",
+                    title: "Challenge completed successfully",
                     message: wasAbleToPayPrizes
                         ? "Congratulations on your completed challenge! If you had some participations pending to pay, remember to proceed with the payment when you are ready"
                         : "Congratulations on your completed challenge! You can now start paying the approved participants based on the prizes their solutions deserve",
