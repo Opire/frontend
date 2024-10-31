@@ -1,6 +1,6 @@
 import { Box, Button, Card, Center, Checkbox, Text, em, Grid, NumberInput, Space, TextInput, Table, Flex, Badge, Tooltip, ActionIcon, Fieldset, Textarea } from "@mantine/core";
 import { FC, useMemo, useState } from "react";
-import { ChallengePrimitive, EditPublishedChallengeDTO } from "../../../../_core/_primitives/ChallengePrimitive";
+import { ChallengeDTO, EditPublishedChallengeDTO } from "../../../../_core/_primitives/ChallengePrimitive";
 import { getChallengePrizeMaxPosition, getChallengePrizeMinPosition, isPrimitiveSpecificPositionPrize, isPrimitiveThresholdPrize, isPrimitiveThresholdWithoutLimitPrize, sortPrizes } from "../../../../_utils/challengePrizes";
 import { clientCustomFetch } from "../../../../_utils/clientCustomFetch";
 import { API_ROUTES } from "../../../../../constants";
@@ -15,14 +15,20 @@ import { EditChallengePrizeModal } from "../../_components/creator/draft/EditCha
 import { DatePickerInput } from "@mantine/dates";
 import { AddChallengePrizeModal } from "../../_components/creator/draft/AddChallengePrizeModal";
 import { formatPrice } from "../../../../_utils/formatPrice";
+import { useGetChallenge } from "../../../../../hooks/useGetChallenge";
 
 interface EditPublishedChallengeFormProps {
-    challenge: ChallengePrimitive;
+    challenge: ChallengeDTO;
 }
 
-export const EditPublishedChallengeForm: FC<EditPublishedChallengeFormProps> = ({ challenge }) => {
+export const EditPublishedChallengeForm: FC<EditPublishedChallengeFormProps> = ({ challenge: initialChallenge }) => {
     const router = useRouter();
     const isMobile = useMediaQuery(`(max-width: ${em(750)})`);
+
+    const { challenge } = useGetChallenge({
+        initialChallenge,
+        revalidateOnFocus: true,
+    });
 
     const [
         isModalToAddPrizeOpen,

@@ -1,13 +1,13 @@
 'use client';
 
 import { Grid } from "@mantine/core";
-import { ChallengePrimitive } from "../../../_core/_primitives/ChallengePrimitive";
+import { ChallengeDTO } from "../../../_core/_primitives/ChallengePrimitive";
 import { EditPublishedChallengeForm } from "./_component/EditPublishedChallengeForm";
 
 export function EditPublishedChallengeView({
     challenge,
 }: {
-    challenge: ChallengePrimitive;
+    challenge: ChallengeDTO;
 }) {
     return (
         <Grid h={'100%'}>
