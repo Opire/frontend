@@ -25,7 +25,7 @@ export const PublishedChallengePublicParticipationsData: FC<{
         <Center>
             <Card withBorder shadow="md" radius='md' w={'100%'}>
                 <Center>
-                    <Title order={2} size="h2" style={{ fontSize: '2.6rem', fontWeight: 900 }}>
+                    <Title order={2} size="h2" ta='center' style={{ fontSize: '2.6rem', fontWeight: 900 }}>
                         {challenge.isCompleted ? 'Other participations' : 'Participations'}
                     </Title>
                 </Center >
