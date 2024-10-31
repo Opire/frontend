@@ -116,7 +116,6 @@ export const PayChallengeParticipationModal: FC<
 
                     <Grid
                         style={{ justifyItems: 'center', alignItems: 'center' }}
-                        gutter={20}
                     >
                         {availablePrizes.map((prize, index) => (
                             <Grid.Col key={index} span={'auto'} flex={1}>

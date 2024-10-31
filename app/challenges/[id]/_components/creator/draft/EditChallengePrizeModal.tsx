@@ -34,6 +34,7 @@ import { getPriceInUSD } from "../../../../../_utils/formatPrice";
 
 interface EditChallengePrizeModalProps {
     prize: ChallengePrizePrimitive;
+    canPrizeBeDowngraded?: boolean;
     otherPrizes: ChallengePrizePrimitive[];
     isOpened: boolean;
     onClose: () => void;
@@ -42,6 +43,7 @@ interface EditChallengePrizeModalProps {
 
 export const EditChallengePrizeModal: FC<EditChallengePrizeModalProps> = ({
     prize,
+    canPrizeBeDowngraded = true,
     otherPrizes,
     isOpened,
     onClose,
@@ -177,7 +179,7 @@ export const EditChallengePrizeModal: FC<EditChallengePrizeModalProps> = ({
                                 }
                                 prefix="$"
                                 key={form.key("amount.value")}
-                                min={0}
+                                min={!canPrizeBeDowngraded && prize.amount ? getPriceInUSD(prize.amount) : 0}
                                 {...form.getInputProps("amount.value")}
                                 onChange={(value) =>
                                     form.setFieldValue("amount", value ? {
