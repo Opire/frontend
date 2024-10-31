@@ -39,10 +39,11 @@ const PrizeCard: FC<{
         <Card
             ref={ref}
             withBorder
-            radius={'lg'}
+            radius='lg'
             shadow="md"
             h={250}
-            w={350}
+            miw={350}
+            w='auto'
             style={{ transition: 'box-shadow 0.3s ease-in-out', boxShadow: hovered ? '0 4px 30px rgba(16, 152, 173, 0.5)' : undefined }}
         >
             <Center style={{ margin: 'auto 0', height: '100%' }}>
