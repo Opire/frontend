@@ -143,29 +143,11 @@ export function ChallengeCardPrice ({
             {isPrimitiveThresholdPrize(prize) && (<>#{prize.fromPosition} - {prize.toPosition}</>)}
             {isPrimitiveThresholdWithoutLimitPrize(prize) && (<>#{prize.fromPosition} - no limit</>)}
 
-            {isPrimitiveSpecificPositionPrize(prize) && (
-                <Text
-                    variant="gradient"
-                    style={{ fontSize: '2.4rem', fontWeight: 'bold' }}>
-                    {prize.amount ? formatCompactPrice(prize.amount) : 'No prize'}
-                </Text>
-            )}
-
-            {isPrimitiveThresholdPrize(prize) && (
-                <Text
-                    variant="gradient"
-                     style={{ fontSize: '2.4rem', fontWeight: 'bold' }}>
-                     {prize.amount ? formatCompactPrice(prize.amount) : 'No prize'}
-                </Text>
-            )}
-
-            {isPrimitiveThresholdWithoutLimitPrize(prize) && (
-                <Text
-                    variant="gradient"
-                    style={{ fontSize: '2.4rem', fontWeight: 'bold' }}>
-                    {prize.amount ? formatCompactPrice(prize.amount) : 'No prize'}
-                </Text>
-            )}
+            <Text
+                variant="gradient"
+                style={{ fontSize: '2.4rem', fontWeight: 'bold' }}>
+                {prize.amount ? formatCompactPrice(prize.amount) : 'No prize'}
+            </Text>
         </div>
   )
 }
