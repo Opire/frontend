@@ -5,11 +5,10 @@ import { ChallengePrimitive } from '../../../_core/_primitives/ChallengePrimitiv
 import { useHover } from '@mantine/hooks'
 import { useGetUserPublicInfoFromAnyPlatform } from '../../../../hooks/useGetUserPublicInfoFromAnyPlatform'
 import { getRelativeTime } from '../../../_utils/getRelativeTime'
-import { getChallengeHighestPrize } from '../../../_utils/getChallengeHighestPrize'
-import { formatPrice } from '../../../_utils/formatPrice'
 import { ChallengePrizePrimitive } from '../../../_core/_primitives/ChallengePrizePrimitive'
 import { PricePrimitive } from '../../../_core/_primitives/PricePrimitive'
 import { PriceUnit } from '../../../_core/_vos/PriceUnit'
+import { isPrimitiveSpecificPositionPrize, isPrimitiveThresholdPrize, isPrimitiveThresholdWithoutLimitPrize } from '../../../_utils/challengePrizes'
 
 interface ChallengeCardProps {
     data: ChallengePrimitive;
@@ -27,9 +26,6 @@ export const ChallengeCard: FC<ChallengeCardProps> = ({
     avatarURL
   } = useGetUserPublicInfoFromAnyPlatform({ userId: challenge.creatorId })
   const { hovered, ref: hoverRef } = useHover()
-  const highestPrize = getChallengeHighestPrize(challenge)
-
-  const hasMultiplePrizes = challenge.configuration.prizes.length > 1
 
   const redirectToDetails = () => {
     router.push(`/challenges/${challenge.id}`)
@@ -97,18 +93,13 @@ export const ChallengeCard: FC<ChallengeCardProps> = ({
                       justifyContent: 'space-around',
                       flexWrap: 'wrap'
                     }}>
-                        {challenge.configuration.prizes.map((prize) => (
-                            <div key={`${prize.amount}-${prize
-                                .benefits
-                                .join('-')
-                            }`}>
+                        {challenge.configuration.prizes.map((prize, index) => (
+                          <div key={index}>
                                 <ChallengeCardPrice
                                     prize={prize}
-                                    type={getTypeOfFirstPrize(prize)}
                                 />
                             </div>
                         ))}
-                        {/* {formatPrice(highestPrize)} */}
                   </div>
             </CardSection>
 
@@ -136,57 +127,47 @@ export const ChallengeCard: FC<ChallengeCardProps> = ({
         </Card>
   )
 }
-type ChallengePrizeType = 'SpecificPositionPrizePrimitive' | 'ThresholdWithoutLimitPrizePrimitive' | 'ThresholdPrizePrimitive'
 
 export function ChallengeCardPrice ({
-  type,
   prize
 }: {
-    type: ChallengePrizeType,
     prize: ChallengePrizePrimitive
 }) {
   return (
-       <div style={{
-         display: 'flex',
-         flexDirection: 'column',
-         alignItems: 'center'
-       }}>
-          {type === 'SpecificPositionPrizePrimitive' && 'position' in prize && (<>#{prize.position}</>)}
-          {type === 'ThresholdWithoutLimitPrizePrimitive' && !('position' in prize) && (<>#{prize.fromPosition} - {prize.toPosition === 'WITHOUT_LIMIT' ? 'no limit' : prize.toPosition}</>)}
+        <div style={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center'
+        }}>
+            {isPrimitiveSpecificPositionPrize(prize) && (<>#{prize.position}</>)}
+            {isPrimitiveThresholdPrize(prize) && (<>#{prize.fromPosition} - {prize.toPosition}</>)}
+            {isPrimitiveThresholdWithoutLimitPrize(prize) && (<>#{prize.fromPosition} - no limit</>)}
 
-            {type === 'SpecificPositionPrizePrimitive' && (
-              <Text
-                  variant="gradient"
-                  style={{ fontSize: '2.4rem', fontWeight: 'bold' }}>
-                  {prize.amount ? formatCompactPrice(prize.amount) : 'No prize'}
+            {isPrimitiveSpecificPositionPrize(prize) && (
+                <Text
+                    variant="gradient"
+                    style={{ fontSize: '2.4rem', fontWeight: 'bold' }}>
+                    {prize.amount ? formatCompactPrice(prize.amount) : 'No prize'}
                 </Text>
             )}
 
-              {type === 'ThresholdPrizePrimitive' && (
-              <Text
-                  variant="gradient"
-                  style={{ fontSize: '2.4rem', fontWeight: 'bold' }}>
-                  {prize.amount ? formatCompactPrice(prize.amount) : 'No prize'}
+            {isPrimitiveThresholdPrize(prize) && (
+                <Text
+                    variant="gradient"
+                     style={{ fontSize: '2.4rem', fontWeight: 'bold' }}>
+                     {prize.amount ? formatCompactPrice(prize.amount) : 'No prize'}
                 </Text>
-              )}
+            )}
 
-              {type === 'ThresholdWithoutLimitPrizePrimitive' && (
-              <Text
-                  variant="gradient"
-                  style={{ fontSize: '2.4rem', fontWeight: 'bold' }}>
-                  {prize.amount ? formatCompactPrice(prize.amount) : 'No prize'}
+            {isPrimitiveThresholdWithoutLimitPrize(prize) && (
+                <Text
+                    variant="gradient"
+                    style={{ fontSize: '2.4rem', fontWeight: 'bold' }}>
+                    {prize.amount ? formatCompactPrice(prize.amount) : 'No prize'}
                 </Text>
-              )}
-      </div>
+            )}
+        </div>
   )
-}
-
-function getTypeOfFirstPrize (prize: ChallengePrizePrimitive): ChallengePrizeType {
-  return 'position' in prize
-    ? 'SpecificPositionPrizePrimitive'
-    : prize.toPosition === 'WITHOUT_LIMIT'
-      ? 'ThresholdWithoutLimitPrizePrimitive'
-      : 'ThresholdPrizePrimitive'
 }
 
 function formatCompactPrice (price: PricePrimitive) {
