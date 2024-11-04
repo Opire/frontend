@@ -1,5 +1,5 @@
-import { ChallengeConfigurationPrimitive } from "./ChallengeConfigurationPrimitive";
-import { ChallengeParticipationPrimitive } from "./ChallengeParticipationPrimitive";
+import { ChallengeConfigurationPrimitive } from './ChallengeConfigurationPrimitive'
+import { ChallengeParticipationPrimitive } from './ChallengeParticipationPrimitive'
 
 export interface ChallengePrimitive {
     id: string;
@@ -23,7 +23,6 @@ export interface ChallengePrimitive {
 
 type ChallengePrimitivePropsToOmitForCreateChallengeDTO = 'id' | 'creatorId' | 'participations' | 'isPublished' | 'isAcceptingParticipations' | 'isCompleted' | 'createdAt' | 'updatedAt';
 export interface CreateChallengeDTO extends Omit<ChallengePrimitive, ChallengePrimitivePropsToOmitForCreateChallengeDTO> {}
-
 
 type ChallengePrimitivePropsToOmitForEditDraftChallengeDTO = ChallengePrimitivePropsToOmitForCreateChallengeDTO;
 export interface EditDraftChallengeDTO extends Omit<ChallengePrimitive, ChallengePrimitivePropsToOmitForEditDraftChallengeDTO> {}
