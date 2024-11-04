@@ -1,4 +1,4 @@
-import { ChallengePrizePrimitive } from "./ChallengePrizePrimitive";
+import { ChallengePrizePrimitive } from './ChallengePrizePrimitive'
 
 export interface ChallengeConfigurationPrimitive {
     prizes: ChallengePrizePrimitive[];
