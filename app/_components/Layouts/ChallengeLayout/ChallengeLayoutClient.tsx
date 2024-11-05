@@ -15,7 +15,7 @@ export const ChallengeLayoutClient: FC<ChallengeLayoutProps> = ({
     children,
     userAuth,
 }) => {
-    const [opened, { toggle }] = useDisclosure(false);
+    const [opened, { toggle }] = useDisclosure(true);
 
     return (
         <AppShell
