@@ -20,7 +20,7 @@ export const ChallengeLayoutClient: FC<ChallengeLayoutProps> = ({
     return (
         <AppShell
             header={{ height: 60 }}
-            navbar={{ width: 300, breakpoint: 'sm', collapsed: { mobile: !opened, desktop: !opened } }}
+            navbar={{ width: 300, breakpoint: 'xs', collapsed: { mobile: !opened, desktop: !opened } }}
             px="none"
         >
             <AppShellHeader>
