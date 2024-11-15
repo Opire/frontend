@@ -2,7 +2,7 @@ import { notifications } from "@mantine/notifications";
 import { generalNotification } from "./generalNotification";
 import crypto from "crypto";
 
-export async function generalLoadingNotification({
+export async function generalLoadingNotification ({
     titleOnStart,
     titleOnEnd,
     titleOnError,
@@ -43,9 +43,7 @@ export async function generalLoadingNotification({
             loading: false,
             color: "red",
             title: titleOnError,
-            message: !!messageOnError
-                ? messageOnError
-                : (error as any)?.message ?? "",
+            message: messageOnError || ((error as any)?.message ?? ""),
             autoClose: false,
             withCloseButton: true,
         });

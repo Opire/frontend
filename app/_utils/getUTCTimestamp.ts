@@ -1,15 +1,14 @@
+export function getUTCTimestamp () {
+    const date = new Date();
 
-export function getUTCTimestamp() {
-    let date = new Date();
-
-    let utcDate = Date.UTC(
+    const utcDate = Date.UTC(
         date.getUTCFullYear(),
         date.getUTCMonth(),
         date.getUTCDate(),
         date.getUTCHours(),
         date.getUTCMinutes(),
         date.getUTCSeconds(),
-        date.getUTCMilliseconds()
+        date.getUTCMilliseconds(),
     );
 
     return new Date(utcDate).toISOString();

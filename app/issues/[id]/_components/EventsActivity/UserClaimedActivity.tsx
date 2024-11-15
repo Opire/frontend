@@ -17,7 +17,7 @@ export const UserClaimedActivity: FC<UserClaimedActivityProps> = ({ event }) => 
 
     const platform = attributes.issue.platform;
 
-    const { isLoading, username, usernameLink, avatarURL } = useGetUserPublicInfoFromPlatform({ userId: attributes.userId, platform })
+    const { isLoading, username, usernameLink, avatarURL } = useGetUserPublicInfoFromPlatform({ userId: attributes.userId, platform });
 
     return (
         <Timeline.Item title="New claimer" bullet={
@@ -29,7 +29,7 @@ export const UserClaimedActivity: FC<UserClaimedActivityProps> = ({ event }) => 
             </AvatarGroup>
         } >
             {isLoading &&
-                <Skeleton height={'2rem'} radius="xl" />
+                <Skeleton height={"2rem"} radius="xl" />
             }
 
             {!isLoading &&

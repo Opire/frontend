@@ -2,7 +2,7 @@ import { BaseException } from "./BaseException";
 
 export class PositiveNumberMustBeGreaterThan0 extends BaseException {
 
-    constructor(number: number) {
+    constructor (number: number) {
         super(
             `Number "${number}" must be greater than 0`,
             {

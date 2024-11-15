@@ -1,4 +1,3 @@
-import { FC } from "react";
 import { Button, Divider, Loader, Space, Text } from "@mantine/core";
 import { ProgrammerRewardUnpaidCard } from "../ProgrammerRewardCard/ProgrammerRewardUnpaidCard";
 import { ProgrammerRewardCardSkeletonClient } from "../ProgrammerRewardCard/ProgrammerRewardCardSkeletonClient";
@@ -15,10 +14,7 @@ import { ClaimRewardsModal } from "./ClaimRewardsModal";
 import { mutate } from "swr";
 import { API_ROUTES } from "../../../../../constants";
 
-interface ProgrammerRewardsPanelProps {
-}
-
-export const ProgrammerRewardsPanel: FC<ProgrammerRewardsPanelProps> = ({ }) => {
+export function ProgrammerRewardsPanel() {
     const [isModalOpen, { close: closeModal, open: openModal }] = useDisclosure();
 
     const { issues: allIssues, isLoading } = useGetRewardsFromProgrammer({ revalidateOnFocus: !isModalOpen });
@@ -31,30 +27,29 @@ export const ProgrammerRewardsPanel: FC<ProgrammerRewardsPanelProps> = ({ }) => 
     const paidRewardsToTheProgrammer = paidRewards.filter((issue) => issue.programmer.alreadyPaid.value > 0);
     const paidRewardsToOthers = paidRewards.filter((issue) => issue.programmer.alreadyPaid.value === 0);
 
-
     const PANEL_SECTIONS = {
-        UNCLAIMED: { key: 'unclaimed', text: 'Trying', rewards: unclaimedRewards, itemComponent: ProgrammerRewardUnpaidCard },
-        UNPAID: { key: 'unpaid', text: 'Waiting for payment', rewards: unpaidRewards, itemComponent: ProgrammerRewardUnpaidCard },
-        PAID: { key: 'paidToProgrammer', text: 'Paid', rewards: paidRewardsToTheProgrammer, itemComponent: ProgrammerRewardPaidCard },
-        PAID_TO_OTHERS: { key: 'paidToOthers', text: 'Paid to others', rewards: paidRewardsToOthers, itemComponent: ProgrammerRewardPaidOthersCard },
+        UNCLAIMED: { key: "unclaimed", text: "Trying", rewards: unclaimedRewards, itemComponent: ProgrammerRewardUnpaidCard },
+        UNPAID: { key: "unpaid", text: "Waiting for payment", rewards: unpaidRewards, itemComponent: ProgrammerRewardUnpaidCard },
+        PAID: { key: "paidToProgrammer", text: "Paid", rewards: paidRewardsToTheProgrammer, itemComponent: ProgrammerRewardPaidCard },
+        PAID_TO_OTHERS: { key: "paidToOthers", text: "Paid to others", rewards: paidRewardsToOthers, itemComponent: ProgrammerRewardPaidOthersCard },
     };
 
-    const sections: { key: string, text: string, rewards: IssueByProgrammerDTO[], itemComponent: FC<any> }[] = [];
+    const sections: { key: string, text: string, rewards: IssueByProgrammerDTO[], itemComponent: React.FC<any> }[] = [];
 
     if (unclaimedRewards.length > 0) {
-        sections.push(PANEL_SECTIONS.UNCLAIMED)
+        sections.push(PANEL_SECTIONS.UNCLAIMED);
     }
 
     if (unpaidRewards.length > 0) {
-        sections.push(PANEL_SECTIONS.UNPAID)
+        sections.push(PANEL_SECTIONS.UNPAID);
     }
 
     if (paidRewardsToTheProgrammer.length > 0) {
-        sections.push(PANEL_SECTIONS.PAID)
+        sections.push(PANEL_SECTIONS.PAID);
     }
 
     if (paidRewardsToOthers.length > 0) {
-        sections.push(PANEL_SECTIONS.PAID_TO_OTHERS)
+        sections.push(PANEL_SECTIONS.PAID_TO_OTHERS);
     }
 
     const hasSections = sections.some((section) => section.rewards.length > 0);
@@ -76,10 +71,10 @@ export const ProgrammerRewardsPanel: FC<ProgrammerRewardsPanelProps> = ({ }) => 
                         Claim rewards manually
                     </Button>
 
-                    <ClaimRewardsModal 
-                        isOpened={isModalOpen} 
-                        onClose={closeModal} 
-                        onRewardsClaimed={onRewardsClaimed} 
+                    <ClaimRewardsModal
+                        isOpened={isModalOpen}
+                        onClose={closeModal}
+                        onRewardsClaimed={onRewardsClaimed}
                     />
                 </div>
 
@@ -87,7 +82,7 @@ export const ProgrammerRewardsPanel: FC<ProgrammerRewardsPanelProps> = ({ }) => 
 
                 <NothingFound />
             </div>
-        )
+        );
     }
 
     return (
@@ -111,7 +106,7 @@ export const ProgrammerRewardsPanel: FC<ProgrammerRewardsPanelProps> = ({ }) => 
                 <div key={section.key}>
                     {section.rewards.length > 0 && (
                         <>
-                            <Text fw={900} size={'xl'}>
+                            <Text fw={900} size={"xl"}>
                                 {section.text}
                             </Text>
                             <Space h="12px" />
@@ -131,7 +126,7 @@ export const ProgrammerRewardsPanel: FC<ProgrammerRewardsPanelProps> = ({ }) => 
             ))}
         </div>
     );
-};
+}
 
 function onRewardsClaimed() {
     mutate(API_ROUTES.REWARDS.TRYING_BY_ME());

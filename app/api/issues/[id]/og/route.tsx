@@ -20,12 +20,12 @@ export const GET = async (req: NextRequest, { params }: any) => {
     });
 
     const availablePrice: PricePrimitive = issue.rewards.reduce((acc, el) => {
-        if (el.status === 'Available') {
-            acc.value += el.price.value
+        if (el.status === "Available") {
+            acc.value += el.price.value;
         }
-        return acc;
 
-    }, { unit: 'USD_CENT', value: 0 })
+        return acc;
+    }, { unit: "USD_CENT", value: 0 });
 
     const issueList: IssueListDTO = {
         id: issue.id,
@@ -43,37 +43,33 @@ export const GET = async (req: NextRequest, { params }: any) => {
             url: issue.project.url,
             name: issue.project.name,
             isPublic: issue.project.isPublic,
-            isBotInstalled: issue.project.isInstalled
+            isBotInstalled: issue.project.isInstalled,
         },
         programmingLanguages: issue.project.programmingLanguages,
         pendingPrice: availablePrice,
         createdAt: issue.createdAt,
         claimerUsers: [],
         tryingUsers: [],
-    }
+    };
 
-    const roboto = await fetch(
-        new URL(`${process.env.NEXT_PUBLIC_URL}/fonts/Roboto/Roboto-Regular.ttf`),
-    ).then((res) => res.arrayBuffer());
+    const roboto = await fetch(new URL(`${process.env.NEXT_PUBLIC_URL}/fonts/Roboto/Roboto-Regular.ttf`)).then((res) => res.arrayBuffer());
 
-    const robotoBold = await fetch(
-        new URL(`${process.env.NEXT_PUBLIC_URL}/fonts/Roboto/Roboto-Bold.ttf`),
-    ).then((res) => res.arrayBuffer());
+    const robotoBold = await fetch(new URL(`${process.env.NEXT_PUBLIC_URL}/fonts/Roboto/Roboto-Bold.ttf`)).then((res) => res.arrayBuffer());
 
     return new ImageResponse(<StaticHomeRewardCard data={issueList} />, {
         width: 400,
         height: 450,
         fonts: [
             {
-                name: 'Roboto',
+                name: "Roboto",
                 data: roboto,
-                style: 'normal',
+                style: "normal",
             },
             {
-                name: 'Roboto-Bold',
+                name: "Roboto-Bold",
                 data: robotoBold,
-                style: 'normal',
-            }
-        ]
+                style: "normal",
+            },
+        ],
     });
 };

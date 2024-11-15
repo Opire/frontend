@@ -1,4 +1,4 @@
-import { GridCol, Loader, SimpleGrid, Text, Title } from "@mantine/core";
+import { Loader } from "@mantine/core";
 import { useIntersection } from "@mantine/hooks";
 import { FC, Ref, useEffect } from "react";
 import { NothingFound } from "./NothingFound";
@@ -20,7 +20,6 @@ export function InfinityList<T, TId extends IndexableKeyof<T>>({
     isLoading,
     loadNextPage,
     ItemComponent,
-    ItemSkeletonComponent
 }: {
     items: T[];
     keyIdentifier: TId;
@@ -30,32 +29,33 @@ export function InfinityList<T, TId extends IndexableKeyof<T>>({
         data: T;
         inputRef?: Ref<HTMLDivElement> | undefined;
     }>
-    ItemSkeletonComponent: FC<{}>
+    ItemSkeletonComponent: FC;
 }) {
-    const { entry, ref } = useIntersection<HTMLDivElement>()
+    const { entry, ref } = useIntersection<HTMLDivElement>();
     const isIntersecting = entry?.isIntersecting ?? false;
 
     useEffect(() => {
         if (isIntersecting) {
-            loadNextPage()
+            loadNextPage();
         }
-    }, [isIntersecting])
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isIntersecting]);
 
     return (
         <>
             <section
                 style={{
-                    display: 'grid',
-                    gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 260px), 1fr))',
-                    gap: '24px',
+                    display: "grid",
+                    gridTemplateColumns: "repeat(auto-fill, minmax(min(100%, 260px), 1fr))",
+                    gap: "24px",
                 }}
             >
                 {items.map((data, index) => (
                     <ItemComponent
-                        key={data[keyIdentifier] as string ?? ''}
+                        key={data[keyIdentifier] as string ?? ""}
                         {...{
                             data,
-                            inputRef: index === items.length - 15 ? ref : undefined
+                            inputRef: index === items.length - 15 ? ref : undefined,
                         }}
                     />
                 ))}
@@ -73,4 +73,3 @@ export function InfinityList<T, TId extends IndexableKeyof<T>>({
         </>
     );
 }
-

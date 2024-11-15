@@ -3,7 +3,7 @@ import { BaseException } from "./BaseException";
 
 export class InvalidSupportedCountry extends BaseException {
 
-    constructor(country: string) {
+    constructor (country: string) {
         super(
             `The supported country "${country}" is invalid`,
             {

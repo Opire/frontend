@@ -1,9 +1,9 @@
-'use client'
+"use client";
 
 import { FC } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { Divider, NavLink, Space } from "@mantine/core";
-import { IconChartBar, IconDeviceLaptop, IconCoin, IconSettings, IconLayoutDashboard, IconMoneybag, IconBrandGit } from "@tabler/icons-react";
+import { IconChartBar, IconDeviceLaptop, IconCoin, IconSettings, IconLayoutDashboard, IconMoneybag, IconBrandGit, IconTrophy } from "@tabler/icons-react";
 import { LogoutButton } from "./LogoutButton";
 import { useExternalStateOverride } from "../../../hooks/useExternalStateOverride";
 import { UserInfo } from "../User/UserInfo";
@@ -26,75 +26,89 @@ interface ItemMenu {
 export const Navbar: FC<NavbarProps> = ({
     userAuth,
 }) => {
-    const path = usePathname()
+    const path = usePathname();
 
     const menuItems: ItemMenu[] = [
         {
-            id: 'home',
+            id: "home",
             icon: <IconMoneybag size={18} />,
-            text: 'Rewards',
-            path: '/home',
+            text: "Rewards",
+            path: "/home",
             isPublic: true,
         },
         {
-            id: 'projects',
+            id: "challenges",
+            icon: <IconTrophy size={18} />,
+            text: "Challenges",
+            path: "/challenges/list",
+            isPublic: true,
+        },
+        {
+            id: "projects",
             icon: <IconBrandGit size={18} />,
-            text: 'Projects',
-            path: '/projects',
+            text: "Projects",
+            path: "/projects",
             isPublic: true,
         },
         {
-            id: 'dashboard',
+            id: "dashboard",
             icon: <IconLayoutDashboard size={18} />,
-            text: 'My dashboard',
+            text: "My dashboard",
             // path: '/dashboard',
             isPublic: false,
             children: [
                 {
-                    id: 'dashboard-creator',
+                    id: "dashboard-creator",
                     icon: <IconChartBar size={18} />,
-                    text: 'Creator',
+                    text: "Creator",
                     // path: '/dashboard/creator',
                     isPublic: false,
                     children: [
                         {
-                            id: 'dashboard-creator-rewards',
+                            id: "dashboard-creator-rewards",
                             icon: <IconMoneybag size={18} />,
-                            text: 'Rewards',
-                            path: '/dashboard/creator/rewards',
+                            text: "Rewards",
+                            path: "/dashboard/creator/rewards",
                             isPublic: false,
                         },
                         {
-                            id: 'dashboard-creator-tips',
+                            id: "dashboard-creator-tips",
                             icon: <IconCoin size={18} />,
-                            text: 'Tips',
-                            path: '/dashboard/creator/tips',
+                            text: "Tips",
+                            path: "/dashboard/creator/tips",
                             isPublic: false,
-                        }
-                    ]
+                        },
+                        {
+                            id: "dashboard-creator-challenges",
+                            icon: <IconTrophy size={18} />,
+                            text: "Challenges",
+                            path: "/dashboard/creator/challenges",
+                            isPublic: false,
+                        },
+                    ],
                 },
                 {
-                    id: 'dashboard-programmer',
+                    id: "dashboard-programmer",
                     icon: <IconDeviceLaptop size={18} />,
-                    text: 'Programmer',
+                    text: "Programmer",
                     // path: '/dashboard/programmer',
                     isPublic: false,
                     children: [
                         {
-                            id: 'dashboard-programmer-rewards',
+                            id: "dashboard-programmer-rewards",
                             icon: <IconMoneybag size={18} />,
-                            text: 'Rewards',
-                            path: '/dashboard/programmer/rewards',
+                            text: "Rewards",
+                            path: "/dashboard/programmer/rewards",
                             isPublic: false,
                         },
                         {
-                            id: 'dashboard-programmer-tips',
+                            id: "dashboard-programmer-tips",
                             icon: <IconCoin size={18} />,
-                            text: 'Tips',
-                            path: '/dashboard/programmer/tips',
+                            text: "Tips",
+                            path: "/dashboard/programmer/tips",
                             isPublic: false,
-                        }
-                    ]
+                        },
+                    ],
                 },
                 // {
                 //     icon: <IconChartHistogram size={18} />,
@@ -102,13 +116,13 @@ export const Navbar: FC<NavbarProps> = ({
                 //     path: '/dashboard/metrics',
                 //     isPublic: false,
                 // }
-            ]
+            ],
         },
         {
-            id: 'settings',
+            id: "settings",
             icon: <IconSettings size={18} />,
-            text: 'Settings',
-            path: '/settings',
+            text: "Settings",
+            path: "/settings",
             isPublic: false,
             // children: [
             //     {
@@ -118,7 +132,7 @@ export const Navbar: FC<NavbarProps> = ({
             //         isPublic: false,
             //     }
             // ]
-        }
+        },
     ];
 
     return (
@@ -136,19 +150,19 @@ export const Navbar: FC<NavbarProps> = ({
                 userAuth={userAuth}
             />
 
-            <Divider style={{ marginTop: 'auto', marginBottom: '10px' }} />
+            <Divider style={{ marginTop: "auto", marginBottom: "10px" }} />
 
-            <div className="links" style={{ marginBottom: '10px', overflow: 'auto' }} >
+            <div className="links" style={{ marginBottom: "10px", overflow: "auto" }} >
                 <InterestingLinks />
             </div>
         </>
-    )
-}
+    );
+};
 
-function NavbarMenu({
+function NavbarMenu ({
     menuItems,
     userAuth,
-    path
+    path,
 }: {
     menuItems: ItemMenu[],
     userAuth: UserAuthDTO | null,
@@ -167,16 +181,13 @@ function NavbarMenu({
                 />
             ))
         }
-    </>
-
+    </>;
 }
 
-
-
-function NavbarMenuItem({
+function NavbarMenuItem ({
     item,
     userAuth,
-    path
+    path,
 }: {
     item: ItemMenu,
     userAuth: UserAuthDTO | null,
@@ -198,10 +209,10 @@ function NavbarMenuItem({
                 opened={isOpen}
                 styles={{
                     label: {
-                        fontSize: '16px',
+                        fontSize: "16px",
                     },
                     body: {
-                        margin: '4px 0'
+                        margin: "4px 0",
                     },
                 }}
                 onClick={() => {
@@ -218,9 +229,9 @@ function NavbarMenuItem({
                 )}
             </NavLink >
         }
-    </>
+    </>;
 
-    function handleClickNavLink(item: ItemMenu) {
+    function handleClickNavLink (item: ItemMenu) {
         if (!item.path) {
             return;
         }
@@ -228,14 +239,12 @@ function NavbarMenuItem({
         router.push(item.path);
     }
 
-    function shouldStartOpened(item: ItemMenu, path: string): boolean {
+    function shouldStartOpened (item: ItemMenu, path: string): boolean {
         const hasTheSamePath = item.path === path;
-        const childrenHaveSamePath = item.children?.some(child => child.path === path
-            || shouldStartOpened(child, path));
+        const childrenHaveSamePath = item.children?.some(child => child.path === path ||
+            shouldStartOpened(child, path));
 
         return (hasTheSamePath || childrenHaveSamePath) ?? false;
-        // return childrenHaveSamePath ?? false;
+    // return childrenHaveSamePath ?? false;
     }
-
 }
-

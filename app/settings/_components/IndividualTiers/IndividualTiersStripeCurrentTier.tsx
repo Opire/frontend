@@ -7,7 +7,7 @@ export interface IndividualTiersStripeCurrentTierProps {
     paymentsEmail: string | null;
 }
 
-export function IndividualTiersStripeCurrentTier({  paymentsEmail }: IndividualTiersStripeCurrentTierProps) {
+export function IndividualTiersStripeCurrentTier ({ paymentsEmail }: IndividualTiersStripeCurrentTierProps) {
     const stripeCustomerPortalURL = process.env.NEXT_PUBLIC_STRIPE_CUSTOMER_PORTAL_URL;
 
     return (
@@ -17,14 +17,13 @@ export function IndividualTiersStripeCurrentTier({  paymentsEmail }: IndividualT
             variant="light"
             component="a"
             target="_blank"
-            mt={'1rem'}
+            mt={"1rem"}
             href={paymentsEmail ? `${stripeCustomerPortalURL}?prefilled_email=${paymentsEmail}` : stripeCustomerPortalURL}
-            >
-            <IconUser style={{ marginRight: '8px' }} />
-            <Text style={{ fontSize: '1.2rem' }}>
+        >
+            <IconUser style={{ marginRight: "8px" }} />
+            <Text style={{ fontSize: "1.2rem" }}>
                 Manage subscription
             </Text>
         </Button>
     );
-  }
-  
+}

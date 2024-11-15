@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { MultiSelect } from '@mantine/core';
+import { MultiSelect } from "@mantine/core";
 
-export function BaseMultiSelect<T>({
+export function BaseMultiSelect<T> ({
     label,
     options,
     value,
@@ -29,9 +29,9 @@ export function BaseMultiSelect<T>({
     };
 
     const updateErrorState = (value: T[]) => {
-        const error = validator(value, required)
+        const error = validator(value, required);
         setError(error);
-    }
+    };
 
     return (
         <MultiSelect
@@ -44,5 +44,4 @@ export function BaseMultiSelect<T>({
             searchable={true}
         />
     );
-
 }

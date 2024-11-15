@@ -1,22 +1,8 @@
-import { Button, Chip, Container, Group, NumberInput, Popover, RangeSlider, Space } from '@mantine/core';
-import React, { FC, useState } from 'react';
-import { DEFAULT_REWARD_FILTERS } from './Filters';
-import { useMediaQuery } from '@mantine/hooks';
-
-type AnyFunction = (...args: any[]) => any;
-
-function debounce<F extends AnyFunction>(func: F, delay: number): (...args: Parameters<F>) => void {
-    let timeoutId: NodeJS.Timeout;
-
-    return function debounced(...args: Parameters<F>): void {
-        clearTimeout(timeoutId);
-
-        timeoutId = setTimeout(() => {
-            func(...args);
-        }, delay);
-    };
-}
-
+import { Button, Chip, Container, Group, NumberInput, Popover, RangeSlider, Space } from "@mantine/core";
+import React, { FC, useState } from "react";
+import { DEFAULT_REWARD_FILTERS } from "./Filters";
+import { useMediaQuery } from "@mantine/hooks";
+import { debounce } from "../../../_utils/debounce";
 
 interface PriceFilterProp {
     value: [number, number | null]
@@ -26,7 +12,7 @@ interface PriceFilterProp {
 const maxPriceValue = 10_001;
 export const PriceFilter: FC<PriceFilterProp> = ({
     value,
-    onApply
+    onApply,
 }) => {
     const isMobile = useMediaQuery("(max-width: 50em)");
 
@@ -34,16 +20,16 @@ export const PriceFilter: FC<PriceFilterProp> = ({
     const isFilteringByMax = value[1] !== null;
     const isFiltering = isFilteringByMin || isFilteringByMax;
 
-    const [filterValue, setFilterValue] = useState({ min: value[0], max: value[1] || maxPriceValue })
+    const [filterValue, setFilterValue] = useState({ min: value[0], max: value[1] || maxPriceValue });
 
     const marks = [
-        { value: 0, label: '$0' },
-        { value: maxPriceValue, label: '∞' }
+        { value: 0, label: "$0" },
+        { value: maxPriceValue, label: "∞" },
     ];
 
     const chipTitle = () => {
         if (!isFiltering) {
-            return 'Price'
+            return "Price";
         }
 
         if (isFilteringByMin && isFilteringByMax) {
@@ -51,25 +37,24 @@ export const PriceFilter: FC<PriceFilterProp> = ({
         }
 
         if (!isFilteringByMax) {
-            return `From $${value[0]}`
+            return `From $${value[0]}`;
         }
 
-        return `Up to $${value[1]}`
-    }
-
+        return `Up to $${value[1]}`;
+    };
 
     const debouncedApply = debounce(({ min, max }: { min: number, max: number }) => {
-        onApply(min, max === maxPriceValue ? null : max)
-    }, 500)
+        onApply(min, max === maxPriceValue ? null : max);
+    }, 500);
 
-    function clear() {
-        setFilterValue({ min: DEFAULT_REWARD_FILTERS.price.min, max: DEFAULT_REWARD_FILTERS.price.max || maxPriceValue })
-        debouncedApply({ min: DEFAULT_REWARD_FILTERS.price.min, max: DEFAULT_REWARD_FILTERS.price.max || maxPriceValue })
+    function clear () {
+        setFilterValue({ min: DEFAULT_REWARD_FILTERS.price.min, max: DEFAULT_REWARD_FILTERS.price.max || maxPriceValue });
+        debouncedApply({ min: DEFAULT_REWARD_FILTERS.price.min, max: DEFAULT_REWARD_FILTERS.price.max || maxPriceValue });
     }
 
-    function onLocalApply(data: { min: number, max: number }) {
+    function onLocalApply (data: { min: number, max: number }) {
         setFilterValue(data);
-        debouncedApply(data)
+        debouncedApply(data);
     }
 
     return (
@@ -80,24 +65,24 @@ export const PriceFilter: FC<PriceFilterProp> = ({
                 </Chip>
             </Popover.Target>
 
-            <Popover.Dropdown style={{ width: 'auto' }}>
+            <Popover.Dropdown style={{ width: "auto" }}>
                 <Container>
                     <Group justify='space-between'>
                         <NumberInput
-                            size={isMobile ? 'xs' : 'md'}
-                            maw={isMobile ? '100px' : '200px'}
+                            size={isMobile ? "xs" : "md"}
+                            maw={isMobile ? "100px" : "200px"}
                             label="Min price"
-                            value={filterValue.min === maxPriceValue ? '' : filterValue.min}
+                            value={filterValue.min === maxPriceValue ? "" : filterValue.min}
                             onChange={(value) => onLocalApply({ min: +value, max: filterValue.max })}
                             placeholder=""
                             min={DEFAULT_REWARD_FILTERS.price.min}
                             max={filterValue.max}
                         />
                         <NumberInput
-                            size={isMobile ? 'xs' : 'md'}
-                            maw={isMobile ? '100px' : '200px'}
+                            size={isMobile ? "xs" : "md"}
+                            maw={isMobile ? "100px" : "200px"}
                             label="Max price"
-                            value={filterValue.max === maxPriceValue ? '' : filterValue.max}
+                            value={filterValue.max === maxPriceValue ? "" : filterValue.max}
                             onChange={(value) => onLocalApply({ min: filterValue.min, max: +value > maxPriceValue ? maxPriceValue : +value })}
                             placeholder=""
                             min={filterValue.min}
@@ -131,4 +116,3 @@ export const PriceFilter: FC<PriceFilterProp> = ({
         </Popover>
     );
 };
-

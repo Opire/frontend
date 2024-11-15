@@ -14,36 +14,37 @@ export async function generateMetadata({
         });
 
         const totalPrice: PricePrimitive = issue.rewards.reduce((acc, el) => {
-            acc.value += el.price.value
-            return acc;
+            acc.value += el.price.value;
 
-        }, { unit: 'USD_CENT', value: 0 });
+            return acc;
+        }, { unit: "USD_CENT", value: 0 });
 
         return {
             title: `Opire - Issue <${issue.title}>`,
             openGraph: {
-                type: 'website',
+                type: "website",
                 url: `${process.env.NEXT_PUBLIC_URL}/issues/${issue.id}`,
                 title: `${formatPrice(totalPrice)} bounty: ${issue.title}`,
                 description: `Earn up to ${formatPrice(totalPrice)} with Opire by solving this issue in ${issue.project.organization.name}/${issue.project.name}`,
                 images: `${process.env.NEXT_PUBLIC_URL}/api/issues/${issue.id}/og?time=${Date.now()}`,
             },
             twitter: {
-                creator: '@opire_dev',
-                creatorId: '1745861018234814464',
-                site: '@opire_dev',
-                siteId: '1745861018234814464',
+                creator: "@opire_dev",
+                creatorId: "1745861018234814464",
+                site: "@opire_dev",
+                siteId: "1745861018234814464",
                 title: `${formatPrice(totalPrice)} bounty: ${issue.title}`,
                 description: `Earn up to ${formatPrice(totalPrice)} with Opire by solving this issue in ${issue.project.organization.name}/${issue.project.name}`,
                 images: `${process.env.NEXT_PUBLIC_URL}/api/issues/${issue.id}/og?time=${Date.now()}`,
             },
         };
     } catch (error) {
+        console.error(error);
+
         return {
             title: "Opire - Issue",
         };
     }
-
 }
 
 export default async function Page({
@@ -56,6 +57,4 @@ export default async function Page({
     const userAuth = getUserAuth();
 
     return (<DetailedIssueView issue={issue} userAuth={userAuth} />);
-
-
 }

@@ -1,6 +1,6 @@
 import { Button, Container, Group, Modal, NumberInput, Space, TextInput } from "@mantine/core";
 import { FC, useState } from "react";
-import { useForm } from '@mantine/form';
+import { useForm } from "@mantine/form";
 import { IconCheck, IconDiamond, IconX } from "@tabler/icons-react";
 import { clientCustomFetch } from "../../../../_utils/clientCustomFetch";
 import { API_ROUTES } from "../../../../../constants";
@@ -17,13 +17,13 @@ export const CreateNewRewardModal: FC<CreateNewRewardModalProps> = ({
     isOpened,
     onClose,
     prefilledIssueURL,
-    onNewRewardCreated = () => {},
+    onNewRewardCreated = () => { },
 }) => {
     const [isCreatingReward, setIsCreatingReward] = useState(false);
 
     const form = useForm({
         initialValues: {
-            issueURL: prefilledIssueURL ?? '',
+            issueURL: prefilledIssueURL ?? "",
             rewardPrice: 0,
         },
         validate: {
@@ -32,21 +32,22 @@ export const CreateNewRewardModal: FC<CreateNewRewardModalProps> = ({
 
                 try {
                     validURL = new URL(value);
-                } catch (_) {
-                    return 'Invalid issue URL'
+                } catch (error) {
+                    console.error(error);
 
+                    return "Invalid issue URL";
                 }
-                const isValid = validURL.protocol === 'http:' || validURL.protocol === 'https:';
+                const isValid = validURL.protocol === "http:" || validURL.protocol === "https:";
 
                 if (!isValid) {
-                    return 'Invalid issue URL'
+                    return "Invalid issue URL";
                 }
             },
             rewardPrice: (value: number) => {
                 const isValid = value >= 20;
 
                 if (!isValid) {
-                    return 'Invalid reward price. Rewards start at $20';
+                    return "Invalid reward price. Rewards start at $20";
                 }
             },
         },
@@ -57,45 +58,47 @@ export const CreateNewRewardModal: FC<CreateNewRewardModalProps> = ({
             setIsCreatingReward(true);
 
             await clientCustomFetch(API_ROUTES.REWARDS.CREATE_FROM_ISSUE_URL(), {
-                method: 'POST', body: {
+                method: "POST",
+                body: {
                     reward: {
                         price: {
                             value: rewardPrice,
-                            unit: "USD"
+                            unit: "USD",
                         },
                     },
                     issue: {
-                        url: issueURL
-                    }
-                }
+                        url: issueURL,
+                    },
+                },
             });
 
             notifications.show({
-                title: 'Reward created sucesfully',
+                title: "Reward created successfully",
                 message: "",
                 withBorder: true,
                 withCloseButton: true,
                 autoClose: 10_000,
-                color: 'teal',
+                color: "teal",
                 icon: <IconCheck />,
-            })
+            });
 
             setTimeout(() => {
                 onNewRewardCreated();
                 setIsCreatingReward(false);
             }, 500);
 
-            onClose()
+            onClose();
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
         } catch (error) {
             notifications.show({
-                title: 'Error while trying to create the reward',
+                title: "Error while trying to create the reward",
                 message: "Please review that the issue is public and can be accessed by anyone",
                 withBorder: true,
                 withCloseButton: true,
                 autoClose: 10_000,
-                color: 'red',
+                color: "red",
                 icon: <IconX />,
-            })
+            });
             setIsCreatingReward(false);
         }
     }
@@ -105,8 +108,8 @@ export const CreateNewRewardModal: FC<CreateNewRewardModalProps> = ({
             centered={true}
             opened={isOpened}
             onClose={onClose}
-            size={'xl'}
-            title={<div style={{ display: 'flex', gap: '8px', justifyContent: 'center', alignItems: 'center' }}><IconDiamond size={16} color="teal" /><span>Create a new reward on issue</span></div>}
+            size={"xl"}
+            title={<div style={{ display: "flex", gap: "8px", justifyContent: "center", alignItems: "center" }}><IconDiamond size={16} color="teal" /><span>Create a new reward on issue</span></div>}
             closeOnEscape={true}
             closeOnClickOutside={false}
             withCloseButton={true}
@@ -120,7 +123,7 @@ export const CreateNewRewardModal: FC<CreateNewRewardModalProps> = ({
                         key='issueURL'
                         required
                         disabled={prefilledIssueURL !== undefined}
-                        {...form.getInputProps('issueURL')}
+                        {...form.getInputProps("issueURL")}
                     />
 
                     <Space h='1rem' />
@@ -133,7 +136,7 @@ export const CreateNewRewardModal: FC<CreateNewRewardModalProps> = ({
                         min={0}
                         key='rewardPrice'
                         required
-                        {...form.getInputProps('rewardPrice')}
+                        {...form.getInputProps("rewardPrice")}
                     />
                 </Container>
 
@@ -151,5 +154,5 @@ export const CreateNewRewardModal: FC<CreateNewRewardModalProps> = ({
                 </Group>
             </form>
         </Modal>
-    )
-}
+    );
+};

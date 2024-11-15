@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import { useState } from "react";
 import { API_ROUTES } from "../../constants";
@@ -13,7 +13,7 @@ import { useExternalStateOverride } from "../../hooks/useExternalStateOverride";
 
 const PAGE_SIZE = 30;
 
-export function HomeView({
+export function HomeView ({
     initialRewards,
     filters,
     search,
@@ -26,7 +26,7 @@ export function HomeView({
     const [rewards, setRewards] = useExternalStateOverride(initialRewards);
     const [page, setPage] = useState(1);
 
-    async function loadMoreRewards() {
+    async function loadMoreRewards () {
         setIsLoading(true);
 
         const next = page + 1;
@@ -35,18 +35,18 @@ export function HomeView({
             page: next,
             filters,
             search,
-        }))
+        }));
 
         const newRewards = await newRewardsResponse.json() as IssueListDTO[];
 
         // setIsLoading(false); // Here?
 
         if (newRewards?.length) {
-            setPage(next)
+            setPage(next);
             setRewards((prev: IssueListDTO[] | undefined) => [
                 ...(prev?.length ? prev : []),
-                ...newRewards
-            ])
+                ...newRewards,
+            ]);
         }
 
         setIsLoading(false); // Or here?

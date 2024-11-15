@@ -1,9 +1,9 @@
-import * as React from 'react';
+import * as React from "react";
 
 declare global {
   namespace JSX {
     interface IntrinsicElements {
-      'stripe-pricing-table': React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement>;
+      "stripe-pricing-table": React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement>;
     }
   }
 }
@@ -13,7 +13,7 @@ export interface StripePricingPageProps {
     clientReference: string
 }
 
-export function StripePricingPage({ pricingTableId, clientReference }: StripePricingPageProps) {
+export function StripePricingPage ({ pricingTableId, clientReference }: StripePricingPageProps) {
     const publishableKey = process.env.NEXT_PUBLIC_STRIPE_PRICING_TABLE_PUBLISHABLE_KEY;
 
     return (
@@ -21,8 +21,7 @@ export function StripePricingPage({ pricingTableId, clientReference }: StripePri
             pricing-table-id={pricingTableId}
             client-reference-id={clientReference}
             publishable-key={publishableKey}
-            >
+        >
         </stripe-pricing-table>
     );
-  }
-  
+}

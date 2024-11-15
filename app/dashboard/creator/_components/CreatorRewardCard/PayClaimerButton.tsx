@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import { FC } from "react";
 import { Button } from "@mantine/core";
@@ -17,27 +17,25 @@ export const PayClaimerButton: FC<PayButtonProps> = ({
     claimerId,
     issueId,
     priceToPay,
-}) => {
-    return (
-        <Button
-            size={'md'}
-            variant='gradient'
-            onClick={() => handleClickPayClaimer(claimerId, issueId)}
-        >
-            {priceToPay ? `Pay: ${formatPrice(priceToPay)}` : 'Pay'}
-        </Button>
+}) => (
+    <Button
+        size={"md"}
+        variant='gradient'
+        onClick={() => handleClickPayClaimer(claimerId, issueId)}
+    >
+        {priceToPay ? `Pay: ${formatPrice(priceToPay)}` : "Pay"}
+    </Button>
 
-    );
-};
+);
 
-export async function handleClickPayClaimer(claimerId: string, issueId: string): Promise<void> {
+export async function handleClickPayClaimer (claimerId: string, issueId: string): Promise<void> {
     const response = await clientCustomFetch(
         API_ROUTES.PAYMENTS.LINK_TO_PAY_REWARDS_FOR_ISSUE(issueId),
-        { method: 'POST', body: { claimerId } }
+        { method: "POST", body: { claimerId } },
     );
     const responseData = await response.json();
 
     if (responseData) {
-        window.open(responseData.url, '_blank');
+        window.open(responseData.url, "_blank");
     }
 }

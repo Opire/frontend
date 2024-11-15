@@ -1,21 +1,21 @@
-'use client'
+"use client";
 
-import { Container, Divider, Space, Tabs } from "@mantine/core"
-import { IconCoin, IconMoneybag } from "@tabler/icons-react"
+import { Container, Divider, Space, Tabs } from "@mantine/core";
+import { IconCoin, IconMoneybag } from "@tabler/icons-react";
 import { useRouter } from "next/navigation";
 import { ProgrammerRewardsPanel } from "./ProgrammerRewardsPanel/ProgrammerRewardsPanel";
 import { ProgrammerTipsPanel } from "./ProgrammerTipsPanel/ProgrammerTipsPanel";
 
-export function ProgrammerView({
+export function ProgrammerView ({
     view,
 }: {
-    view: 'rewards' | 'tips';
+    view: "rewards" | "tips";
 }) {
     const router = useRouter();
 
     return (
         <>
-            <Space h={'7px'} />
+            <Space h={"7px"} />
 
             <Tabs
                 value={view}
@@ -50,5 +50,5 @@ export function ProgrammerView({
 
             </Tabs>
         </>
-    )
+    );
 }

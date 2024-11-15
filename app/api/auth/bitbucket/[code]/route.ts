@@ -11,9 +11,9 @@ export const GET = async (req: NextRequest, { params }: any) => {
 
     const token = resJson.data;
     const cookieStore = cookies();
-    cookieStore.set('token', token, {
+    cookieStore.set("token", token, {
         httpOnly: true, secure: true,
     });
 
-    return NextResponse.json({ token }, { status: 200 })
-}
+    return NextResponse.json({ token }, { status: 200 });
+};

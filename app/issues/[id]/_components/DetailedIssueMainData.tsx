@@ -30,60 +30,62 @@ export const DetailedIssueMainData: FC<DetailedIssueMainDataProps> = ({ issue, u
 
     const [isAddRewardModalOpen, { close: closeAddRewardModal, open: openAddRewardModal }] = useDisclosure();
     const [isClaimRewardsModalOpen, { close: closeClaimRewardsModal, open: openClaimRewardsModal }] = useDisclosure();
-    
-    useTriggerCallbackOnQueryParamFirstMatch({ queryParamKey: 'add-reward', callback: openAddRewardModal });
-    useTriggerCallbackOnQueryParamFirstMatch({ queryParamKey: 'claim-rewards', callback: openClaimRewardsModal });
 
-    function handleClickAddReward() {
-        if(userAuth) {
+    useTriggerCallbackOnQueryParamFirstMatch({ queryParamKey: "add-reward", callback: openAddRewardModal });
+    useTriggerCallbackOnQueryParamFirstMatch({ queryParamKey: "claim-rewards", callback: openClaimRewardsModal });
+
+    function handleClickAddReward () {
+        if (userAuth) {
             openAddRewardModal();
+
             return;
         }
-        
+
         redirectAfterLogin.prepareNextRedirection(`/issues/${issue.id}?add-reward=true`);
-        router.push('?login=true');      
+        router.push("?login=true");
     }
 
-    function handleClickClaimRewards() {
-        if(userAuth) {
+    function handleClickClaimRewards () {
+        if (userAuth) {
             openClaimRewardsModal();
+
             return;
         }
-        
+
         redirectAfterLogin.prepareNextRedirection(`/issues/${issue.id}?claim-rewards=true`);
-        router.push('?login=true');      
+        router.push("?login=true");
     }
 
-    function onNewRewardCreated() {
+    function onNewRewardCreated () {
         mutate(API_ROUTES.ACTIVITY.BY_ISSUE_ID(issue.id));
         router.refresh();
     }
 
-    function onRewardsClaimed() {
+    function onRewardsClaimed () {
         mutate(API_ROUTES.ACTIVITY.BY_ISSUE_ID(issue.id));
         router.refresh();
     }
 
     const totalPrice: PricePrimitive = issue.rewards.reduce((acc, el) => {
-        acc.value += el.price.value
-        return acc;
+        acc.value += el.price.value;
 
-    }, { unit: 'USD_CENT', value: 0 })
+        return acc;
+    }, { unit: "USD_CENT", value: 0 });
 
     const availablePrice: PricePrimitive = issue.rewards.reduce((acc, el) => {
-        if (el.status === 'Available') {
-            acc.value += el.price.value
+        if (el.status === "Available") {
+            acc.value += el.price.value;
         }
-        return acc;
 
-    }, { unit: 'USD_CENT', value: 0 })
+        return acc;
+    }, { unit: "USD_CENT", value: 0 });
 
     const somethingHasBeenAlreadyPaid = totalPrice.value !== availablePrice.value;
 
-    const labelsAndProgrammingLanguagesToShow = [...issue.labels.filter(label => !label.includes('Reward')), ...issue.project.programmingLanguages]
+    const labelsAndProgrammingLanguagesToShow = [...issue.labels.filter(label => !label.includes("Reward")), ...issue.project.programmingLanguages];
 
     return (
-        <section style={{ height: 'auto' }}>
+        <section style={{ height: "auto" }}>
             <Grid>
                 <Grid.Col span={{ base: 12, md: 7, lg: 8 }}>
                     <Group wrap="nowrap" >
@@ -100,13 +102,13 @@ export const DetailedIssueMainData: FC<DetailedIssueMainDataProps> = ({ issue, u
                             target="_blank"
                             style={{ color: "inherit", textDecoration: "none" }}
                         >
-                            <Text fw={600} size={'2rem'}>{issue.title}</Text>
+                            <Text fw={600} size={"2rem"}>{issue.title}</Text>
                         </Link>
                     </Group>
 
-                    <Space h={'1.5rem'} />
+                    <Space h={"1.5rem"} />
 
-                    <Group wrap="nowrap" ml={'0.6rem'}>
+                    <Group wrap="nowrap" ml={"0.6rem"}>
                         <Avatar
                             src={issue.project.organization.logoUrl}
                             alt={issue.project.organization.name}
@@ -117,17 +119,17 @@ export const DetailedIssueMainData: FC<DetailedIssueMainDataProps> = ({ issue, u
                             radius="xl"
                         />
 
-                        <Flex wrap={'wrap'}>
+                        <Flex wrap={"wrap"}>
                             <Link
                                 href={issue.project.organization.url}
-                                style={{ color: "inherit", textDecoration: "none", display: 'flex', flexWrap: 'wrap' }}
+                                style={{ color: "inherit", textDecoration: "none", display: "flex", flexWrap: "wrap" }}
                             >
                                 <Text lineClamp={1} c={"dimmed"}>{issue.project.organization.name}</Text>
                             </Link>
                             <span>&nbsp;/&nbsp;</span>
                             <Link
                                 href={issue.project.url}
-                                style={{ color: "inherit", textDecoration: "none", display: 'flex', flexWrap: 'wrap' }}
+                                style={{ color: "inherit", textDecoration: "none", display: "flex", flexWrap: "wrap" }}
                             >
                                 <Text lineClamp={1}>{issue.project.name}</Text>
                             </Link>
@@ -140,7 +142,7 @@ export const DetailedIssueMainData: FC<DetailedIssueMainDataProps> = ({ issue, u
                     {/* <Card withBorder shadow="md" radius='md' bg={'dark.7'}> */}
 
                     <Center>
-                        <Flex direction={'column'}>
+                        <Flex direction={"column"}>
                             <Text
                                 style={{ fontSize: "2.4rem", fontWeight: "bold" }}
                                 variant='gradient'
@@ -148,14 +150,12 @@ export const DetailedIssueMainData: FC<DetailedIssueMainDataProps> = ({ issue, u
                                 {formatPrice(totalPrice)}
                             </Text>
 
-
                             {
-                                somethingHasBeenAlreadyPaid 
-                                && 
+                                somethingHasBeenAlreadyPaid &&
                                 <Flex
-                                align={"center"}
-                                columnGap={'0.4rem'}
-                                wrap={'wrap'}
+                                    align={"center"}
+                                    columnGap={"0.4rem"}
+                                    wrap={"wrap"}
                                 >
                                     <Text >
                                         Available:
@@ -164,7 +164,7 @@ export const DetailedIssueMainData: FC<DetailedIssueMainDataProps> = ({ issue, u
                                     <Text
                                         style={{ fontSize: "1.4rem", fontWeight: "bold" }}
                                         variant='gradient'
-                                        >
+                                    >
                                         {formatPrice(availablePrice)}
                                     </Text>
                                 </Flex>
@@ -172,9 +172,9 @@ export const DetailedIssueMainData: FC<DetailedIssueMainDataProps> = ({ issue, u
                         </Flex>
 
                     </Center>
-                    <Space h={'0.4rem'} />
+                    <Space h={"0.4rem"} />
 
-                    <Center style={{ gap: '1rem' }}>
+                    <Center style={{ gap: "1rem" }}>
                         <Button
                             leftSection={<IconPlus size={18} />}
                             variant='gradient'
@@ -183,11 +183,11 @@ export const DetailedIssueMainData: FC<DetailedIssueMainDataProps> = ({ issue, u
                             Add reward
                         </Button>
 
-                        <CreateNewRewardModal 
-                            isOpened={isAddRewardModalOpen} 
+                        <CreateNewRewardModal
+                            isOpened={isAddRewardModalOpen}
                             onClose={closeAddRewardModal}
                             prefilledIssueURL={issue.issueURL}
-                            onNewRewardCreated={onNewRewardCreated} 
+                            onNewRewardCreated={onNewRewardCreated}
                         />
 
                         <ShareModal issue={issue} />
@@ -196,7 +196,7 @@ export const DetailedIssueMainData: FC<DetailedIssueMainDataProps> = ({ issue, u
                 </Grid.Col>
             </Grid>
 
-            <Space h={'2rem'} />
+            <Space h={"2rem"} />
 
             <div>
                 <Group style={{ gap: "6px" }}>
@@ -213,7 +213,7 @@ export const DetailedIssueMainData: FC<DetailedIssueMainDataProps> = ({ issue, u
                 </Group>
             </div>
 
-            <Space h={'2rem'} />
+            <Space h={"2rem"} />
 
             <Card withBorder shadow="md" radius='md'>
                 <Center>
@@ -224,7 +224,7 @@ export const DetailedIssueMainData: FC<DetailedIssueMainDataProps> = ({ issue, u
                     </Text>
                 </Center>
 
-                <Space h={'1rem'} />
+                <Space h={"1rem"} />
 
                 <Center>
                     <Button
@@ -235,18 +235,18 @@ export const DetailedIssueMainData: FC<DetailedIssueMainDataProps> = ({ issue, u
                         Claim available rewards
                     </Button>
 
-                    <ClaimRewardsModal 
-                        isOpened={isClaimRewardsModalOpen} 
+                    <ClaimRewardsModal
+                        isOpened={isClaimRewardsModalOpen}
                         onClose={closeClaimRewardsModal}
                         prefilledIssueURL={issue.issueURL}
-                        onRewardsClaimed={onRewardsClaimed} 
+                        onRewardsClaimed={onRewardsClaimed}
                     />
                 </Center>
 
-                <Space h={'1rem'} />
+                <Space h={"1rem"} />
 
                 <Table.ScrollContainer minWidth={500}>
-                    <Table verticalSpacing="md">
+                    <Table verticalSpacing="md" highlightOnHover>
                         <Table.Thead>
                             <Table.Tr>
                                 <Table.Th>Date</Table.Th>
@@ -268,7 +268,7 @@ export const DetailedIssueMainData: FC<DetailedIssueMainDataProps> = ({ issue, u
                 </Table.ScrollContainer>
             </Card>
 
-            <Space h={'2rem'} />
+            <Space h={"2rem"} />
 
             {
                 issue.usersTrying.length > 0 &&
@@ -281,11 +281,11 @@ export const DetailedIssueMainData: FC<DetailedIssueMainDataProps> = ({ issue, u
                         </Text>
                     </Center>
 
-                    <Space h={'1.2rem'} />
+                    <Space h={"1.2rem"} />
 
                     <Grid justify="center">
                         {issue.usersTrying.map(userId => (
-                            <Grid.Col key={userId} span={'content'}>
+                            <Grid.Col key={userId} span={"content"}>
                                 <UserTryingCard
                                     userId={userId}
                                     platform={issue.platform}
@@ -294,7 +294,7 @@ export const DetailedIssueMainData: FC<DetailedIssueMainDataProps> = ({ issue, u
                             </Grid.Col>
                         ))}
                     </Grid>
-                    <Space h={'2rem'} />
+                    <Space h={"2rem"} />
                 </>
             }
         </section >
@@ -308,8 +308,8 @@ const DetailedIssueReward: FC<{ reward: RewardPrimitive, issue: IssuePrimitive }
         isLoading,
         username,
         avatarURL,
-        usernameLink
-    } = useGetUserPublicInfoFromPlatform({ userId: reward.creatorId, platform })
+        usernameLink,
+    } = useGetUserPublicInfoFromPlatform({ userId: reward.creatorId, platform });
 
     const wasRewardCreatedFromComment = reward.commentURL !== issue.issueURL;
 
@@ -318,17 +318,17 @@ const DetailedIssueReward: FC<{ reward: RewardPrimitive, issue: IssuePrimitive }
             <Table.Td colSpan={5}>
                 <Skeleton h='2rem' />
             </Table.Td>
-        )
+        );
     }
 
     return (
         <>
             <Table.Td>
-                {new Intl.DateTimeFormat('en-GB').format(new Date(reward.createdAt))}
+                {new Intl.DateTimeFormat("en-GB").format(new Date(reward.createdAt))}
             </Table.Td>
 
             <Table.Td>
-                <Flex align={'center'} gap={'5px'}>
+                <Flex align={"center"} gap={"5px"}>
                     <Avatar
                         src={avatarURL}
                         alt={username}
@@ -343,12 +343,12 @@ const DetailedIssueReward: FC<{ reward: RewardPrimitive, issue: IssuePrimitive }
             </Table.Td>
 
             <Table.Td>
-                <Text variant="gradient" style={{ fontWeight: "bold", fontSize: '1.2rem' }}>{formatPrice(reward.price)}</Text>
+                <Text variant="gradient" style={{ fontWeight: "bold", fontSize: "1.2rem" }}>{formatPrice(reward.price)}</Text>
             </Table.Td>
 
             <Table.Td>
                 <Badge
-                    color={reward.status === 'Available' ? 'teal' : 'blue'}
+                    color={reward.status === "Available" ? "teal" : "blue"}
                 >
                     {reward.status}
                 </Badge>
@@ -358,29 +358,27 @@ const DetailedIssueReward: FC<{ reward: RewardPrimitive, issue: IssuePrimitive }
                 <Text c="dimmed" size="sm">
                     {
                         wasRewardCreatedFromComment
-                        ?
-                        <Link href={reward.commentURL}>Go to comment</Link>
-                        :
-                        <span>OpireBot was not installed</span>
+                            ? <Link href={reward.commentURL}>Go to comment</Link>
+                            : <span>OpireBot was not installed</span>
                     }
                 </Text>
             </Table.Td>
         </>
-    )
-}
+    );
+};
 
 const UserTryingCard: FC<{ userId: string, platform: PlatformType, hasClaimed: boolean }> = ({ userId, platform, hasClaimed }) => {
     const {
         isLoading,
         username,
         avatarURL,
-        usernameLink
-    } = useGetUserPublicInfoFromPlatform({ userId, platform })
+        usernameLink,
+    } = useGetUserPublicInfoFromPlatform({ userId, platform });
 
     if (isLoading) {
         return <div>
             <Skeleton h='2rem' />
-        </div>
+        </div>;
     }
 
     return (
@@ -393,7 +391,7 @@ const UserTryingCard: FC<{ userId: string, platform: PlatformType, hasClaimed: b
                     radius='xl'
                 />
             </Center>
-            <Space h={'0.5rem'} />
+            <Space h={"0.5rem"} />
 
             <Center>
 
@@ -404,12 +402,12 @@ const UserTryingCard: FC<{ userId: string, platform: PlatformType, hasClaimed: b
 
             {hasClaimed &&
                 <>
-                    <Space h={'0.5rem'} />
+                    <Space h={"0.5rem"} />
                     <Center>
                         <Badge color="teal">Claimed</Badge>
                     </Center>
                 </>
             }
         </Card>
-    )
-}
+    );
+};

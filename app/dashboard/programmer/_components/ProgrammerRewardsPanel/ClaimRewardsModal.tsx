@@ -1,6 +1,6 @@
 import { Button, Container, Group, Modal, Space, TextInput } from "@mantine/core";
 import { FC, useState } from "react";
-import { useForm } from '@mantine/form';
+import { useForm } from "@mantine/form";
 import { IconCheck, IconDiamond, IconX } from "@tabler/icons-react";
 import { clientCustomFetch } from "../../../../_utils/clientCustomFetch";
 import { API_ROUTES } from "../../../../../constants";
@@ -17,14 +17,14 @@ export const ClaimRewardsModal: FC<ClaimRewardsModalProps> = ({
     isOpened,
     onClose,
     prefilledIssueURL,
-    onRewardsClaimed = () => {},
+    onRewardsClaimed = () => { },
 }) => {
     const [isClaimingRewards, setIsClaimingRewards] = useState(false);
 
     const form = useForm({
         initialValues: {
-            issueURL: prefilledIssueURL ?? '',
-            pullRequestURL: '',
+            issueURL: prefilledIssueURL ?? "",
+            pullRequestURL: "",
         },
         validate: {
             issueURL: (value: string) => {
@@ -32,14 +32,15 @@ export const ClaimRewardsModal: FC<ClaimRewardsModalProps> = ({
 
                 try {
                     validURL = new URL(value);
-                } catch (_) {
-                    return 'Invalid issue URL'
+                } catch (error) {
+                    console.error(error);
 
+                    return "Invalid issue URL";
                 }
-                const isValid = validURL.protocol === 'http:' || validURL.protocol === 'https:';
+                const isValid = validURL.protocol === "http:" || validURL.protocol === "https:";
 
                 if (!isValid) {
-                    return 'Invalid issue URL'
+                    return "Invalid issue URL";
                 }
             },
             pullRequestURL: (value: string) => {
@@ -47,14 +48,15 @@ export const ClaimRewardsModal: FC<ClaimRewardsModalProps> = ({
 
                 try {
                     validURL = new URL(value);
-                } catch (_) {
-                    return 'Invalid pull request URL'
+                } catch (error) {
+                    console.error(error);
 
+                    return "Invalid pull request URL";
                 }
-                const isValid = validURL.protocol === 'http:' || validURL.protocol === 'https:';
+                const isValid = validURL.protocol === "http:" || validURL.protocol === "https:";
 
                 if (!isValid) {
-                    return 'Invalid pull request URL'
+                    return "Invalid pull request URL";
                 }
             },
         },
@@ -65,26 +67,26 @@ export const ClaimRewardsModal: FC<ClaimRewardsModalProps> = ({
             setIsClaimingRewards(true);
 
             await clientCustomFetch(API_ROUTES.ISSUES.CLAIM_FROM_ISSUE_URL(), {
-                method: 'POST',
+                method: "POST",
                 body: {
                     issue: {
-                        url: issueURL
+                        url: issueURL,
                     },
                     pullRequest: {
-                        url: pullRequestURL
-                    }
-                }
+                        url: pullRequestURL,
+                    },
+                },
             });
 
             notifications.show({
-                title: 'Rewards claimed sucesfully',
+                title: "Rewards claimed successfully",
                 message: "",
                 withBorder: true,
                 withCloseButton: true,
                 autoClose: 10_000,
-                color: 'teal',
+                color: "teal",
                 icon: <IconCheck />,
-            })
+            });
             setTimeout(() => {
                 onRewardsClaimed();
                 setIsClaimingRewards(false);
@@ -92,15 +94,17 @@ export const ClaimRewardsModal: FC<ClaimRewardsModalProps> = ({
 
             onClose();
         } catch (error) {
+            console.error(error);
+
             notifications.show({
-                title: 'Error while trying to claim the rewards',
+                title: "Error while trying to claim the rewards",
                 message: "Please review that the issue and the pull request are public and can be accessed by anyone",
                 withBorder: true,
                 withCloseButton: true,
                 autoClose: 10_000,
-                color: 'red',
+                color: "red",
                 icon: <IconX />,
-            })
+            });
             setIsClaimingRewards(false);
         }
     }
@@ -110,8 +114,8 @@ export const ClaimRewardsModal: FC<ClaimRewardsModalProps> = ({
             centered={true}
             opened={isOpened}
             onClose={onClose}
-            size={'xl'}
-            title={<div style={{ display: 'flex', gap: '8px', justifyContent: 'center', alignItems: 'center' }}><IconDiamond size={16} color="teal" /><span>Claim rewards from an issue</span></div>}
+            size={"xl"}
+            title={<div style={{ display: "flex", gap: "8px", justifyContent: "center", alignItems: "center" }}><IconDiamond size={16} color="teal" /><span>Claim rewards from an issue</span></div>}
             closeOnEscape={true}
             closeOnClickOutside={false}
             withCloseButton={true}
@@ -125,7 +129,7 @@ export const ClaimRewardsModal: FC<ClaimRewardsModalProps> = ({
                         key='issueURL'
                         required
                         disabled={prefilledIssueURL !== undefined}
-                        {...form.getInputProps('issueURL')}
+                        {...form.getInputProps("issueURL")}
                     />
 
                     <Space h='1rem' />
@@ -136,7 +140,7 @@ export const ClaimRewardsModal: FC<ClaimRewardsModalProps> = ({
                         placeholder="https://github.com/Opire/docs/pull/10"
                         key='pullRequestURL'
                         required
-                        {...form.getInputProps('pullRequestURL')}
+                        {...form.getInputProps("pullRequestURL")}
                     />
                 </Container>
 
@@ -154,5 +158,5 @@ export const ClaimRewardsModal: FC<ClaimRewardsModalProps> = ({
                 </Group>
             </form>
         </Modal>
-    )
-}
+    );
+};

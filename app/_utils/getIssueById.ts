@@ -3,7 +3,7 @@ import { API_ROUTES } from "../../constants";
 import { IssuePrimitive } from "../_core/_primitives/IssuePrimitive";
 import { serverCustomFetch } from "./serverCustomFetch";
 
-export async function getIssueById({
+export async function getIssueById ({
     id,
 }: {
     id: string;
@@ -13,7 +13,8 @@ export async function getIssueById({
 
         return response.json();
     } catch (error) {
-        redirect('/');
+        // eslint-disable-next-line no-console
+        console.error(error);
+        redirect("/");
     }
-
 }

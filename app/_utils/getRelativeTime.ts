@@ -1,4 +1,4 @@
-export function getRelativeTime(date: Date) {
+export function getRelativeTime (date: Date) {
     const rtf = new Intl.RelativeTimeFormat("en", {
         numeric: "auto",
         style: "long",
@@ -17,8 +17,8 @@ export function getRelativeTime(date: Date) {
 
     const elapsed: number = date.getTime() - new Date().getTime();
 
-    for (var u in units) {
-        if (Math.abs(elapsed) > units[u] || u == "second") {
+    for (const u in units) {
+        if (Math.abs(elapsed) > units[u] || u === "second") {
             return rtf.format(
                 Math.round(elapsed / units[u]),
                 u as Intl.RelativeTimeFormatUnit,

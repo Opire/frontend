@@ -38,7 +38,7 @@ export const HomeRewardCard: FC<HomeRewardCardProps> = ({ data, inputRef }) => {
 
     const [usersToShow, usersHidden] = splitToShow(
         data.claimerUsers,
-        MAX_NUMBER_OF_USERS_TO_SHOW
+        MAX_NUMBER_OF_USERS_TO_SHOW,
     );
 
     const hasMoreUsers = usersHidden.length > 0;
@@ -46,15 +46,15 @@ export const HomeRewardCard: FC<HomeRewardCardProps> = ({ data, inputRef }) => {
 
     const [programmingLanguagesToShow] = splitToShow(
         data.programmingLanguages,
-        MAX_NUMBER_OF_PROGRAMMING_LANGUAGES_TO_SHOW
-    )
+        MAX_NUMBER_OF_PROGRAMMING_LANGUAGES_TO_SHOW,
+    );
 
     const redirectToDetails = () => {
-        router.push(`/issues/${data.id}`)
-    }
+        router.push(`/issues/${data.id}`);
+    };
 
     return (
-        <Card ref={hoverRef} withBorder shadow={'md'} radius="md" style={{ display: 'flex', justifyContent: 'space-between', cursor: 'pointer', transition: 'transform 100ms ease-out', transform: hovered ? 'scale(1.01)' : '' }} onClick={redirectToDetails}>
+        <Card ref={hoverRef} withBorder shadow={"md"} radius="md" style={{ display: "flex", justifyContent: "space-between", cursor: "pointer", transition: "transform 100ms ease-out", transform: hovered ? "scale(1.01)" : "" }} onClick={redirectToDetails}>
             <CardSection withBorder p="sm" ref={inputRef}>
                 <Group justify="space-between">
                     <Group wrap="nowrap" h={"50px"}>
@@ -84,7 +84,7 @@ export const HomeRewardCard: FC<HomeRewardCardProps> = ({ data, inputRef }) => {
                         radius="xl"
                     />
 
-                    <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+                    <div style={{ display: "flex", flexWrap: "wrap" }}>
                         <Text lineClamp={1} c={"dimmed"}>{data.organization.name}</Text>
                         <span>&nbsp;/&nbsp;</span>
                         <Text lineClamp={1}>{data.project.name}</Text>
@@ -136,30 +136,28 @@ export const HomeRewardCard: FC<HomeRewardCardProps> = ({ data, inputRef }) => {
 
                         <Group gap="xs">
                             <AvatarGroup>
-                                {usersToShow.map((user) => {
-                                    return (
-                                        <HoverCard
-                                            withArrow
-                                            shadow="md"
-                                            closeDelay={0}
-                                            openDelay={0}
-                                            key={user.id}
-                                        >
-                                            <HoverCardTarget>
-                                                <Avatar
-                                                    src={user.avatarURL}
-                                                    alt={user.username}
-                                                    size='md'
-                                                    radius='xl'
-                                                />
-                                            </HoverCardTarget>
+                                {usersToShow.map((user) => (
+                                    <HoverCard
+                                        withArrow
+                                        shadow="md"
+                                        closeDelay={0}
+                                        openDelay={0}
+                                        key={user.id}
+                                    >
+                                        <HoverCardTarget>
+                                            <Avatar
+                                                src={user.avatarURL}
+                                                alt={user.username}
+                                                size='md'
+                                                radius='xl'
+                                            />
+                                        </HoverCardTarget>
 
-                                            <HoverCardDropdown>
-                                                {user.username}
-                                            </HoverCardDropdown>
-                                        </HoverCard>
-                                    );
-                                })}
+                                        <HoverCardDropdown>
+                                            {user.username}
+                                        </HoverCardDropdown>
+                                    </HoverCard>
+                                ))}
                                 {hasMoreUsers && (
                                     <HoverCard
                                         withArrow

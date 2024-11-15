@@ -1,4 +1,4 @@
-import { Avatar, Button, Card, Group, Text } from "@mantine/core";
+import { Avatar, Card, Group, Text } from "@mantine/core";
 import { PayClaimerButton } from "./CreatorRewardCard/PayClaimerButton";
 import { formatPrice } from "../../../_utils/formatPrice";
 import { PricePrimitive } from "../../../_core/_primitives/PricePrimitive";
@@ -44,16 +44,15 @@ export function ClaimerUserCard({
                 padding="lg"
                 radius="md"
                 withBorder
-                style={{ flexGrow: 1, rowGap: '1.5rem', display: 'flex' }}
+                style={{ flexGrow: 1, rowGap: "1.5rem", display: "flex" }}
             >
                 <Text fw={600} size="xl">
                     {user.username}
                 </Text>
 
                 {
-                    haveToShowSomePrices
-                    &&
-                    <Group style={{ justifyContent: 'space-between' }}>
+                    haveToShowSomePrices &&
+                    <Group style={{ justifyContent: "space-between" }}>
                         {
                             haveToShowPayButton &&
                             <PayClaimerButton
@@ -64,12 +63,11 @@ export function ClaimerUserCard({
                         }
 
                         {
-                            paidPrice.value > 0
-                            &&
+                            paidPrice.value > 0 &&
                             <Text
                                 component="div"
-                                size={'xs'}
-                                style={{ textAlign: 'center' }}
+                                size={"xs"}
+                                style={{ textAlign: "center" }}
                             >
                                 <Text>
                                     Already paid:
@@ -87,7 +85,5 @@ export function ClaimerUserCard({
                 }
             </Card>
         </Group>
-    )
+    );
 }
-
-

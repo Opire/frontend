@@ -1,6 +1,5 @@
-import { FC } from "react";
 import { useGetRewardsFromCreator } from "../../../../../hooks/useGetRewardsFromCreator";
-import { Button, Divider, Loader, Space, Text, Title } from "@mantine/core";
+import { Button, Divider, Loader, Space, Text } from "@mantine/core";
 import { CreatorRewardCardSkeletonClient } from "../CreatorRewardCard/CreatorRewardCardSkeletonClient";
 import { CreatorRewardPaidCard } from "../CreatorRewardCard/CreatorRewardPaidCard";
 import { CreatorRewardUnpaidCard } from "../CreatorRewardCard/CreatorRewardUnpaidCard";
@@ -13,11 +12,7 @@ import { CreateNewRewardModal } from "./CreateNewRewardModal";
 import { mutate } from "swr";
 import { API_ROUTES } from "../../../../../constants";
 
-interface CreatorRewardsPanelProps {
-}
-
-export const CreatorRewardsPanel: FC<CreatorRewardsPanelProps> = ({
-}) => {
+export function CreatorRewardsPanel() {
     const [isModalOpen, { close: closeModal, open: openModal }] = useDisclosure();
 
     const { issues: allIssues, isLoading } = useGetRewardsFromCreator({ revalidateOnFocus: !isModalOpen });
@@ -32,7 +27,7 @@ export const CreatorRewardsPanel: FC<CreatorRewardsPanelProps> = ({
     const noRewards = !hasUnpaidRewards && !hasPaidRewards;
 
     if (isLoading) {
-        return <Loader display='block' size='xl' m='30px auto' />
+        return <Loader display='block' size='xl' m='30px auto' />;
     }
 
     if (noRewards) {
@@ -48,10 +43,10 @@ export const CreatorRewardsPanel: FC<CreatorRewardsPanelProps> = ({
                         Create a new reward
                     </Button>
 
-                    <CreateNewRewardModal 
-                        isOpened={isModalOpen} 
-                        onClose={closeModal} 
-                        onNewRewardCreated={onNewRewardCreated} 
+                    <CreateNewRewardModal
+                        isOpened={isModalOpen}
+                        onClose={closeModal}
+                        onNewRewardCreated={onNewRewardCreated}
                     />
                 </div>
 
@@ -59,7 +54,7 @@ export const CreatorRewardsPanel: FC<CreatorRewardsPanelProps> = ({
 
                 <NothingFound />
             </div>
-        )
+        );
     }
 
     return (
@@ -74,10 +69,10 @@ export const CreatorRewardsPanel: FC<CreatorRewardsPanelProps> = ({
                     Create a new reward
                 </Button>
 
-                <CreateNewRewardModal 
-                    isOpened={isModalOpen} 
-                    onClose={closeModal} 
-                    onNewRewardCreated={onNewRewardCreated} 
+                <CreateNewRewardModal
+                    isOpened={isModalOpen}
+                    onClose={closeModal}
+                    onNewRewardCreated={onNewRewardCreated}
                 />
             </div>
 
@@ -85,7 +80,7 @@ export const CreatorRewardsPanel: FC<CreatorRewardsPanelProps> = ({
 
             {hasUnpaidRewards && (
                 <>
-                    <Text fw={900} size={'xl'}>Active</Text>
+                    <Text fw={900} size={"xl"}>Active</Text>
                     <Space h='12px' />
                     <InfinityList
                         items={unpaidRewards}
@@ -102,7 +97,7 @@ export const CreatorRewardsPanel: FC<CreatorRewardsPanelProps> = ({
 
             {hasPaidRewards && (
                 <>
-                    <Text fw={900} size={'xl'}>Paid</Text>
+                    <Text fw={900} size={"xl"}>Paid</Text>
                     <Space h='12px' />
                     <InfinityList
                         items={paidRewards}

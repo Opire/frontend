@@ -7,5 +7,5 @@ export const TierLabelMapper: Record<TIER_NAMES, string> = {
     [TIER_NAMES.ORGANIZATION_BASIC]: "Organization Basic",
     [TIER_NAMES.ORGANIZATION_STARTER]: "Organization Starter",
     [TIER_NAMES.ORGANIZATION_PRO]: "Organization Pro",
-    [TIER_NAMES.ORGANIZATION_ENTERPRISE]: "Organization Enterprise"
-}
+    [TIER_NAMES.ORGANIZATION_ENTERPRISE]: "Organization Enterprise",
+};

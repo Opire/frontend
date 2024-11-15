@@ -15,15 +15,15 @@ interface CreatorRewardPaidCardProps {
 
 export const CreatorRewardPaidCard: FC<CreatorRewardPaidCardProps> = ({
     data,
-    inputRef
+    inputRef,
 }) => {
     const totalIssueRewardPrice = Price.sum([Price.fromPrimitives(data.alreadyPaid), Price.fromPrimitives(data.pendingToBePaid)]);
     const { hovered, ref: hoverRef } = useHover();
     const router = useRouter();
 
     const redirectToDetails = () => {
-        router.push(`/issues/${data.issueId}`)
-    }
+        router.push(`/issues/${data.issueId}`);
+    };
 
     return (
         <Card
@@ -31,7 +31,7 @@ export const CreatorRewardPaidCard: FC<CreatorRewardPaidCardProps> = ({
             withBorder
             shadow="md"
             radius="md"
-            style={{ cursor: 'pointer', transition: 'transform 100ms ease-out', transform: hovered ? 'scale(1.01)' : '' }}
+            style={{ cursor: "pointer", transition: "transform 100ms ease-out", transform: hovered ? "scale(1.01)" : "" }}
             onClick={redirectToDetails}
         >
             <CardSection withBorder p="sm" ref={inputRef}>
@@ -39,7 +39,7 @@ export const CreatorRewardPaidCard: FC<CreatorRewardPaidCardProps> = ({
                     <Group>
                         <Avatar src={data.organization.logoURL} size='md' radius='xl' />
                         <div
-                            style={{ display: 'flex', flexWrap: 'wrap' }}
+                            style={{ display: "flex", flexWrap: "wrap" }}
                         >
                             <Text lineClamp={1} c={"dimmed"}>{data.organization.name}</Text>
                             <span>&nbsp;/&nbsp;</span>
@@ -63,11 +63,11 @@ export const CreatorRewardPaidCard: FC<CreatorRewardPaidCardProps> = ({
             </CardSection>
 
             <CardSection p="sm">
-                <Group justify="center" style={{ flexDirection: 'column' }}>
+                <Group justify="center" style={{ flexDirection: "column" }}>
                     <Text
                         component="div"
-                        size={'xs'}
-                        style={{ textAlign: 'center' }}
+                        size={"xs"}
+                        style={{ textAlign: "center" }}
                     >
                         <Text>
                             Total:
@@ -84,29 +84,26 @@ export const CreatorRewardPaidCard: FC<CreatorRewardPaidCardProps> = ({
 
             </CardSection>
 
-
-            <CardSection withBorder inheritPadding p="md" style={{ minHeight: '88px', height: '100%' }}>
-                <Group justify="space-between" align='flex-end' style={{ height: '100%' }}>
+            <CardSection withBorder inheritPadding p="md" style={{ minHeight: "88px", height: "100%" }}>
+                <Group justify="space-between" align='flex-end' style={{ height: "100%" }}>
                     <AvatarGroup>
                         {
-                            data.usersTrying.filter(userTrying => userTrying.alreadyPaid.value > 0).map((userTrying) => {
-                                return (
-                                    <>
-                                        <HoverCard withArrow shadow="md" closeDelay={0} openDelay={0} key={userTrying.id}>
-                                            <HoverCardTarget>
-                                                <Avatar src={userTrying.avatarURL} alt={userTrying.username} color="teal" size='lg' radius='xl' />
-                                            </HoverCardTarget>
-                                            <HoverCardDropdown>
-                                                <Text
-                                                    variant='default'
-                                                >
+                            data.usersTrying.filter(userTrying => userTrying.alreadyPaid.value > 0).map((userTrying) => (
+                                <>
+                                    <HoverCard withArrow shadow="md" closeDelay={0} openDelay={0} key={userTrying.id}>
+                                        <HoverCardTarget>
+                                            <Avatar src={userTrying.avatarURL} alt={userTrying.username} color="teal" size='lg' radius='xl' />
+                                        </HoverCardTarget>
+                                        <HoverCardDropdown>
+                                            <Text
+                                                variant='default'
+                                            >
                                                     Paid {formatPrice(userTrying.alreadyPaid)}
-                                                </Text>
-                                            </HoverCardDropdown>
-                                        </HoverCard>
-                                    </>
-                                )
-                            })
+                                            </Text>
+                                        </HoverCardDropdown>
+                                    </HoverCard>
+                                </>
+                            ))
                         }
                     </AvatarGroup>
 

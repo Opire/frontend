@@ -1,7 +1,7 @@
 import { IssuePrimitive } from "../../../_core/_primitives/IssuePrimitive";
 import React, { FC } from "react";
-import { Modal, Button, Title, SimpleGrid, Divider, Space, TextInput, CopyButton, Flex } from '@mantine/core';
-import { useDisclosure } from '@mantine/hooks';
+import { Modal, Button, Title, SimpleGrid, Divider, Space, TextInput, CopyButton, Flex } from "@mantine/core";
+import { useDisclosure } from "@mantine/hooks";
 import { IconBrandLinkedin, IconBrandTelegram, IconBrandThreads, IconBrandTwitter, IconBrandWhatsapp, IconCheck, IconMail, IconShare } from "@tabler/icons-react";
 import { formatPrice } from "../../../_utils/formatPrice";
 import { PricePrimitive } from "../../../_core/_primitives/PricePrimitive";
@@ -16,34 +16,34 @@ export const ShareModal: FC<ShareModalProps> = ({ issue }) => {
     const rewardedIssueURL = `${process.env.NEXT_PUBLIC_URL}/issues/${issue.id}`;
 
     const totalPrice: PricePrimitive = issue.rewards.reduce((acc, el) => {
-        acc.value += el.price.value
-        return acc;
+        acc.value += el.price.value;
 
-    }, { unit: 'USD_CENT', value: 0 })
+        return acc;
+    }, { unit: "USD_CENT", value: 0 });
 
     const shareInSocialMediaText = `Look at this rewarded issue in Opire! You can earn up to ${formatPrice(totalPrice)} by collaborating with an open-source project\n`;
 
-    function shareToTwitter() {
-        window.open(`https://twitter.com/intent/post?text=${encodeURIComponent(shareInSocialMediaText)}&url=${rewardedIssueURL}&via=${encodeURIComponent('opire_dev')}&hashtags=${encodeURIComponent('opensource,opire,bounty,reward')}`)
+    function shareToTwitter () {
+        window.open(`https://twitter.com/intent/post?text=${encodeURIComponent(shareInSocialMediaText)}&url=${rewardedIssueURL}&via=${encodeURIComponent("opire_dev")}&hashtags=${encodeURIComponent("opensource,opire,bounty,reward")}`);
     }
 
-    function shareToLinkedin() {
-        window.open(`https://linkedin.com/sharing/share-offsite?url=${rewardedIssueURL}`)
+    function shareToLinkedin () {
+        window.open(`https://linkedin.com/sharing/share-offsite?url=${rewardedIssueURL}`);
     }
 
-    function shareToWhatsapp() {
+    function shareToWhatsapp () {
         window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(`${shareInSocialMediaText}\n${rewardedIssueURL}`)}`);
     }
 
-    function shareToTelegram() {
+    function shareToTelegram () {
         window.open(`https://telegram.me/share/url?text=${encodeURIComponent(shareInSocialMediaText)}&url=${rewardedIssueURL}`);
     }
 
-    function shareToThreads() {
+    function shareToThreads () {
         window.open(`https://threads.net/intent/post?text=${encodeURIComponent(`${shareInSocialMediaText}\n${rewardedIssueURL}\n\n#opensource\n\nvia @opiredev`)}`);
     }
 
-    function shareToEmail() {
+    function shareToEmail () {
         window.open(`mailto:?body=${encodeURIComponent(`${shareInSocialMediaText}\n${rewardedIssueURL}`)}`);
     }
 
@@ -53,28 +53,28 @@ export const ShareModal: FC<ShareModalProps> = ({ issue }) => {
                 <Title size={18} fw={700}>Copy link</Title>
                 <Space h='xs' />
 
-                <Flex wrap={'nowrap'} justify={'center'} align={'end'}>
+                <Flex wrap={"nowrap"} justify={"center"} align={"end"}>
                     <TextInput
                         aria-label="Reward url"
                         readOnly
                         value={rewardedIssueURL}
-                        radius={'xs'}
+                        radius={"xs"}
                         style={{ flex: 1 }}
                     />
                     <CopyButton value={rewardedIssueURL}>
                         {({ copied, copy }) => (
                             <Button
-                                color={copied ? 'teal' : 'blue'}
+                                color={copied ? "teal" : "blue"}
                                 variant='light'
                                 onClick={copy}
                                 style={{
                                     borderTopLeftRadius: 0,
-                                    borderBottomLeftRadius: 0
+                                    borderBottomLeftRadius: 0,
 
                                 }}
                                 leftSection={copied ? <IconCheck size={16} /> : undefined}
                             >
-                                {copied ? 'Copied' : 'Copy'}
+                                {copied ? "Copied" : "Copy"}
                             </Button>
                         )}
                     </CopyButton>
@@ -99,5 +99,5 @@ export const ShareModal: FC<ShareModalProps> = ({ issue }) => {
 
             <Button onClick={open} leftSection={<IconShare size={18} />} variant="light">Share</Button>
         </>
-    )
+    );
 };

@@ -9,7 +9,6 @@ import Link from "next/link";
 import { FC, Ref, useEffect } from "react";
 import { CustomImage } from "../../_components/CustomImage";
 import { ProjectListDTO } from "../../_core/_dtos/ProjectListDTO";
-import { IconUsersGroup } from "@tabler/icons-react";
 
 interface ProjectCardProps {
     data: ProjectListDTO;
@@ -20,7 +19,7 @@ export const ProjectCard: FC<ProjectCardProps> = ({ data, inputRef }) => {
     useEffect(() => { }, []);
 
     return (
-        <Card ref={inputRef} withBorder shadow="md" radius="md" style={{ display: 'flex' }}>
+        <Card ref={inputRef} withBorder shadow="md" radius="md" style={{ display: "flex" }}>
             <Group wrap="nowrap" h={"50px"}>
                 <CustomImage
                     src={`${data.organization.logoUrl}`}
@@ -40,7 +39,7 @@ export const ProjectCard: FC<ProjectCardProps> = ({ data, inputRef }) => {
                 </Link>
             </Group>
 
-            <CardSection withBorder p="sm" mt='xs' style={{ borderBottom: 'none' }}>
+            <CardSection withBorder p="sm" mt='xs' style={{ borderBottom: "none" }}>
                 <Group justify="space-between">
                     <Link
                         href={data.url}
@@ -55,16 +54,14 @@ export const ProjectCard: FC<ProjectCardProps> = ({ data, inputRef }) => {
 
             </CardSection>
 
-            <CardSection style={{ marginTop: 'auto' }}>
-                <div style={{ display: 'flex', flexDirection: 'row-reverse', margin: '1rem' }}>
+            <CardSection style={{ marginTop: "auto" }}>
+                <div style={{ display: "flex", flexDirection: "row-reverse", margin: "1rem" }}>
                     {
-                        !data.isPublic
-                        &&
+                        !data.isPublic &&
                         <Badge variant="outline" color="orange">Private</Badge>
                     }
                 </div>
             </CardSection>
-
 
         </Card>
     );

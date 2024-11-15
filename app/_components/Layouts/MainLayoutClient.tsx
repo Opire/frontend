@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import { AppShell, Burger, AppShellHeader, AppShellNavbar, AppShellMain, Group, Box } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
@@ -22,15 +22,15 @@ export const MainLayoutClient: FC<MainLayoutProps> = ({
     return (
         <AppShell
             header={{ height: 60 }}
-            navbar={{ width: 300, breakpoint: 'sm', collapsed: { mobile: !opened } }}
+            navbar={{ width: 300, breakpoint: "sm", collapsed: { mobile: !opened } }}
             px="none"
         >
             <AppShellHeader>
-                <Group h="100%" px="md" justify={'space-between'}>
+                <Group h="100%" px="md" justify={"space-between"}>
                     <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
 
                     {headerContent &&
-                        <Box hiddenFrom="sm" style={{ width: '70%' }}>
+                        <Box hiddenFrom="sm" style={{ width: "70%" }}>
                             {headerContent}
                         </Box>
                     }
@@ -38,7 +38,7 @@ export const MainLayoutClient: FC<MainLayoutProps> = ({
                     <LogoIcon />
 
                     {headerContent &&
-                        <Box visibleFrom="sm" style={{ width: 'calc(100% - 300px)' }}>
+                        <Box visibleFrom="sm" style={{ width: "calc(100% - 300px)" }}>
                             {headerContent}
                         </Box>
                     }
@@ -53,5 +53,5 @@ export const MainLayoutClient: FC<MainLayoutProps> = ({
                 {children}
             </AppShellMain>
         </AppShell>
-    )
-}
+    );
+};

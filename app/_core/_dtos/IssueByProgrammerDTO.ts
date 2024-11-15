@@ -2,7 +2,6 @@ import { PlatformType } from "../_types/PlatformType";
 import { ProgrammingLanguageType } from "../_types/ProgrammingLanguageType";
 import { PricePrimitive } from "../_primitives/PricePrimitive";
 
-
 interface IssueDashboardUser {
     id: string;
     username: string;

@@ -1,16 +1,19 @@
-import '@mantine/core/styles.css';
-import '@mantine/notifications/styles.css';
+import "@mantine/core/styles.css";
+import "@mantine/notifications/styles.css";
+import "@mantine/dates/styles.css";
 
 import { ColorSchemeScript, MantineProvider } from "@mantine/core";
 import { ModalsProvider } from "@mantine/modals";
 import { Notifications } from "@mantine/notifications";
+import { DatesProvider } from "@mantine/dates";
+
+import React from "react";
 
 export default function RootLayout({
     children,
 }: {
     children: React.ReactNode
 }) {
-
     return (
         <html lang="en">
             <head>
@@ -52,21 +55,22 @@ export default function RootLayout({
                 <MantineProvider
                     defaultColorScheme="dark"
                     theme={{
-                        primaryColor: 'cyan',
+                        primaryColor: "cyan",
                         defaultGradient: {
-                            from: 'teal.6',
-                            to: 'cyan.7'
+                            from: "teal.6",
+                            to: "cyan.7",
                         },
                     }}
                 >
                     <Notifications limit={5} position='bottom-right' />
-                    <ModalsProvider>
-                        {children}
-                    </ModalsProvider>
+                    <DatesProvider settings={{ locale: "en", timezone: "UTC" }}>
+                        <ModalsProvider>
+                            {children}
+                        </ModalsProvider>
+                    </DatesProvider>
                 </MantineProvider>
             </body>
 
-
         </html>
-    )
+    );
 }

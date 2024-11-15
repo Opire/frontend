@@ -12,19 +12,18 @@ interface OwnerRewardCardProps {
 
 export const TipCard: FC<OwnerRewardCardProps> = ({
     data,
-    inputRef
+    inputRef,
 }) => {
-
     const completePayTip = async (tipId: string) => {
         const response = await clientCustomFetch(API_ROUTES.PAYMENTS.LINK_TO_PAY_TIP(tipId));
         const data = await response.json();
 
         if (data) {
-            window.open(data.url, '_blank');
+            window.open(data.url, "_blank");
         }
-    }
+    };
 
-    const canBePaid = data.status === 'Pending payment';
+    const canBePaid = data.status === "Pending payment";
 
     return (
         <Card
@@ -40,7 +39,7 @@ export const TipCard: FC<OwnerRewardCardProps> = ({
                     size='lg'
                 />
                 <Text
-                    style={{ fontSize: '40px' }}
+                    style={{ fontSize: "40px" }}
                     fw={700}
                     size="xl"
                     variant='gradient'
@@ -63,7 +62,7 @@ export const TipCard: FC<OwnerRewardCardProps> = ({
                     onClick={() => completePayTip(data.id)}
                     disabled={!canBePaid}
                 >
-                    {canBePaid ? 'Pay' : 'Paid'}
+                    {canBePaid ? "Pay" : "Paid"}
                 </Button>
             </Group>
         </Card>

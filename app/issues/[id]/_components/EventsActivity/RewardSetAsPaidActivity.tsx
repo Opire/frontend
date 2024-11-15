@@ -23,15 +23,15 @@ export const RewardSetAsPaidActivity: FC<RewardSetAsPaidActivityProps> = ({ even
         isLoading: isLoadingGetCreator,
         username: rewardCreatorUsername,
         avatarURL: rewardCreatorAvatarURL,
-        usernameLink: rewardCreatorUsernameLink
-    } = useGetUserPublicInfoFromPlatform({ userId: attributes.creatorId, platform })
+        usernameLink: rewardCreatorUsernameLink,
+    } = useGetUserPublicInfoFromPlatform({ userId: attributes.creatorId, platform });
 
     const {
         isLoading: isLoadingGetRewardedUser,
         username: rewardedUserUsername,
         avatarURL: rewardedUserAvatarURL,
         usernameLink: rewardedUserUsernameLink,
-    } = useGetUserPublicInfoFromPlatform({ userId: attributes.rewards[0].rewardedUserId as string, platform })
+    } = useGetUserPublicInfoFromPlatform({ userId: attributes.rewards[0].rewardedUserId as string, platform });
 
     const isLoading = isLoadingGetCreator || isLoadingGetRewardedUser;
 
@@ -52,10 +52,9 @@ export const RewardSetAsPaidActivity: FC<RewardSetAsPaidActivityProps> = ({ even
                 />
             </AvatarGroup>
 
-
         } >
             {isLoading &&
-                <Skeleton height={'2rem'} radius="xl" />
+                <Skeleton height={"2rem"} radius="xl" />
             }
 
             {!isLoading &&

@@ -1,8 +1,8 @@
-import { BaseException } from './BaseException';
+import { BaseException } from "./BaseException";
 
 export class InvalidEmail extends BaseException {
 
-    constructor(email: string) {
+    constructor (email: string) {
         super(
             `Email "${email}" is invalid`,
             {

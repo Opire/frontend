@@ -11,43 +11,41 @@ interface LoginModalProps {
 
 export const LoginModal: FC<LoginModalProps> = ({
     isOpened,
-    onClose
-}) => {
-    return (
-        <Modal
-            centered={true}
-            opened={isOpened}
-            onClose={onClose}
-            size={'sm'}
-            closeOnEscape={true}
-            closeOnClickOutside={true}
-            withCloseButton={false}
-        >
-            <Center>
-                <Flex
-                    direction='column'
-                    justify='center'
-                    align='center'
-                >
-                    <Title order={3}>Log in</Title>
-                    <Text c='dimmed'>Choose your preferred service</Text>
-                </Flex>
-            </Center>
+    onClose,
+}) => (
+    <Modal
+        centered={true}
+        opened={isOpened}
+        onClose={onClose}
+        size={"sm"}
+        closeOnEscape={true}
+        closeOnClickOutside={true}
+        withCloseButton={false}
+    >
+        <Center>
+            <Flex
+                direction='column'
+                justify='center'
+                align='center'
+            >
+                <Title order={3}>Log in</Title>
+                <Text c='dimmed'>Choose your preferred service</Text>
+            </Flex>
+        </Center>
 
-            <Space h='2rem' />
+        <Space h='2rem' />
 
-            <div style={{ display: 'flex', flexDirection: 'column' }}>
-                <GitHubLoginButton />
+        <div style={{ display: "flex", flexDirection: "column" }}>
+            <GitHubLoginButton />
 
-                {/* <Space h="lg" /> */}
+            {/* <Space h="lg" /> */}
 
-                {/* <GitLabLoginButton /> */}
+            {/* <GitLabLoginButton /> */}
 
-                {/* <Space h="lg" /> */}
+            {/* <Space h="lg" /> */}
 
-                {/* <BitBucketLoginButton /> */}
-            </div>
+            {/* <BitBucketLoginButton /> */}
+        </div>
 
-        </Modal>
-    )
-}
+    </Modal>
+);

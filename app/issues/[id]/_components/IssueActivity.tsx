@@ -15,13 +15,12 @@ interface IssueActivityProps {
     issue: IssuePrimitive;
 }
 
-
 export const IssueActivity: FC<IssueActivityProps> = ({ issue }) => {
     const { activity, isLoading } = useGetActivityFromIssue({ issueId: issue.id });
 
     if (isLoading) {
         return (
-            <Card withBorder shadow="md" radius='md' h={'100%'}>
+            <Card withBorder shadow="md" radius='md' h={"100%"}>
                 <Center>
                     <Text
                         style={{ fontSize: "1.2rem", fontWeight: "bold" }}
@@ -30,15 +29,15 @@ export const IssueActivity: FC<IssueActivityProps> = ({ issue }) => {
                     </Text>
                 </Center>
 
-                <Space h={'1rem'} />
+                <Space h={"1rem"} />
 
-                <Skeleton height={'70vh'} radius="xl" />
+                <Skeleton height={"70vh"} radius="xl" />
             </Card>
-        )
+        );
     }
 
     return (
-        <Card withBorder shadow="md" radius='md' h={'100%'}>
+        <Card withBorder shadow="md" radius='md' h={"100%"}>
             <Center>
                 <Text
                     style={{ fontSize: "1.2rem", fontWeight: "bold" }}
@@ -47,7 +46,7 @@ export const IssueActivity: FC<IssueActivityProps> = ({ issue }) => {
                 </Text>
             </Center>
 
-            <Space h={'1rem'} />
+            <Space h={"1rem"} />
 
             <Timeline active={1} bulletSize={24} lineWidth={2}>
                 {activity.map(event => {
@@ -57,7 +56,7 @@ export const IssueActivity: FC<IssueActivityProps> = ({ issue }) => {
                         return undefined;
                     }
 
-                    return component({ event, issue })
+                    return component({ event, issue });
                 })}
             </Timeline>
         </Card>
@@ -71,4 +70,4 @@ const activityMaperComponent: Partial<Record<EVENT_NAMES, ({ event, issue }: { e
     [EVENT_NAMES.UserClaimedIssue]: (params) => <UserClaimedActivity {...params} />,
     [EVENT_NAMES.RewardsSetAsPaid]: (params) => <RewardSetAsPaidActivity {...params} />,
     [EVENT_NAMES.RewardRemovedFromIssue]: (params) => <RewardRemovedFromIssueActivity {...params} />,
-}
+};

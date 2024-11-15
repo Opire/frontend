@@ -1,13 +1,13 @@
-import { Metadata } from "next"
+import { Metadata } from "next";
 
 export const metadata: Metadata = {
-    title: 'Opire - Not found',
-}
+    title: "Opire - Not found",
+};
 
-export default function Page() {
+export default function Page () {
     return (
         <>
             404
         </>
-    )
+    );
 }

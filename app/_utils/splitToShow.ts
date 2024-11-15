@@ -1,4 +1,4 @@
-export function splitToShow<T>(
+export function splitToShow<T> (
     data: T[],
     limit: number,
 ): [toShow: T[], hidden: T[]] {

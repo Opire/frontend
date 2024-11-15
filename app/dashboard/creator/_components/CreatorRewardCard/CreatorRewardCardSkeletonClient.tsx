@@ -1,9 +1,9 @@
-'use client'
+"use client";
 
-import { Card, CardSection, Group, SimpleGrid, Skeleton } from '@mantine/core';
+import { Card, CardSection, Group, SimpleGrid, Skeleton } from "@mantine/core";
 import { FC, useEffect, useState } from "react";
-import crypto from 'crypto';
-import { getRandomNumber } from '../../../../_utils/getRandomNumber';
+import crypto from "crypto";
+import { getRandomNumber } from "../../../../_utils/getRandomNumber";
 
 export const CreatorRewardCardSkeletonClient: FC = () => {
     // use render state to not render on server (only on the client side)
@@ -36,20 +36,20 @@ export const CreatorRewardCardSkeletonClient: FC = () => {
                 <Group justify="space-between">
                     <div
                         style={{
-                            width: '30px',
-                            height: '30px',
-                            position: 'relative',
-                            display: 'flex',
-                            justifyContent: 'center',
-                            alignItems: 'center',
+                            width: "30px",
+                            height: "30px",
+                            position: "relative",
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
                         }}
                     >
-                        <Skeleton height={'30px'} circle key={`${crypto.randomUUID()}-skeleton-dot`} />
+                        <Skeleton height={"30px"} circle key={`${crypto.randomUUID()}-skeleton-dot`} />
                     </div>
-                    <div style={{ width: '100px' }}>
+                    <div style={{ width: "100px" }}>
                         <Skeleton height={8} radius="xl" />
                     </div>
-                    <div style={{ width: '100px' }}>
+                    <div style={{ width: "100px" }}>
                         <Skeleton height={8} radius="xl" />
                     </div>
                 </Group>
@@ -64,9 +64,9 @@ export const CreatorRewardCardSkeletonClient: FC = () => {
                     {new Array(numberOfEmptyIcons).fill(0).map(() => (
                         <div
                             key={`${crypto.randomUUID()}-skeleton-dot`}
-                            style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
+                            style={{ display: "flex", justifyContent: "center", alignItems: "center" }}
                         >
-                            <Skeleton height={'30px'} circle mb="sm" />
+                            <Skeleton height={"30px"} circle mb="sm" />
                         </div>
                     ))}
                 </SimpleGrid>

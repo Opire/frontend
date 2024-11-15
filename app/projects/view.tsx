@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import { useState } from "react";
 import { API_ROUTES } from "../../constants";
@@ -12,7 +12,7 @@ import { ProjectCard } from "./_components/ProjectCard";
 
 const PAGE_SIZE = 30;
 
-export function ProjectView({
+export function ProjectView ({
     initialProjects,
     search,
 }: {
@@ -23,7 +23,7 @@ export function ProjectView({
     const [projects, setProjects] = useExternalStateOverride(initialProjects);
     const [page, setPage] = useState(1);
 
-    async function loadMoreProject() {
+    async function loadMoreProject () {
         setIsLoading(true);
 
         const next = page + 1;
@@ -31,18 +31,18 @@ export function ProjectView({
             itemsPerPage: PAGE_SIZE,
             page: next,
             search,
-        }))
+        }));
 
         const newProjects = await newProjectsResponse.json() as ProjectListDTO[];
 
         // setIsLoading(false); // Here?
 
         if (newProjects?.length) {
-            setPage(next)
+            setPage(next);
             setProjects((prev: ProjectListDTO[] | undefined) => [
                 ...(prev?.length ? prev : []),
-                ...newProjects
-            ])
+                ...newProjects,
+            ]);
         }
 
         setIsLoading(false); // Or here?
