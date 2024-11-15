@@ -63,6 +63,7 @@ export const RejectChallengeParticipationModal: FC<
             }, 500);
 
             onClose();
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         } catch (error) {
             notifications.show({
                 title: "Error while rejecting the solution",
@@ -101,7 +102,7 @@ export const RejectChallengeParticipationModal: FC<
                 <Space h="1rem" />
 
                 <Text>
-                        Please, provide thoughtful feedback and describe in detail what's the reason for the rejection. This will be sent to the participant, so it's possible that they will submit another solution based on the feedback you provide.
+                        Please, provide thoughtful feedback and describe in detail what&apos;s the reason for the rejection. This will be sent to the participant, so it&apos;s possible that they will submit another solution based on the feedback you provide.
                 </Text>
 
                 <Space h="2rem" />

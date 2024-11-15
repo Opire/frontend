@@ -1,17 +1,12 @@
-import { FC } from "react";
 import { useTipsByCreator } from "../../../../../hooks/useTipsByCreator";
-import { Divider, Loader, Space, Text, Title } from "@mantine/core";
+import { Divider, Loader, Space, Text } from "@mantine/core";
 import { TipCard } from "./components/TipCard";
 import { TipCardSkeleton } from "./components/TipCardSkeleton";
 import { InfinityList } from "../../../../_components/InfinityList";
 import { useGetFilteredById } from "../../../../../hooks/useGetFilteredById";
 import { NothingFound } from "../../../../_components/NothingFound";
 
-interface CreatorTipsPanelProps {
-}
-
-export const CreatorTipsPanel: FC<CreatorTipsPanelProps> = ({
-}) => {
+export function CreatorTipsPanel() {
     const { tips: allTips, isLoading } = useTipsByCreator();
     const tips = useGetFilteredById(allTips);
 
@@ -69,4 +64,4 @@ export const CreatorTipsPanel: FC<CreatorTipsPanelProps> = ({
             )}
         </div>
     );
-};
+}

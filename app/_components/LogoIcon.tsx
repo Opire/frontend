@@ -1,10 +1,11 @@
 "use client";
 
 import { useMediaQuery } from "@mantine/hooks";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { FC } from "react";
 
-export const LogoIcon: FC<{}> = () => {
+export const LogoIcon: FC = () => {
     const router = useRouter();
     const isMobile = useMediaQuery("(max-width: 50em)");
     const logoSize = isMobile ? "26px" : "48px";
@@ -14,6 +15,6 @@ export const LogoIcon: FC<{}> = () => {
     }
 
     return (
-        <img src={"/opire_logo.svg"} onClick={goToHome} style={{ cursor: "pointer", width: logoSize, height: logoSize }} />
+        <Image src={"/opire_logo.svg"} alt="Opire logo" onClick={goToHome} style={{ cursor: "pointer", width: logoSize, height: logoSize }} />
     );
 };

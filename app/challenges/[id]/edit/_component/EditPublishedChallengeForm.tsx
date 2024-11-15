@@ -77,7 +77,7 @@ export const EditPublishedChallengeForm: FC<EditPublishedChallengeFormProps> = (
         [indexPrizeToUpdate],
     );
 
-    async function updatePublishedChallenge () {
+    async function updatePublishedChallenge() {
         setIsUpdatingChallenge(true);
 
         try {
@@ -104,16 +104,18 @@ export const EditPublishedChallengeForm: FC<EditPublishedChallengeFormProps> = (
                 goBackToPublishedChallenge();
             }, 1000);
         } catch (error) {
+            console.error(error);
+
             setIsUpdatingChallenge(false);
         }
     }
 
-    function onNewPrize (newPrize: ChallengePrizePrimitive) {
+    function onNewPrize(newPrize: ChallengePrizePrimitive) {
         const newPrizes = [...form.getValues().configuration.prizes, newPrize];
         form.setFieldValue("configuration.prizes", sortPrizes(newPrizes));
     }
 
-    function onPrizeUpdated (updatedPrize: ChallengePrizePrimitive) {
+    function onPrizeUpdated(updatedPrize: ChallengePrizePrimitive) {
         const newPrizes = [
             ...form
                 .getValues()
@@ -126,19 +128,19 @@ export const EditPublishedChallengeForm: FC<EditPublishedChallengeFormProps> = (
         closeEditPrizeModal();
     }
 
-    function onRemovePrize (indexPrizeToRemove: number) {
+    function onRemovePrize(indexPrizeToRemove: number) {
         const newPrizes = form
             .getValues()
             .configuration.prizes.filter((_, i) => i !== indexPrizeToRemove);
         form.setFieldValue("configuration.prizes", sortPrizes(newPrizes));
     }
 
-    function onEditPrize (indexPrizeToUpdate: number) {
+    function onEditPrize(indexPrizeToUpdate: number) {
         setIndexPrizeToUpdate(indexPrizeToUpdate);
         openEditPrizeModal();
     }
 
-    function goBackToPublishedChallenge () {
+    function goBackToPublishedChallenge() {
         router.push(`/challenges/${challenge.id}`);
     }
 
@@ -287,8 +289,8 @@ export const EditPublishedChallengeForm: FC<EditPublishedChallengeFormProps> = (
                                                                 }
                                                                 isLastRow={
                                                                     index +
-                                                                        1 ===
-                                                                        prizes.length
+                                                                    1 ===
+                                                                    prizes.length
                                                                 }
                                                                 isNewPrize={challenge.configuration.prizes[index] === undefined}
                                                             />

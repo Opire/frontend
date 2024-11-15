@@ -131,6 +131,7 @@ export const DraftChallengeCreatorData: FC<DraftChallengeCreatorDataProps> = ({
 
     const prizes = useMemo(
         () => sortPrizes(form.getValues().configuration.prizes),
+        // eslint-disable-next-line react-hooks/exhaustive-deps
         [form.getValues()],
     );
 
@@ -145,16 +146,16 @@ export const DraftChallengeCreatorData: FC<DraftChallengeCreatorDataProps> = ({
         return { prizeToUpdate, otherPrizes };
     }, [prizes, indexPrizeToUpdate]);
 
-    function applyTemplate (selectedTemplate: CreateChallengeTemplate) {
+    function applyTemplate(selectedTemplate: CreateChallengeTemplate) {
         form.setValues(selectedTemplate.template);
     }
 
-    function onNewPrize (newPrize: ChallengePrizePrimitive) {
+    function onNewPrize(newPrize: ChallengePrizePrimitive) {
         const newPrizes = [...form.getValues().configuration.prizes, newPrize];
         form.setFieldValue("configuration.prizes", sortPrizes(newPrizes));
     }
 
-    function onPrizeUpdated (updatedPrize: ChallengePrizePrimitive) {
+    function onPrizeUpdated(updatedPrize: ChallengePrizePrimitive) {
         const newPrizes = [
             ...form
                 .getValues()
@@ -167,19 +168,19 @@ export const DraftChallengeCreatorData: FC<DraftChallengeCreatorDataProps> = ({
         closeEditPrizeModal();
     }
 
-    function onRemovePrize (indexPrizeToRemove: number) {
+    function onRemovePrize(indexPrizeToRemove: number) {
         const newPrizes = form
             .getValues()
             .configuration.prizes.filter((_, i) => i !== indexPrizeToRemove);
         form.setFieldValue("configuration.prizes", sortPrizes(newPrizes));
     }
 
-    function onEditPrize (indexPrizeToUpdate: number) {
+    function onEditPrize(indexPrizeToUpdate: number) {
         setIndexPrizeToUpdate(indexPrizeToUpdate);
         openEditPrizeModal();
     }
 
-    function previewPublishedChallenge () {
+    function previewPublishedChallenge() {
         window.open(`/challenges/${challenge.id}/preview`, "_blank")?.focus();
     }
 
@@ -197,6 +198,7 @@ export const DraftChallengeCreatorData: FC<DraftChallengeCreatorDataProps> = ({
                 configuration: challenge.configuration,
             });
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [challenge]);
 
     return (
@@ -399,8 +401,8 @@ export const DraftChallengeCreatorData: FC<DraftChallengeCreatorDataProps> = ({
                                                                 }
                                                                 isLastRow={
                                                                     index +
-                                                                        1 ===
-                                                                        prizes.length
+                                                                    1 ===
+                                                                    prizes.length
                                                                 }
                                                             />
                                                         </Table.Tr>
@@ -626,7 +628,7 @@ const PrizeRow: FC<{
     );
 };
 
-async function onUpdateDraft (
+async function onUpdateDraft(
     challengeId: string,
     draft: EditDraftChallengeDTO,
     onDraftUpdated: () => void,

@@ -23,13 +23,12 @@ export const PreviewPublishedChallengePublicData: FC<PreviewPublishedChallengePu
     </Box>
 );
 
-const ParticipationsSection: FC<{
-}> = ({ }) => (
+const ParticipationsSection: FC = () => (
     <Center>
         <Card withBorder shadow="md" radius='md' w={"100%"}>
             <Center>
                 <Title order={2} size="h2" style={{ fontSize: "2.6rem", fontWeight: 900 }}>
-                        Participations
+                    Participations
                 </Title>
             </Center >
 
@@ -41,7 +40,7 @@ const ParticipationsSection: FC<{
                     variant='light'
                     onClick={() => { }}
                 >
-                        Submit solution
+                    Submit solution
                 </Button>
             </Center>
 
@@ -55,11 +54,11 @@ const ParticipationsSection: FC<{
                     icon={<IconInfoCircle />}
                 >
                     <Text>
-                            No one has send their solution yet.
+                        No one has send their solution yet.
                     </Text>
 
                     <Text>
-                            If you want to complete the challenge, start working in your solution and send it when it's ready!
+                        If you want to complete the challenge, start working in your solution and send it when it&apos;s ready!
                     </Text>
                 </Alert>
             </Center>

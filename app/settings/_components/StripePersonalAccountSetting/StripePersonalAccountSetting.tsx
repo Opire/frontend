@@ -41,6 +41,8 @@ export const StripePersonalAccountSetting: FC<StripeSettingsProps> = ({
                 try {
                     new Email(value);
                 } catch (error) {
+                    console.error(error);
+
                     return "Invalid email";
                 }
             },
@@ -48,13 +50,15 @@ export const StripePersonalAccountSetting: FC<StripeSettingsProps> = ({
                 try {
                     SupportedCountry.fromString(value);
                 } catch (error) {
+                    console.error(error);
+
                     return "Invalid country";
                 }
             },
         },
     });
 
-    async function disconnectStripeAccount () {
+    async function disconnectStripeAccount() {
         try {
             setIsDisconnectingAccount(true);
 
@@ -70,7 +74,7 @@ export const StripePersonalAccountSetting: FC<StripeSettingsProps> = ({
         }
     }
 
-    async function createExpressAccount ({ emailForStripe, country }: { emailForStripe: string, country: string }) {
+    async function createExpressAccount({ emailForStripe, country }: { emailForStripe: string, country: string }) {
         try {
             setIsCreatingExpressAccount(true);
             const response = await clientCustomFetch(API_ROUTES.PAYMENTS.EXPRESS_ACCOUNT(), {
@@ -91,7 +95,7 @@ export const StripePersonalAccountSetting: FC<StripeSettingsProps> = ({
         }
     }
 
-    async function openExpressAccountOnboarding () {
+    async function openExpressAccountOnboarding() {
         try {
             setIsOpeningExpressAccountOnboarding(true);
 
@@ -107,7 +111,7 @@ export const StripePersonalAccountSetting: FC<StripeSettingsProps> = ({
     }
 
     if (hasStripeConfigured) {
-    // const stripeLoginURL = 'https://connect.stripe.com/login';
+        // const stripeLoginURL = 'https://connect.stripe.com/login';
         const stripeLoginURL = "https://connect.stripe.com/express_login";
 
         const downloadInvoicesURL = paymentsEmail

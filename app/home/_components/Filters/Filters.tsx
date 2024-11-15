@@ -1,6 +1,6 @@
 "use client";
 
-import React, { FC, useState } from "react";
+import React, { useState } from "react";
 import { usePopulateToURL } from "../../../../hooks/usePopulateToURL";
 import { PriceFilter } from "./PriceFilter";
 import { ProgrammingLanguagesFilter } from "./ProgrammingLanguagesFilter";
@@ -34,12 +34,12 @@ const URL_KEYS = {
     USERS_TRYING: "usersTrying",
 };
 
-export const Filters: FC<{}> = () => {
+export function Filters() {
     const { populateParamToURL, populateMultipleParamToURL, searchParams } =
         usePopulateToURL();
     const [filters, setFilters] = useState<RewardFilters>(getFiltersFromURL);
 
-    function getFiltersFromURL (): RewardFilters {
+    function getFiltersFromURL(): RewardFilters {
         const minPrice = searchParams.get(URL_KEYS.PRICE.MIN)
             ? +searchParams.get(URL_KEYS.PRICE.MIN)!
             : DEFAULT_REWARD_FILTERS.price.min;
@@ -129,4 +129,4 @@ export const Filters: FC<{}> = () => {
             />
         </div>
     );
-};
+}

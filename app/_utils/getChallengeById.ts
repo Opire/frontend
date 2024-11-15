@@ -13,6 +13,8 @@ export async function getChallengeById ({
 
         return response.json();
     } catch (error) {
+        // eslint-disable-next-line no-console
+        console.error(error);
         redirect("/");
     }
 }

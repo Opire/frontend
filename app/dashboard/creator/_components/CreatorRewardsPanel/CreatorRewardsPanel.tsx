@@ -1,6 +1,5 @@
-import { FC } from "react";
 import { useGetRewardsFromCreator } from "../../../../../hooks/useGetRewardsFromCreator";
-import { Button, Divider, Loader, Space, Text, Title } from "@mantine/core";
+import { Button, Divider, Loader, Space, Text } from "@mantine/core";
 import { CreatorRewardCardSkeletonClient } from "../CreatorRewardCard/CreatorRewardCardSkeletonClient";
 import { CreatorRewardPaidCard } from "../CreatorRewardCard/CreatorRewardPaidCard";
 import { CreatorRewardUnpaidCard } from "../CreatorRewardCard/CreatorRewardUnpaidCard";
@@ -13,11 +12,7 @@ import { CreateNewRewardModal } from "./CreateNewRewardModal";
 import { mutate } from "swr";
 import { API_ROUTES } from "../../../../../constants";
 
-interface CreatorRewardsPanelProps {
-}
-
-export const CreatorRewardsPanel: FC<CreatorRewardsPanelProps> = ({
-}) => {
+export function CreatorRewardsPanel() {
     const [isModalOpen, { close: closeModal, open: openModal }] = useDisclosure();
 
     const { issues: allIssues, isLoading } = useGetRewardsFromCreator({ revalidateOnFocus: !isModalOpen });
@@ -116,8 +111,8 @@ export const CreatorRewardsPanel: FC<CreatorRewardsPanelProps> = ({
             )}
         </div>
     );
-};
+}
 
-function onNewRewardCreated () {
+function onNewRewardCreated() {
     mutate(API_ROUTES.REWARDS.CREATED_BY_ME());
 }

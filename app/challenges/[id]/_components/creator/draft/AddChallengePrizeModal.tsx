@@ -113,9 +113,10 @@ export const AddChallengePrizeModal: FC<AddChallengePrizeModalProps> = ({
         }
 
         return null;
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [form.getValues()]);
 
-    function handleChangeIsPrizeForSpecificPosition (isChecked: boolean) {
+    function handleChangeIsPrizeForSpecificPosition(isChecked: boolean) {
         const values = form.getValues();
         const amount = values.amount;
         const benefits = values.benefits;
@@ -141,12 +142,12 @@ export const AddChallengePrizeModal: FC<AddChallengePrizeModalProps> = ({
         setIsPrizeForSpecificPosition(isChecked);
     }
 
-    async function addNewPrize (newPrize: ChallengePrizePrimitive) {
+    async function addNewPrize(newPrize: ChallengePrizePrimitive) {
         onNewPrize(newPrize);
         onClose();
     }
 
-    async function checkIsPrizeValid (newPrize: ChallengePrizePrimitive) {
+    async function checkIsPrizeValid(newPrize: ChallengePrizePrimitive) {
         try {
             setIsCheckingPrize(true);
 
@@ -169,6 +170,7 @@ export const AddChallengePrizeModal: FC<AddChallengePrizeModalProps> = ({
             );
 
             setPrizeInvalidReason(null);
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
         } catch (error) {
             // Do nothing
         } finally {
@@ -192,6 +194,7 @@ export const AddChallengePrizeModal: FC<AddChallengePrizeModalProps> = ({
 
             setIsPrizeForSpecificPosition(true);
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isOpened]);
 
     return (
@@ -329,7 +332,7 @@ export const AddChallengePrizeModal: FC<AddChallengePrizeModalProps> = ({
                             icon={<IconInfoHexagon />}
                             mt="xl"
                         >
-                            This prize can't have any possible winners.
+                            This prize cannnot have any possible winners.
                         </Blockquote>
                     )}
 

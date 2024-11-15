@@ -1,5 +1,4 @@
-import { FC } from "react";
-import { Divider, Loader, Space, Text, Title } from "@mantine/core";
+import { Divider, Loader, Space, Text } from "@mantine/core";
 import { TipCardSkeleton } from "./components/TipCardSkeleton";
 import { ProgrammerTipCard } from "./components/ProgrammerTipCard";
 import { InfinityList } from "../../../../_components/InfinityList";
@@ -7,11 +6,7 @@ import { useTipsByProgrammer } from "../../../../../hooks/useTipsByProgrammer";
 import { useGetFilteredById } from "../../../../../hooks/useGetFilteredById";
 import { NothingFound } from "../../../../_components/NothingFound";
 
-interface ProgrammerTipsPanelProps {
-}
-
-export const ProgrammerTipsPanel: FC<ProgrammerTipsPanelProps> = ({
-}) => {
+export function ProgrammerTipsPanel() {
     const { tips: allTips, isLoading } = useTipsByProgrammer();
     const tips = useGetFilteredById(allTips);
 
@@ -68,4 +63,4 @@ export const ProgrammerTipsPanel: FC<ProgrammerTipsPanelProps> = ({
             )}
         </div>
     );
-};
+}

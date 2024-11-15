@@ -7,8 +7,7 @@ import { FC } from "react";
 import { LoginModal } from "./LoginModal";
 import { useTriggerCallbackOnQueryParamFirstMatch } from "../../../hooks/useTriggerCallbackOnQueryParamFirstMatch";
 
-export const LoginButton: FC<{}> = ({
-}) => {
+export const LoginButton: FC = () => {
     const [isModalOpen, { close: closeModal, open: openModal }] = useDisclosure();
     useTriggerCallbackOnQueryParamFirstMatch({ queryParamKey: "login", callback: openModal });
 

@@ -9,7 +9,6 @@ import Link from "next/link";
 import { FC, Ref, useEffect } from "react";
 import { CustomImage } from "../../_components/CustomImage";
 import { ProjectListDTO } from "../../_core/_dtos/ProjectListDTO";
-import { IconUsersGroup } from "@tabler/icons-react";
 
 interface ProjectCardProps {
     data: ProjectListDTO;

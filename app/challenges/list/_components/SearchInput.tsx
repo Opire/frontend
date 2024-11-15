@@ -8,13 +8,14 @@ import { BaseInputText } from "../../../_components/Form/BaseInputText";
 
 const urlKey = "search";
 
-export const SearchInput: FC<{}> = () => {
+export const SearchInput: FC = () => {
     const { populateParamToURL, searchParams } = usePopulateToURL();
     const [search, setSearch] = useState(searchParams.get(urlKey) ?? "");
     const [debouncedSearch] = useDebouncedValue(search, 275);
 
     useEffect(() => {
         populateParamToURL(urlKey, debouncedSearch);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [debouncedSearch]);
 
     return (

@@ -13,7 +13,7 @@ interface PublishChallengeFormProps {
     isLoading: boolean;
 }
 
-export function PublishChallengeForm ({ challengeId, isDisabled, isLoading }: PublishChallengeFormProps): React.ReactElement {
+export function PublishChallengeForm({ challengeId, isDisabled, isLoading }: PublishChallengeFormProps): React.ReactElement {
     const router = useRouter();
 
     const [isPublishingChallenge, setIsPublishingChallenge] = useState(false);
@@ -23,7 +23,7 @@ export function PublishChallengeForm ({ challengeId, isDisabled, isLoading }: Pu
         { close: closePublishChallengeModal, open: openPublishChallengeModal },
     ] = useDisclosure();
 
-    async function publishChallenge (allowParticipationsAfterPublish: boolean) {
+    async function publishChallenge(allowParticipationsAfterPublish: boolean) {
         try {
             setIsPublishingChallenge(true);
 
@@ -63,6 +63,7 @@ export function PublishChallengeForm ({ challengeId, isDisabled, isLoading }: Pu
 
                 setIsPublishingChallenge(false);
             }, 1000);
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
         } catch (error) {
             notifications.show({
                 title: "Challenge cannot be published",
@@ -113,13 +114,13 @@ export function PublishChallengeForm ({ challengeId, isDisabled, isLoading }: Pu
                         <Space h='1rem' />
 
                         <Text>
-                            <strong>This can't be undone</strong>, so make sure that you are happy with the challenge configuration before continue. Once published, <strong>you won't be able to edit your challenge</strong>.
+                            <strong>This cannot be undone</strong>, so make sure that you are happy with the challenge configuration before continue. Once published, <strong>you will not be able to edit your challenge</strong>.
                         </Text>
 
                         <Space h='1rem' />
 
                         <Text>
-                            You only will be able to <strong>increase the prizes, increase the limit of participations, and extend the deadline</strong>. The rest of the content won't be editable anymore.
+                            You only will be able to <strong>increase the prizes, increase the limit of participations, and extend the deadline</strong>. The rest of the content will not be editable anymore.
                         </Text>
 
                     </Alert>
@@ -136,7 +137,7 @@ export function PublishChallengeForm ({ challengeId, isDisabled, isLoading }: Pu
                     </Text>
                     <Space h='1rem' />
                     <Text>
-                        This is ideal if you're ready to start receiving the solutions, and don't need to wait before the participants start to work in their solutions.
+                        This is ideal if you are ready to start receiving the solutions, and do not need to wait before the participants start to work in their solutions.
                     </Text>
 
                     <Space h='2rem' />
@@ -156,7 +157,7 @@ export function PublishChallengeForm ({ challengeId, isDisabled, isLoading }: Pu
                     <Space h='1rem' />
 
                     <Text>
-                        Once the challenge is published, you will be able to close/open the participations at will as many times as you need, so don't worry if you're not sure which option to pick right now.
+                        Once the challenge is published, you will be able to close/open the participations at will as many times as you need, so don&apos;t worry if you are not sure which option to pick right now.
                     </Text>
 
                     <Space h='2rem' />

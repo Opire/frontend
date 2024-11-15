@@ -1,4 +1,4 @@
-import { GridCol, Loader, SimpleGrid, Text, Title } from "@mantine/core";
+import { Loader } from "@mantine/core";
 import { useIntersection } from "@mantine/hooks";
 import { FC, Ref, useEffect } from "react";
 import { NothingFound } from "./NothingFound";
@@ -14,13 +14,12 @@ type IndexableKeyof<Interface> = {
     : never;
 }[keyof Interface];
 
-export function InfinityList<T, TId extends IndexableKeyof<T>> ({
+export function InfinityList<T, TId extends IndexableKeyof<T>>({
     items,
     keyIdentifier,
     isLoading,
     loadNextPage,
     ItemComponent,
-    ItemSkeletonComponent,
 }: {
     items: T[];
     keyIdentifier: TId;
@@ -30,7 +29,7 @@ export function InfinityList<T, TId extends IndexableKeyof<T>> ({
         data: T;
         inputRef?: Ref<HTMLDivElement> | undefined;
     }>
-    ItemSkeletonComponent: FC<{}>
+    ItemSkeletonComponent: FC;
 }) {
     const { entry, ref } = useIntersection<HTMLDivElement>();
     const isIntersecting = entry?.isIntersecting ?? false;
@@ -39,6 +38,7 @@ export function InfinityList<T, TId extends IndexableKeyof<T>> ({
         if (isIntersecting) {
             loadNextPage();
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isIntersecting]);
 
     return (

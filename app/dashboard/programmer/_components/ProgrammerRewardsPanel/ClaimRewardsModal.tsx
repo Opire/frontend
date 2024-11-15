@@ -32,7 +32,9 @@ export const ClaimRewardsModal: FC<ClaimRewardsModalProps> = ({
 
                 try {
                     validURL = new URL(value);
-                } catch (_) {
+                } catch (error) {
+                    console.error(error);
+
                     return "Invalid issue URL";
                 }
                 const isValid = validURL.protocol === "http:" || validURL.protocol === "https:";
@@ -46,7 +48,9 @@ export const ClaimRewardsModal: FC<ClaimRewardsModalProps> = ({
 
                 try {
                     validURL = new URL(value);
-                } catch (_) {
+                } catch (error) {
+                    console.error(error);
+
                     return "Invalid pull request URL";
                 }
                 const isValid = validURL.protocol === "http:" || validURL.protocol === "https:";
@@ -58,7 +62,7 @@ export const ClaimRewardsModal: FC<ClaimRewardsModalProps> = ({
         },
     });
 
-    async function claimRewards ({ issueURL, pullRequestURL }: { issueURL: string; pullRequestURL: string }) {
+    async function claimRewards({ issueURL, pullRequestURL }: { issueURL: string; pullRequestURL: string }) {
         try {
             setIsClaimingRewards(true);
 
@@ -90,6 +94,8 @@ export const ClaimRewardsModal: FC<ClaimRewardsModalProps> = ({
 
             onClose();
         } catch (error) {
+            console.error(error);
+
             notifications.show({
                 title: "Error while trying to claim the rewards",
                 message: "Please review that the issue and the pull request are public and can be accessed by anyone",

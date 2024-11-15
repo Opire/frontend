@@ -2,6 +2,7 @@ import { FC } from "react";
 import { splitToShow } from "../../../../../_utils/splitToShow";
 import { IssueListDTO } from "../../../../../_core/_dtos/IssueListDTO";
 import { formatPrice } from "../../../../../_utils/formatPrice";
+import Image from "next/image";
 
 interface StaticHomeRewardCardProps {
     data: IssueListDTO;
@@ -35,7 +36,8 @@ export const StaticHomeRewardCard: FC<StaticHomeRewardCardProps> = ({ data }) =>
                     gap: "10px",
                 }}
             >
-                <img
+                <Image
+                    alt="Platform icon"
                     height={44}
                     width={44}
                     src={`${process.env.NEXT_PUBLIC_URL}/icons/${data.platform.toLowerCase()}.png`}
@@ -71,7 +73,8 @@ export const StaticHomeRewardCard: FC<StaticHomeRewardCardProps> = ({ data }) =>
                             padding: "10px",
                         }}
                     >
-                        <img
+                        <Image
+                            alt="Organization logo"
                             height={44}
                             width={44}
                             src={data.organization.logoURL}

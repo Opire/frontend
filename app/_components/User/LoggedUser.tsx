@@ -16,6 +16,7 @@ export const LoggedUser = ({ userAuth }: { userAuth: UserAuthDTO }) => {
             redirectAfterLogin.clearNextRedirection();
             router.push(nextRedirection);
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return (

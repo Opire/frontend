@@ -3,7 +3,7 @@ import querystring from "querystring";
 import { FC } from "react";
 import { IconBrandGithub } from "@tabler/icons-react";
 
-export async function openGithubExternalLoginPage () {
+export async function openGithubExternalLoginPage() {
     const params = querystring.stringify({
         client_id: process.env.NEXT_PUBLIC_GITHUB_APP_CLIENT_ID,
         redirect_uri: `${process.env.NEXT_PUBLIC_URL!}/auth/github`,
@@ -16,7 +16,6 @@ export async function openGithubExternalLoginPage () {
     // window.open(githubLoginUrl, 'targetWindow', 'popup=yes'); // Default behavior of the browser
 }
 
-export const GitHubLoginButton: FC<{}> = ({
-}) => (
+export const GitHubLoginButton: FC = () => (
     <Button leftSection={<IconBrandGithub size='1rem' />} onClick={openGithubExternalLoginPage} variant="gradient">Continue with GitHub</Button>
 );

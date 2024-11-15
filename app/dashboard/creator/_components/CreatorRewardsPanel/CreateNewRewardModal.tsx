@@ -32,7 +32,9 @@ export const CreateNewRewardModal: FC<CreateNewRewardModalProps> = ({
 
                 try {
                     validURL = new URL(value);
-                } catch (_) {
+                } catch (error) {
+                    console.error(error);
+
                     return "Invalid issue URL";
                 }
                 const isValid = validURL.protocol === "http:" || validURL.protocol === "https:";
@@ -51,7 +53,7 @@ export const CreateNewRewardModal: FC<CreateNewRewardModalProps> = ({
         },
     });
 
-    async function createNewReward ({ issueURL, rewardPrice }: { issueURL: string; rewardPrice: number }) {
+    async function createNewReward({ issueURL, rewardPrice }: { issueURL: string; rewardPrice: number }) {
         try {
             setIsCreatingReward(true);
 
@@ -86,6 +88,7 @@ export const CreateNewRewardModal: FC<CreateNewRewardModalProps> = ({
             }, 500);
 
             onClose();
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
         } catch (error) {
             notifications.show({
                 title: "Error while trying to create the reward",

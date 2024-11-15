@@ -19,7 +19,6 @@ import {
 } from "@tabler/icons-react";
 import {
     ChallengePrizePrimitive,
-    EMPTY_CHALLENGE_PRIZE_AMOUNT,
 } from "../../../../../_core/_primitives/ChallengePrizePrimitive";
 import {
     getChallengePrizeMaxPosition,
@@ -87,6 +86,7 @@ export const EditChallengePrizeModal: FC<EditChallengePrizeModalProps> = ({
         }
 
         return null;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [form.getValues()]);
 
     async function updatePrize (newPrize: ChallengePrizePrimitive) {
@@ -117,6 +117,7 @@ export const EditChallengePrizeModal: FC<EditChallengePrizeModalProps> = ({
             );
 
             setPrizeInvalidReason(null);
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         } catch (error) {
             // Do nothing
         } finally {
@@ -137,6 +138,7 @@ export const EditChallengePrizeModal: FC<EditChallengePrizeModalProps> = ({
                     : null,
             });
         }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isOpened]);
 
     return (
@@ -259,7 +261,7 @@ export const EditChallengePrizeModal: FC<EditChallengePrizeModalProps> = ({
                             icon={<IconInfoHexagon />}
                             mt="xl"
                         >
-                            This prize can't have any possible winners.
+                            This prize cannot have any possible winners.
                         </Blockquote>
                     )}
 

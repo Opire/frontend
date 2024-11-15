@@ -87,7 +87,7 @@ export const PublishedChallengeCreatorParticipationsSection: FC<{
                                         </Text>
 
                                         <Text>
-                                            You may need to increase the prizes (you'll need to unpublish the challenge first) or contact some potential sponsors.
+                                            You may need to increase the prizes (you&apos;ll need to unpublish the challenge first) or contact some potential sponsors.
                                         </Text>
                                     </Alert>
                                 </Center>

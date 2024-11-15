@@ -23,7 +23,7 @@ export const ToggleIsChallengeAcceptingNewParticipationsModal: FC<ToggleIsChalle
 
     const isGoingToStopNewParticipations = challenge.isAcceptingParticipations;
 
-    async function updateChallenge () {
+    async function updateChallenge() {
         try {
             setIsUpdatingChallenge(true);
 
@@ -52,6 +52,8 @@ export const ToggleIsChallengeAcceptingNewParticipationsModal: FC<ToggleIsChalle
 
             onClose();
         } catch (error) {
+            console.error(error);
+
             notifications.show({
                 title: "Error while updating the challenge",
                 message: "Please, try again later. Contact us at opiredev@gmail.com if the problem persist",

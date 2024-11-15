@@ -1,10 +1,8 @@
 import { FC, useState } from "react";
 import { TextInput, TextInputProps } from "@mantine/core";
-// import { TextValueObject } from "../../../Core/Shared/Domain/VOs/TextValueObject";
-// import { TextHaveInvalidChars } from "../../../Core/Shared/Domain/Exceptions/TextHaveInvalidChars";
-// import { TextMustHaveSomeChars } from "../../../Core/Shared/Domain/Exceptions/TextMustHaveSomeChars";
 
-export function validateText (text?: string, required?: boolean) {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export function validateText(text?: string, required?: boolean) {
     // if (!required && !text) {
     //     return null;
     // }

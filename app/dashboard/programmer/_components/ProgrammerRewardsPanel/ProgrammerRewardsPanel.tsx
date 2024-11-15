@@ -1,4 +1,3 @@
-import { FC } from "react";
 import { Button, Divider, Loader, Space, Text } from "@mantine/core";
 import { ProgrammerRewardUnpaidCard } from "../ProgrammerRewardCard/ProgrammerRewardUnpaidCard";
 import { ProgrammerRewardCardSkeletonClient } from "../ProgrammerRewardCard/ProgrammerRewardCardSkeletonClient";
@@ -15,10 +14,7 @@ import { ClaimRewardsModal } from "./ClaimRewardsModal";
 import { mutate } from "swr";
 import { API_ROUTES } from "../../../../../constants";
 
-interface ProgrammerRewardsPanelProps {
-}
-
-export const ProgrammerRewardsPanel: FC<ProgrammerRewardsPanelProps> = ({ }) => {
+export function ProgrammerRewardsPanel() {
     const [isModalOpen, { close: closeModal, open: openModal }] = useDisclosure();
 
     const { issues: allIssues, isLoading } = useGetRewardsFromProgrammer({ revalidateOnFocus: !isModalOpen });
@@ -38,7 +34,7 @@ export const ProgrammerRewardsPanel: FC<ProgrammerRewardsPanelProps> = ({ }) => 
         PAID_TO_OTHERS: { key: "paidToOthers", text: "Paid to others", rewards: paidRewardsToOthers, itemComponent: ProgrammerRewardPaidOthersCard },
     };
 
-    const sections: { key: string, text: string, rewards: IssueByProgrammerDTO[], itemComponent: FC<any> }[] = [];
+    const sections: { key: string, text: string, rewards: IssueByProgrammerDTO[], itemComponent: React.FC<any> }[] = [];
 
     if (unclaimedRewards.length > 0) {
         sections.push(PANEL_SECTIONS.UNCLAIMED);
@@ -130,8 +126,8 @@ export const ProgrammerRewardsPanel: FC<ProgrammerRewardsPanelProps> = ({ }) => 
             ))}
         </div>
     );
-};
+}
 
-function onRewardsClaimed () {
+function onRewardsClaimed() {
     mutate(API_ROUTES.REWARDS.TRYING_BY_ME());
 }

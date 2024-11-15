@@ -12,7 +12,7 @@ interface CompleteChallengeFormProps {
     challenge: ChallengeDTO;
 }
 
-export function CompleteChallengeForm ({ challenge }: CompleteChallengeFormProps): React.ReactElement {
+export function CompleteChallengeForm({ challenge }: CompleteChallengeFormProps): React.ReactElement {
     const router = useRouter();
 
     const [isCompletingChallenge, setIsCompletingChallenge] = useState(false);
@@ -22,7 +22,7 @@ export function CompleteChallengeForm ({ challenge }: CompleteChallengeFormProps
         { close: closeCompleteChallengeModal, open: openCompleteChallengeModal },
     ] = useDisclosure();
 
-    async function completeChallenge () {
+    async function completeChallenge() {
         try {
             const wasAbleToPayPrizes = challenge.canPrizesBePaid;
 
@@ -52,6 +52,7 @@ export function CompleteChallengeForm ({ challenge }: CompleteChallengeFormProps
                 closeCompleteChallengeModal();
                 setIsCompletingChallenge(false);
             }, 1000);
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
         } catch (error) {
             setIsCompletingChallenge(false);
         }
@@ -95,7 +96,7 @@ export function CompleteChallengeForm ({ challenge }: CompleteChallengeFormProps
                                 </ThemeIcon>
                             }
                         >
-                            New participations won't be allowed
+                            New participations won&apos;t be allowed
                         </ListItem>
 
                         <ListItem

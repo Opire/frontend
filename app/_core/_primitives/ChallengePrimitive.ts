@@ -22,13 +22,13 @@ export interface ChallengePrimitive {
 }
 
 type ChallengePrimitivePropsToOmitForCreateChallengeDTO = "id" | "creatorId" | "participations" | "isPublished" | "isAcceptingParticipations" | "isCompleted" | "createdAt" | "updatedAt";
-export interface CreateChallengeDTO extends Omit<ChallengePrimitive, ChallengePrimitivePropsToOmitForCreateChallengeDTO> {}
+export type CreateChallengeDTO = Omit<ChallengePrimitive, ChallengePrimitivePropsToOmitForCreateChallengeDTO>
 
 type ChallengePrimitivePropsToOmitForEditDraftChallengeDTO = ChallengePrimitivePropsToOmitForCreateChallengeDTO;
-export interface EditDraftChallengeDTO extends Omit<ChallengePrimitive, ChallengePrimitivePropsToOmitForEditDraftChallengeDTO> {}
+export type EditDraftChallengeDTO = Omit<ChallengePrimitive, ChallengePrimitivePropsToOmitForEditDraftChallengeDTO>
 
 type ChallengePrimitivePropsToOmitForEditPublishedChallengeDTO = ChallengePrimitivePropsToOmitForCreateChallengeDTO | "title" | "summary" | "mainObjetive" | "otherObjetives" | "requirements" | "evaluationCriteria" | "contactInformation" | "additionalComments";
-export interface EditPublishedChallengeDTO extends Omit<ChallengePrimitive, ChallengePrimitivePropsToOmitForEditPublishedChallengeDTO> {}
+export type EditPublishedChallengeDTO = Omit<ChallengePrimitive, ChallengePrimitivePropsToOmitForEditPublishedChallengeDTO>
 
 export interface ChallengeDTO extends ChallengePrimitive {
     canBePublished: boolean;

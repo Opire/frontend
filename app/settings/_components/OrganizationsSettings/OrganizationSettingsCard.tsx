@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { UserSettingsDTO } from "../../../_core/_dtos/UserSettingsDTO";
-import { Text, Card, Center, Button, Group, Avatar, Space, Badge, Tooltip, Modal } from "@mantine/core";
+import { Text, Card, Center, Button, Group, Avatar, Space, Badge, Modal } from "@mantine/core";
 import { CustomImage } from "../../../_components/CustomImage";
 import Link from "next/link";
 import { ORGANIZATION_TIER_NAMES } from "../../../_core/_types/TierNames";

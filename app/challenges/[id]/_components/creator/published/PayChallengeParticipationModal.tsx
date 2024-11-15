@@ -74,6 +74,7 @@ export const PayChallengeParticipationModal: FC<
                 setIsPayingParticipation(false);
                 handleClose();
             }, 1000);
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         } catch (error) {
             setIsPayingParticipation(false);
         }
@@ -102,7 +103,7 @@ export const PayChallengeParticipationModal: FC<
                 <Space h="1rem" />
 
                 <Text>
-                        If the prize contains a monetary amount, you will be redirected to a Stripe Checkout session where you can securely pay the participant. Your payment method won't be visible by the participant or even Opire.
+                        If the prize contains a monetary amount, you will be redirected to a Stripe Checkout session where you can securely pay the participant. Your payment method won&apos;t be visible by the participant or even Opire.
                 </Text>
 
                 <Space h="1rem" />

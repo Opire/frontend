@@ -76,7 +76,7 @@ export const PublishedChallengePublicParticipationsData: FC<{
                                         </Text>
 
                                         <Text>
-                                            If you want to complete the challenge, start working in your solution and send it when it's ready!
+                                            If you want to complete the challenge, start working in your solution and send it when it&apos;s ready!
                                         </Text>
                                     </Alert>
                                 </Center>

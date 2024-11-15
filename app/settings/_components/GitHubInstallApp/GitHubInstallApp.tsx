@@ -1,15 +1,10 @@
 "use client";
 
-import { Card, Title, Button, Center } from "@mantine/core";
-import { FC } from "react";
+import { Card, Button, Center } from "@mantine/core";
 import { IconBrandGithub } from "@tabler/icons-react";
 import Link from "next/link";
 
-interface GitHubInstallAppProps {
-}
-
-export const GitHubInstallApp: FC<GitHubInstallAppProps> = ({
-}) => {
+export function GitHubInstallApp() {
     const installationURL = `${process.env.NEXT_PUBLIC_GITHUB_APP_LINK}/installations/new`;
 
     return (
@@ -25,4 +20,4 @@ export const GitHubInstallApp: FC<GitHubInstallAppProps> = ({
             </Center>
         </Card >
     );
-};
+}

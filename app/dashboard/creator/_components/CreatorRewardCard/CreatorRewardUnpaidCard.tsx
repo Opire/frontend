@@ -94,7 +94,7 @@ export const CreatorRewardUnpaidCard: FC<CreatorRewardUnpaidCardProps> = ({
         openModalForRemoveRewards();
     };
 
-    async function removeRewards () {
+    async function removeRewards() {
         setIsRemovingRewards(true);
 
         try {
@@ -125,6 +125,8 @@ export const CreatorRewardUnpaidCard: FC<CreatorRewardUnpaidCardProps> = ({
                 setIsRemovingRewards(false);
             }, 500);
         } catch (error) {
+            console.error(error);
+
             notifications.show({
                 title: "Error while trying to delete the rewards",
                 message: "Please review that none has claimed the rewards",

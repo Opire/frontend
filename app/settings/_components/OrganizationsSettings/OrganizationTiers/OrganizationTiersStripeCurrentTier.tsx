@@ -6,7 +6,8 @@ export interface OrganizationTiersStripeCurrentTierProps {
     currentTier: ORGANIZATION_TIER_NAMES;
 }
 
-export function OrganizationTiersStripeCurrentTier ({ }: OrganizationTiersStripeCurrentTierProps) {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export function OrganizationTiersStripeCurrentTier({ currentTier }: OrganizationTiersStripeCurrentTierProps) {
     const stripeCustomerPortalURL = process.env.NEXT_PUBLIC_STRIPE_CUSTOMER_PORTAL_URL;
 
     return (

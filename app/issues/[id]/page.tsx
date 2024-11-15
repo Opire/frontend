@@ -5,7 +5,7 @@ import { PricePrimitive } from "../../_core/_primitives/PricePrimitive";
 import { formatPrice } from "../../_utils/formatPrice";
 import { getUserAuth } from "../../_utils/getUserAuth";
 
-export async function generateMetadata ({
+export async function generateMetadata({
     params,
 }: { params: { id: string } }): Promise<Metadata> {
     try {
@@ -39,13 +39,15 @@ export async function generateMetadata ({
             },
         };
     } catch (error) {
+        console.error(error);
+
         return {
             title: "Opire - Issue",
         };
     }
 }
 
-export default async function Page ({
+export default async function Page({
     params,
 }: { params: { id: string } }) {
     const issue = await getIssueById({

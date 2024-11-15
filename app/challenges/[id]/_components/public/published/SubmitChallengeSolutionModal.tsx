@@ -33,7 +33,9 @@ export const SubmitChallengeSolutionModal: FC<SubmitChallengeSolutionModalProps>
 
                 try {
                     validURL = new URL(value);
-                } catch (_) {
+                } catch (error) {
+                    console.log(error);
+
                     return "Invalid URL";
                 }
                 const isValid = validURL.protocol === "http:" || validURL.protocol === "https:";
@@ -45,7 +47,7 @@ export const SubmitChallengeSolutionModal: FC<SubmitChallengeSolutionModalProps>
         },
     });
 
-    async function submitSolution ({ proposedSolution }: { proposedSolution: string }) {
+    async function submitSolution({ proposedSolution }: { proposedSolution: string }) {
         if (!canCurrentUserParticipate) {
             return;
         }
@@ -78,6 +80,8 @@ export const SubmitChallengeSolutionModal: FC<SubmitChallengeSolutionModalProps>
 
             onClose();
         } catch (error) {
+            console.log(error);
+
             notifications.show({
                 title: "Error while submitting the solution",
                 message: "Please, review that you provided a valid URL that points to your solution for this challenge",

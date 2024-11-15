@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { useState } from "react";
 import { Button, Divider, Loader, Space, Text } from "@mantine/core";
 import { ChallengeCard } from "./components/ChallengeCard";
 import { ChallengeCardSkeleton } from "./components/ChallengeCardSkeleton";
@@ -13,10 +13,7 @@ import { notifications } from "@mantine/notifications";
 import { ChallengePrimitive } from "../../../../_core/_primitives/ChallengePrimitive";
 import { useRouter } from "next/navigation";
 
-interface CreatorChallengesPanelProps {}
-
-export const CreatorChallengesPanel: FC<CreatorChallengesPanelProps> = ({
-}) => {
+export function CreatorChallengesPanel() {
     const router = useRouter();
     const [isCreatingChallenge, setIsCreatingChallenge] = useState(false);
 
@@ -31,7 +28,7 @@ export const CreatorChallengesPanel: FC<CreatorChallengesPanelProps> = ({
 
     const noChallenges = !hasDraftChallenges && !hasPublishedChallenges;
 
-    async function createNewChallenge () {
+    async function createNewChallenge() {
         try {
             setIsCreatingChallenge(true);
 
@@ -135,4 +132,4 @@ export const CreatorChallengesPanel: FC<CreatorChallengesPanelProps> = ({
             )}
         </div>
     );
-};
+}

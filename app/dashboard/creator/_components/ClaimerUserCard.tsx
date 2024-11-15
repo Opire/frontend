@@ -1,4 +1,4 @@
-import { Avatar, Button, Card, Group, Text } from "@mantine/core";
+import { Avatar, Card, Group, Text } from "@mantine/core";
 import { PayClaimerButton } from "./CreatorRewardCard/PayClaimerButton";
 import { formatPrice } from "../../../_utils/formatPrice";
 import { PricePrimitive } from "../../../_core/_primitives/PricePrimitive";
@@ -26,7 +26,7 @@ interface PropsWithoutPrice {
 
 type ClaimerUserCardProps = PropsWithPrice | PropsWithoutPrice;
 
-export function ClaimerUserCard ({
+export function ClaimerUserCard({
     user,
     issueId,
     paidPrice,

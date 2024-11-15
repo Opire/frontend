@@ -14,7 +14,7 @@ interface DeleteChallengeFormProps {
     isLoading: boolean;
 }
 
-export function DeleteChallengeForm ({ challengeId, isDisabled, isLoading }: DeleteChallengeFormProps): React.ReactElement {
+export function DeleteChallengeForm({ challengeId, isDisabled, isLoading }: DeleteChallengeFormProps): React.ReactElement {
     const router = useRouter();
 
     const [isDeletingChallenge, setIsDeletingChallenge] = useState(false);
@@ -24,7 +24,7 @@ export function DeleteChallengeForm ({ challengeId, isDisabled, isLoading }: Del
         { close: closeDeleteChallengeModal, open: openDeleteChallengeModal },
     ] = useDisclosure();
 
-    async function deleteChallenge () {
+    async function deleteChallenge() {
         try {
             setIsDeletingChallenge(true);
 
@@ -51,6 +51,7 @@ export function DeleteChallengeForm ({ challengeId, isDisabled, isLoading }: Del
                 router.push("/dashboard/creator/challenges");
                 window.scrollTo(0, 0);
             }, 1000);
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
         } catch (error) {
             setIsDeletingChallenge(false);
         }
@@ -86,13 +87,13 @@ export function DeleteChallengeForm ({ challengeId, isDisabled, isLoading }: Del
                         icon={<IconInfoCircle />}
                     >
                         <Text>
-                            Are you sure you want to delete this challenge? <strong>Once deleted, you won't be able to access to it</strong>, and it will be completely removed from the platform.
+                            Are you sure you want to delete this challenge? <strong>Once deleted, you will not be able to access to it</strong>, and it will be completely removed from the platform.
                         </Text>
 
                         <Space h='1rem' />
 
                         <Text>
-                            <strong>This can't be undone</strong>, so make sure that you don't want to keep or edit the configuration.
+                            <strong>This cannot be undone</strong>, so make sure that you do not want to keep or edit the configuration.
                         </Text>
                     </Alert>
 

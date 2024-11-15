@@ -8,7 +8,7 @@ import { clientCustomFetch } from "../../_utils/clientCustomFetch";
 import { TokenServiceLocalStorage } from "../../../TokenServiceLocalStorage";
 import { NEXT_SERVER_ROUTES } from "../../../constants";
 
-export const LogoutButton: FC<{}> = ({ }) => {
+export const LogoutButton: FC = () => {
     const router = useRouter();
 
     return (
