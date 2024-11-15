@@ -1,6 +1,6 @@
 import { Button, Container, Group, Modal, Space, TextInput } from "@mantine/core";
 import { FC, useState } from "react";
-import { useForm } from '@mantine/form';
+import { useForm } from "@mantine/form";
 import { IconCheck, IconTrophy, IconX } from "@tabler/icons-react";
 import { notifications } from "@mantine/notifications";
 import { clientCustomFetch } from "../../../../../_utils/clientCustomFetch";
@@ -25,7 +25,7 @@ export const SubmitChallengeSolutionModal: FC<SubmitChallengeSolutionModalProps>
 
     const form = useForm({
         initialValues: {
-            proposedSolution: '',
+            proposedSolution: "",
         },
         validate: {
             proposedSolution: (value: string) => {
@@ -34,19 +34,18 @@ export const SubmitChallengeSolutionModal: FC<SubmitChallengeSolutionModalProps>
                 try {
                     validURL = new URL(value);
                 } catch (_) {
-                    return 'Invalid URL'
-
+                    return "Invalid URL";
                 }
-                const isValid = validURL.protocol === 'http:' || validURL.protocol === 'https:';
+                const isValid = validURL.protocol === "http:" || validURL.protocol === "https:";
 
                 if (!isValid) {
-                    return 'Invalid URL'
+                    return "Invalid URL";
                 }
             },
         },
     });
 
-    async function submitSolution({ proposedSolution }: { proposedSolution: string }) {
+    async function submitSolution ({ proposedSolution }: { proposedSolution: string }) {
         if (!canCurrentUserParticipate) {
             return;
         }
@@ -55,23 +54,23 @@ export const SubmitChallengeSolutionModal: FC<SubmitChallengeSolutionModalProps>
             setIsSubmittingSolution(true);
 
             await clientCustomFetch(API_ROUTES.CHALLENGES.PARTICIPATE(challengeId), {
-                method: 'POST',
+                method: "POST",
                 body: {
                     participation: {
                         proposedSolution,
-                    }
-                }
+                    },
+                },
             });
 
             notifications.show({
-                title: 'Solution submitted successfully',
+                title: "Solution submitted successfully",
                 message: "The creator of the challenge has been notified. We'll let you know once your solution has been approved or rejected. Good luck! 🎉",
                 withBorder: true,
                 withCloseButton: true,
                 autoClose: 10_000,
-                color: 'teal',
+                color: "teal",
                 icon: <IconCheck />,
-            })
+            });
             setTimeout(() => {
                 onSolutionSubmitted();
                 setIsSubmittingSolution(false);
@@ -80,14 +79,14 @@ export const SubmitChallengeSolutionModal: FC<SubmitChallengeSolutionModalProps>
             onClose();
         } catch (error) {
             notifications.show({
-                title: 'Error while submitting the solution',
+                title: "Error while submitting the solution",
                 message: "Please, review that you provided a valid URL that points to your solution for this challenge",
                 withBorder: true,
                 withCloseButton: true,
                 autoClose: 10_000,
-                color: 'red',
+                color: "red",
                 icon: <IconX />,
-            })
+            });
             setIsSubmittingSolution(false);
         }
     }
@@ -97,8 +96,8 @@ export const SubmitChallengeSolutionModal: FC<SubmitChallengeSolutionModalProps>
             centered={true}
             opened={isOpened}
             onClose={onClose}
-            size={'xl'}
-            title={<div style={{ display: 'flex', gap: '8px', justifyContent: 'center', alignItems: 'center' }}><IconTrophy size={16} color="teal" /><span>Submit a solution for the challenge</span></div>}
+            size={"xl"}
+            title={<div style={{ display: "flex", gap: "8px", justifyContent: "center", alignItems: "center" }}><IconTrophy size={16} color="teal" /><span>Submit a solution for the challenge</span></div>}
             closeOnEscape={true}
             closeOnClickOutside={false}
             withCloseButton={true}
@@ -112,7 +111,7 @@ export const SubmitChallengeSolutionModal: FC<SubmitChallengeSolutionModalProps>
                         placeholder="e.g. https://github.com/Opire/docs/pull/10"
                         key='proposedSolution'
                         required
-                        {...form.getInputProps('proposedSolution')}
+                        {...form.getInputProps("proposedSolution")}
                     />
                 </Container>
 
@@ -135,5 +134,5 @@ export const SubmitChallengeSolutionModal: FC<SubmitChallengeSolutionModalProps>
                 </Group>
             </form>
         </Modal>
-    )
-}
+    );
+};

@@ -1,5 +1,5 @@
-import { ChallengeConfigurationPrimitive } from './ChallengeConfigurationPrimitive'
-import { ChallengeParticipationPrimitive } from './ChallengeParticipationPrimitive'
+import { ChallengeConfigurationPrimitive } from "./ChallengeConfigurationPrimitive";
+import { ChallengeParticipationPrimitive } from "./ChallengeParticipationPrimitive";
 
 export interface ChallengePrimitive {
     id: string;
@@ -21,13 +21,13 @@ export interface ChallengePrimitive {
     updatedAt: number;
 }
 
-type ChallengePrimitivePropsToOmitForCreateChallengeDTO = 'id' | 'creatorId' | 'participations' | 'isPublished' | 'isAcceptingParticipations' | 'isCompleted' | 'createdAt' | 'updatedAt';
+type ChallengePrimitivePropsToOmitForCreateChallengeDTO = "id" | "creatorId" | "participations" | "isPublished" | "isAcceptingParticipations" | "isCompleted" | "createdAt" | "updatedAt";
 export interface CreateChallengeDTO extends Omit<ChallengePrimitive, ChallengePrimitivePropsToOmitForCreateChallengeDTO> {}
 
 type ChallengePrimitivePropsToOmitForEditDraftChallengeDTO = ChallengePrimitivePropsToOmitForCreateChallengeDTO;
 export interface EditDraftChallengeDTO extends Omit<ChallengePrimitive, ChallengePrimitivePropsToOmitForEditDraftChallengeDTO> {}
 
-type ChallengePrimitivePropsToOmitForEditPublishedChallengeDTO = ChallengePrimitivePropsToOmitForCreateChallengeDTO | 'title' | 'summary' | 'mainObjetive' | 'otherObjetives' | 'requirements' | 'evaluationCriteria' | 'contactInformation' | 'additionalComments';
+type ChallengePrimitivePropsToOmitForEditPublishedChallengeDTO = ChallengePrimitivePropsToOmitForCreateChallengeDTO | "title" | "summary" | "mainObjetive" | "otherObjetives" | "requirements" | "evaluationCriteria" | "contactInformation" | "additionalComments";
 export interface EditPublishedChallengeDTO extends Omit<ChallengePrimitive, ChallengePrimitivePropsToOmitForEditPublishedChallengeDTO> {}
 
 export interface ChallengeDTO extends ChallengePrimitive {

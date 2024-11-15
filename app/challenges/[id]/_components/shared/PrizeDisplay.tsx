@@ -5,19 +5,16 @@ import { formatPrice } from "../../../../_utils/formatPrice";
 
 export const PrizeDisplay: FC<{
     prize: ChallengePrizePrimitive;
-}> = ({ prize }) => {
-    return (
-        <>
-            {
-                prize.amount
-                &&
+}> = ({ prize }) => (
+    <>
+        {
+            prize.amount &&
                 formatPrice(prize.amount)
-            }
+        }
 
-            {
-                prize.benefits.length > 0
-                &&
-                <Flex gap={'xs'} display={'inline-flex'} mx={'1rem'}>
+        {
+            prize.benefits.length > 0 &&
+                <Flex gap={"xs"} display={"inline-flex"} mx={"1rem"}>
                     {prize.benefits.map((benefit) => (
                         <Badge
                             key={benefit}
@@ -27,10 +24,8 @@ export const PrizeDisplay: FC<{
                         >
                             {benefit}
                         </Badge>
-                    )
-                    )}
+                    ))}
                 </Flex>
-            }
-        </>
-    );
-};
+        }
+    </>
+);

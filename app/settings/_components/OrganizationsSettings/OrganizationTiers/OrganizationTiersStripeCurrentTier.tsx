@@ -6,7 +6,7 @@ export interface OrganizationTiersStripeCurrentTierProps {
     currentTier: ORGANIZATION_TIER_NAMES;
 }
 
-export function OrganizationTiersStripeCurrentTier({ }: OrganizationTiersStripeCurrentTierProps) {
+export function OrganizationTiersStripeCurrentTier ({ }: OrganizationTiersStripeCurrentTierProps) {
     const stripeCustomerPortalURL = process.env.NEXT_PUBLIC_STRIPE_CUSTOMER_PORTAL_URL;
 
     return (
@@ -16,14 +16,13 @@ export function OrganizationTiersStripeCurrentTier({ }: OrganizationTiersStripeC
             variant="light"
             component="a"
             target="_blank"
-            mt={'1rem'}
+            mt={"1rem"}
             href={stripeCustomerPortalURL}
         >
-            <IconUsersGroup style={{ marginRight: '8px' }} />
-            <Text style={{ fontSize: '1.2rem' }}>
+            <IconUsersGroup style={{ marginRight: "8px" }} />
+            <Text style={{ fontSize: "1.2rem" }}>
                 Manage subscription
             </Text>
         </Button>
     );
-  }
-  
+}

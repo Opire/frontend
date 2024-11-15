@@ -50,20 +50,20 @@ export const EditChallengePrizeModal: FC<EditChallengePrizeModalProps> = ({
     onPrizeUpdated,
 }) => {
     const [isCheckingPrize, setIsCheckingPrize] = useState(false);
-    const [prizeInvalidReason, setPrizeInvalidReason] = useState<string | null>(
-        null
-    );
+    const [prizeInvalidReason, setPrizeInvalidReason] = useState<string | null>(null);
     const isPrizeFilled = Boolean(prize.amount) || prize.benefits.length > 0;
     const isPrizeValid = prizeInvalidReason === null && isPrizeFilled;
-    const isPrizeForSpecificPosition = isPrimitiveSpecificPositionPrize(prize)
+    const isPrizeForSpecificPosition = isPrimitiveSpecificPositionPrize(prize);
 
     const form = useForm<ChallengePrizePrimitive>({
         initialValues: {
             ...prize,
-            amount: prize.amount ? {
-                unit: "USD",
-                value: getPriceInUSD(prize.amount),
-            } : null
+            amount: prize.amount
+                ? {
+                    unit: "USD",
+                    value: getPriceInUSD(prize.amount),
+                }
+                : null,
         },
         onValuesChange: (values) => {
             checkIsPrizeValid(values);
@@ -75,32 +75,26 @@ export const EditChallengePrizeModal: FC<EditChallengePrizeModalProps> = ({
         const prize = form.getValues();
 
         if (isPrimitiveSpecificPositionPrize(prize)) {
-            return `${baseMessage} to the winner that ends in the position ${getChallengePrizeMinPosition(
-                prize
-            )}`;
+            return `${baseMessage} to the winner that ends in the position ${getChallengePrizeMinPosition(prize)}`;
         }
 
         if (isPrimitiveThresholdPrize(prize)) {
-            return `${baseMessage} to the winners that end in the positions ${getChallengePrizeMinPosition(
-                prize
-            )} ~ ${getChallengePrizeMaxPosition(prize)}`;
+            return `${baseMessage} to the winners that end in the positions ${getChallengePrizeMinPosition(prize)} ~ ${getChallengePrizeMaxPosition(prize)}`;
         }
 
         if (isPrimitiveThresholdWithoutLimitPrize(prize)) {
-            return `${baseMessage} to the winners that end in the position ${getChallengePrizeMinPosition(
-                prize
-            )} and onwards`;
+            return `${baseMessage} to the winners that end in the position ${getChallengePrizeMinPosition(prize)} and onwards`;
         }
 
         return null;
     }, [form.getValues()]);
 
-    async function updatePrize(newPrize: ChallengePrizePrimitive) {
+    async function updatePrize (newPrize: ChallengePrizePrimitive) {
         onPrizeUpdated(newPrize);
         onClose();
     }
 
-    async function checkIsPrizeValid(newPrize: ChallengePrizePrimitive) {
+    async function checkIsPrizeValid (newPrize: ChallengePrizePrimitive) {
         try {
             setIsCheckingPrize(true);
 
@@ -119,7 +113,7 @@ export const EditChallengePrizeModal: FC<EditChallengePrizeModalProps> = ({
                     onError: (error) => {
                         setPrizeInvalidReason(error.error);
                     },
-                }
+                },
             );
 
             setPrizeInvalidReason(null);
@@ -135,10 +129,12 @@ export const EditChallengePrizeModal: FC<EditChallengePrizeModalProps> = ({
         if (isOpened) {
             form.setValues({
                 ...prize,
-                amount: prize.amount ? {
-                    unit: "USD",
-                    value: getPriceInUSD(prize.amount),
-                } : null
+                amount: prize.amount
+                    ? {
+                        unit: "USD",
+                        value: getPriceInUSD(prize.amount),
+                    }
+                    : null,
             });
         }
     }, [isOpened]);
@@ -181,11 +177,12 @@ export const EditChallengePrizeModal: FC<EditChallengePrizeModalProps> = ({
                                 key={form.key("amount.value")}
                                 min={!canPrizeBeDowngraded && prize.amount ? getPriceInUSD(prize.amount) : 0}
                                 {...form.getInputProps("amount.value")}
-                                onChange={(value) =>
-                                    form.setFieldValue("amount", value ? {
+                                onChange={(value) => form.setFieldValue("amount", value
+                                    ? {
                                         unit: "USD",
                                         value: +value,
-                                    } : null)
+                                    }
+                                    : null)
                                 }
                             />
                         </Grid.Col>
@@ -203,7 +200,7 @@ export const EditChallengePrizeModal: FC<EditChallengePrizeModalProps> = ({
                         <Grid.Col span={{ base: 12 }}>
                             <TagsInput
                                 label="Benefits (non-monetary prizes)"
-                                placeholder={'Press Enter to add a benefit'}
+                                placeholder={"Press Enter to add a benefit"}
                                 description="Add up to 10"
                                 maxTags={10}
                                 key={form.key("benefits")}
@@ -247,14 +244,14 @@ export const EditChallengePrizeModal: FC<EditChallengePrizeModalProps> = ({
 
                     {prizeAffectedPositionsDescription &&
                         !prizeInvalidReason && (
-                            <Blockquote
-                                color="blue"
-                                icon={<IconInfoCircle />}
-                                mt="xl"
-                            >
-                                {prizeAffectedPositionsDescription}
-                            </Blockquote>
-                        )}
+                        <Blockquote
+                            color="blue"
+                            icon={<IconInfoCircle />}
+                            mt="xl"
+                        >
+                            {prizeAffectedPositionsDescription}
+                        </Blockquote>
+                    )}
 
                     {!prizeAffectedPositionsDescription && (
                         <Blockquote

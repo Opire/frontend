@@ -15,10 +15,10 @@ interface NewRewardAddedActivityProps {
 }
 
 export const NewRewardAddedActivity: FC<NewRewardAddedActivityProps> = ({ event }) => {
-    const attributes = event.attributes as { reward: RewardPrimitive, issue: IssuePrimitive }
+    const attributes = event.attributes as { reward: RewardPrimitive, issue: IssuePrimitive };
     const platform = attributes.issue.platform;
 
-    const { isLoading, username, avatarURL, usernameLink } = useGetUserPublicInfoFromPlatform({ userId: attributes.reward.creatorId, platform })
+    const { isLoading, username, avatarURL, usernameLink } = useGetUserPublicInfoFromPlatform({ userId: attributes.reward.creatorId, platform });
 
     return (
         <Timeline.Item title="New reward" bullet={
@@ -30,7 +30,7 @@ export const NewRewardAddedActivity: FC<NewRewardAddedActivityProps> = ({ event 
             </AvatarGroup>
         }>
             {isLoading &&
-                <Skeleton height={'2rem'} radius="xl" />
+                <Skeleton height={"2rem"} radius="xl" />
             }
 
             {!isLoading &&
@@ -43,5 +43,3 @@ export const NewRewardAddedActivity: FC<NewRewardAddedActivityProps> = ({ event 
         </Timeline.Item>
     );
 };
-
-

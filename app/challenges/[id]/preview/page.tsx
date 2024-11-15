@@ -3,7 +3,7 @@ import { getChallengeById } from "../../../_utils/getChallengeById";
 import { redirect } from "next/navigation";
 import { PreviewPublishedChallengeView } from "./view";
 
-export async function generateMetadata({
+export async function generateMetadata ({
     params,
 }: { params: { id: string } }): Promise<Metadata> {
     const challenge = await getChallengeById({
@@ -15,7 +15,7 @@ export async function generateMetadata({
     };
 }
 
-export default async function Page({
+export default async function Page ({
     params,
 }: { params: { id: string } }) {
     const challenge = await getChallengeById({

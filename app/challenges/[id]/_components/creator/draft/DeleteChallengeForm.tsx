@@ -14,7 +14,7 @@ interface DeleteChallengeFormProps {
     isLoading: boolean;
 }
 
-export function DeleteChallengeForm({ challengeId, isDisabled, isLoading }: DeleteChallengeFormProps): React.ReactElement {
+export function DeleteChallengeForm ({ challengeId, isDisabled, isLoading }: DeleteChallengeFormProps): React.ReactElement {
     const router = useRouter();
 
     const [isDeletingChallenge, setIsDeletingChallenge] = useState(false);
@@ -24,8 +24,7 @@ export function DeleteChallengeForm({ challengeId, isDisabled, isLoading }: Dele
         { close: closeDeleteChallengeModal, open: openDeleteChallengeModal },
     ] = useDisclosure();
 
-
-    async function deleteChallenge() {
+    async function deleteChallenge () {
         try {
             setIsDeletingChallenge(true);
 
@@ -33,9 +32,8 @@ export function DeleteChallengeForm({ challengeId, isDisabled, isLoading }: Dele
                 API_ROUTES.CHALLENGES.BY_ID(challengeId),
                 {
                     method: "DELETE",
-                }
+                },
             );
-
 
             setTimeout(() => {
                 setIsDeletingChallenge(false);
@@ -53,7 +51,6 @@ export function DeleteChallengeForm({ challengeId, isDisabled, isLoading }: Dele
                 router.push("/dashboard/creator/challenges");
                 window.scrollTo(0, 0);
             }, 1000);
-
         } catch (error) {
             setIsDeletingChallenge(false);
         }
@@ -74,14 +71,14 @@ export function DeleteChallengeForm({ challengeId, isDisabled, isLoading }: Dele
             <Modal
                 opened={isModalToDeleteChallengeOpen}
                 onClose={closeDeleteChallengeModal}
-                title={<Title size={'h2'}>Confirm action</Title>}
+                title={<Title size={"h2"}>Confirm action</Title>}
                 centered
-                size={'xl'}
+                size={"xl"}
                 closeOnEscape={true}
                 closeOnClickOutside={false}
                 withCloseButton={true}
             >
-                <Container size={'lg'}>
+                <Container size={"lg"}>
                     <Alert
                         variant="light"
                         color="yellow"
@@ -101,7 +98,7 @@ export function DeleteChallengeForm({ challengeId, isDisabled, isLoading }: Dele
 
                     <Space h='2rem' />
 
-                    <div style={{ display: "flex", justifyContent: "flex-end", gap: '1rem', flexWrap: 'wrap' }}>
+                    <div style={{ display: "flex", justifyContent: "flex-end", gap: "1rem", flexWrap: "wrap" }}>
                         <Button
                             onClick={closeDeleteChallengeModal}
                             variant="subtle"

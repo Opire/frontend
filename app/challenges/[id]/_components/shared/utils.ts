@@ -1,4 +1,4 @@
-export function getOrdinalPositionDescription(position: number): string {
+export function getOrdinalPositionDescription (position: number): string {
     const suffixes = ["th", "st", "nd", "rd"];
     const v = position % 100;
 

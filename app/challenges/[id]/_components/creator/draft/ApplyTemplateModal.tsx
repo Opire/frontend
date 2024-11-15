@@ -4,7 +4,7 @@ import { IconInfoCircle } from "@tabler/icons-react";
 import { useState } from "react";
 import { CreateChallengeTemplate, useGetCreateChallengeTemplates } from "../../../../../../hooks/useGetCreateChallengeTemplates";
 
-export function ApplyTemplateModal({ applyTemplate }: { applyTemplate: (template: CreateChallengeTemplate) => void }): React.ReactElement {
+export function ApplyTemplateModal ({ applyTemplate }: { applyTemplate: (template: CreateChallengeTemplate) => void }): React.ReactElement {
     const { templates, isLoadingTemplates } = useGetCreateChallengeTemplates();
     const [
         isModalToSelectTemplateOpen,
@@ -14,13 +14,13 @@ export function ApplyTemplateModal({ applyTemplate }: { applyTemplate: (template
     const [selectedTemplate, setSelectedTemplate] =
         useState<CreateChallengeTemplate | null>(null);
 
-    function onChangeTemplate(value: string | null) {
+    function onChangeTemplate (value: string | null) {
         const template = templates.find((template) => template.label === value);
 
         setSelectedTemplate(template ?? null);
     }
 
-    function onApplyTemplate() {
+    function onApplyTemplate () {
         if (selectedTemplate) {
             applyTemplate(selectedTemplate);
         }
@@ -48,7 +48,7 @@ export function ApplyTemplateModal({ applyTemplate }: { applyTemplate: (template
                 title="Choose a template to apply to your challenge"
                 centered
             >
-                <Container size={'lg'}>
+                <Container size={"lg"}>
                     <Select
                         label="Available templates"
                         placeholder="Select a template"

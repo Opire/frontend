@@ -1,6 +1,6 @@
 import { ChallengePrizePrimitive } from "./ChallengePrizePrimitive";
 
-export type ChallengeParticipationStatusType = 'waiting_for_approval' | 'rejected' | 'approved' | 'paid';
+export type ChallengeParticipationStatusType = "waiting_for_approval" | "rejected" | "approved" | "paid";
 
 export interface ChallengeParticipationPrimitive {
     id: string;
@@ -13,4 +13,3 @@ export interface ChallengeParticipationPrimitive {
     createdAt: number;
     updatedAt: number;
 }
-

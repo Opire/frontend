@@ -1,7 +1,6 @@
 import { ChallengeDTO } from "../../../../../_core/_primitives/ChallengePrimitive";
-import { FC } from "react";
+import React, { FC } from "react";
 import { UserAuthDTO } from "../../../../../_core/_dtos/UserAuthDTO";
-import React from "react";
 import { Divider, Box, Space, Button } from "@mantine/core";
 import { ChallengeMainData } from "../../shared/ChallengeMainData";
 import { NewChallengeSection } from "../../shared/NewChallengeSection";
@@ -18,16 +17,16 @@ interface PublishedChallengeCreatorDataProps {
 
 export const PublishedChallengeCreatorData: FC<PublishedChallengeCreatorDataProps> = ({
     challenge: initialChallenge,
-    creator }) => {
+    creator,
+}) => {
     const { challenge } = useGetChallenge({
         initialChallenge,
         revalidateOnFocus: true,
     });
 
-
     const router = useRouter();
 
-    function goToEditChallenge() {
+    function goToEditChallenge () {
         router.push(`/challenges/${challenge.id}/edit`);
     }
 
@@ -61,4 +60,3 @@ export const PublishedChallengeCreatorData: FC<PublishedChallengeCreatorDataProp
         </Box>
     );
 };
-

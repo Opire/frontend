@@ -1,7 +1,6 @@
+"use client";
 
-'use client'
-
-import { Button, Center, Container, Flex, Group, Modal, rem, Select, Space, Text, TextInput} from "@mantine/core";
+import { Button, Center, Container, Flex, Group, Modal, rem, Select, Space, Text, TextInput } from "@mantine/core";
 import { IconBrandStripe, IconCornerDownRight, IconCirclePlus, IconAt, IconUpload, IconFileInvoice } from "@tabler/icons-react";
 import { FC, useState } from "react";
 import { API_ROUTES } from "../../../../constants";
@@ -12,7 +11,6 @@ import { useForm } from "@mantine/form";
 import { Email } from "../../../_core/_vos/Email";
 import { STRIPE_SUPPORTED_COUNTRY_OPTIONS } from "./StripeSupportedCountryOptions";
 import { SupportedCountry } from "../../../_core/_vos/SupportedCountry";
-
 
 interface StripeSettingsProps {
     hasStripeConfigured: boolean;
@@ -35,66 +33,65 @@ export const StripePersonalAccountSetting: FC<StripeSettingsProps> = ({
 
     const form = useForm({
         initialValues: {
-            country: '',
-            emailForStripe: paymentsEmail || '',
+            country: "",
+            emailForStripe: paymentsEmail || "",
         },
         validate: {
             emailForStripe: (value: string) => {
                 try {
                     new Email(value);
                 } catch (error) {
-                    return 'Invalid email';
+                    return "Invalid email";
                 }
             },
             country: (value: string) => {
                 try {
                     SupportedCountry.fromString(value);
                 } catch (error) {
-                    return 'Invalid country';
+                    return "Invalid country";
                 }
             },
         },
     });
 
-    async function disconnectStripeAccount() {
+    async function disconnectStripeAccount () {
         try {
             setIsDisconnectingAccount(true);
 
             await clientCustomFetch(API_ROUTES.PAYMENTS.STRIPE_DISCONNECT_ACCOUNT(), {
                 method: "POST",
                 body: {
-                    userId
-                }
+                    userId,
+                },
             });
         } finally {
             setIsDisconnectingAccount(false);
-            router.refresh()
+            router.refresh();
         }
     }
 
-
-    async function createExpressAccount({ emailForStripe, country }: { emailForStripe: string, country: string }) {
+    async function createExpressAccount ({ emailForStripe, country }: { emailForStripe: string, country: string }) {
         try {
             setIsCreatingExpressAccount(true);
             const response = await clientCustomFetch(API_ROUTES.PAYMENTS.EXPRESS_ACCOUNT(), {
                 method: "POST",
                 body: {
                     country,
-                    email: emailForStripe
-                }
+                    email: emailForStripe,
+                },
             });
             const data = await response.json();
 
             if (data) {
-                window.open(data.url, '_blank');
+                window.open(data.url, "_blank");
             }
         } finally {
             setIsCreatingExpressAccount(false);
-            router.refresh()
+            router.refresh();
         }
     }
 
-    async function openExpressAccountOnboarding() {
+    async function openExpressAccountOnboarding () {
         try {
             setIsOpeningExpressAccountOnboarding(true);
 
@@ -102,7 +99,7 @@ export const StripePersonalAccountSetting: FC<StripeSettingsProps> = ({
             const data = await response.json();
 
             if (data) {
-                window.open(data.url, '_blank');
+                window.open(data.url, "_blank");
             }
         } finally {
             setIsOpeningExpressAccountOnboarding(false);
@@ -110,12 +107,12 @@ export const StripePersonalAccountSetting: FC<StripeSettingsProps> = ({
     }
 
     if (hasStripeConfigured) {
-        // const stripeLoginURL = 'https://connect.stripe.com/login';
-        const stripeLoginURL = 'https://connect.stripe.com/express_login';
+    // const stripeLoginURL = 'https://connect.stripe.com/login';
+        const stripeLoginURL = "https://connect.stripe.com/express_login";
 
-        const downloadInvoicesURL = paymentsEmail 
-        ? `https://zenvoice.io/p/66b37d99f1bbae9758e307b6?email=${paymentsEmail}` 
-        : 'https://zenvoice.io/p/66b37d99f1bbae9758e307b6';
+        const downloadInvoicesURL = paymentsEmail
+            ? `https://zenvoice.io/p/66b37d99f1bbae9758e307b6?email=${paymentsEmail}`
+            : "https://zenvoice.io/p/66b37d99f1bbae9758e307b6";
 
         return (
             <div>
@@ -123,7 +120,7 @@ export const StripePersonalAccountSetting: FC<StripeSettingsProps> = ({
                 <Space h='0.6rem' />
 
                 <Center>
-                    <Flex gap='1rem' wrap={'wrap'}>
+                    <Flex gap='1rem' wrap={"wrap"}>
                         <Button
                             radius='2rem'
                             size="lg"
@@ -132,8 +129,8 @@ export const StripePersonalAccountSetting: FC<StripeSettingsProps> = ({
                             target="_blank"
                             href={stripeLoginURL}
                         >
-                            <IconCornerDownRight style={{ marginRight: '8px' }} />
-                            <Text lineClamp={2} style={{ fontSize: '1.2rem' }}>
+                            <IconCornerDownRight style={{ marginRight: "8px" }} />
+                            <Text lineClamp={2} style={{ fontSize: "1.2rem" }}>
                                 Go to your Stripe dashboard
                             </Text>
                         </Button>
@@ -145,8 +142,8 @@ export const StripePersonalAccountSetting: FC<StripeSettingsProps> = ({
                             loading={isOpeningExpressAccountOnboarding}
                             onClick={openExpressAccountOnboarding}
                         >
-                            <IconUpload style={{ marginRight: '8px' }} />
-                            <Text lineClamp={2} style={{ fontSize: '1.2rem' }}>
+                            <IconUpload style={{ marginRight: "8px" }} />
+                            <Text lineClamp={2} style={{ fontSize: "1.2rem" }}>
                                 Update Stripe configuration
                             </Text>
                         </Button>
@@ -159,19 +156,19 @@ export const StripePersonalAccountSetting: FC<StripeSettingsProps> = ({
                             target="_blank"
                             href={downloadInvoicesURL}
                         >
-                            <IconFileInvoice style={{ marginRight: '8px' }} />
-                            <div style={{ display: 'flex', flexDirection: 'column' }}>
-                                <Text lineClamp={2} style={{ fontSize: '0.6rem', lineHeight: 'normal' }} c={'gray.4'} ml='auto'>
-                                    Powered by <span style={{ fontSize: '0.62rem', fontWeight: 'bold', color: '#06AB78'  }}>Zenvoice.io</span>
+                            <IconFileInvoice style={{ marginRight: "8px" }} />
+                            <div style={{ display: "flex", flexDirection: "column" }}>
+                                <Text lineClamp={2} style={{ fontSize: "0.6rem", lineHeight: "normal" }} c={"gray.4"} ml='auto'>
+                                    Powered by <span style={{ fontSize: "0.62rem", fontWeight: "bold", color: "#06AB78" }}>Zenvoice.io</span>
                                 </Text>
-                                <Text lineClamp={2} style={{ fontSize: '1.2rem', lineHeight: 'inherit', marginBottom: '8px' }} >
+                                <Text lineClamp={2} style={{ fontSize: "1.2rem", lineHeight: "inherit", marginBottom: "8px" }} >
                                     Download invoices
                                 </Text>
                             </div>
                         </Button>
 
                         <Button
-                            mt={'2rem'}
+                            mt={"2rem"}
                             radius='2rem'
                             size="lg"
                             variant="outline"
@@ -179,15 +176,15 @@ export const StripePersonalAccountSetting: FC<StripeSettingsProps> = ({
                             loading={isDisconnectingAccount}
                             onClick={disconnectStripeAccount}
                         >
-                            <IconBrandStripe style={{ marginRight: '8px' }} />
-                            <Text lineClamp={2} style={{ fontSize: '1.2rem' }}>
+                            <IconBrandStripe style={{ marginRight: "8px" }} />
+                            <Text lineClamp={2} style={{ fontSize: "1.2rem" }}>
                                 Disconnect Stripe
                             </Text>
                         </Button>
                     </Flex>
                 </Center>
             </div>
-        )
+        );
     }
 
     return (
@@ -201,8 +198,8 @@ export const StripePersonalAccountSetting: FC<StripeSettingsProps> = ({
                     color="green"
                     onClick={openModalForNewAccount}
                 >
-                    <IconCirclePlus style={{ marginRight: '8px' }} />
-                    <Text lineClamp={2} style={{ fontSize: '1.2rem' }}>
+                    <IconCirclePlus style={{ marginRight: "8px" }} />
+                    <Text lineClamp={2} style={{ fontSize: "1.2rem" }}>
                         Connect with Stripe
                     </Text>
                 </Button>
@@ -212,9 +209,9 @@ export const StripePersonalAccountSetting: FC<StripeSettingsProps> = ({
                 centered={true}
                 opened={isModalForNewAccountOpened}
                 onClose={closeModalForNewAccount}
-                size={'lg'}
+                size={"lg"}
                 title={
-                    <div style={{ display: 'flex', gap: '8px', justifyContent: 'center', alignItems: 'center' }}>
+                    <div style={{ display: "flex", gap: "8px", justifyContent: "center", alignItems: "center" }}>
                         <IconBrandStripe size={16} color="teal" />
                         <span>
                             Create a new Stripe Express account
@@ -235,7 +232,7 @@ export const StripePersonalAccountSetting: FC<StripeSettingsProps> = ({
                             placeholder="Your email"
                             key='emailForStripe'
                             required
-                            {...form.getInputProps('emailForStripe')}
+                            {...form.getInputProps("emailForStripe")}
                             leftSectionPointerEvents="none"
                             leftSection={<IconAt style={{ width: rem(16), height: rem(16) }} />}
                         />
@@ -250,7 +247,7 @@ export const StripePersonalAccountSetting: FC<StripeSettingsProps> = ({
                             searchable
                             clearable
                             required
-                            {...form.getInputProps('country')}
+                            {...form.getInputProps("country")}
                             data={STRIPE_SUPPORTED_COUNTRY_OPTIONS}
                         />
                     </Container>
@@ -264,7 +261,7 @@ export const StripePersonalAccountSetting: FC<StripeSettingsProps> = ({
                             size="md"
                             loading={isCreatingExpressAccount}
                         >
-                            {isCreatingExpressAccount ? 'Waiting for Stripe...' : 'Create new Stripe account'}
+                            {isCreatingExpressAccount ? "Waiting for Stripe..." : "Create new Stripe account"}
                         </Button>
                     </Group>
 
@@ -273,5 +270,5 @@ export const StripePersonalAccountSetting: FC<StripeSettingsProps> = ({
                 </form>
             </Modal>
         </>
-    )
-}
+    );
+};

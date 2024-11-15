@@ -1,6 +1,6 @@
 import { notifications } from "@mantine/notifications";
 
-export async function errorNotification({
+export async function errorNotification ({
     title,
     message = "",
 }: {

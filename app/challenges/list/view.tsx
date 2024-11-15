@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import { useState } from "react";
 import { API_ROUTES } from "../../../constants";
@@ -11,7 +11,7 @@ import { ChallengeCard } from "./_components/ChallengeCard";
 
 const PAGE_SIZE = 30;
 
-export function ChallengesView({
+export function ChallengesView ({
     initialChallenges,
     search,
 }: {
@@ -22,7 +22,7 @@ export function ChallengesView({
     const [challenges, setChallenges] = useExternalStateOverride(initialChallenges);
     const [page, setPage] = useState(1);
 
-    async function loadMoreChallenges() {
+    async function loadMoreChallenges () {
         setIsLoading(true);
 
         const next = page + 1;
@@ -30,16 +30,16 @@ export function ChallengesView({
             itemsPerPage: PAGE_SIZE,
             page: next,
             search,
-        }))
+        }));
 
         const nextChallenges = await nextChallengesResponse.json() as ChallengePrimitive[];
 
         if (nextChallenges?.length) {
-            setPage(next)
+            setPage(next);
             setChallenges((prev: ChallengePrimitive[] | undefined) => [
                 ...(prev?.length ? prev : []),
-                ...nextChallenges
-            ])
+                ...nextChallenges,
+            ]);
         }
 
         setIsLoading(false);

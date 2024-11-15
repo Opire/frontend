@@ -1,22 +1,22 @@
-'use client'
+"use client";
 
-import { Container, Divider, Space, Tabs } from "@mantine/core"
-import { IconCoin, IconMoneybag, IconTrophy } from "@tabler/icons-react"
+import { Container, Divider, Space, Tabs } from "@mantine/core";
+import { IconCoin, IconMoneybag, IconTrophy } from "@tabler/icons-react";
 import { useRouter } from "next/navigation";
 import { CreatorRewardsPanel } from "./CreatorRewardsPanel/CreatorRewardsPanel";
 import { CreatorTipsPanel } from "./CreatorTipsPanel/CreatorTipsPanel";
 import { CreatorChallengesPanel } from "./CreatorChallengesPanel/CreatorChallengesPanel";
 
-export function CreatorView({
+export function CreatorView ({
     view,
 }: {
-    view: 'rewards' | 'tips' | 'challenges'
+    view: "rewards" | "tips" | "challenges"
 }) {
     const router = useRouter();
 
     return (
         <>
-            <Space h={'7px'} />
+            <Space h={"7px"} />
 
             <Tabs
                 value={view}
@@ -61,5 +61,5 @@ export function CreatorView({
 
             </Tabs>
         </>
-    )
+    );
 }

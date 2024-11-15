@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import { Card, Title, Button, Center } from "@mantine/core";
 import { FC } from "react";
@@ -25,4 +25,4 @@ export const GitHubInstallApp: FC<GitHubInstallAppProps> = ({
             </Center>
         </Card >
     );
-}
+};

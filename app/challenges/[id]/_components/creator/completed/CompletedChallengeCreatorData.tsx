@@ -1,7 +1,6 @@
 import { ChallengeDTO } from "../../../../../_core/_primitives/ChallengePrimitive";
-import { FC } from "react";
+import React, { FC } from "react";
 import { UserAuthDTO } from "../../../../../_core/_dtos/UserAuthDTO";
-import React from "react";
 import { Divider, Box, Space } from "@mantine/core";
 import { ChallengeMainData } from "../../shared/ChallengeMainData";
 import { NewChallengeSection } from "../../shared/NewChallengeSection";
@@ -17,7 +16,8 @@ interface CompletedChallengeCreatorDataProps {
 
 export const CompletedChallengeCreatorData: FC<CompletedChallengeCreatorDataProps> = ({
     challenge: initialChallenge,
-    creator }) => {
+    creator,
+}) => {
     const { challenge } = useGetChallenge({
         initialChallenge,
         revalidateOnFocus: true,
@@ -43,4 +43,3 @@ export const CompletedChallengeCreatorData: FC<CompletedChallengeCreatorDataProp
         </Box>
     );
 };
-

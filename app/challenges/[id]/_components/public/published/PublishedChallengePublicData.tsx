@@ -1,7 +1,6 @@
 import { ChallengeDTO } from "../../../../../_core/_primitives/ChallengePrimitive";
-import { FC } from "react";
+import React, { FC } from "react";
 import { UserAuthDTO } from "../../../../../_core/_dtos/UserAuthDTO";
-import React from "react";
 import { Divider, Box, Space } from "@mantine/core";
 
 import { NewChallengeSection } from "../../shared/NewChallengeSection";

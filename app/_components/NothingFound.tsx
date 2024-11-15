@@ -1,8 +1,7 @@
 import { Center, Space, Title } from "@mantine/core";
 import { IconCurrencyDollar } from "@tabler/icons-react";
 
-export function NothingFound() {
-
+export function NothingFound () {
     return (
         <div>
             <Space h='4vh' />
@@ -11,9 +10,8 @@ export function NothingFound() {
             </Center>
             <Space h='20px' />
             <Center>
-                <Title order={1} opacity={0.6} style={{ textAlign: 'center' }}>Nothing found...</Title>
+                <Title order={1} opacity={0.6} style={{ textAlign: "center" }}>Nothing found...</Title>
             </Center>
         </div >
     );
 }
-

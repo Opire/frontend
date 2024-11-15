@@ -1,10 +1,10 @@
 import { FC, useState } from "react";
-import { TextInput, TextInputProps } from '@mantine/core';
+import { TextInput, TextInputProps } from "@mantine/core";
 // import { TextValueObject } from "../../../Core/Shared/Domain/VOs/TextValueObject";
 // import { TextHaveInvalidChars } from "../../../Core/Shared/Domain/Exceptions/TextHaveInvalidChars";
 // import { TextMustHaveSomeChars } from "../../../Core/Shared/Domain/Exceptions/TextMustHaveSomeChars";
 
-export function validateText(text?: string, required?: boolean) {
+export function validateText (text?: string, required?: boolean) {
     // if (!required && !text) {
     //     return null;
     // }
@@ -28,7 +28,7 @@ export function validateText(text?: string, required?: boolean) {
     return null;
 }
 
-type TextInputPropsToOmit = 'onChange' | 'value';
+type TextInputPropsToOmit = "onChange" | "value";
 interface BaseInputTextProps extends Omit<TextInputProps, TextInputPropsToOmit> {
     value: string;
     onChange: (value: string) => void;
@@ -50,9 +50,9 @@ export const BaseInputText: FC<BaseInputTextProps> = ({
     };
 
     const updateErrorState = (value: string) => {
-        const error = validateText(value, required)
+        const error = validateText(value, required);
         setNameError(error);
-    }
+    };
 
     return (
         <TextInput

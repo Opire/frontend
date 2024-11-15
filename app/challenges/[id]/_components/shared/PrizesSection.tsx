@@ -9,22 +9,20 @@ import { getOrdinalPositionDescription } from "./utils";
 
 export const PrizesSection: FC<{
     challenge: ChallengePrimitive;
-}> = ({ challenge }) => {
-    return (
-        <Center>
-            <Grid
-                style={{ justifyItems: 'center', alignItems: 'center' }}
-                gutter={20}
-            >
-                {challenge.configuration.prizes.map((prize, index) => (
-                    <Grid.Col key={index} span={'auto'}>
-                        <PrizeCard prize={prize} />
-                    </Grid.Col>
-                ))}
-            </Grid>
-        </Center>
-    );
-};
+}> = ({ challenge }) => (
+    <Center>
+        <Grid
+            style={{ justifyItems: "center", alignItems: "center" }}
+            gutter={20}
+        >
+            {challenge.configuration.prizes.map((prize, index) => (
+                <Grid.Col key={index} span={"auto"}>
+                    <PrizeCard prize={prize} />
+                </Grid.Col>
+            ))}
+        </Grid>
+    </Center>
+);
 
 const PrizeCard: FC<{
     prize: ChallengePrizePrimitive;
@@ -44,43 +42,38 @@ const PrizeCard: FC<{
             h={250}
             miw={350}
             w='auto'
-            style={{ transition: 'box-shadow 0.3s ease-in-out', boxShadow: hovered ? '0 4px 30px rgba(16, 152, 173, 0.5)' : undefined }}
+            style={{ transition: "box-shadow 0.3s ease-in-out", boxShadow: hovered ? "0 4px 30px rgba(16, 152, 173, 0.5)" : undefined }}
         >
-            <Center style={{ margin: 'auto 0', height: '100%' }}>
-                <Flex direction={'column'} align={'center'} justify={'center'} h={'100%'}>
-                    <Text style={{ fontWeight: 700, fontSize: '1.6rem', textAlign: 'center' }}>
+            <Center style={{ margin: "auto 0", height: "100%" }}>
+                <Flex direction={"column"} align={"center"} justify={"center"} h={"100%"}>
+                    <Text style={{ fontWeight: 700, fontSize: "1.6rem", textAlign: "center" }}>
                         {
-                            isSpecificPositionPrize
-                            &&
+                            isSpecificPositionPrize &&
                             `${getOrdinalPositionDescription(prize.position)} prize`
                         }
                         {
-                            isThresholdPrize
-                            &&
+                            isThresholdPrize &&
                             `${getOrdinalPositionDescription(prize.fromPosition)} to ${getOrdinalPositionDescription(prize.toPosition)} prize`
                         }
                         {
-                            isThresholdWithoutLimitPrize
-                            &&
+                            isThresholdWithoutLimitPrize &&
                             `${getOrdinalPositionDescription(prize.fromPosition)} prize onwards`
                         }
                     </Text>
 
                     {
-                        prize.amount
-                        &&
-                        <Text variant="gradient" style={{ fontWeight: 900, fontSize: '2.4rem' }}>
+                        prize.amount &&
+                        <Text variant="gradient" style={{ fontWeight: 900, fontSize: "2.4rem" }}>
                             {formatPrice(prize.amount)}
                         </Text>
                     }
 
                     {
-                        prize.benefits.length > 0
-                        &&
+                        prize.benefits.length > 0 &&
                         <>
-                            <Space h={'0.5rem'} />
+                            <Space h={"0.5rem"} />
 
-                            <Flex gap={'xs'} wrap={'wrap'}>
+                            <Flex gap={"xs"} wrap={"wrap"}>
                                 {prize.benefits.map((benefit) => (
                                     <Badge
                                         key={benefit}
@@ -88,8 +81,7 @@ const PrizeCard: FC<{
                                     >
                                         {benefit}
                                     </Badge>
-                                )
-                                )}
+                                ))}
                             </Flex>
                         </>
                     }
@@ -98,4 +90,3 @@ const PrizeCard: FC<{
         </Card>
     );
 };
-

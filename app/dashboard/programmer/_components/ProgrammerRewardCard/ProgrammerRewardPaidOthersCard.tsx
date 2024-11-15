@@ -16,7 +16,7 @@ const MAX_NUMBER_OF_USERS_TO_SHOW = 4;
 
 export const ProgrammerRewardPaidOthersCard: FC<ProgrammerRewardPaidOthersCardProps> = ({
     data,
-    inputRef
+    inputRef,
 }) => {
     const rewardedUsers = data.otherUsersTrying.filter(user => user.alreadyPaid.value > 0);
 
@@ -28,8 +28,8 @@ export const ProgrammerRewardPaidOthersCard: FC<ProgrammerRewardPaidOthersCardPr
     const router = useRouter();
 
     const redirectToDetails = () => {
-        router.push(`/issues/${data.issueId}`)
-    }
+        router.push(`/issues/${data.issueId}`);
+    };
 
     return (
         <Card
@@ -37,7 +37,7 @@ export const ProgrammerRewardPaidOthersCard: FC<ProgrammerRewardPaidOthersCardPr
             withBorder
             shadow="md"
             radius="md"
-            style={{ cursor: 'pointer', transition: 'transform 100ms ease-out', transform: hovered ? 'scale(1.01)' : '' }}
+            style={{ cursor: "pointer", transition: "transform 100ms ease-out", transform: hovered ? "scale(1.01)" : "" }}
             onClick={redirectToDetails}
         >
             <CardSection withBorder p="sm" ref={inputRef}>
@@ -45,7 +45,7 @@ export const ProgrammerRewardPaidOthersCard: FC<ProgrammerRewardPaidOthersCardPr
                     <Group>
                         <Avatar src={data.organization.logoURL} size='md' radius='xl' />
                         <div
-                            style={{ display: 'flex', flexWrap: 'wrap' }}
+                            style={{ display: "flex", flexWrap: "wrap" }}
                         >
                             <Text lineClamp={1} c={"dimmed"}>{data.organization.name}</Text>
                             <span>&nbsp;/&nbsp;</span>
@@ -77,31 +77,29 @@ export const ProgrammerRewardPaidOthersCard: FC<ProgrammerRewardPaidOthersCardPr
                     <Group gap="xs">
                         <AvatarGroup>
                             {
-                                rewardedUsersToShow.map((user) => {
-                                    return (
-                                        <HoverCard
-                                            withArrow
-                                            shadow="md"
-                                            closeDelay={0}
-                                            openDelay={0}
-                                            key={user.id}
-                                        >
-                                            <HoverCardTarget>
-                                                <Avatar
-                                                    src={user.avatarURL}
-                                                    alt={user.username}
-                                                    color="teal"
-                                                    size='lg'
-                                                    radius='xl'
-                                                />
-                                            </HoverCardTarget>
+                                rewardedUsersToShow.map((user) => (
+                                    <HoverCard
+                                        withArrow
+                                        shadow="md"
+                                        closeDelay={0}
+                                        openDelay={0}
+                                        key={user.id}
+                                    >
+                                        <HoverCardTarget>
+                                            <Avatar
+                                                src={user.avatarURL}
+                                                alt={user.username}
+                                                color="teal"
+                                                size='lg'
+                                                radius='xl'
+                                            />
+                                        </HoverCardTarget>
 
-                                            <HoverCardDropdown>
-                                                {user.username}
-                                            </HoverCardDropdown>
-                                        </HoverCard>
-                                    )
-                                })
+                                        <HoverCardDropdown>
+                                            {user.username}
+                                        </HoverCardDropdown>
+                                    </HoverCard>
+                                ))
                             }
 
                             {hasMoreUsers && (
@@ -125,10 +123,10 @@ export const ProgrammerRewardPaidOthersCard: FC<ProgrammerRewardPaidOthersCardPr
                 </CardSection>
             </Center>
 
-            <Space h={'0.5rem'} />
+            <Space h={"0.5rem"} />
 
-            <CardSection withBorder inheritPadding p="md" style={{ height: '100%' }}>
-                <Group justify="flex-end" align='flex-end' style={{ height: '100%' }}>
+            <CardSection withBorder inheritPadding p="md" style={{ height: "100%" }}>
+                <Group justify="flex-end" align='flex-end' style={{ height: "100%" }}>
                     <Text
                         c="dimmed"
                         size="xs"

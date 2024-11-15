@@ -15,30 +15,29 @@ export const ProgrammerTipsPanel: FC<ProgrammerTipsPanelProps> = ({
     const { tips: allTips, isLoading } = useTipsByProgrammer();
     const tips = useGetFilteredById(allTips);
 
-    const unpaidTips = [...tips].filter((tip) => tip.status === 'Pending payment')
-    const paidTips = [...tips].filter((tip) => tip.status === 'Paid')
+    const unpaidTips = [...tips].filter((tip) => tip.status === "Pending payment");
+    const paidTips = [...tips].filter((tip) => tip.status === "Paid");
 
-    const hasUnpaidTips = unpaidTips.length > 0
-    const hasPaidTips = paidTips.length > 0
+    const hasUnpaidTips = unpaidTips.length > 0;
+    const hasPaidTips = paidTips.length > 0;
 
     const noTips = !hasUnpaidTips && !hasPaidTips;
 
-
     if (isLoading) {
-        return <Loader display='block' size='xl' m='30px auto' />
+        return <Loader display='block' size='xl' m='30px auto' />;
     }
 
     if (noTips) {
         return (
             <NothingFound />
-        )
+        );
     }
 
     return (
         <div>
             {hasUnpaidTips && (
                 <>
-                    <Text fw={900} size={'xl'}>Waiting for payment</Text>
+                    <Text fw={900} size={"xl"}>Waiting for payment</Text>
                     <Space h='12px' />
                     <InfinityList
                         keyIdentifier="id"
@@ -55,7 +54,7 @@ export const ProgrammerTipsPanel: FC<ProgrammerTipsPanelProps> = ({
 
             {hasPaidTips && (
                 <>
-                    <Text fw={900} size={'xl'}>Paid</Text>
+                    <Text fw={900} size={"xl"}>Paid</Text>
                     <Space h='12px' />
                     <InfinityList
                         keyIdentifier='id'

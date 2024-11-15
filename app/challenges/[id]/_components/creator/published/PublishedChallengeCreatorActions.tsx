@@ -16,7 +16,7 @@ export const PublishedChallengeCreatorActions: FC<PublishedChallengeCreatorActio
     const router = useRouter();
     const [isModalForToggleChallengeAcceptsParticipationsOpen, { close: closeModalForToggleChallengeAcceptsParticipations, open: openModalForToggleChallengeAcceptsParticipations }] = useDisclosure();
 
-    function onChallengeUpdated() {
+    function onChallengeUpdated () {
         mutate(API_ROUTES.CHALLENGES.BY_ID(challenge.id));
         router.refresh();
     }
@@ -29,7 +29,7 @@ export const PublishedChallengeCreatorActions: FC<PublishedChallengeCreatorActio
                     variant='light'
                     onClick={openModalForToggleChallengeAcceptsParticipations}
                 >
-                    {challenge.isAcceptingParticipations ? 'Disable new participations' : 'Enable new participations'}
+                    {challenge.isAcceptingParticipations ? "Disable new participations" : "Enable new participations"}
                 </Button>
             </Flex>
 

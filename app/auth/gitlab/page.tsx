@@ -2,10 +2,10 @@ import { Metadata } from "next";
 import { AuthGitlabView } from "./view";
 
 export const metadata: Metadata = {
-    title: 'Opire - GitLab',
-}
+    title: "Opire - GitLab",
+};
 
-export default function Page() {
+export default function Page () {
     return (
         <AuthGitlabView />
     );

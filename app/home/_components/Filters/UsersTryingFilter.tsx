@@ -1,13 +1,13 @@
-import { Chip, Container, Group, Popover, Radio, Space } from '@mantine/core';
-import React, { FC, useState } from 'react';
+import { Chip, Container, Group, Popover, Radio, Space } from "@mantine/core";
+import React, { FC, useState } from "react";
 
-export type RewardFilterUserTrying = 'SOMEBODY' | 'NOBODY' | 'BOTH';
+export type RewardFilterUserTrying = "SOMEBODY" | "NOBODY" | "BOTH";
 
 const values: { [key in RewardFilterUserTrying]: RewardFilterUserTrying } = {
-    BOTH: 'BOTH',
-    NOBODY: 'NOBODY',
-    SOMEBODY: 'SOMEBODY',
-}
+    BOTH: "BOTH",
+    NOBODY: "NOBODY",
+    SOMEBODY: "SOMEBODY",
+};
 
 interface UsersTryingFilterProp {
     value: RewardFilterUserTrying
@@ -16,26 +16,26 @@ interface UsersTryingFilterProp {
 
 export const UsersTryingFilter: FC<UsersTryingFilterProp> = ({
     value,
-    onApply
+    onApply,
 }) => {
     const [filterValue, setFilterValue] = useState(value);
-    const isFiltering = value !== 'BOTH';
+    const isFiltering = value !== "BOTH";
 
     const chipTitle = () => {
         if (!isFiltering) {
-            return 'Users trying'
+            return "Users trying";
         }
 
         const translation: Record<RewardFilterUserTrying, string> = {
-            BOTH: 'Users trying',
-            NOBODY: 'Nobody is trying',
-            SOMEBODY: 'Someone is trying',
+            BOTH: "Users trying",
+            NOBODY: "Nobody is trying",
+            SOMEBODY: "Someone is trying",
         };
 
         return translation[value];
-    }
+    };
 
-    function onLocalApply(usersTrying: RewardFilterUserTrying) {
+    function onLocalApply (usersTrying: RewardFilterUserTrying) {
         onApply(usersTrying);
         setFilterValue(usersTrying);
     }
@@ -48,7 +48,7 @@ export const UsersTryingFilter: FC<UsersTryingFilterProp> = ({
                 </Chip>
             </Popover.Target>
 
-            <Popover.Dropdown style={{ width: 'auto' }}>
+            <Popover.Dropdown style={{ width: "auto" }}>
                 <Container>
                     <Space h='xs' />
 

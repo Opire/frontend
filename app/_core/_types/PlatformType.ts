@@ -1,4 +1,4 @@
 export type PlatformType =
-    | 'GitHub'
-    | 'GitLab'
-    | 'BitBucket'
+    | "GitHub"
+    | "GitLab"
+    | "BitBucket"

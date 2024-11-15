@@ -46,6 +46,9 @@ start: up setPermissions
 lint: up
 	@docker compose exec $(SERVICE_NAME) npm run lint
 
+lint-fix: up
+	@docker compose exec $(SERVICE_NAME) npm run lint:fix
+
 cpd: up
 	@docker compose exec $(SERVICE_NAME) npm run cpd
 

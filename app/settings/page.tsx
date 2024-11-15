@@ -10,10 +10,10 @@ import { TierLabelMapper } from "../_core/_types/TierLabelMapper";
 import { OrganizationsSettings } from "./_components/OrganizationsSettings/OrganizationsSettings";
 
 export const metadata: Metadata = {
-    title: 'Opire - Settings',
-}
+    title: "Opire - Settings",
+};
 
-export default async function Page() {
+export default async function Page () {
     redirectToHomeIfNotLogged();
     const userSettings = await getUserSettings();
     const belongsToSomeOrganization = userSettings.payments.organizations.length > 0;
@@ -27,14 +27,14 @@ export default async function Page() {
                     Install app
                 </Text>
 
-                <Space h={'1rem'}/>
+                <Space h={"1rem"}/>
 
                 <SimpleGrid cols={{ xs: 1, md: 2, lg: 3 }} w='100%' spacing='xl' verticalSpacing='xl' >
                     <GitHubInstallApp />
                 </SimpleGrid>
             </section>
 
-            <Divider mt={'1rem'} />
+            <Divider mt={"1rem"} />
 
             <section>
                 <Text
@@ -43,7 +43,7 @@ export default async function Page() {
                     Payments
                 </Text>
 
-                <Space h={'1rem'}/>
+                <Space h={"1rem"}/>
 
                 <Group>
                     <StripePersonalAccountSetting
@@ -54,26 +54,25 @@ export default async function Page() {
                 </Group>
             </section>
 
-            <Divider mt={'1rem'} />
+            <Divider mt={"1rem"} />
 
             <section>
-                <div style={{ display: 'flex', gap: '0.8rem', alignItems: 'center'}}>
+                <div style={{ display: "flex", gap: "0.8rem", alignItems: "center" }}>
                     <Text
                         style={{ fontSize: "2.4rem", fontWeight: "bold" }}
                     >
-                        Tier   
+                        Tier
                     </Text>
-                   
+
                     {
-                        userSettings.tierName !== INDIVIDUAL_TIER_NAMES.INDIVIDUAL_BASIC && 
+                        userSettings.tierName !== INDIVIDUAL_TIER_NAMES.INDIVIDUAL_BASIC &&
                         <Badge color="indigo" variant="outline">
                             {TierLabelMapper[userSettings.tierName]}
                         </Badge>
                     }
                 </div>
-                     
 
-                <Space h={'0.2rem'}/>
+                <Space h={"0.2rem"}/>
 
                 <IndividualTiersSettings
                     userId={userSettings.id}
@@ -81,11 +80,11 @@ export default async function Page() {
                     currentTier={userSettings.tierName}
                 />
             </section>
-            
+
             {
                 belongsToSomeOrganization &&
                 <>
-                    <Divider mt={'1rem'} />
+                    <Divider mt={"1rem"} />
 
                     <Text
                         style={{ fontSize: "2.4rem", fontWeight: "bold" }}

@@ -23,7 +23,7 @@ export const ToggleIsChallengeAcceptingNewParticipationsModal: FC<ToggleIsChalle
 
     const isGoingToStopNewParticipations = challenge.isAcceptingParticipations;
 
-    async function updateChallenge() {
+    async function updateChallenge () {
         try {
             setIsUpdatingChallenge(true);
 
@@ -32,18 +32,19 @@ export const ToggleIsChallengeAcceptingNewParticipationsModal: FC<ToggleIsChalle
                     ? API_ROUTES.CHALLENGES.DENY_NEW_PARTICIPATIONS(challenge.id)
                     : API_ROUTES.CHALLENGES.ALLOW_NEW_PARTICIPATIONS(challenge.id),
                 {
-                    method: 'POST',
-                });
+                    method: "POST",
+                },
+            );
 
             notifications.show({
-                title: isGoingToStopNewParticipations ? 'Participations stopped' : 'New participations allowed',
+                title: isGoingToStopNewParticipations ? "Participations stopped" : "New participations allowed",
                 message: isGoingToStopNewParticipations ? "No more participants will be able to submit their solution. Don't forget to re-allow new participations once you're ready to start receiving solutions for your challenge" : "Now any participant will be able to submit their solution to the challenge 🎉",
                 withBorder: true,
                 withCloseButton: true,
                 autoClose: 10_000,
-                color: isGoingToStopNewParticipations ? 'red' : 'teal',
+                color: isGoingToStopNewParticipations ? "red" : "teal",
                 icon: isGoingToStopNewParticipations ? <IconHandStop /> : <IconCheck />,
-            })
+            });
             setTimeout(() => {
                 onChallengeUpdated();
                 setIsUpdatingChallenge(false);
@@ -52,14 +53,14 @@ export const ToggleIsChallengeAcceptingNewParticipationsModal: FC<ToggleIsChalle
             onClose();
         } catch (error) {
             notifications.show({
-                title: 'Error while updating the challenge',
+                title: "Error while updating the challenge",
                 message: "Please, try again later. Contact us at opiredev@gmail.com if the problem persist",
                 withBorder: true,
                 withCloseButton: true,
                 autoClose: 10_000,
-                color: 'red',
+                color: "red",
                 icon: <IconX />,
-            })
+            });
             setIsUpdatingChallenge(false);
         }
     }
@@ -69,17 +70,17 @@ export const ToggleIsChallengeAcceptingNewParticipationsModal: FC<ToggleIsChalle
             centered={true}
             opened={isOpened}
             onClose={onClose}
-            title={<Title size={'h3'}>{isGoingToStopNewParticipations ? 'Disallow new participations' : 'Allow new participations'}</Title>}
-            size={'xl'}
+            title={<Title size={"h3"}>{isGoingToStopNewParticipations ? "Disallow new participations" : "Allow new participations"}</Title>}
+            size={"xl"}
             closeOnEscape={true}
             closeOnClickOutside={false}
             withCloseButton={true}
         >
-            <Container size={'lg'}>
+            <Container size={"lg"}>
                 <Text>
                     {isGoingToStopNewParticipations
-                        ? 'If you continue, you will prevent new participants from submitting their solution to the challenge. This can be reverted at any time.'
-                        : 'If you continue, participants will be able to submit their solution to the challenge. Make sure you are prepared to start reviewing their participations. This can be reverted later if you change your mind.'
+                        ? "If you continue, you will prevent new participants from submitting their solution to the challenge. This can be reverted at any time."
+                        : "If you continue, participants will be able to submit their solution to the challenge. Make sure you are prepared to start reviewing their participations. This can be reverted later if you change your mind."
                     }
                 </Text>
 
@@ -101,10 +102,10 @@ export const ToggleIsChallengeAcceptingNewParticipationsModal: FC<ToggleIsChalle
                         disabled={isUpdatingChallenge}
                         onClick={updateChallenge}
                     >
-                        {isGoingToStopNewParticipations ? 'Stop receiving participations' : 'Start receiving participations'}
+                        {isGoingToStopNewParticipations ? "Stop receiving participations" : "Start receiving participations"}
                     </Button>
                 </Group>
             </Container>
         </Modal>
-    )
-}
+    );
+};

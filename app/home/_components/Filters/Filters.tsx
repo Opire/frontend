@@ -22,7 +22,7 @@ export const DEFAULT_REWARD_FILTERS: RewardFilters = {
         max: null,
     },
     programmingLanguages: [],
-    usersTrying: 'BOTH',
+    usersTrying: "BOTH",
 };
 
 const URL_KEYS = {
@@ -31,7 +31,7 @@ const URL_KEYS = {
         MAX: "maxPrice",
     },
     PROGRAMMING_LANGUAGES: "programmingLanguages",
-    USERS_TRYING: 'usersTrying',
+    USERS_TRYING: "usersTrying",
 };
 
 export const Filters: FC<{}> = () => {
@@ -39,24 +39,20 @@ export const Filters: FC<{}> = () => {
         usePopulateToURL();
     const [filters, setFilters] = useState<RewardFilters>(getFiltersFromURL);
 
-    function getFiltersFromURL(): RewardFilters {
+    function getFiltersFromURL (): RewardFilters {
         const minPrice = searchParams.get(URL_KEYS.PRICE.MIN)
             ? +searchParams.get(URL_KEYS.PRICE.MIN)!
             : DEFAULT_REWARD_FILTERS.price.min;
         const maxPrice = searchParams.get(URL_KEYS.PRICE.MAX)
             ? +searchParams.get(URL_KEYS.PRICE.MAX)!
             : DEFAULT_REWARD_FILTERS.price.max;
-        const programmingLanguages = searchParams.get(
-            URL_KEYS.PROGRAMMING_LANGUAGES
-        )
+        const programmingLanguages = searchParams.get(URL_KEYS.PROGRAMMING_LANGUAGES)
             ? (searchParams
                 .get(URL_KEYS.PROGRAMMING_LANGUAGES)!
                 .split(",") as ProgrammingLanguageType[])
             : DEFAULT_REWARD_FILTERS.programmingLanguages;
 
-        const usersTrying = searchParams.get(
-            URL_KEYS.USERS_TRYING
-        )
+        const usersTrying = searchParams.get(URL_KEYS.USERS_TRYING)
             ? (searchParams
                 .get(URL_KEYS.USERS_TRYING)! as RewardFilterUserTrying)
             : DEFAULT_REWARD_FILTERS.usersTrying;
@@ -67,7 +63,7 @@ export const Filters: FC<{}> = () => {
                 max: maxPrice,
             },
             programmingLanguages,
-            usersTrying
+            usersTrying,
         };
     }
 
@@ -83,9 +79,7 @@ export const Filters: FC<{}> = () => {
         ]);
     };
 
-    const updateProgrammingLanguageFilter = (
-        programmingLanguages: ProgrammingLanguageType[]
-    ) => {
+    const updateProgrammingLanguageFilter = (programmingLanguages: ProgrammingLanguageType[]) => {
         setFilters((oldFilters) => ({
             ...oldFilters,
             programmingLanguages,
@@ -93,13 +87,11 @@ export const Filters: FC<{}> = () => {
 
         populateParamToURL(
             URL_KEYS.PROGRAMMING_LANGUAGES,
-            programmingLanguages.join(",")
+            programmingLanguages.join(","),
         );
     };
 
-    const updateUsersTryingFilter = (
-        usersTrying: RewardFilterUserTrying
-    ) => {
+    const updateUsersTryingFilter = (usersTrying: RewardFilterUserTrying) => {
         setFilters((oldFilters) => ({
             ...oldFilters,
             usersTrying,
@@ -107,10 +99,9 @@ export const Filters: FC<{}> = () => {
 
         populateParamToURL(
             URL_KEYS.USERS_TRYING,
-            usersTrying === 'BOTH' ? '' : usersTrying,
+            usersTrying === "BOTH" ? "" : usersTrying,
         );
     };
-
 
     return (
         <div

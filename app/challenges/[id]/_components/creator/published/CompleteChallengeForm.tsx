@@ -8,12 +8,11 @@ import { ChallengeDTO } from "../../../../../_core/_primitives/ChallengePrimitiv
 import { clientCustomFetch } from "../../../../../_utils/clientCustomFetch";
 import { API_ROUTES } from "../../../../../../constants";
 
-
 interface CompleteChallengeFormProps {
     challenge: ChallengeDTO;
 }
 
-export function CompleteChallengeForm({ challenge }: CompleteChallengeFormProps): React.ReactElement {
+export function CompleteChallengeForm ({ challenge }: CompleteChallengeFormProps): React.ReactElement {
     const router = useRouter();
 
     const [isCompletingChallenge, setIsCompletingChallenge] = useState(false);
@@ -23,8 +22,7 @@ export function CompleteChallengeForm({ challenge }: CompleteChallengeFormProps)
         { close: closeCompleteChallengeModal, open: openCompleteChallengeModal },
     ] = useDisclosure();
 
-
-    async function completeChallenge() {
+    async function completeChallenge () {
         try {
             const wasAbleToPayPrizes = challenge.canPrizesBePaid;
 
@@ -34,7 +32,7 @@ export function CompleteChallengeForm({ challenge }: CompleteChallengeFormProps)
                 API_ROUTES.CHALLENGES.COMPLETE(challenge.id),
                 {
                     method: "POST",
-                }
+                },
             );
 
             setTimeout(() => {
@@ -75,14 +73,14 @@ export function CompleteChallengeForm({ challenge }: CompleteChallengeFormProps)
             <Modal
                 opened={isModalToCompleteChallengeOpen}
                 onClose={closeCompleteChallengeModal}
-                title={<Title size={'h2'}>Are you sure you want to complete this challenge?</Title>}
+                title={<Title size={"h2"}>Are you sure you want to complete this challenge?</Title>}
                 centered
-                size={'xl'}
+                size={"xl"}
                 closeOnEscape={true}
                 closeOnClickOutside={false}
                 withCloseButton={true}
             >
-                <Container size={'lg'}>
+                <Container size={"lg"}>
                     <Space h='0.5rem' />
 
                     <List
@@ -111,8 +109,7 @@ export function CompleteChallengeForm({ challenge }: CompleteChallengeFormProps)
                         </ListItem>
 
                         {
-                            !challenge.canPrizesBePaid
-                            &&
+                            !challenge.canPrizesBePaid &&
                             <ListItem
                                 icon={
                                     <ThemeIcon color="teal" size={24} radius="xl">
@@ -135,10 +132,9 @@ export function CompleteChallengeForm({ challenge }: CompleteChallengeFormProps)
                         </ListItem>
                     </List>
 
-
                     <Space h='3rem' />
 
-                    <div style={{ display: "flex", justifyContent: "flex-end", gap: '1rem', flexWrap: 'wrap' }}>
+                    <div style={{ display: "flex", justifyContent: "flex-end", gap: "1rem", flexWrap: "wrap" }}>
                         <Button
                             onClick={closeCompleteChallengeModal}
                             variant="subtle"
@@ -157,7 +153,6 @@ export function CompleteChallengeForm({ challenge }: CompleteChallengeFormProps)
                         >
                             Complete challenge
                         </Button>
-
 
                     </div>
                 </Container>

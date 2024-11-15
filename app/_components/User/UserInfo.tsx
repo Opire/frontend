@@ -5,11 +5,9 @@ import { UserAuthDTO } from "../../_core/_dtos/UserAuthDTO";
 
 export const UserInfo: FC<{
     userAuth: UserAuthDTO | null;
-}> = ({ userAuth }) => {
-    return (
-        <>
-            {!userAuth && <LoginButton />}
-            {userAuth && <LoggedUser userAuth={userAuth} />}
-        </>
-    );
-};
+}> = ({ userAuth }) => (
+    <>
+        {!userAuth && <LoginButton />}
+        {userAuth && <LoggedUser userAuth={userAuth} />}
+    </>
+);

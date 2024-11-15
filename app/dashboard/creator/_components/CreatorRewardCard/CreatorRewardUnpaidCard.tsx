@@ -58,12 +58,10 @@ export const CreatorRewardUnpaidCard: FC<CreatorRewardUnpaidCardProps> = ({
     const { hovered, ref: hoverRef } = useHover();
     const router = useRouter();
 
-    const claimerUsers = data.usersTrying.filter(
-        (userTrying) => userTrying.hasClaimed
-    );
+    const claimerUsers = data.usersTrying.filter((userTrying) => userTrying.hasClaimed);
     const [claimerUsersToShow, claimerUsersHidden] = splitToShow(
         claimerUsers,
-        MAX_NUMBER_OF_USERS_TO_SHOW
+        MAX_NUMBER_OF_USERS_TO_SHOW,
     );
     const hasMoreUsers = claimerUsersHidden.length > 0;
     const amountOfExtraUsers = claimerUsersHidden.length;
@@ -75,13 +73,12 @@ export const CreatorRewardUnpaidCard: FC<CreatorRewardUnpaidCardProps> = ({
         router.push(`/issues/${data.issueId}`);
     };
 
-    const handleClickPay = async (
-        event: React.MouseEvent<HTMLButtonElement>
-    ) => {
+    const handleClickPay = async (event: React.MouseEvent<HTMLButtonElement>) => {
         event.stopPropagation();
 
         if (claimerUsers.length > 1) {
             openModalForSelectUserToPay();
+
             return;
         }
 
@@ -91,15 +88,13 @@ export const CreatorRewardUnpaidCard: FC<CreatorRewardUnpaidCardProps> = ({
         }
     };
 
-    const handleClickRemove = async (
-        event: React.MouseEvent<HTMLButtonElement>
-    ) => {
+    const handleClickRemove = async (event: React.MouseEvent<HTMLButtonElement>) => {
         event.stopPropagation();
 
         openModalForRemoveRewards();
     };
 
-    async function removeRewards() {
+    async function removeRewards () {
         setIsRemovingRewards(true);
 
         try {
@@ -112,7 +107,7 @@ export const CreatorRewardUnpaidCard: FC<CreatorRewardUnpaidCardProps> = ({
                             id: data.issueId,
                         },
                     },
-                }
+                },
             );
 
             notifications.show({
@@ -328,17 +323,15 @@ export const CreatorRewardUnpaidCard: FC<CreatorRewardUnpaidCardProps> = ({
                                                 </Avatar>
                                             </HoverCardTarget>
                                             <HoverCardDropdown>
-                                                {claimerUsersHidden.map(
-                                                    (claimerUser) => (
-                                                        <div
-                                                            key={claimerUser.id}
-                                                        >
-                                                            {
-                                                                claimerUser.username
-                                                            }
-                                                        </div>
-                                                    )
-                                                )}
+                                                {claimerUsersHidden.map((claimerUser) => (
+                                                    <div
+                                                        key={claimerUser.id}
+                                                    >
+                                                        {
+                                                            claimerUser.username
+                                                        }
+                                                    </div>
+                                                ))}
                                             </HoverCardDropdown>
                                         </HoverCard>
                                     )}

@@ -22,23 +22,24 @@ export const SubmitChallengeSolutionForm: FC<SubmitChallengeSolutionFormProps> =
     const [isModalOpen, { close, open }] = useDisclosure();
     const { canCurrentUserParticipate, reloadCanCurrentUserParticipate } = useGetCanCurrentUserParticipateInChallenge({ challengeId: challenge.id, revalidateOnFocus: true });
 
-    useTriggerCallbackOnQueryParamFirstMatch({ queryParamKey: 'submit-solution', callback: open });
+    useTriggerCallbackOnQueryParamFirstMatch({ queryParamKey: "submit-solution", callback: open });
 
-    function handleClickSubmitSolution() {
+    function handleClickSubmitSolution () {
         if (!canCurrentUserParticipate) {
             return;
         }
 
         if (userAuth) {
             open();
+
             return;
         }
 
         redirectAfterLogin.prepareNextRedirection(`/challenges/${challenge.id}?submit-solution=true`);
-        router.push('?login=true');
+        router.push("?login=true");
     }
 
-    function onSolutionSubmitted() {
+    function onSolutionSubmitted () {
         mutate(API_ROUTES.CHALLENGES.BY_ID(challenge.id));
         reloadCanCurrentUserParticipate();
         router.refresh();

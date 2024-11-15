@@ -10,12 +10,8 @@ interface IssueCreatedActivityProps {
     issue: IssuePrimitive;
 }
 
-
-export const IssueCreatedActivity: FC<IssueCreatedActivityProps> = ({ event }) => {
-
-    return (
-        <Timeline.Item title="Issue added to Opire" bullet={<IconPlus size="sm" />}>
-            <Text size="xs" mt={4}>{getRelativeTime(new Date(event.occurredOn))}</Text>
-        </Timeline.Item>
-    );
-};
+export const IssueCreatedActivity: FC<IssueCreatedActivityProps> = ({ event }) => (
+    <Timeline.Item title="Issue added to Opire" bullet={<IconPlus size="sm" />}>
+        <Text size="xs" mt={4}>{getRelativeTime(new Date(event.occurredOn))}</Text>
+    </Timeline.Item>
+);

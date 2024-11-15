@@ -10,13 +10,13 @@ interface ChallengeCardProps {
 
 export const ChallengeCard: FC<ChallengeCardProps> = ({
     data,
-    inputRef
+    inputRef,
 }) => {
     const router = useRouter();
 
     const redirectToDetails = () => {
-        router.push(`/challenges/${data.id}`)
-    }
+        router.push(`/challenges/${data.id}`);
+    };
 
     return (
         <Card
@@ -24,7 +24,7 @@ export const ChallengeCard: FC<ChallengeCardProps> = ({
             withBorder
             shadow="md"
             radius="md"
-            style={{ justifyContent: 'space-between' }}
+            style={{ justifyContent: "space-between" }}
         >
             <Group justify="center">
                 <Text

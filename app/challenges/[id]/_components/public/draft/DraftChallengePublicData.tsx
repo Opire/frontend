@@ -1,6 +1,5 @@
 import { ChallengePrimitive } from "../../../../../_core/_primitives/ChallengePrimitive";
-import { FC, useMemo } from "react";
-import React from "react";
+import React, { FC, useMemo } from "react";
 import { ChallengePrizePrimitive } from "../../../../../_core/_primitives/ChallengePrizePrimitive";
 import {
     getChallengePrizeMaxPosition,
@@ -40,15 +39,13 @@ interface DraftChallengePublicDataProps {
 export const DraftChallengePublicData: FC<DraftChallengePublicDataProps> = ({
     challenge,
 }) => {
-
     const prizes = useMemo(
         () => sortPrizes(challenge.configuration.prizes),
-        [challenge]
+        [challenge],
     );
 
-
-    function previewPublishedChallenge() {
-        window.open(`/challenges/${challenge.id}/preview`, '_blank')?.focus();
+    function previewPublishedChallenge () {
+        window.open(`/challenges/${challenge.id}/preview`, "_blank")?.focus();
     }
 
     return (
@@ -67,11 +64,9 @@ export const DraftChallengePublicData: FC<DraftChallengePublicDataProps> = ({
                     </Text>
 
                     <Tooltip
-                        label={`Updated at ${formatDateTime(
-                            challenge
-                                ? new Date(challenge.updatedAt)
-                                : new Date()
-                        )}`}
+                        label={`Updated at ${formatDateTime(challenge
+                            ? new Date(challenge.updatedAt)
+                            : new Date())}`}
                     >
                         <IconCircleCheckFilled size={24} />
                     </Tooltip>
@@ -95,9 +90,7 @@ export const DraftChallengePublicData: FC<DraftChallengePublicDataProps> = ({
                                     description="The challenge will be automatically closed on this date"
                                     value={
                                         challenge.configuration.deadline
-                                            ? new Date(
-                                                challenge.configuration.deadline
-                                            )
+                                            ? new Date(challenge.configuration.deadline)
                                             : null
                                     }
                                     disabled={true}
@@ -116,7 +109,7 @@ export const DraftChallengePublicData: FC<DraftChallengePublicDataProps> = ({
                                 />
                             </Grid.Col>
 
-                            <Grid.Col span={{ base: 12, md: 4 }} style={{ alignSelf: 'center' }}>
+                            <Grid.Col span={{ base: 12, md: 4 }} style={{ alignSelf: "center" }}>
                                 <Checkbox
                                     label="Allow multiple participations per user"
                                     description="If allowed, you may want to limit the number of participations to avoid facing an unmanageable amount of them"
@@ -163,19 +156,17 @@ export const DraftChallengePublicData: FC<DraftChallengePublicDataProps> = ({
                                                 </Table.Thead>
 
                                                 <Table.Tbody ta={"center"}>
-                                                    {prizes.map(
-                                                        (prize, index) => (
-                                                            <Table.Tr
-                                                                key={index}
-                                                            >
-                                                                <PrizeRow
-                                                                    prize={
-                                                                        prize
-                                                                    }
-                                                                />
-                                                            </Table.Tr>
-                                                        )
-                                                    )}
+                                                    {prizes.map((prize, index) => (
+                                                        <Table.Tr
+                                                            key={index}
+                                                        >
+                                                            <PrizeRow
+                                                                prize={
+                                                                    prize
+                                                                }
+                                                            />
+                                                        </Table.Tr>
+                                                    ))}
                                                 </Table.Tbody>
                                             </Table>
                                         </Table.ScrollContainer>
@@ -263,7 +254,7 @@ export const DraftChallengePublicData: FC<DraftChallengePublicDataProps> = ({
                                         <Grid.Col span={{ base: 12, md: 6 }}>
                                             <Textarea
                                                 label="Contact information"
-                                                description={`Communication channels for participants to contact you in case of doubts, questions, feedback...`}
+                                                description={"Communication channels for participants to contact you in case of doubts, questions, feedback..."}
                                                 withAsterisk
                                                 autosize
                                                 minRows={2}
@@ -299,7 +290,7 @@ export const DraftChallengePublicData: FC<DraftChallengePublicDataProps> = ({
 
                 <Space h={"1rem"} />
 
-                <div style={{ display: "flex", justifyContent: "flex-end", gap: '1rem' }}>
+                <div style={{ display: "flex", justifyContent: "flex-end", gap: "1rem" }}>
                     <Button
                         onClick={previewPublishedChallenge}
                         variant="light"
@@ -335,9 +326,7 @@ const PrizeRow: FC<{
                 {isSpecificPositionPrize &&
                     `${getChallengePrizeMinPosition(prize)}`}
                 {isThresholdPrize &&
-                    `From ${getChallengePrizeMinPosition(
-                        prize
-                    )} to ${getChallengePrizeMaxPosition(prize)}`}
+                    `From ${getChallengePrizeMinPosition(prize)} to ${getChallengePrizeMaxPosition(prize)}`}
                 {isThresholdWithoutLimitPrize &&
                     `From ${getChallengePrizeMinPosition(prize)} onwards`}
             </Table.Td>
@@ -345,18 +334,16 @@ const PrizeRow: FC<{
             <Table.Td>
                 {
                     prize.amount
-                        ?
-                        formatPrice(prize.amount)
-                        :
-                        <IconLineDashed />
+                        ? formatPrice(prize.amount)
+                        : <IconLineDashed />
                 }
             </Table.Td>
 
             <Table.Td>
-                <Flex gap={'xs'} display={'inline-flex'} mx={'1rem'}>
+                <Flex gap={"xs"} display={"inline-flex"} mx={"1rem"}>
                     {
-                        prize.benefits.length > 0 ?
-                            prize.benefits.map((benefit) => (
+                        prize.benefits.length > 0
+                            ? prize.benefits.map((benefit) => (
                                 <Badge
                                     key={benefit}
                                     variant="outline"
@@ -365,10 +352,8 @@ const PrizeRow: FC<{
                                 >
                                     {benefit}
                                 </Badge>
-                            )
-                            )
-                            :
-                            <IconLineDashed />
+                            ))
+                            : <IconLineDashed />
                     }
                 </Flex>
             </Table.Td>

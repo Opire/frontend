@@ -22,17 +22,17 @@ export const CreatorActionsOnParticipation: FC<CreatorActionsOnParticipationProp
     const [isModalForPayOpen, { close: closeModalForPay, open: openModalForPay }] = useDisclosure();
     const [isModalForRejectOpen, { close: closeModalForReject, open: openModalForReject }] = useDisclosure();
 
-    function onChallengeUpdated() {
+    function onChallengeUpdated () {
         mutate(API_ROUTES.CHALLENGES.BY_ID(challenge.id));
         router.refresh();
     }
 
-    function onParticipationPaid() {
+    function onParticipationPaid () {
         mutate(API_ROUTES.CHALLENGES.GET_AVAILABLE_PRIZES(challenge.id));
         onChallengeUpdated();
     }
 
-    function onParticipationApproved() {
+    function onParticipationApproved () {
         onChallengeUpdated();
 
         if (challenge.canPrizesBePaid) {
@@ -41,20 +41,19 @@ export const CreatorActionsOnParticipation: FC<CreatorActionsOnParticipationProp
     }
 
     const { canApprove, canReject, canPay } = useMemo(() => {
-        const canApprove = participation.status === 'waiting_for_approval';
-        const canReject = participation.status === 'waiting_for_approval' || participation.status === 'approved';
-        const canPay = participation.status === 'approved';
+        const canApprove = participation.status === "waiting_for_approval";
+        const canReject = participation.status === "waiting_for_approval" || participation.status === "approved";
+        const canPay = participation.status === "approved";
 
-        return { canApprove, canReject, canPay }
+        return { canApprove, canReject, canPay };
     }, [participation]);
 
     return (
         <>
-            <Flex gap={'md'}>
+            <Flex gap={"md"}>
 
                 {
-                    canApprove
-                    &&
+                    canApprove &&
                     <Tooltip label="Approve solution">
                         <ActionIcon size="md" variant="light" color="cyan" onClick={openModalForApprove}>
                             <IconCheck />
@@ -63,9 +62,8 @@ export const CreatorActionsOnParticipation: FC<CreatorActionsOnParticipationProp
                 }
 
                 {
-                    canPay
-                    &&
-                    <Tooltip label={challenge.canPrizesBePaid ? 'Pay prize' : 'The challenge needs to be completed before you can pay the participant'}>
+                    canPay &&
+                    <Tooltip label={challenge.canPrizesBePaid ? "Pay prize" : "The challenge needs to be completed before you can pay the participant"}>
                         <ActionIcon size="md" variant="light" color="green" disabled={!challenge.canPrizesBePaid} onClick={openModalForPay}>
                             <IconTrophyFilled />
                         </ActionIcon>
@@ -73,8 +71,7 @@ export const CreatorActionsOnParticipation: FC<CreatorActionsOnParticipationProp
                 }
 
                 {
-                    canReject
-                    &&
+                    canReject &&
                     <Tooltip label="Reject solution">
                         <ActionIcon size="md" variant="light" color="red" onClick={openModalForReject}>
                             <IconTrash />

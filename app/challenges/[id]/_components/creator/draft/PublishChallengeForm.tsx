@@ -7,14 +7,13 @@ import { API_ROUTES } from "../../../../../../constants";
 import { notifications } from "@mantine/notifications";
 import { useRouter } from "next/navigation";
 
-
 interface PublishChallengeFormProps {
     challengeId: string;
     isDisabled: boolean;
     isLoading: boolean;
 }
 
-export function PublishChallengeForm({ challengeId, isDisabled, isLoading }: PublishChallengeFormProps): React.ReactElement {
+export function PublishChallengeForm ({ challengeId, isDisabled, isLoading }: PublishChallengeFormProps): React.ReactElement {
     const router = useRouter();
 
     const [isPublishingChallenge, setIsPublishingChallenge] = useState(false);
@@ -24,8 +23,7 @@ export function PublishChallengeForm({ challengeId, isDisabled, isLoading }: Pub
         { close: closePublishChallengeModal, open: openPublishChallengeModal },
     ] = useDisclosure();
 
-
-    async function publishChallenge(allowParticipationsAfterPublish: boolean) {
+    async function publishChallenge (allowParticipationsAfterPublish: boolean) {
         try {
             setIsPublishingChallenge(true);
 
@@ -33,22 +31,21 @@ export function PublishChallengeForm({ challengeId, isDisabled, isLoading }: Pub
                 API_ROUTES.CHALLENGES.PUBLISH_DRAFT(challengeId),
                 {
                     method: "POST",
-                }
+                },
             );
-
 
             if (allowParticipationsAfterPublish) {
                 await clientCustomFetch(
                     API_ROUTES.CHALLENGES.ALLOW_NEW_PARTICIPATIONS(challengeId),
                     {
-                        method: 'POST',
-                    }
+                        method: "POST",
+                    },
                 );
             }
 
             const message = allowParticipationsAfterPublish
                 ? "Now everyone is able to see the challenge, and participants can start to submit their solutions! Attract more attention by sharing it in your social media!"
-                : "Now everyone is able to see the challenge! Attract more attention by sharing it in your social media, but rembember that you need to enable new participations before participants can submit their solutions"
+                : "Now everyone is able to see the challenge! Attract more attention by sharing it in your social media, but rembember that you need to enable new participations before participants can submit their solutions";
 
             setTimeout(() => {
                 notifications.show({
@@ -66,7 +63,6 @@ export function PublishChallengeForm({ challengeId, isDisabled, isLoading }: Pub
 
                 setIsPublishingChallenge(false);
             }, 1000);
-
         } catch (error) {
             notifications.show({
                 title: "Challenge cannot be published",
@@ -96,14 +92,14 @@ export function PublishChallengeForm({ challengeId, isDisabled, isLoading }: Pub
             <Modal
                 opened={isModalToPublishChallengeOpen}
                 onClose={closePublishChallengeModal}
-                title={<Title size={'h2'}>Choose how to publish your challenge</Title>}
+                title={<Title size={"h2"}>Choose how to publish your challenge</Title>}
                 centered
-                size={'xl'}
+                size={"xl"}
                 closeOnEscape={true}
                 closeOnClickOutside={false}
                 withCloseButton={true}
             >
-                <Container size={'lg'}>
+                <Container size={"lg"}>
                     <Alert
                         variant="light"
                         color="blue"
@@ -134,7 +130,7 @@ export function PublishChallengeForm({ challengeId, isDisabled, isLoading }: Pub
                     </Text>
                     <Space h='1rem' />
 
-                    <Title size={'h4'}>With open participations</Title>
+                    <Title size={"h4"}>With open participations</Title>
                     <Text>
                         The challenge will be published, and the participants will be able to submit their solutions right away.
                     </Text>
@@ -145,7 +141,7 @@ export function PublishChallengeForm({ challengeId, isDisabled, isLoading }: Pub
 
                     <Space h='2rem' />
 
-                    <Title size={'h4'}>With closed participations</Title>
+                    <Title size={"h4"}>With closed participations</Title>
                     <Text>
                         The challenge will be published, but nobody will be able to submit a solution.
                     </Text>
@@ -165,7 +161,7 @@ export function PublishChallengeForm({ challengeId, isDisabled, isLoading }: Pub
 
                     <Space h='2rem' />
 
-                    <div style={{ display: "flex", justifyContent: "flex-end", gap: '1rem', flexWrap: 'wrap' }}>
+                    <div style={{ display: "flex", justifyContent: "flex-end", gap: "1rem", flexWrap: "wrap" }}>
                         <Button
                             onClick={closePublishChallengeModal}
                             variant="subtle"

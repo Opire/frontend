@@ -10,44 +10,41 @@ interface ProgrammerTipCardProps {
 
 export const ProgrammerTipCard: FC<ProgrammerTipCardProps> = ({
     data,
-    inputRef
-}) => {
+    inputRef,
+}) => (
+    <Card
+        ref={inputRef}
+        withBorder
+        shadow="md"
+        radius="md"
+    >
+        <Group justify="center">
+            <Avatar
+                src={data.creator.avatarURL}
+                radius='xl'
+                size='lg'
+            />
+            <Text
+                style={{ fontSize: "40px" }}
+                fw={700}
+                size="xl"
+                variant='gradient'
+            >
+                {formatPrice(data.price)}
+            </Text>
+        </Group>
 
-    return (
-        <Card
-            ref={inputRef}
-            withBorder
-            shadow="md"
-            radius="md"
-        >
-            <Group justify="center">
-                <Avatar
-                    src={data.creator.avatarURL}
-                    radius='xl'
-                    size='lg'
-                />
-                <Text
-                    style={{ fontSize: '40px' }}
-                    fw={700}
-                    size="xl"
-                    variant='gradient'
-                >
-                    {formatPrice(data.price)}
-                </Text>
-            </Group>
+        <Space h='20px' />
 
-            <Space h='20px' />
-
-            <Group justify="center">
-                <Button
-                    component="a"
-                    variant='subtle'
-                    target="_blank"
-                    href={data.commentURL}
-                >
+        <Group justify="center">
+            <Button
+                component="a"
+                variant='subtle'
+                target="_blank"
+                href={data.commentURL}
+            >
                     Go to issue
-                </Button>
-            </Group>
-        </Card>
-    );
-};
+            </Button>
+        </Group>
+    </Card>
+);

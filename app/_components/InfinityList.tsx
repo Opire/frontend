@@ -14,13 +14,13 @@ type IndexableKeyof<Interface> = {
     : never;
 }[keyof Interface];
 
-export function InfinityList<T, TId extends IndexableKeyof<T>>({
+export function InfinityList<T, TId extends IndexableKeyof<T>> ({
     items,
     keyIdentifier,
     isLoading,
     loadNextPage,
     ItemComponent,
-    ItemSkeletonComponent
+    ItemSkeletonComponent,
 }: {
     items: T[];
     keyIdentifier: TId;
@@ -32,30 +32,30 @@ export function InfinityList<T, TId extends IndexableKeyof<T>>({
     }>
     ItemSkeletonComponent: FC<{}>
 }) {
-    const { entry, ref } = useIntersection<HTMLDivElement>()
+    const { entry, ref } = useIntersection<HTMLDivElement>();
     const isIntersecting = entry?.isIntersecting ?? false;
 
     useEffect(() => {
         if (isIntersecting) {
-            loadNextPage()
+            loadNextPage();
         }
-    }, [isIntersecting])
+    }, [isIntersecting]);
 
     return (
         <>
             <section
                 style={{
-                    display: 'grid',
-                    gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 260px), 1fr))',
-                    gap: '24px',
+                    display: "grid",
+                    gridTemplateColumns: "repeat(auto-fill, minmax(min(100%, 260px), 1fr))",
+                    gap: "24px",
                 }}
             >
                 {items.map((data, index) => (
                     <ItemComponent
-                        key={data[keyIdentifier] as string ?? ''}
+                        key={data[keyIdentifier] as string ?? ""}
                         {...{
                             data,
-                            inputRef: index === items.length - 15 ? ref : undefined
+                            inputRef: index === items.length - 15 ? ref : undefined,
                         }}
                     />
                 ))}
@@ -73,4 +73,3 @@ export function InfinityList<T, TId extends IndexableKeyof<T>>({
         </>
     );
 }
-

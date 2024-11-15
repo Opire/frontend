@@ -1,9 +1,9 @@
-import { PriceUnit } from '../_vos/PriceUnit';
-import { BaseException } from './BaseException';
+import { PriceUnit } from "../_vos/PriceUnit";
+import { BaseException } from "./BaseException";
 
 export class InvalidPriceUnit extends BaseException {
 
-    constructor(priceUnit: string) {
+    constructor (priceUnit: string) {
         super(
             `Price unit "${priceUnit}" is invalid`,
             {

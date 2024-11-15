@@ -11,19 +11,19 @@ import { PrizeDisplay } from "./PrizeDisplay";
 export const ChallengeLeaderboard: FC<{
     challenge: ChallengePrimitive;
 }> = ({ challenge }) => {
-    const paidParticipations = challenge.participations.filter(participation => participation.status === 'paid');
+    const paidParticipations = challenge.participations.filter(participation => participation.status === "paid");
     const sortedPaidParticipations = [...paidParticipations].sort((a, b) => (a.position ?? 0) - (b.position ?? 0));
 
     return (
         <Center>
-            <Card withBorder shadow="md" radius='md' w={'100%'}>
+            <Card withBorder shadow="md" radius='md' w={"100%"}>
                 <Center>
-                    <Title order={2} size="h2" style={{ fontSize: '2.6rem', fontWeight: 900 }}>
+                    <Title order={2} size="h2" style={{ fontSize: "2.6rem", fontWeight: 900 }}>
                         Winners
                     </Title>
                 </Center >
 
-                <Space h={'1rem'} />
+                <Space h={"1rem"} />
 
                 <Table.ScrollContainer minWidth={500}>
                     <Table verticalSpacing="md" highlightOnHover>
@@ -69,15 +69,15 @@ const LeaderboardRow: FC<{
         isLoading,
         username,
         avatarURL,
-        usernameLink
-    } = useGetUserPublicInfoFromAnyPlatform({ userId: participation.userId })
+        usernameLink,
+    } = useGetUserPublicInfoFromAnyPlatform({ userId: participation.userId });
 
     if (isLoading) {
         return (
             <Table.Td colSpan={5}>
                 <Skeleton h='2rem' />
             </Table.Td>
-        )
+        );
     }
 
     return (
@@ -87,7 +87,7 @@ const LeaderboardRow: FC<{
             </Table.Td>
 
             <Table.Td>
-                <Flex align={'center'} gap={'5px'}>
+                <Flex align={"center"} gap={"5px"}>
                     <Avatar
                         src={avatarURL}
                         alt={username}
@@ -109,12 +109,10 @@ const LeaderboardRow: FC<{
                 </Link>
             </Table.Td>
 
-
             <Table.Td>
-                <Text variant="gradient" style={{ fontWeight: "bold", fontSize: '1.2rem' }}>
+                <Text variant="gradient" style={{ fontWeight: "bold", fontSize: "1.2rem" }}>
                     {
-                        participation.prize
-                        &&
+                        participation.prize &&
                         <PrizeDisplay prize={participation.prize} />
                     }
                 </Text>
@@ -124,6 +122,5 @@ const LeaderboardRow: FC<{
                 {formatDateTime(new Date(participation.createdAt))}
             </Table.Td>
         </>
-    )
-}
-
+    );
+};

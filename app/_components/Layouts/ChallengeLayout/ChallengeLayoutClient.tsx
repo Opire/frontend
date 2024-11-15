@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import { AppShell, Burger, AppShellHeader, AppShellNavbar, AppShellMain, Group } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
@@ -20,11 +20,11 @@ export const ChallengeLayoutClient: FC<ChallengeLayoutProps> = ({
     return (
         <AppShell
             header={{ height: 60 }}
-            navbar={{ width: 300, breakpoint: 'xs', collapsed: { mobile: !opened, desktop: !opened } }}
+            navbar={{ width: 300, breakpoint: "xs", collapsed: { mobile: !opened, desktop: !opened } }}
             px="none"
         >
             <AppShellHeader>
-                <Group h="100%" px="md" justify={'space-between'}>
+                <Group h="100%" px="md" justify={"space-between"}>
                     <Burger opened={opened} onClick={toggle} size="sm" />
 
                     <LogoIcon />
@@ -39,5 +39,5 @@ export const ChallengeLayoutClient: FC<ChallengeLayoutProps> = ({
                 {children}
             </AppShellMain>
         </AppShell>
-    )
-}
+    );
+};

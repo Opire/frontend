@@ -9,68 +9,61 @@ interface PreviewPublishedChallengePublicDataProps {
     challenge: ChallengePrimitive;
 }
 
-export const PreviewPublishedChallengePublicData: FC<PreviewPublishedChallengePublicDataProps> = ({ challenge }) => {
+export const PreviewPublishedChallengePublicData: FC<PreviewPublishedChallengePublicDataProps> = ({ challenge }) => (
+    <Box>
+        <ChallengeMainData challenge={challenge} />
 
-    return (
-        <Box>
-            <ChallengeMainData challenge={challenge} />
+        <Divider my="xl" />
+        <PrizesSection challenge={challenge} />
 
-            <Divider my="xl" />
-            <PrizesSection challenge={challenge} />
+        <Space h='4rem' />
+        <ParticipationsSection />
 
-            <Space h='4rem' />
-            <ParticipationsSection />
-
-            <Space h='2rem' />
-        </Box>
-    );
-};
-
+        <Space h='2rem' />
+    </Box>
+);
 
 const ParticipationsSection: FC<{
-}> = ({ }) => {
-
-    return (
-        <Center>
-            <Card withBorder shadow="md" radius='md' w={'100%'}>
-                <Center>
-                    <Title order={2} size="h2" style={{ fontSize: '2.6rem', fontWeight: 900 }}>
+}> = ({ }) => (
+    <Center>
+        <Card withBorder shadow="md" radius='md' w={"100%"}>
+            <Center>
+                <Title order={2} size="h2" style={{ fontSize: "2.6rem", fontWeight: 900 }}>
                         Participations
-                    </Title>
-                </Center >
+                </Title>
+            </Center >
 
-                <Space h={'1rem'} />
+            <Space h={"1rem"} />
 
-                <Center>
-                    <Button
-                        leftSection={<IconSend size={18} />}
-                        variant='light'
-                        onClick={() => { }}
-                    >
+            <Center>
+                <Button
+                    leftSection={<IconSend size={18} />}
+                    variant='light'
+                    onClick={() => { }}
+                >
                         Submit solution
-                    </Button>
-                </Center>
+                </Button>
+            </Center>
 
-                <Space h={'1rem'} />
+            <Space h={"1rem"} />
 
-                <Center>
-                    <Alert
-                        variant="light"
-                        color="blue"
-                        title="No participants yet"
-                        icon={<IconInfoCircle />}
-                    >
-                        <Text>
+            <Center>
+                <Alert
+                    variant="light"
+                    color="blue"
+                    title="No participants yet"
+                    icon={<IconInfoCircle />}
+                >
+                    <Text>
                             No one has send their solution yet.
-                        </Text>
+                    </Text>
 
-                        <Text>
+                    <Text>
                             If you want to complete the challenge, start working in your solution and send it when it's ready!
-                        </Text>
-                    </Alert>
-                </Center>
-            </Card>
-        </Center>
+                    </Text>
+                </Alert>
+            </Center>
+        </Card>
+    </Center>
 
-    );
-};
+);

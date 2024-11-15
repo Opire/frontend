@@ -1,7 +1,6 @@
 import { Group, Loader, Stack } from "@mantine/core";
 
-export default function Loading() {
-
+export default function Loading () {
     return (
         <>
             <Stack gap="xl">
@@ -10,5 +9,5 @@ export default function Loading() {
                 </Group>
             </Stack>
         </>
-    )
+    );
 }

@@ -40,11 +40,8 @@ export const EditPublishedChallengeForm: FC<EditPublishedChallengeFormProps> = (
         { close: closeEditPrizeModal, open: openEditPrizeModal },
     ] = useDisclosure();
 
-
     const [isUpdatingChallenge, setIsUpdatingChallenge] = useState(false);
-    const [indexPrizeToUpdate, setIndexPrizeToUpdate] = useState<number | null>(
-        null
-    );
+    const [indexPrizeToUpdate, setIndexPrizeToUpdate] = useState<number | null>(null);
 
     const form = useForm<EditPublishedChallengeDTO>({
         mode: "uncontrolled",
@@ -55,7 +52,7 @@ export const EditPublishedChallengeForm: FC<EditPublishedChallengeFormProps> = (
 
     const prizes = useMemo(
         () => sortPrizes(form.getValues().configuration.prizes),
-        [form.getValues()]
+        [form.getValues()],
     );
 
     const { prizeToUpdate, otherPrizes } = useMemo(() => {
@@ -73,14 +70,14 @@ export const EditPublishedChallengeForm: FC<EditPublishedChallengeFormProps> = (
         () => {
             if (!indexPrizeToUpdate) {
                 return false;
-            };
+            }
 
-            return challenge.configuration.prizes[indexPrizeToUpdate] === undefined
+            return challenge.configuration.prizes[indexPrizeToUpdate] === undefined;
         },
-        [indexPrizeToUpdate]
+        [indexPrizeToUpdate],
     );
 
-    async function updatePublishedChallenge() {
+    async function updatePublishedChallenge () {
         setIsUpdatingChallenge(true);
 
         try {
@@ -111,18 +108,16 @@ export const EditPublishedChallengeForm: FC<EditPublishedChallengeFormProps> = (
         }
     }
 
-    function onNewPrize(newPrize: ChallengePrizePrimitive) {
+    function onNewPrize (newPrize: ChallengePrizePrimitive) {
         const newPrizes = [...form.getValues().configuration.prizes, newPrize];
         form.setFieldValue("configuration.prizes", sortPrizes(newPrizes));
     }
 
-    function onPrizeUpdated(updatedPrize: ChallengePrizePrimitive) {
+    function onPrizeUpdated (updatedPrize: ChallengePrizePrimitive) {
         const newPrizes = [
             ...form
                 .getValues()
-                .configuration.prizes.filter(
-                    (_, i) => i !== indexPrizeToUpdate
-                ),
+                .configuration.prizes.filter((_, i) => i !== indexPrizeToUpdate),
             updatedPrize,
         ];
 
@@ -131,19 +126,19 @@ export const EditPublishedChallengeForm: FC<EditPublishedChallengeFormProps> = (
         closeEditPrizeModal();
     }
 
-    function onRemovePrize(indexPrizeToRemove: number) {
+    function onRemovePrize (indexPrizeToRemove: number) {
         const newPrizes = form
             .getValues()
             .configuration.prizes.filter((_, i) => i !== indexPrizeToRemove);
         form.setFieldValue("configuration.prizes", sortPrizes(newPrizes));
     }
 
-    function onEditPrize(indexPrizeToUpdate: number) {
+    function onEditPrize (indexPrizeToUpdate: number) {
         setIndexPrizeToUpdate(indexPrizeToUpdate);
         openEditPrizeModal();
     }
 
-    function goBackToPublishedChallenge() {
+    function goBackToPublishedChallenge () {
         router.push(`/challenges/${challenge.id}`);
     }
 
@@ -183,17 +178,14 @@ export const EditPublishedChallengeForm: FC<EditPublishedChallengeFormProps> = (
                                     key={form.key("configuration.deadline")}
                                     value={
                                         form.getValues().configuration.deadline
-                                            ? new Date(
-                                                form.getValues().configuration
-                                                    .deadline as number
-                                            )
+                                            ? new Date(form.getValues().configuration
+                                                .deadline as number)
                                             : null
                                     }
-                                    onChange={(value) =>
-                                        form.setFieldValue(
-                                            "configuration.deadline",
-                                            value ? value.getTime() : null
-                                        )
+                                    onChange={(value) => form.setFieldValue(
+                                        "configuration.deadline",
+                                        value ? value.getTime() : null,
+                                    )
                                     }
                                     minDate={challenge.configuration.deadline ? new Date(challenge.configuration.deadline) : undefined}
                                     disabled={!challenge.configuration.deadline}
@@ -204,18 +196,14 @@ export const EditPublishedChallengeForm: FC<EditPublishedChallengeFormProps> = (
                                 <NumberInput
                                     label="Limit of participations"
                                     description="Will take into account both approved and pending of approval"
-                                    key={form.key(
-                                        "configuration.limitOfParticipations"
-                                    )}
-                                    {...form.getInputProps(
-                                        "configuration.limitOfParticipations"
-                                    )}
+                                    key={form.key("configuration.limitOfParticipations")}
+                                    {...form.getInputProps("configuration.limitOfParticipations")}
                                     min={challenge.configuration.limitOfParticipations ?? 0}
                                     disabled={!challenge.configuration.limitOfParticipations}
                                 />
                             </Grid.Col>
 
-                            <Grid.Col span={{ base: 12, md: 4 }} style={{ alignSelf: 'center' }}>
+                            <Grid.Col span={{ base: 12, md: 4 }} style={{ alignSelf: "center" }}>
                                 <Checkbox
                                     label="Allow multiple participations per user"
                                     description="If allowed, you may want to limit the number of participations to avoid facing an unmanageable amount of them"
@@ -223,11 +211,10 @@ export const EditPublishedChallengeForm: FC<EditPublishedChallengeFormProps> = (
                                         form.getValues().configuration
                                             .allowMultipleParticipationsPerUser
                                     }
-                                    onChange={(event) =>
-                                        form.setFieldValue(
-                                            "configuration.allowMultipleParticipationsPerUser",
-                                            event.target.checked
-                                        )
+                                    onChange={(event) => form.setFieldValue(
+                                        "configuration.allowMultipleParticipationsPerUser",
+                                        event.target.checked,
+                                    )
                                     }
                                     disabled={challenge.configuration.allowMultipleParticipationsPerUser}
                                 />
@@ -286,35 +273,27 @@ export const EditPublishedChallengeForm: FC<EditPublishedChallengeFormProps> = (
                                                 </Table.Thead>
 
                                                 <Table.Tbody ta={"center"}>
-                                                    {prizes.map(
-                                                        (prize, index) => (
-                                                            <Table.Tr
-                                                                key={index}
-                                                            >
-                                                                <PrizeRow
-                                                                    prize={
-                                                                        prize
-                                                                    }
-                                                                    onRemovePrize={() =>
-                                                                        onRemovePrize(
-                                                                            index
-                                                                        )
-                                                                    }
-                                                                    onEditPrize={() =>
-                                                                        onEditPrize(
-                                                                            index
-                                                                        )
-                                                                    }
-                                                                    isLastRow={
-                                                                        index +
+                                                    {prizes.map((prize, index) => (
+                                                        <Table.Tr
+                                                            key={index}
+                                                        >
+                                                            <PrizeRow
+                                                                prize={
+                                                                    prize
+                                                                }
+                                                                onRemovePrize={() => onRemovePrize(index)
+                                                                }
+                                                                onEditPrize={() => onEditPrize(index)
+                                                                }
+                                                                isLastRow={
+                                                                    index +
                                                                         1 ===
                                                                         prizes.length
-                                                                    }
-                                                                    isNewPrize={challenge.configuration.prizes[index] === undefined}
-                                                                />
-                                                            </Table.Tr>
-                                                        )
-                                                    )}
+                                                                }
+                                                                isNewPrize={challenge.configuration.prizes[index] === undefined}
+                                                            />
+                                                        </Table.Tr>
+                                                    ))}
                                                 </Table.Tbody>
                                             </Table>
                                         </Table.ScrollContainer>
@@ -331,7 +310,7 @@ export const EditPublishedChallengeForm: FC<EditPublishedChallengeFormProps> = (
                                                 description="Explain to the potential participants what this challenge is about"
                                                 autosize
                                                 minRows={4}
-                                                value={challenge.summary ?? ''}
+                                                value={challenge.summary ?? ""}
                                                 disabled
                                             />
                                         </Grid.Col>
@@ -342,7 +321,7 @@ export const EditPublishedChallengeForm: FC<EditPublishedChallengeFormProps> = (
                                                 description="One-liner. What's the really important thing to do in this challenge?"
                                                 autosize
                                                 minRows={1}
-                                                value={challenge.mainObjetive ?? ''}
+                                                value={challenge.mainObjetive ?? ""}
                                                 disabled
                                             />
                                         </Grid.Col>
@@ -353,7 +332,7 @@ export const EditPublishedChallengeForm: FC<EditPublishedChallengeFormProps> = (
                                                 description="Nice-to-have, or things to consider, but not the essence of the challenge"
                                                 autosize
                                                 minRows={1}
-                                                value={challenge.otherObjetives ?? ''}
+                                                value={challenge.otherObjetives ?? ""}
                                                 disabled
                                             />
                                         </Grid.Col>
@@ -364,7 +343,7 @@ export const EditPublishedChallengeForm: FC<EditPublishedChallengeFormProps> = (
                                                 description="What the participants need to do in order to have their solution considered as a potential winner"
                                                 autosize
                                                 minRows={4}
-                                                value={challenge.requirements ?? ''}
+                                                value={challenge.requirements ?? ""}
                                                 disabled
                                             />
                                         </Grid.Col>
@@ -375,7 +354,7 @@ export const EditPublishedChallengeForm: FC<EditPublishedChallengeFormProps> = (
                                                 description="What will be taken into account to decide if a solution is approved and which prize does it deserve"
                                                 autosize
                                                 minRows={4}
-                                                value={challenge.evaluationCriteria ?? ''}
+                                                value={challenge.evaluationCriteria ?? ""}
                                                 disabled
                                             />
                                         </Grid.Col>
@@ -383,10 +362,10 @@ export const EditPublishedChallengeForm: FC<EditPublishedChallengeFormProps> = (
                                         <Grid.Col span={{ base: 12, md: 6 }}>
                                             <Textarea
                                                 label="Contact information"
-                                                description={`Communication channels for participants to contact you in case of doubts, questions, feedback...`}
+                                                description={"Communication channels for participants to contact you in case of doubts, questions, feedback..."}
                                                 autosize
                                                 minRows={2}
-                                                value={challenge.contactInformation ?? ''}
+                                                value={challenge.contactInformation ?? ""}
                                                 disabled
                                             />
                                         </Grid.Col>
@@ -397,7 +376,7 @@ export const EditPublishedChallengeForm: FC<EditPublishedChallengeFormProps> = (
                                                 description="Anything you want to add in order to clarify any aspect of the challenge"
                                                 autosize
                                                 minRows={2}
-                                                value={challenge.additionalComments ?? ''}
+                                                value={challenge.additionalComments ?? ""}
                                                 disabled
                                             />
                                         </Grid.Col>
@@ -412,7 +391,7 @@ export const EditPublishedChallengeForm: FC<EditPublishedChallengeFormProps> = (
 
                 <Space h={"1rem"} />
 
-                <div style={{ display: "flex", justifyContent: "flex-end", gap: '1rem', flexWrap: 'wrap' }}>
+                <div style={{ display: "flex", justifyContent: "flex-end", gap: "1rem", flexWrap: "wrap" }}>
                     <Button
                         onClick={goBackToPublishedChallenge}
                         variant="subtle"
@@ -465,9 +444,7 @@ const PrizeRow: FC<{
                 {isSpecificPositionPrize &&
                     `${getChallengePrizeMinPosition(prize)}`}
                 {isThresholdPrize &&
-                    `From ${getChallengePrizeMinPosition(
-                        prize
-                    )} to ${getChallengePrizeMaxPosition(prize)}`}
+                    `From ${getChallengePrizeMinPosition(prize)} to ${getChallengePrizeMaxPosition(prize)}`}
                 {isThresholdWithoutLimitPrize &&
                     `From ${getChallengePrizeMinPosition(prize)} onwards`}
             </Table.Td>
@@ -475,18 +452,16 @@ const PrizeRow: FC<{
             <Table.Td>
                 {
                     prize.amount
-                        ?
-                        formatPrice(prize.amount)
-                        :
-                        <IconLineDashed />
+                        ? formatPrice(prize.amount)
+                        : <IconLineDashed />
                 }
             </Table.Td>
 
             <Table.Td>
-                <Flex gap={'xs'} display={'inline-flex'} mx={'1rem'}>
+                <Flex gap={"xs"} display={"inline-flex"} mx={"1rem"}>
                     {
-                        prize.benefits.length > 0 ?
-                            prize.benefits.map((benefit) => (
+                        prize.benefits.length > 0
+                            ? prize.benefits.map((benefit) => (
                                 <Badge
                                     key={benefit}
                                     variant="outline"
@@ -495,16 +470,14 @@ const PrizeRow: FC<{
                                 >
                                     {benefit}
                                 </Badge>
-                            )
-                            )
-                            :
-                            <IconLineDashed />
+                            ))
+                            : <IconLineDashed />
                     }
                 </Flex>
             </Table.Td>
 
             <Table.Td>
-                <Flex gap={'0.6rem'}>
+                <Flex gap={"0.6rem"}>
                     <Tooltip label="Edit prize">
                         <ActionIcon
                             variant="light"

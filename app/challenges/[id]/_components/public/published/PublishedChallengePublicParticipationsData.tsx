@@ -14,36 +14,35 @@ export const PublishedChallengePublicParticipationsData: FC<{
     challenge: ChallengePrimitive;
     userAuth: UserAuthDTO | null;
 }> = ({ challenge, userAuth }) => {
-    const participationsToShow = challenge.isCompleted ? challenge.participations.filter(participation => participation.status !== 'paid') : challenge.participations;
+    const participationsToShow = challenge.isCompleted ? challenge.participations.filter(participation => participation.status !== "paid") : challenge.participations;
     const sortedParticipations = [...participationsToShow].sort((a, b) => b.createdAt - a.createdAt);
 
     const isChallengeCompletelyReviewed = sortedParticipations.length === 0 && challenge.isCompleted;
     if (isChallengeCompletelyReviewed) {
         return <></>;
     }
+
     return (
         <Center>
-            <Card withBorder shadow="md" radius='md' w={'100%'}>
+            <Card withBorder shadow="md" radius='md' w={"100%"}>
                 <Center>
-                    <Title order={2} size="h2" ta='center' style={{ fontSize: '2.6rem', fontWeight: 900 }}>
-                        {challenge.isCompleted ? 'Other participations' : 'Participations'}
+                    <Title order={2} size="h2" ta='center' style={{ fontSize: "2.6rem", fontWeight: 900 }}>
+                        {challenge.isCompleted ? "Other participations" : "Participations"}
                     </Title>
                 </Center >
 
-                <Space h={'1rem'} />
+                <Space h={"1rem"} />
 
                 {
-                    !challenge.isCompleted
-                    &&
+                    !challenge.isCompleted &&
                     <Center>
                         <SubmitChallengeSolutionForm challenge={challenge} userAuth={userAuth} />
                     </Center>
                 }
 
-                <Space h={'1rem'} />
+                <Space h={"1rem"} />
 
-                {!challenge.isAcceptingParticipations && !challenge.isCompleted
-                    &&
+                {!challenge.isAcceptingParticipations && !challenge.isCompleted &&
                     <>
                         <Center>
                             <Alert
@@ -57,14 +56,13 @@ export const PublishedChallengePublicParticipationsData: FC<{
                                 </Text>
                             </Alert>
                         </Center>
-                        <Space h={'1rem'} />
+                        <Space h={"1rem"} />
                     </>
                 }
 
                 {
                     sortedParticipations.length === 0
-                        ?
-                        <>
+                        ? <>
                             {challenge.isAcceptingParticipations &&
                                 <Center>
                                     <Alert
@@ -84,8 +82,7 @@ export const PublishedChallengePublicParticipationsData: FC<{
                                 </Center>
                             }
                         </>
-                        :
-                        <Table.ScrollContainer minWidth={500}>
+                        : <Table.ScrollContainer minWidth={500}>
                             <Table verticalSpacing="md" highlightOnHover>
                                 <Table.Thead>
                                     <Table.Tr>
@@ -121,15 +118,15 @@ const ParticipationRow: FC<{
         isLoading,
         username,
         avatarURL,
-        usernameLink
-    } = useGetUserPublicInfoFromAnyPlatform({ userId: participation.userId })
+        usernameLink,
+    } = useGetUserPublicInfoFromAnyPlatform({ userId: participation.userId });
 
     if (isLoading) {
         return (
             <Table.Td colSpan={5}>
                 <Skeleton h='2rem' />
             </Table.Td>
-        )
+        );
     }
 
     const isUserAuthTheParticipant = userAuth?.userId === participation.userId;
@@ -137,7 +134,7 @@ const ParticipationRow: FC<{
     return (
         <>
             <Table.Td>
-                <Flex align={'center'} gap={'5px'}>
+                <Flex align={"center"} gap={"5px"}>
                     <Avatar
                         src={avatarURL}
                         alt={username}
@@ -159,36 +156,34 @@ const ParticipationRow: FC<{
                 </Link>
             </Table.Td>
 
-            <Table.Td miw={'180px'}>
+            <Table.Td miw={"180px"}>
                 {
-                    participation.status === 'rejected' && isUserAuthTheParticipant
-                        ?
-                        <Tooltip
+                    participation.status === "rejected" && isUserAuthTheParticipant
+                        ? <Tooltip
                             multiline
                             withArrow
                             transitionProps={{ duration: 300 }}
-                            events={{ hover: true, touch: true, focus: false, }}
+                            events={{ hover: true, touch: true, focus: false }}
                             label={
                                 <div>
                                     <strong>Reason for rejection:</strong>
-                                    <Space h={'0.5rem'} />
-                                    <q style={{ whiteSpace: 'pre-wrap' }}>
-                                        {participation.reasonForRejection ?? ''}
+                                    <Space h={"0.5rem"} />
+                                    <q style={{ whiteSpace: "pre-wrap" }}>
+                                        {participation.reasonForRejection ?? ""}
                                     </q>
                                 </div>
                             }
                         >
                             <Badge
                                 leftSection={<IconInfoCircle size={14} />}
-                                style={{ cursor: 'help' }}
+                                style={{ cursor: "help" }}
                                 variant="light"
-                                color={PARTICIPATION_STATUS_COLOR['rejected']}
+                                color={PARTICIPATION_STATUS_COLOR.rejected}
                             >
-                                {PARTICIPATION_STATUS_LABEL['rejected']}
+                                {PARTICIPATION_STATUS_LABEL.rejected}
                             </Badge>
                         </Tooltip>
-                        :
-                        <Badge
+                        : <Badge
                             variant="light"
                             color={PARTICIPATION_STATUS_COLOR[participation.status]}
                         >
@@ -200,12 +195,10 @@ const ParticipationRow: FC<{
             <Table.Td>
                 {
                     participation.prize
-                        ?
-                        <Text variant="gradient" style={{ fontWeight: "bold", fontSize: '1.2rem' }}>
+                        ? <Text variant="gradient" style={{ fontWeight: "bold", fontSize: "1.2rem" }}>
                             <PrizeDisplay prize={participation.prize} />
                         </Text>
-                        :
-                        <IconLineDashed />
+                        : <IconLineDashed />
                 }
             </Table.Td>
 
@@ -213,19 +206,19 @@ const ParticipationRow: FC<{
                 {formatDateTime(new Date(participation.createdAt))}
             </Table.Td>
         </>
-    )
-}
+    );
+};
 
 const PARTICIPATION_STATUS_COLOR: Record<ChallengeParticipationStatusType, DefaultMantineColor> = {
     waiting_for_approval: "yellow",
     rejected: "red",
     approved: "cyan",
-    paid: "green"
-}
+    paid: "green",
+};
 
 const PARTICIPATION_STATUS_LABEL: Record<ChallengeParticipationStatusType, string> = {
     waiting_for_approval: "Waiting for review",
     rejected: "Rejected",
     approved: "Approved",
-    paid: "Paid"
-}
+    paid: "Paid",
+};

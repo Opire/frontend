@@ -1,8 +1,5 @@
 import { FC } from "react";
 
-export const ChallengeCardSkeleton: FC<{}> = () => {
-
-    return (
-        <></>
-    );
-};
+export const ChallengeCardSkeleton: FC<{}> = () => (
+    <></>
+);

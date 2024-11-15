@@ -1,9 +1,9 @@
-import jwt from 'jsonwebtoken';
-import { UserAuthDTO } from '../_dtos/UserAuthDTO';
+import jwt from "jsonwebtoken";
+import { UserAuthDTO } from "../_dtos/UserAuthDTO";
 
 export class Token {
 
-    public static getTokenPayload(value: string): UserAuthDTO {
+    public static getTokenPayload (value: string): UserAuthDTO {
         const tokenDecoded = jwt.decode(value, {
             complete: true,
             json: true,
@@ -13,10 +13,10 @@ export class Token {
         const payload: UserAuthDTO | undefined = tokenDecoded?.payload;
 
         if (!payload || !payload.userId) {
-            throw new Error('Invalid token');
+            throw new Error("Invalid token");
         }
 
-        return payload
+        return payload;
     }
 
 }

@@ -4,7 +4,7 @@ import { ChallengePublicView } from "./public-view";
 import { getUserAuth } from "../../_utils/getUserAuth";
 import { getChallengeById } from "../../_utils/getChallengeById";
 
-export async function generateMetadata({
+export async function generateMetadata ({
     params,
 }: { params: { id: string } }): Promise<Metadata> {
     const challenge = await getChallengeById({
@@ -16,7 +16,7 @@ export async function generateMetadata({
     };
 }
 
-export default async function Page({
+export default async function Page ({
     params,
 }: { params: { id: string } }) {
     const challenge = await getChallengeById({

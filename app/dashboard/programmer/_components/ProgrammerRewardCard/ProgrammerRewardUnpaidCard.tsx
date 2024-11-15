@@ -17,7 +17,7 @@ const MAX_NUMBER_OF_USERS_TO_SHOW = 3;
 
 export const ProgrammerRewardUnpaidCard: FC<ProgrammerRewardUnpaidCardProps> = ({
     data,
-    inputRef
+    inputRef,
 }) => {
     const paidIssueRewardPrice = data.programmer.alreadyPaid;
     const unpaidIssueRewardPrice = data.pendingToBePaid;
@@ -31,8 +31,8 @@ export const ProgrammerRewardUnpaidCard: FC<ProgrammerRewardUnpaidCardProps> = (
     const router = useRouter();
 
     const redirectToDetails = () => {
-        router.push(`/issues/${data.issueId}`)
-    }
+        router.push(`/issues/${data.issueId}`);
+    };
 
     return (
         <>
@@ -41,7 +41,7 @@ export const ProgrammerRewardUnpaidCard: FC<ProgrammerRewardUnpaidCardProps> = (
                 withBorder
                 shadow="md"
                 radius="md"
-                style={{ cursor: 'pointer', transition: 'transform 100ms ease-out', transform: hovered ? 'scale(1.01)' : '' }}
+                style={{ cursor: "pointer", transition: "transform 100ms ease-out", transform: hovered ? "scale(1.01)" : "" }}
                 onClick={redirectToDetails}
             >
                 <CardSection withBorder p="sm" ref={inputRef}>
@@ -49,7 +49,7 @@ export const ProgrammerRewardUnpaidCard: FC<ProgrammerRewardUnpaidCardProps> = (
                         <Group>
                             <Avatar src={data.organization.logoURL} size='md' radius='xl' />
                             <div
-                                style={{ display: 'flex', flexWrap: 'wrap' }}
+                                style={{ display: "flex", flexWrap: "wrap" }}
                             >
                                 <Text lineClamp={1} c={"dimmed"}>{data.organization.name}</Text>
                                 <span>&nbsp;/&nbsp;</span>
@@ -74,14 +74,13 @@ export const ProgrammerRewardUnpaidCard: FC<ProgrammerRewardUnpaidCardProps> = (
 
                 <CardSection p="sm">
                     {
-                        paidIssueRewardPrice.value > 0
-                        &&
+                        paidIssueRewardPrice.value > 0 &&
                         <>
                             <Group justify="space-between">
                                 <Text
                                     component="div"
-                                    size={'xs'}
-                                    style={{ textAlign: 'center' }}
+                                    size={"xs"}
+                                    style={{ textAlign: "center" }}
                                 >
                                     <Text>
                                         Already received:
@@ -101,11 +100,11 @@ export const ProgrammerRewardUnpaidCard: FC<ProgrammerRewardUnpaidCardProps> = (
 
                     }
 
-                    <Group justify="center" style={{ flexDirection: 'column' }}>
+                    <Group justify="center" style={{ flexDirection: "column" }}>
                         <Text
                             component="div"
-                            size={'xs'}
-                            style={{ textAlign: 'center' }}
+                            size={"xs"}
+                            style={{ textAlign: "center" }}
                         >
                             <Text>
                                 Potential to receive:
@@ -122,9 +121,8 @@ export const ProgrammerRewardUnpaidCard: FC<ProgrammerRewardUnpaidCardProps> = (
 
                 </CardSection>
 
-
-                <CardSection withBorder inheritPadding p="md" style={{ minHeight: '88px', height: '100%' }}>
-                    <Group justify="space-between" align='flex-end' style={{ height: '100%' }}>
+                <CardSection withBorder inheritPadding p="md" style={{ minHeight: "88px", height: "100%" }}>
+                    <Group justify="space-between" align='flex-end' style={{ height: "100%" }}>
                         <Flex direction="column" gap="8px">
                             {claimerUsersToShow.length > 0 && (
                                 <Text c="dimmed" size={"sm"}>
@@ -135,31 +133,29 @@ export const ProgrammerRewardUnpaidCard: FC<ProgrammerRewardUnpaidCardProps> = (
                             <Group gap="xs">
                                 <AvatarGroup>
                                     {
-                                        claimerUsersToShow.map((claimerUser) => {
-                                            return (
-                                                <HoverCard
-                                                    withArrow
-                                                    shadow="md"
-                                                    closeDelay={0}
-                                                    openDelay={0}
-                                                    key={claimerUser.id}
-                                                >
-                                                    <HoverCardTarget>
-                                                        <Avatar
-                                                            src={claimerUser.avatarURL}
-                                                            alt={claimerUser.username}
-                                                            color="teal"
-                                                            size='md'
-                                                            radius='xl'
-                                                        />
-                                                    </HoverCardTarget>
+                                        claimerUsersToShow.map((claimerUser) => (
+                                            <HoverCard
+                                                withArrow
+                                                shadow="md"
+                                                closeDelay={0}
+                                                openDelay={0}
+                                                key={claimerUser.id}
+                                            >
+                                                <HoverCardTarget>
+                                                    <Avatar
+                                                        src={claimerUser.avatarURL}
+                                                        alt={claimerUser.username}
+                                                        color="teal"
+                                                        size='md'
+                                                        radius='xl'
+                                                    />
+                                                </HoverCardTarget>
 
-                                                    <HoverCardDropdown>
-                                                        {claimerUser.username}
-                                                    </HoverCardDropdown>
-                                                </HoverCard>
-                                            )
-                                        })
+                                                <HoverCardDropdown>
+                                                    {claimerUser.username}
+                                                </HoverCardDropdown>
+                                            </HoverCard>
+                                        ))
                                     }
                                     {hasMoreUsers && (
                                         <HoverCard withArrow shadow="md" closeDelay={0} openDelay={0}>
@@ -178,7 +174,6 @@ export const ProgrammerRewardUnpaidCard: FC<ProgrammerRewardUnpaidCardProps> = (
                                         </HoverCard>
                                     )}
                                 </AvatarGroup>
-
 
                             </Group>
                         </Flex>

@@ -1,4 +1,4 @@
-export function buildEndpointWithSearchAndPagination(
+export function buildEndpointWithSearchAndPagination (
     baseURL: string,
     options: {
         page: number;
@@ -8,7 +8,7 @@ export function buildEndpointWithSearchAndPagination(
 ) {
     const { page, itemsPerPage, search } = options;
 
-    let url = `${baseURL}?page=${page}&itemsPerPage=${itemsPerPage}`;
+    const url = `${baseURL}?page=${page}&itemsPerPage=${itemsPerPage}`;
 
     if (!search) {
         return url;

@@ -1,4 +1,3 @@
-
 export type TypeOfProperty<
     ParentInterface,
     Property extends keyof ParentInterface

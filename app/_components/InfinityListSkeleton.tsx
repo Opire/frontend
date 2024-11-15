@@ -1,14 +1,13 @@
 import { Grid, GridCol } from "@mantine/core";
 import { FC } from "react";
 
-export function InfinityListSkeleton<T>({
+export function InfinityListSkeleton<T> ({
     items,
-    ItemSkeletonComponent
+    ItemSkeletonComponent,
 }: {
     items: number;
     ItemSkeletonComponent: FC<{}>
 }) {
-
     return (
         <Grid gutter={25} grow>
             {[...Array(10).keys()].map((number) => (
@@ -19,4 +18,3 @@ export function InfinityListSkeleton<T>({
         </Grid>
     );
 }
-

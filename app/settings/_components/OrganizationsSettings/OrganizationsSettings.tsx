@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import { Blockquote, SimpleGrid, Text } from "@mantine/core";
 import { FC } from "react";
 import { UserSettingsDTO } from "../../../_core/_dtos/UserSettingsDTO";
@@ -7,20 +7,20 @@ import { ORGANIZATION_TIER_NAMES } from "../../../_core/_types/TierNames";
 import { IconInfoCircle } from "@tabler/icons-react";
 
 interface OrganizationsSettingsProps {
-    organizations: UserSettingsDTO['payments']['organizations'];
+    organizations: UserSettingsDTO["payments"]["organizations"];
 }
 
 export const OrganizationsSettings: FC<OrganizationsSettingsProps> = ({
     organizations,
 }) => {
-    const hasAccessToSomeOrganizationCustomerPortal = organizations.some(organization => organization.tierName !== ORGANIZATION_TIER_NAMES.ORGANIZATION_BASIC)
+    const hasAccessToSomeOrganizationCustomerPortal = organizations.some(organization => organization.tierName !== ORGANIZATION_TIER_NAMES.ORGANIZATION_BASIC);
 
     return (
         <>
             {hasAccessToSomeOrganizationCustomerPortal &&
                 <Blockquote color='green' icon={<IconInfoCircle />}>
-                    <Text style={{ fontSize: '1rem' }}>
-                       To manage an organization subscription, you will need to provide the email address that was used when making the first payment of the subscription 
+                    <Text style={{ fontSize: "1rem" }}>
+                       To manage an organization subscription, you will need to provide the email address that was used when making the first payment of the subscription
                     </Text>
                 </Blockquote>
             }
@@ -30,4 +30,4 @@ export const OrganizationsSettings: FC<OrganizationsSettingsProps> = ({
             </SimpleGrid>
         </>
     );
-}
+};

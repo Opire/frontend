@@ -1,11 +1,10 @@
 import { redirect } from "next/navigation";
 import { getUserAuth } from "./getUserAuth";
 
-
-export function redirectToHomeIfNotLogged() {
+export function redirectToHomeIfNotLogged () {
     const userAuth = getUserAuth();
 
     if (!userAuth) {
-        redirect('/');
+        redirect("/");
     }
 }

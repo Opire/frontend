@@ -9,6 +9,5 @@ export const ChallengeLayout: FC<ChallengeLayoutProps> = (props) => {
 
     return (
         <ChallengeLayoutClient {...props} userAuth={userAuth} />
-    )
-}
-
+    );
+};

@@ -32,7 +32,7 @@ export const CreatorRewardsPanel: FC<CreatorRewardsPanelProps> = ({
     const noRewards = !hasUnpaidRewards && !hasPaidRewards;
 
     if (isLoading) {
-        return <Loader display='block' size='xl' m='30px auto' />
+        return <Loader display='block' size='xl' m='30px auto' />;
     }
 
     if (noRewards) {
@@ -48,10 +48,10 @@ export const CreatorRewardsPanel: FC<CreatorRewardsPanelProps> = ({
                         Create a new reward
                     </Button>
 
-                    <CreateNewRewardModal 
-                        isOpened={isModalOpen} 
-                        onClose={closeModal} 
-                        onNewRewardCreated={onNewRewardCreated} 
+                    <CreateNewRewardModal
+                        isOpened={isModalOpen}
+                        onClose={closeModal}
+                        onNewRewardCreated={onNewRewardCreated}
                     />
                 </div>
 
@@ -59,7 +59,7 @@ export const CreatorRewardsPanel: FC<CreatorRewardsPanelProps> = ({
 
                 <NothingFound />
             </div>
-        )
+        );
     }
 
     return (
@@ -74,10 +74,10 @@ export const CreatorRewardsPanel: FC<CreatorRewardsPanelProps> = ({
                     Create a new reward
                 </Button>
 
-                <CreateNewRewardModal 
-                    isOpened={isModalOpen} 
-                    onClose={closeModal} 
-                    onNewRewardCreated={onNewRewardCreated} 
+                <CreateNewRewardModal
+                    isOpened={isModalOpen}
+                    onClose={closeModal}
+                    onNewRewardCreated={onNewRewardCreated}
                 />
             </div>
 
@@ -85,7 +85,7 @@ export const CreatorRewardsPanel: FC<CreatorRewardsPanelProps> = ({
 
             {hasUnpaidRewards && (
                 <>
-                    <Text fw={900} size={'xl'}>Active</Text>
+                    <Text fw={900} size={"xl"}>Active</Text>
                     <Space h='12px' />
                     <InfinityList
                         items={unpaidRewards}
@@ -102,7 +102,7 @@ export const CreatorRewardsPanel: FC<CreatorRewardsPanelProps> = ({
 
             {hasPaidRewards && (
                 <>
-                    <Text fw={900} size={'xl'}>Paid</Text>
+                    <Text fw={900} size={"xl"}>Paid</Text>
                     <Space h='12px' />
                     <InfinityList
                         items={paidRewards}
@@ -116,8 +116,8 @@ export const CreatorRewardsPanel: FC<CreatorRewardsPanelProps> = ({
             )}
         </div>
     );
-}
+};
 
-function onNewRewardCreated() {
+function onNewRewardCreated () {
     mutate(API_ROUTES.REWARDS.CREATED_BY_ME());
 }

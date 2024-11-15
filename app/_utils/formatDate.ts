@@ -1,6 +1,6 @@
 import { fillWithZero } from "./fillWithZero";
 
-export function formatDate(date: Date): string {
+export function formatDate (date: Date): string {
     const day = fillWithZero(date.getUTCDate());
     const month = fillWithZero(date.getUTCMonth() + 1);
     const year = date.getUTCFullYear();
@@ -8,7 +8,7 @@ export function formatDate(date: Date): string {
     return `${day}/${month}/${year}`;
 }
 
-export function formatDateTime(date: Date): string {
+export function formatDateTime (date: Date): string {
     const day = fillWithZero(date.getUTCDate());
     const month = fillWithZero(date.getUTCMonth() + 1);
     const year = date.getUTCFullYear();

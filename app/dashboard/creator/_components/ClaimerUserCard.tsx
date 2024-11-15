@@ -26,7 +26,7 @@ interface PropsWithoutPrice {
 
 type ClaimerUserCardProps = PropsWithPrice | PropsWithoutPrice;
 
-export function ClaimerUserCard({
+export function ClaimerUserCard ({
     user,
     issueId,
     paidPrice,
@@ -44,16 +44,15 @@ export function ClaimerUserCard({
                 padding="lg"
                 radius="md"
                 withBorder
-                style={{ flexGrow: 1, rowGap: '1.5rem', display: 'flex' }}
+                style={{ flexGrow: 1, rowGap: "1.5rem", display: "flex" }}
             >
                 <Text fw={600} size="xl">
                     {user.username}
                 </Text>
 
                 {
-                    haveToShowSomePrices
-                    &&
-                    <Group style={{ justifyContent: 'space-between' }}>
+                    haveToShowSomePrices &&
+                    <Group style={{ justifyContent: "space-between" }}>
                         {
                             haveToShowPayButton &&
                             <PayClaimerButton
@@ -64,12 +63,11 @@ export function ClaimerUserCard({
                         }
 
                         {
-                            paidPrice.value > 0
-                            &&
+                            paidPrice.value > 0 &&
                             <Text
                                 component="div"
-                                size={'xs'}
-                                style={{ textAlign: 'center' }}
+                                size={"xs"}
+                                style={{ textAlign: "center" }}
                             >
                                 <Text>
                                     Already paid:
@@ -87,7 +85,5 @@ export function ClaimerUserCard({
                 }
             </Card>
         </Group>
-    )
+    );
 }
-
-

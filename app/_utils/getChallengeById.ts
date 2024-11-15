@@ -3,7 +3,7 @@ import { API_ROUTES } from "../../constants";
 import { ChallengeDTO } from "../_core/_primitives/ChallengePrimitive";
 import { serverCustomFetch } from "./serverCustomFetch";
 
-export async function getChallengeById({
+export async function getChallengeById ({
     id,
 }: {
     id: string;
@@ -13,7 +13,6 @@ export async function getChallengeById({
 
         return response.json();
     } catch (error) {
-        redirect('/');
+        redirect("/");
     }
-
 }

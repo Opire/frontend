@@ -26,40 +26,39 @@ export const CreatorChallengesPanel: FC<CreatorChallengesPanelProps> = ({
     const draftChallenges = [...challenges].filter((challenge) => challenge.isPublished === false);
     const publishedChallenges = [...challenges].filter((challenge) => challenge.isPublished === true);
 
-    const hasDraftChallenges = draftChallenges.length > 0
-    const hasPublishedChallenges = publishedChallenges.length > 0
+    const hasDraftChallenges = draftChallenges.length > 0;
+    const hasPublishedChallenges = publishedChallenges.length > 0;
 
     const noChallenges = !hasDraftChallenges && !hasPublishedChallenges;
 
-    
-    async function createNewChallenge() {
+    async function createNewChallenge () {
         try {
             setIsCreatingChallenge(true);
 
             const response = await clientCustomFetch(API_ROUTES.CHALLENGES.CREATE(), {
-                method: 'POST', 
+                method: "POST",
             });
 
             const newChallenge = await response.json() as ChallengePrimitive;
 
-            router.push(`/challenges/${newChallenge.id}`)
+            router.push(`/challenges/${newChallenge.id}`);
         } catch (error) {
-            console.log({ error })
+            console.log({ error });
             notifications.show({
-                title: 'Error while trying to create the challenge',
+                title: "Error while trying to create the challenge",
                 message: "",
                 withBorder: true,
                 withCloseButton: true,
                 autoClose: 10_000,
-                color: 'red',
+                color: "red",
                 icon: <IconX />,
-            })
+            });
             setIsCreatingChallenge(false);
         }
     }
 
     if (isLoadingChallenges) {
-        return <Loader display='block' size='xl' m='30px auto' />
+        return <Loader display='block' size='xl' m='30px auto' />;
     }
 
     if (noChallenges) {
@@ -78,11 +77,11 @@ export const CreatorChallengesPanel: FC<CreatorChallengesPanelProps> = ({
                     </Button>
                 </div>
 
-            <Space h='xl' />
+                <Space h='xl' />
 
-            <NothingFound />
-        </div>
-        )
+                <NothingFound />
+            </div>
+        );
     }
 
     return (
@@ -104,7 +103,7 @@ export const CreatorChallengesPanel: FC<CreatorChallengesPanelProps> = ({
 
             {hasDraftChallenges && (
                 <>
-                    <Text fw={900} size={'xl'}>Draft</Text>
+                    <Text fw={900} size={"xl"}>Draft</Text>
                     <Space h='12px' />
 
                     <InfinityList
@@ -122,7 +121,7 @@ export const CreatorChallengesPanel: FC<CreatorChallengesPanelProps> = ({
 
             {hasPublishedChallenges && (
                 <>
-                    <Text fw={900} size={'xl'}>Published</Text>
+                    <Text fw={900} size={"xl"}>Published</Text>
                     <Space h='12px' />
                     <InfinityList
                         items={publishedChallenges}

@@ -1,3 +1,3 @@
 export type TipStatusType =
-  | 'Pending payment'
-  | 'Paid'
+  | "Pending payment"
+  | "Paid"

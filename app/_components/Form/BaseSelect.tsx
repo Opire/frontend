@@ -1,14 +1,14 @@
 import { useState } from "react";
-import { Select } from '@mantine/core';
+import { Select } from "@mantine/core";
 
-export function BaseSelect<T>({
+export function BaseSelect<T> ({
     options,
     validator,
     onChange,
     value = undefined,
-    label = '',
+    label = "",
     required = false,
-    placeholder = '',
+    placeholder = "",
 }: {
     options: T[];
     validator: (value?: T, required?: boolean) => string | null;
@@ -23,17 +23,18 @@ export function BaseSelect<T>({
     const onLocalChange = (newValue: T | null) => {
         if (!newValue) {
             onChange(undefined);
-            return
+
+            return;
         }
 
         onChange(newValue);
-        updateErrorState(newValue)
+        updateErrorState(newValue);
     };
 
     const updateErrorState = (value?: T) => {
-        const error = validator(value, required)
+        const error = validator(value, required);
         setError(error);
-    }
+    };
 
     return (
         <Select
@@ -47,5 +48,4 @@ export function BaseSelect<T>({
             error={error}
         />
     );
-
 }

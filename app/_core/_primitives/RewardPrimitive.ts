@@ -1,9 +1,8 @@
 import { PricePrimitive } from "../_primitives/PricePrimitive";
 
 export type RewardStatusType =
-    | 'Available'
-    | 'Paid'
-
+    | "Available"
+    | "Paid"
 
 export interface RewardPrimitive {
     id: string;

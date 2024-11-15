@@ -25,120 +25,119 @@ export const RejectChallengeParticipationModal: FC<
     onClose,
     onParticipationRejected,
 }) => {
-        const [isRejectingParticipation, setIsRejectingParticipation] =
+    const [isRejectingParticipation, setIsRejectingParticipation] =
             useState(false);
 
-        const form = useForm({
-            initialValues: {
-                reasonForRejection: '',
-            },
-        });
+    const form = useForm({
+        initialValues: {
+            reasonForRejection: "",
+        },
+    });
 
-        async function reject({ reasonForRejection }: { reasonForRejection: string }) {
-            try {
-                setIsRejectingParticipation(true);
+    async function reject ({ reasonForRejection }: { reasonForRejection: string }) {
+        try {
+            setIsRejectingParticipation(true);
 
-                await clientCustomFetch(
-                    API_ROUTES.CHALLENGES.REJECT_PARTICIPATION({ challengeId: challenge.id, participationId: participation.id }),
-                    {
-                        method: "POST",
-                        body: {
-                            participation: {
-                                reasonForRejection,
-                            }
-                        }
-                    }
-                );
+            await clientCustomFetch(
+                API_ROUTES.CHALLENGES.REJECT_PARTICIPATION({ challengeId: challenge.id, participationId: participation.id }),
+                {
+                    method: "POST",
+                    body: {
+                        participation: {
+                            reasonForRejection,
+                        },
+                    },
+                },
+            );
 
-                notifications.show({
-                    title: "Solution rejected",
-                    message: "The feedback you provided will be sent to the participant",
-                    withBorder: true,
-                    withCloseButton: true,
-                    autoClose: 10_000,
-                });
-                setTimeout(() => {
-                    onParticipationRejected();
-                    setIsRejectingParticipation(false);
-                }, 500);
-
-                onClose();
-            } catch (error) {
-                notifications.show({
-                    title: "Error while rejecting the solution",
-                    message:
-                        "Please, try again later. Contact us at opiredev@gmail.com if the problem persist",
-                    withBorder: true,
-                    withCloseButton: true,
-                    autoClose: 10_000,
-                    color: "red",
-                    icon: <IconX />,
-                });
+            notifications.show({
+                title: "Solution rejected",
+                message: "The feedback you provided will be sent to the participant",
+                withBorder: true,
+                withCloseButton: true,
+                autoClose: 10_000,
+            });
+            setTimeout(() => {
+                onParticipationRejected();
                 setIsRejectingParticipation(false);
-            }
+            }, 500);
+
+            onClose();
+        } catch (error) {
+            notifications.show({
+                title: "Error while rejecting the solution",
+                message:
+                        "Please, try again later. Contact us at opiredev@gmail.com if the problem persist",
+                withBorder: true,
+                withCloseButton: true,
+                autoClose: 10_000,
+                color: "red",
+                icon: <IconX />,
+            });
+            setIsRejectingParticipation(false);
         }
+    }
 
-        return (
-            <Modal
-                centered={true}
-                opened={isOpened}
-                onClose={onClose}
-                title={
-                    <Title size={"h3"}>
+    return (
+        <Modal
+            centered={true}
+            opened={isOpened}
+            onClose={onClose}
+            title={
+                <Title size={"h3"}>
                         Reject solution
-                    </Title>
-                }
-                size={"xl"}
-                closeOnEscape={true}
-                closeOnClickOutside={false}
-                withCloseButton={true}
-            >
-                <Container size={'lg'}>
-                    <Text>
+                </Title>
+            }
+            size={"xl"}
+            closeOnEscape={true}
+            closeOnClickOutside={false}
+            withCloseButton={true}
+        >
+            <Container size={"lg"}>
+                <Text>
                         If you continue, the participation will be rejected. This mean that the solution has not been considered successful based on the evaluation criteria of the challenge.
-                    </Text>
+                </Text>
 
-                    <Space h="1rem" />
+                <Space h="1rem" />
 
-                    <Text>
+                <Text>
                         Please, provide thoughtful feedback and describe in detail what's the reason for the rejection. This will be sent to the participant, so it's possible that they will submit another solution based on the feedback you provide.
-                    </Text>
+                </Text>
 
-                    <Space h="2rem" />
+                <Space h="2rem" />
 
-                    <form onSubmit={form.onSubmit(reject)}>
-                        <Textarea
-                            withAsterisk
-                            description="Explain why are you rejecting this solution"
-                            label="Reason for rejection"
-                            key='reasonForRejection'
-                            required
-                            autosize
-                            minRows={4}
-                            {...form.getInputProps('reasonForRejection')}
-                        />
+                <form onSubmit={form.onSubmit(reject)}>
+                    <Textarea
+                        withAsterisk
+                        description="Explain why are you rejecting this solution"
+                        label="Reason for rejection"
+                        key='reasonForRejection'
+                        required
+                        autosize
+                        minRows={4}
+                        {...form.getInputProps("reasonForRejection")}
+                    />
 
+                    <Space h='2rem' />
 
-                        <Space h='2rem' />
-
-                        <Group justify="space-between" mt="md">
-                            <Button variant="subtle" size="md" onClick={onClose}>
+                    <Group justify="space-between" mt="md">
+                        <Button variant="subtle" size="md" onClick={onClose}>
                                 Go back
-                            </Button>
+                        </Button>
 
-                            <Button
-                                type="submit"
-                                variant="gradient"
-                                size="md"
-                                loading={isRejectingParticipation}
-                                disabled={isRejectingParticipation}
-                            >
+                        <Button
+                            type="submit"
+                            variant="gradient"
+                            size="md"
+                            loading={isRejectingParticipation}
+                            disabled={isRejectingParticipation}
+                        >
                                 Reject & send feedback
-                            </Button>
-                        </Group>
-                    </form>
-                </Container>
+                        </Button>
+                    </Group>
+                </form>
+            </Container>
 
-            </Modal>
-        );
-    };
+        </Modal>
+    );
+};
