@@ -9,7 +9,9 @@
         "@typescript-eslint",
         "react",
         "react-hooks",
-        "jsx-a11y" // Accessibility checks for React
+        "import", 
+        "simple-import-sort", 
+        "unused-imports"
     ],
     "extends": [
         "eslint:recommended",
@@ -43,6 +45,16 @@
         "curly": 2,
         "default-param-last": 2,
         "no-unused-expressions": 2,
+        "unused-imports/no-unused-imports": "error",
+        "unused-imports/no-unused-vars": [
+          "warn",
+          {
+            "vars": "all",
+            "varsIgnorePattern": "^_",
+            "args": "after-used",
+            "argsIgnorePattern": "^_"
+          }
+        ],
         "@typescript-eslint/no-namespace": 0,
         "@typescript-eslint/no-empty-function": [
             "error",

@@ -1,16 +1,16 @@
 import { Container } from "@mantine/core";
-import { ChallengeLayout } from "../../_components/Layouts/ChallengeLayout/ChallengeLayout";
+import { MainLayout } from "../../_components/Layouts/MainLayout";
 
-export default function Layout ({
+export default function Layout({
     children,
 }: {
     children: React.ReactNode
 }) {
     return (
-        <ChallengeLayout>
+        <MainLayout>
             <Container size='xl' style={{ padding: "20px" }}>
                 {children}
             </Container>
-        </ChallengeLayout>
+        </MainLayout>
     );
 }
