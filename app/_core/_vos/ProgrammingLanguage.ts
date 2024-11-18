@@ -23,6 +23,7 @@ export class ProgrammingLanguage {
         "HTML",
         "Java",
         "JavaScript",
+        "Jupyter Notebook",
         "Kotlin",
         "Lua",
         "Matlab",
