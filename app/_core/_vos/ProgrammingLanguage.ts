@@ -33,6 +33,7 @@ export class ProgrammingLanguage {
         "Objective-C",
         "Objective-C++",
         "Pascal",
+        "Pawn",
         "Perl",
         "PHP",
         "Python",
