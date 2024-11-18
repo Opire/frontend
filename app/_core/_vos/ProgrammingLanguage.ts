@@ -49,6 +49,7 @@ export class ProgrammingLanguage {
         "SourcePawn",
         "SQL",
         "Swift",
+        "TeX",
         "TypeScript",
         "Vue",
         "Others",
