@@ -26,6 +26,7 @@ export class ProgrammingLanguage {
         "Jupyter Notebook",
         "Kotlin",
         "Lua",
+        "Makefile",
         "Matlab",
         "MDX",
         "Objective-C",
