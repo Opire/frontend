@@ -42,6 +42,7 @@ export class ProgrammingLanguage {
         "Ruby",
         "Rust",
         "Scala",
+        "Scheme",
         "SCSS",
         "Shell",
         "SQL",
