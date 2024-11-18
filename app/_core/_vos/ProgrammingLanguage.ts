@@ -53,6 +53,7 @@ export class ProgrammingLanguage {
         "Twig",
         "TypeScript",
         "Vue",
+        "XSLT",
         "Others",
     ] as const;
 
