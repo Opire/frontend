@@ -46,6 +46,7 @@ export class ProgrammingLanguage {
         "SCSS",
         "Shell",
         "Solidity",
+        "SourcePawn",
         "SQL",
         "Swift",
         "TypeScript",
