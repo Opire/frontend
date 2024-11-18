@@ -50,6 +50,7 @@ export class ProgrammingLanguage {
         "SQL",
         "Swift",
         "TeX",
+        "Twig",
         "TypeScript",
         "Vue",
         "Others",
