@@ -3,6 +3,7 @@ import { Mutable } from "../../_utils/mutable";
 export class ProgrammingLanguage {
 
     protected static readonly OPTIONS = [
+        "ANTLR",
         "Assembly",
         "Astro",
         "C",
