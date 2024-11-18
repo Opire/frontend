@@ -6,6 +6,7 @@ export class ProgrammingLanguage {
         "ANTLR",
         "Assembly",
         "Astro",
+        "Blade",
         "C",
         "C#",
         "C++",
