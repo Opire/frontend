@@ -29,6 +29,7 @@ export class ProgrammingLanguage {
         "Makefile",
         "Matlab",
         "MDX",
+        "Nix",
         "Objective-C",
         "Pascal",
         "Perl",
