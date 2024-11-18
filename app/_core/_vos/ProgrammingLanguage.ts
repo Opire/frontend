@@ -31,6 +31,7 @@ export class ProgrammingLanguage {
         "MDX",
         "Nix",
         "Objective-C",
+        "Objective-C++",
         "Pascal",
         "Perl",
         "PHP",
