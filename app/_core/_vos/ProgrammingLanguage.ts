@@ -11,6 +11,7 @@ export class ProgrammingLanguage {
         "C#",
         "C++",
         "Clojure",
+        "CMake",
         "Cobol",
         "CSS",
         "Dart",
