@@ -10,6 +10,7 @@ export class ProgrammingLanguage {
         "C",
         "C#",
         "C++",
+        "Clojure",
         "Cobol",
         "CSS",
         "Dart",
