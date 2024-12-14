@@ -102,6 +102,7 @@ export class ProgrammingLanguage {
         "Visual Basic 6.0",
         "Vue",
         "Vyper",
+        "WebAssembly",
         "XSLT",
         "Others",
     ] as const;
