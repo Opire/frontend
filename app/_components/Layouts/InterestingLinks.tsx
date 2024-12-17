@@ -40,7 +40,7 @@ export const InterestingLinks = () => {
         {
             icon: <IconBrandDiscord size={18} />,
             text: "Discord",
-            path: "https://discord.gg/jWwwsHRbnJ",
+            path: "https://discord.gg/Rfq8CMZH4b",
             color: "violet",
         },
         {

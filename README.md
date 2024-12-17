@@ -24,7 +24,7 @@ _Make Open-Source better: Create Bounties, Incentivize Solutions, and Earn Rewar
 
 The issue list of this repo is exclusively for **bug reports** and **feature requests**.
 
-For questions, discussions and support please use our [discord](https://discord.gg/jWwwsHRbnJ) or our [reddit](https://www.reddit.com/r/opire), we are here to help and we are sure our community can contribute as well.
+For questions, discussions and support please use our [discord](https://discord.gg/Rfq8CMZH4b) or our [reddit](https://www.reddit.com/r/opire), we are here to help and we are sure our community can contribute as well.
 
 ## 👋 Stay In Touch
 
@@ -32,7 +32,7 @@ For questions, discussions and support please use our [discord](https://discord.
   <a href="https://twitter.com/opire_dev">
     <img src="https://img.shields.io/badge/%40opire_dev-white?style=for-the-badge&logo=x&logoColor=black&color=white" alt="X (formerly Twitter)">
   </a>
-  <a href="https://discord.gg/jWwwsHRbnJ">
+  <a href="https://discord.gg/Rfq8CMZH4b">
     <img src="https://img.shields.io/badge/discord-white?style=for-the-badge&logo=discord&logoColor=%237289da&color=white" alt="Discord">
   </a>
   <a href="https://www.reddit.com/r/opire">
