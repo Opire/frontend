@@ -1,13 +1,13 @@
-import { FC } from "react";
-import { LoginButton } from "./LoginButton";
-import { LoggedUser } from "./LoggedUser";
-import { UserAuthDTO } from "../../_core/_dtos/UserAuthDTO";
+import { FC } from 'react';
+import { LoginButton } from './LoginButton';
+import { LoggedUser } from './LoggedUser';
+import { UserAuthDTO } from '../../_core/_dtos/UserAuthDTO';
 
 export const UserInfo: FC<{
-    userAuth: UserAuthDTO | null;
+  userAuth: UserAuthDTO | null;
 }> = ({ userAuth }) => (
-    <>
-        {!userAuth && <LoginButton />}
-        {userAuth && <LoggedUser userAuth={userAuth} />}
-    </>
+  <>
+    {!userAuth && <LoginButton />}
+    {userAuth && <LoggedUser userAuth={userAuth} />}
+  </>
 );

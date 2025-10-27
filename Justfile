@@ -19,7 +19,8 @@ default:
         just i
 ')]
 install:
-    @docker compose run --rm {{SERVICE}} npm install
+	@docker compose run --rm {{SERVICE}} npm install
+	@docker compose run --rm {{SERVICE}} chown -R node:node .
     
 [doc('
     Add a new dependency to the project.
@@ -30,6 +31,7 @@ install:
 ')]
 add deps:
     @docker compose run --rm {{SERVICE}} npm install {{deps}}
+    @docker compose run --rm {{SERVICE}} chown -R node:node .
 
 [doc('
     Run the project in development mode.
@@ -45,7 +47,8 @@ dev:
         just build
 ')]
 build:
-	@docker compose run --rm {{SERVICE}} npm run build
+    @docker compose run --rm {{SERVICE}} npm run build
+    @docker compose run --rm {{SERVICE}} chown -R node:node .
 
 [doc('
     Run the project from the generated build.
@@ -69,23 +72,8 @@ lint_check:
         just lint_fix
 ')]
 lint_fix:
-	@docker compose run --rm {{SERVICE}} npm run lint:fix
-
-[doc('
-    Run the formatter (prettier).
-    ex:
-        just format_check
-')]
-format_check:
-	@docker compose run --rm {{SERVICE}} npm run format:check
-
-[doc('
-    Run the format (prettier) with auto-fix.
-    ex:
-        just format_fix
-')]
-format_fix:
-	@docker compose run --rm {{SERVICE}} npm run format:fix
+    @docker compose run --rm {{SERVICE}} npm run lint:fix
+    @docker compose run --rm {{SERVICE}} chown -R node:node .
 
 [doc('
     Run the copy-paste detector.

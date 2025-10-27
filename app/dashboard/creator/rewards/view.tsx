@@ -1,9 +1,7 @@
-"use client";
+'use client';
 
-import { CreatorView } from "../_components/CreatorView";
+import { CreatorView } from '../_components/CreatorView';
 
-export function DashboardCreatorView () {
-    return (
-        <CreatorView view="rewards" />
-    );
+export function DashboardCreatorView() {
+  return <CreatorView view="rewards" />;
 }

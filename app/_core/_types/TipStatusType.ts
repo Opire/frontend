@@ -1,3 +1,1 @@
-export type TipStatusType =
-  | "Pending payment"
-  | "Paid"
+export type TipStatusType = 'Pending payment' | 'Paid';

@@ -1,5 +1,3 @@
 export function TipCardSkeleton() {
-    return (
-        <></>
-    );
+  return <></>;
 }

@@ -1,15 +1,15 @@
-import React, { FC } from "react";
-import Image, { ImageProps } from "next/image";
+import React, { FC } from 'react';
+import Image, { ImageProps } from 'next/image';
 
 interface ImageWithFallbackProps extends ImageProps {
-    fallbackSrc: string
+  fallbackSrc: string;
 }
 
 export const CustomImage: FC<ImageWithFallbackProps> = ({ fallbackSrc, ...rest }) => (
-    <Image
-        {...rest}
-        onError={(e) => {
-            e.currentTarget.src = fallbackSrc;
-        }}
-    />
+  <Image
+    {...rest}
+    onError={e => {
+      e.currentTarget.src = fallbackSrc;
+    }}
+  />
 );

@@ -1,11 +1,11 @@
-"use client";
+'use client';
 
-import { ProgrammerView } from "../_components/ProgrammerView";
+import { ProgrammerView } from '../_components/ProgrammerView';
 
-export function DashboardProgrammerTipsView () {
-    return (
-        <>
-            <ProgrammerView view="tips" />
-        </>
-    );
+export function DashboardProgrammerTipsView() {
+  return (
+    <>
+      <ProgrammerView view="tips" />
+    </>
+  );
 }

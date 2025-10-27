@@ -1,67 +1,69 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import { API_ROUTES } from "../../constants";
-import { RewardFilters } from "./_components/Filters/Filters";
-import { HomeRewardCard } from "./_components/HomeRewardCard";
-import { InfinityList } from "../_components/InfinityList";
-import { clientCustomFetch } from "../_utils/clientCustomFetch";
-import { buildEndpointWithSearchAndPagination } from "./_utils/buildEndpointWithSearchAndPagination";
-import { IssueListDTO } from "../_core/_dtos/IssueListDTO";
-import { useExternalStateOverride } from "../../hooks/useExternalStateOverride";
+import { useState } from 'react';
+import { API_ROUTES } from '../../constants';
+import { RewardFilters } from './_components/Filters/Filters';
+import { HomeRewardCard } from './_components/HomeRewardCard';
+import { InfinityList } from '../_components/InfinityList';
+import { clientCustomFetch } from '../_utils/clientCustomFetch';
+import { buildEndpointWithSearchAndPagination } from './_utils/buildEndpointWithSearchAndPagination';
+import { IssueListDTO } from '../_core/_dtos/IssueListDTO';
+import { useExternalStateOverride } from '../../hooks/useExternalStateOverride';
 // import { faker } from "@faker-js/faker";
 
 const PAGE_SIZE = 30;
 
-export function HomeView ({
-    initialRewards,
-    filters,
-    search,
+export function HomeView({
+  initialRewards,
+  filters,
+  search,
 }: {
-    initialRewards: IssueListDTO[],
-    filters: RewardFilters,
-    search: string | undefined,
+  initialRewards: IssueListDTO[];
+  filters: RewardFilters;
+  search: string | undefined;
 }) {
-    const [isLoading, setIsLoading] = useState(false);
-    const [rewards, setRewards] = useExternalStateOverride(initialRewards);
-    const [page, setPage] = useState(1);
+  const [isLoading, setIsLoading] = useState(false);
+  const [rewards, setRewards] = useExternalStateOverride(initialRewards);
+  const [page, setPage] = useState(1);
 
-    async function loadMoreRewards () {
-        setIsLoading(true);
+  async function loadMoreRewards() {
+    setIsLoading(true);
 
-        const next = page + 1;
-        const newRewardsResponse = await clientCustomFetch(buildEndpointWithSearchAndPagination(API_ROUTES.REWARDS.ALL(), {
-            itemsPerPage: PAGE_SIZE,
-            page: next,
-            filters,
-            search,
-        }));
+    const next = page + 1;
+    const newRewardsResponse = await clientCustomFetch(
+      buildEndpointWithSearchAndPagination(API_ROUTES.REWARDS.ALL(), {
+        itemsPerPage: PAGE_SIZE,
+        page: next,
+        filters,
+        search,
+      })
+    );
 
-        const newRewards = await newRewardsResponse.json() as IssueListDTO[];
+    const newRewards = (await newRewardsResponse.json()) as IssueListDTO[];
 
-        // setIsLoading(false); // Here?
+    // setIsLoading(false); // Here?
 
-        if (newRewards?.length) {
-            setPage(next);
-            setRewards((prev: IssueListDTO[] | undefined) => [
-                ...(prev?.length ? prev : []),
-                ...newRewards,
-            ]);
-        }
-
-        setIsLoading(false); // Or here?
+    if (newRewards?.length) {
+      setPage(next);
+      setRewards((prev: IssueListDTO[] | undefined) => [
+        ...(prev?.length ? prev : []),
+        ...newRewards,
+      ]);
     }
 
-    return (
-        <InfinityList
-            items={rewards}
-            keyIdentifier="id"
-            isLoading={isLoading}
-            loadNextPage={loadMoreRewards}
-            ItemComponent={HomeRewardCard}
-            ItemSkeletonComponent={() => <div />} // TODO: with the new approach we don't need this
-        />
-    );
+    setIsLoading(false); // Or here?
+  }
+
+  return (
+    <InfinityList
+      items={rewards}
+      keyIdentifier="id"
+      isLoading={isLoading}
+      loadNextPage={loadMoreRewards}
+      ItemComponent={HomeRewardCard}
+      ItemSkeletonComponent={() => <div />} // TODO: with the new approach we don't need this
+    />
+  );
 }
 
 // const customRewards: IssueListDTO[] = faker.helpers.multiple(() => ({

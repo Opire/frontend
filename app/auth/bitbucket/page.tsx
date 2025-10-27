@@ -1,12 +1,10 @@
-import { Metadata } from "next";
-import { AuthBitbucketView } from "./view";
+import { Metadata } from 'next';
+import { AuthBitbucketView } from './view';
 
 export const metadata: Metadata = {
-    title: "Opire - Bitbucket",
+  title: 'Opire - Bitbucket',
 };
 
-export default function Page () {
-    return (
-        <AuthBitbucketView />
-    );
+export default function Page() {
+  return <AuthBitbucketView />;
 }

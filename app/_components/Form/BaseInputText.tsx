@@ -1,67 +1,67 @@
-import { FC, useState } from "react";
-import { TextInput, TextInputProps } from "@mantine/core";
+import { FC, useState } from 'react';
+import { TextInput, TextInputProps } from '@mantine/core';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export function validateText(text?: string, required?: boolean) {
-    // if (!required && !text) {
-    //     return null;
-    // }
-    //
-    // if (required && !text) {
-    //     return 'Campo obligatorio';
-    // }
-    //
-    // try {
-    //     new TextValueObject(text ?? '');
-    // } catch (err) {
-    //     if (err instanceof TextHaveInvalidChars) {
-    //         return 'Hay caracteres inválidos';
-    //     }
-    //
-    //     if (err instanceof TextMustHaveSomeChars) {
-    //         return 'Debe tener texto';
-    //     }
-    // }
+  // if (!required && !text) {
+  //     return null;
+  // }
+  //
+  // if (required && !text) {
+  //     return 'Campo obligatorio';
+  // }
+  //
+  // try {
+  //     new TextValueObject(text ?? '');
+  // } catch (err) {
+  //     if (err instanceof TextHaveInvalidChars) {
+  //         return 'Hay caracteres inválidos';
+  //     }
+  //
+  //     if (err instanceof TextMustHaveSomeChars) {
+  //         return 'Debe tener texto';
+  //     }
+  // }
 
-    return null;
+  return null;
 }
 
-type TextInputPropsToOmit = "onChange" | "value";
+type TextInputPropsToOmit = 'onChange' | 'value';
 interface BaseInputTextProps extends Omit<TextInputProps, TextInputPropsToOmit> {
-    value: string;
-    onChange: (value: string) => void;
+  value: string;
+  onChange: (value: string) => void;
 }
 
 export const BaseInputText: FC<BaseInputTextProps> = ({
-    label,
-    placeholder,
-    value,
-    onChange,
-    required = false,
-    ...rest
+  label,
+  placeholder,
+  value,
+  onChange,
+  required = false,
+  ...rest
 }) => {
-    const [nameError, setNameError] = useState<string | null>(null);
+  const [nameError, setNameError] = useState<string | null>(null);
 
-    const onLocalChange = (newValue: string) => {
-        onChange(newValue);
-        updateErrorState(newValue);
-    };
+  const onLocalChange = (newValue: string) => {
+    onChange(newValue);
+    updateErrorState(newValue);
+  };
 
-    const updateErrorState = (value: string) => {
-        const error = validateText(value, required);
-        setNameError(error);
-    };
+  const updateErrorState = (value: string) => {
+    const error = validateText(value, required);
+    setNameError(error);
+  };
 
-    return (
-        <TextInput
-            {...rest}
-            onBlur={() => updateErrorState(value)}
-            required={required}
-            label={label}
-            placeholder={placeholder}
-            value={value}
-            onChange={(value) => onLocalChange(value.currentTarget.value)}
-            error={nameError}
-        />
-    );
+  return (
+    <TextInput
+      {...rest}
+      onBlur={() => updateErrorState(value)}
+      required={required}
+      label={label}
+      placeholder={placeholder}
+      value={value}
+      onChange={value => onLocalChange(value.currentTarget.value)}
+      error={nameError}
+    />
+  );
 };

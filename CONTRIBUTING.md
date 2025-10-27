@@ -6,7 +6,7 @@ Hi! We are really excited that you are interested in contributing to Opire. Befo
 - [Issue Reporting Guidelines](#issue-reporting-guidelines)
 - [Pull Request Guidelines](#pull-request-guidelines)
 - [Development Setup](#development-setup)
-- [Financial Contribution](#financial-contribution) 
+- [Financial Contribution](#financial-contribution)
 
 ## Issue Reporting Guidelines
 
@@ -83,4 +83,4 @@ $ just dev
 
 ## Financial Contribution
 
-We appreciate any financial contributions through our [Ko-fi](https://ko-fi.com/opire), but we strongly encourage you to invest in open-source project issues using Opire instead. It's the most impactful way to support us and the community. Let's make open source sustainable together! 🤟 
+We appreciate any financial contributions through our [Ko-fi](https://ko-fi.com/opire), but we strongly encourage you to invest in open-source project issues using Opire instead. It's the most impactful way to support us and the community. Let's make open source sustainable together! 🤟

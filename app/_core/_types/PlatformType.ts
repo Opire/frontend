@@ -1,4 +1,1 @@
-export type PlatformType =
-    | "GitHub"
-    | "GitLab"
-    | "BitBucket"
+export type PlatformType = 'GitHub' | 'GitLab' | 'BitBucket';

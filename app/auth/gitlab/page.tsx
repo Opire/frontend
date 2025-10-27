@@ -1,12 +1,10 @@
-import { Metadata } from "next";
-import { AuthGitlabView } from "./view";
+import { Metadata } from 'next';
+import { AuthGitlabView } from './view';
 
 export const metadata: Metadata = {
-    title: "Opire - GitLab",
+  title: 'Opire - GitLab',
 };
 
-export default function Page () {
-    return (
-        <AuthGitlabView />
-    );
+export default function Page() {
+  return <AuthGitlabView />;
 }

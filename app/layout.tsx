@@ -1,28 +1,24 @@
-import "@mantine/core/styles.css";
-import "@mantine/notifications/styles.css";
-import "@mantine/dates/styles.css";
+import '@mantine/core/styles.css';
+import '@mantine/notifications/styles.css';
+import '@mantine/dates/styles.css';
 
-import { ColorSchemeScript, MantineProvider } from "@mantine/core";
-import { ModalsProvider } from "@mantine/modals";
-import { Notifications } from "@mantine/notifications";
-import { DatesProvider } from "@mantine/dates";
+import { ColorSchemeScript, MantineProvider } from '@mantine/core';
+import { ModalsProvider } from '@mantine/modals';
+import { Notifications } from '@mantine/notifications';
+import { DatesProvider } from '@mantine/dates';
 
-import React from "react";
+import React from 'react';
 
-export default function RootLayout({
-    children,
-}: {
-    children: React.ReactNode
-}) {
-    return (
-        <html lang="en">
-            <head>
-                <link rel="shortcut icon" href="/opire_logo.svg" />
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <html lang="en">
+      <head>
+        <link rel="shortcut icon" href="/opire_logo.svg" />
 
-                <ColorSchemeScript />
+        <ColorSchemeScript />
 
-                <style>
-                    {`
+        <style>
+          {`
                     .filters::-webkit-scrollbar {
                         height: 0px;
                         width: 0px;
@@ -46,31 +42,32 @@ export default function RootLayout({
                         height: 10%;
                     }
                 `}
-                </style>
-                <script defer src="https://eu.umami.is/script.js" data-website-id={process.env.NEXT_PUBLIC_UMAMI_TOKEN}></script>
-                <script async src="https://js.stripe.com/v3/pricing-table.js"></script>
-            </head>
+        </style>
+        <script
+          defer
+          src="https://eu.umami.is/script.js"
+          data-website-id={process.env.NEXT_PUBLIC_UMAMI_TOKEN}
+        ></script>
+        <script async src="https://js.stripe.com/v3/pricing-table.js"></script>
+      </head>
 
-            <body>
-                <MantineProvider
-                    defaultColorScheme="dark"
-                    theme={{
-                        primaryColor: "cyan",
-                        defaultGradient: {
-                            from: "teal.6",
-                            to: "cyan.7",
-                        },
-                    }}
-                >
-                    <Notifications limit={5} position='bottom-right' />
-                    <DatesProvider settings={{ locale: "en", timezone: "UTC" }}>
-                        <ModalsProvider>
-                            {children}
-                        </ModalsProvider>
-                    </DatesProvider>
-                </MantineProvider>
-            </body>
-
-        </html>
-    );
+      <body>
+        <MantineProvider
+          defaultColorScheme="dark"
+          theme={{
+            primaryColor: 'cyan',
+            defaultGradient: {
+              from: 'teal.6',
+              to: 'cyan.7',
+            },
+          }}
+        >
+          <Notifications limit={5} position="bottom-right" />
+          <DatesProvider settings={{ locale: 'en', timezone: 'UTC' }}>
+            <ModalsProvider>{children}</ModalsProvider>
+          </DatesProvider>
+        </MantineProvider>
+      </body>
+    </html>
+  );
 }

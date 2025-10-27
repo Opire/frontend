@@ -1,5 +1,3 @@
 export function ChallengeCardSkeleton() {
-    return (
-        <></>
-    );
+  return <></>;
 }

@@ -1,5 +1,5 @@
-import { AuthInfoDTO } from "./AuthInfoDTO";
+import { AuthInfoDTO } from './AuthInfoDTO';
 
 export interface UserAuthDTO extends AuthInfoDTO {
-    userId: string;
+  userId: string;
 }

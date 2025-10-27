@@ -1,6 +1,6 @@
-import { useEffect } from "react";
+// import { useEffect } from 'react';
 // import { useUserAuth } from "./useUserAuth";
-import { useRouter } from "next/navigation";
+// import { useRouter } from 'next/navigation';
 
 // export const useRedirectToHomeIfNotLogged = () => {
 //     const router = useRouter()

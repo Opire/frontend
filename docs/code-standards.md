@@ -35,7 +35,7 @@ They are designed to be easy for LLMs and humans to follow and ensure consistent
 
 ## LLM Guidance
 
--   Follow all Core Rules and Validation Checklist strictly when generating or editing code.
--   Prefer self-describing code over comments or explanations.
--   Validate with TypeScript, ESLint, and Prettier before assuming correctness.
--   Deviations from these rules must be explicitly justified in a comment explaining why.
+- Follow all Core Rules and Validation Checklist strictly when generating or editing code.
+- Prefer self-describing code over comments or explanations.
+- Validate with TypeScript, ESLint, and Prettier before assuming correctness.
+- Deviations from these rules must be explicitly justified in a comment explaining why.

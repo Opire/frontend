@@ -2,14 +2,13 @@
   "name": "opire_frontend",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "next dev -p 3001",
     "build": "next build",
     "start": "next start -p 3001",
-    "lint:check": "next lint",
-    "lint:fix": "next lint --fix",
-    "format:check": "prettier --check .",
-    "format:fix": "prettier --write .",
+    "lint:check": "eslint .",
+    "lint:fix": "eslint . --fix",
     "cpd": "jscpd"
   },
   "dependencies": {
@@ -40,7 +39,6 @@
     "ulid": "^3.0.1"
   },
   "devDependencies": {
-    "@eslint/eslintrc": "^3.3.1",
     "@swc/core": "^1.13.5",
     "@types/jsonwebtoken": "^9.0.10",
     "@types/react": "^19.2.2",
@@ -49,7 +47,7 @@
     "eslint-config-next": "^16.0.0",
     "eslint-plugin-import": "^2.32.0",
     "eslint-config-prettier": "^10.1.8",
-    "eslint-plugin-prettier": "^5.5.4",
+    "eslint-import-resolver-typescript": "^3.7.0",
     "eslint-plugin-unused-imports": "^4.3.0",
     "jscpd": "^4.0.5",
     "ts-node": "^10.9.2",

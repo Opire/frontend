@@ -1,73 +1,70 @@
-import { Card, Center, Skeleton, Timeline, Text, Space } from "@mantine/core";
-import { useGetActivityFromIssue } from "../../../../hooks/useGetActivityFromIssue";
-import { IssuePrimitive } from "../../../_core/_primitives/IssuePrimitive";
-import { FC } from "react";
-import { EVENT_NAMES } from "../../../_core/_types/EventNames";
-import { BaseEventPrimitives } from "../../../_core/_primitives/BaseEventPrimitives";
-import { IssueCreatedActivity } from "./EventsActivity/IssueCreatedActivity";
-import { NewRewardAddedActivity } from "./EventsActivity/NewRewardAddedActivity";
-import { UserTryingActivity } from "./EventsActivity/UserTryingActivity";
-import { UserClaimedActivity } from "./EventsActivity/UserClaimedActivity";
-import { RewardSetAsPaidActivity } from "./EventsActivity/RewardSetAsPaidActivity";
-import { RewardRemovedFromIssueActivity } from "./EventsActivity/RewardRemovedFromIssueActivity";
+import { Card, Center, Skeleton, Timeline, Text, Space } from '@mantine/core';
+import { useGetActivityFromIssue } from '../../../../hooks/useGetActivityFromIssue';
+import { IssuePrimitive } from '../../../_core/_primitives/IssuePrimitive';
+import { FC } from 'react';
+import { EVENT_NAMES } from '../../../_core/_types/EventNames';
+import { BaseEventPrimitives } from '../../../_core/_primitives/BaseEventPrimitives';
+import { IssueCreatedActivity } from './EventsActivity/IssueCreatedActivity';
+import { NewRewardAddedActivity } from './EventsActivity/NewRewardAddedActivity';
+import { UserTryingActivity } from './EventsActivity/UserTryingActivity';
+import { UserClaimedActivity } from './EventsActivity/UserClaimedActivity';
+import { RewardSetAsPaidActivity } from './EventsActivity/RewardSetAsPaidActivity';
+import { RewardRemovedFromIssueActivity } from './EventsActivity/RewardRemovedFromIssueActivity';
 
 interface IssueActivityProps {
-    issue: IssuePrimitive;
+  issue: IssuePrimitive;
 }
 
 export const IssueActivity: FC<IssueActivityProps> = ({ issue }) => {
-    const { activity, isLoading } = useGetActivityFromIssue({ issueId: issue.id });
+  const { activity, isLoading } = useGetActivityFromIssue({ issueId: issue.id });
 
-    if (isLoading) {
-        return (
-            <Card withBorder shadow="md" radius='md' h={"100%"}>
-                <Center>
-                    <Text
-                        style={{ fontSize: "1.2rem", fontWeight: "bold" }}
-                    >
-                        Activity
-                    </Text>
-                </Center>
-
-                <Space h={"1rem"} />
-
-                <Skeleton height={"70vh"} radius="xl" />
-            </Card>
-        );
-    }
-
+  if (isLoading) {
     return (
-        <Card withBorder shadow="md" radius='md' h={"100%"}>
-            <Center>
-                <Text
-                    style={{ fontSize: "1.2rem", fontWeight: "bold" }}
-                >
-                    Activity
-                </Text>
-            </Center>
+      <Card withBorder shadow="md" radius="md" h={'100%'}>
+        <Center>
+          <Text style={{ fontSize: '1.2rem', fontWeight: 'bold' }}>Activity</Text>
+        </Center>
 
-            <Space h={"1rem"} />
+        <Space h={'1rem'} />
 
-            <Timeline active={1} bulletSize={24} lineWidth={2}>
-                {activity.map(event => {
-                    const component = activityMaperComponent[event.eventName];
-
-                    if (!component) {
-                        return undefined;
-                    }
-
-                    return component({ event, issue });
-                })}
-            </Timeline>
-        </Card>
+        <Skeleton height={'70vh'} radius="xl" />
+      </Card>
     );
+  }
+
+  return (
+    <Card withBorder shadow="md" radius="md" h={'100%'}>
+      <Center>
+        <Text style={{ fontSize: '1.2rem', fontWeight: 'bold' }}>Activity</Text>
+      </Center>
+
+      <Space h={'1rem'} />
+
+      <Timeline active={1} bulletSize={24} lineWidth={2}>
+        {activity.map(event => {
+          const component = activityMaperComponent[event.eventName];
+
+          if (!component) {
+            return undefined;
+          }
+
+          return component({ event, issue });
+        })}
+      </Timeline>
+    </Card>
+  );
 };
 
-const activityMaperComponent: Partial<Record<EVENT_NAMES, ({ event, issue }: { event: BaseEventPrimitives, issue: IssuePrimitive }) => JSX.Element>> = {
-    [EVENT_NAMES.IssueCreated]: (params) => <IssueCreatedActivity {...params} />,
-    [EVENT_NAMES.NewRewardAddedToIssue]: (params) => <NewRewardAddedActivity {...params} />,
-    [EVENT_NAMES.UserTryingIssue]: (params) => <UserTryingActivity {...params} />,
-    [EVENT_NAMES.UserClaimedIssue]: (params) => <UserClaimedActivity {...params} />,
-    [EVENT_NAMES.RewardsSetAsPaid]: (params) => <RewardSetAsPaidActivity {...params} />,
-    [EVENT_NAMES.RewardRemovedFromIssue]: (params) => <RewardRemovedFromIssueActivity {...params} />,
+const activityMaperComponent: Partial<
+  Record<
+    EVENT_NAMES,
+    ({ event, issue }: { event: BaseEventPrimitives; issue: IssuePrimitive }) => JSX.Element
+  >
+> = {
+  [EVENT_NAMES.IssueCreated]: params => <IssueCreatedActivity {...params} />,
+  [EVENT_NAMES.NewRewardAddedToIssue]: params => <NewRewardAddedActivity {...params} />,
+  [EVENT_NAMES.UserTryingIssue]: params => <UserTryingActivity {...params} />,
+  [EVENT_NAMES.UserClaimedIssue]: params => <UserClaimedActivity {...params} />,
+  [EVENT_NAMES.RewardsSetAsPaid]: params => <RewardSetAsPaidActivity {...params} />,
+  [EVENT_NAMES.RewardRemovedFromIssue]: params => <RewardRemovedFromIssueActivity {...params} />,
 };
