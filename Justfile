@@ -58,10 +58,34 @@ start:
 [doc('
     Run the linter.
     ex:
-        just lint
+        just lint_check
 ')]
-lint:
-	@docker compose run --rm {{SERVICE}} npm run lint
+lint_check:
+	@docker compose run --rm {{SERVICE}} npm run lint:check
+
+[doc('
+    Run the linter with auto-fix.
+    ex:
+        just lint_fix
+')]
+lint_fix:
+	@docker compose run --rm {{SERVICE}} npm run lint:fix
+
+[doc('
+    Run the formatter (prettier).
+    ex:
+        just format_check
+')]
+format_check:
+	@docker compose run --rm {{SERVICE}} npm run format:check
+
+[doc('
+    Run the format (prettier) with auto-fix.
+    ex:
+        just format_fix
+')]
+format_fix:
+	@docker compose run --rm {{SERVICE}} npm run format:fix
 
 [doc('
     Run the copy-paste detector.

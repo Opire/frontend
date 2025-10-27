@@ -1,10 +1,10 @@
-import { redirect } from "next/navigation";
-import { getUserAuth } from "./getUserAuth";
+import { redirect } from 'next/navigation';
+import { getUserAuth } from './getUserAuth';
 
-export function redirectToHomeIfNotLogged () {
-    const userAuth = getUserAuth();
+export async function redirectToHomeIfNotLogged() {
+  const userAuth = await getUserAuth();
 
-    if (!userAuth) {
-        redirect("/");
-    }
+  if (!userAuth) {
+    redirect('/');
+  }
 }

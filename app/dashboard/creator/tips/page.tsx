@@ -1,17 +1,17 @@
-import { Metadata } from "next";
-import { redirectToHomeIfNotLogged } from "../../../_utils/redirectToHomeIfNotLogged";
-import { DashboardCreatorView } from "./view";
+import { Metadata } from 'next';
+import { redirectToHomeIfNotLogged } from '../../../_utils/redirectToHomeIfNotLogged';
+import { DashboardCreatorView } from './view';
 
 export const metadata: Metadata = {
-    title: "Opire",
+  title: 'Opire',
 };
 
-export default async function Page () {
-    redirectToHomeIfNotLogged();
+export default async function Page() {
+  await redirectToHomeIfNotLogged();
 
-    return (
-        <>
-            <DashboardCreatorView />
-        </>
-    );
+  return (
+    <>
+      <DashboardCreatorView />
+    </>
+  );
 }
