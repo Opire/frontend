@@ -66,8 +66,7 @@ export const CreatorRewardUnpaidCard: FC<CreatorRewardUnpaidCardProps> = ({
     const hasMoreUsers = claimerUsersHidden.length > 0;
     const amountOfExtraUsers = claimerUsersHidden.length;
 
-    const canRewardsBeRemoved =
-        claimerUsers.length === 0 && data.alreadyPaid.value === 0;
+    const canRewardsBeRemoved = data.alreadyPaid.value === 0;
 
     const redirectToDetails = () => {
         router.push(`/issues/${data.issueId}`);
